@@ -1,4 +1,4 @@
-package com.adjust.sdk;
+package com.adjust.nativemodule;
 
 import java.util.Arrays;
 import java.util.Collections;

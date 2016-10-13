@@ -3,7 +3,6 @@
 import { NativeModules } from 'react-native';
 module.exports = NativeModules.Adjust;
 
-
 //var ReactNative = require('react-native');
 //var {
     //NativeModules

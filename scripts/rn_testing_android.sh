@@ -15,6 +15,15 @@ RED='\033[0;31m' # Red color
 GREEN='\033[0;32m' # Green color
 NC='\033[0m' # No Color
 
+# Removing the old Android JAR file
+echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
+cd ${SDK_DIR}
+rm -rfv android/libs/*
+
+# Building the Android JAR file
+echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
+ext/android/build.sh
+
 # Remove and unlink node module from sample project
 echo -e "${GREEN}>>> Uninstall and unlink current module ${NC}"
 cd ${SAMPLE_DIR}

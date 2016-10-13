@@ -1,0 +1,28 @@
+{
+    "name": "@adjust/react-native-adjust",
+    "version": "1.0.5",
+    "description": "A android like toast for react-native support for ios and android",
+    "main": "index.js",
+    "author": {
+        "name": "Abdullah Obaied",
+        "email": "abdullah@adjust.com"
+    },
+    "license": "MIT",
+    "keywords": [
+        "react-native",
+        "react-component",
+        "ios",
+        "android",
+        "position",
+        "remobile",
+        "mobile"
+    ],
+    "homepage": "https://github.com/adjust/react_native_sdk",
+    "bugs": {
+        "url": "https://github.com/adjust/react_native_sdk/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/adjust/react_native_sdk.git"
+    }
+}

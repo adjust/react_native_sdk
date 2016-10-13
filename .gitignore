@@ -1,6 +1,7 @@
 *.[aod]
 *.DS_Store
 .DS_Store
+*.jar
 *Thumbs.db
 *.iml
 .gradle

@@ -7,8 +7,7 @@ set -e
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Traverse up to get to the root directory
 SDK_DIR="$(dirname "$SCRIPTS_DIR")"
-# TODO: change to relative
-SAMPLE_DIR=~/Dev/sample
+SAMPLE_DIR=sample
 SDK_NAME=react-native-adjust
 
 RED='\033[0;31m' # Red color
@@ -26,7 +25,7 @@ ext/android/build.sh
 
 # Remove and unlink node module from sample project
 echo -e "${GREEN}>>> Uninstall and unlink current module ${NC}"
-cd ${SAMPLE_DIR}
+cd ${SDK_DIR}/${SAMPLE_DIR}
 rnpm uninstall ${SDK_NAME}
 
 # Create a new directory with SDK_NAME
@@ -36,7 +35,8 @@ mkdir node_modules/${SDK_NAME}
 # Copy things to it
 echo -e "${GREEN}>>> Copy modules to ${SAMPLE_DIR}/node_modules/${SDK_NAME} ${NC}"
 cd ${SDK_DIR}
-cp -r * ${SAMPLE_DIR}/node_modules/${SDK_NAME}
+rsync -a . ${SAMPLE_DIR}/node_modules/${SDK_NAME} --exclude ${SAMPLE_DIR}
+#cp -r * ${SAMPLE_DIR}/node_modules/${SDK_NAME}
 
 # Establish link
 echo -e "${GREEN}>>> Establish linkage to ${SDK_NAME} ${NC}"

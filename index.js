@@ -1,103 +1,271 @@
 'use strict';
 
-import { NativeModules } from 'react-native';
-module.exports = NativeModules.Adjust;
+var ReactNative = require('react-native');
+var {
+    NativeModules
+} = ReactNative;
 
-//var ReactNative = require('react-native');
-//var {
-    //NativeModules
-//} = ReactNative;
+var module_adjust = NativeModules.Adjust;
+var Adjust = {};
 
-//var RCTToast= NativeModules.Adjust;
-//var Toast = {};
+Adjust.trackEvent = function (adjustEvent) {
+    module_adjust.trackEvent(adjustEvent);
+};
 
-//var optionsBuilder = function () {
+Adjust.setEnabled = function(enabled) {
+    module_adjust.setEnabled(enabled);
+};
 
-  //// defaults
-  //var message = null;
-  //var duration = "short";
-  //var position = "center";
-  //var addPixelsY = 0;
+Adjust.isEnabled = function(callback) {
+    module_adjust.isEnabled(callback);
+};
 
-  //return {
-    //withMessage: function(m) {
-      //message = m;
-      //return this;
-    //},
+Adjust.appWillOpenUrl = function(uri) {
+    module_adjust.appWillOpenUrl(uri);
+};
 
-    //withDuration: function(d) {
-      //duration = d;
-      //return this;
-    //},
+Adjust.setReferrer = function(referrer) {
+    module_adjust.setReferrer(referrer);
+};
 
-    //withPosition: function(p) {
-      //position = p;
-      //return this;
-    //},
+Adjust.setOfflineMode = function(enabled) {
+    module_adjust.setOfflineMode(enabled);
+};
 
-    //withAddPixelsY: function(y) {
-      //addPixelsY = y;
-      //return this;
-    //},
+Adjust.sendFirstPackages = function() {
+    module_adjust.sendFirstPackages();
+};
 
-    //build: function() {
-      //return {
-        //message: message,
-        //duration: duration,
-        //position: position,
-        //addPixelsY: addPixelsY
-      //}
-    //}
-  //}
-//};
+Adjust.isEnabled = function(callback) {
+    module_adjust.isEnabled(callback);
+};
 
-//var 
+Adjust.addSessionCallbackParameter = function(key, value) {
+    module_adjust.addSessionCallbackParameter(key, value);
+};
 
+Adjust.addSessionPartnerParameter = function(key, value) {
+    module_adjust.addSessionPartnerParameter(key, value);
+};
 
-//var showWithOptions = function (options) {
-    //RCTToast.show(options);
-//};
+Adjust.removeSessionCallbackParameter = function(key) {
+    module_adjust.removeSessionCallbackParameter(key);
+};
 
-//var showToast = function (message, duration, position) {
-  //showWithOptions(
-      //optionsBuilder()
-          //.withMessage(message||'未知数据')
-          //.withDuration(duration)
-          //.withPosition(position)
-          //.build()
-      //);
-//};
+Adjust.removeSessionPartnerParameter = function(key) {
+    module_adjust.removeSessionPartnerParameter(key);
+};
 
-//Toast.showShortTop = function (message) {
-  //showToast(message, "short", "top");
-//};
+Adjust.resetSessionCallbackParameters = function() {
+    module_adjust.resetSessionCallbackParameters();
+};
 
-//Toast.showShortCenter = function (message) {
-  //showToast(message, "short", "center");
-//};
+Adjust.resetSessionPartnerParameters = function() {
+    module_adjust.resetSessionPartnerParameters();
+};
 
-//Toast.showShortBottom = function (message) {
-  //showToast(message, "short", "bottom");
-//};
+Adjust.setPushToken = function(token) {
+    module_adjust.setPushToken(token);
+};
 
-//Toast.showLongTop = function (message) {
-  //showToast(message, "long", "top");
-//};
+var AdjustEvent = function (eventToken) {
+    this.eventToken = eventToken;
+    this.revenue = 0.0;
+    this.currency = null;
+    this.callbackParameters = null;
+    this.partnerParameters = null;
 
-//Toast.showLongCenter = function (message) {
-  //showToast(message, "long", "center");
-//};
+    this.setRevenue = function(revenue, currency) {
+        this.revenue = revenue;
+        this.currency = currency;
+    };
 
-//Toast.showLongBottom = function (message) {
-  //showToast(message, "long", "bottom");
-//};
+    this.setCallbackParameters = function(callbackParameters) {
+        this.callbackParameters = callbackParameters;
+    };
 
-//Toast.show = function (message) {
-  //showToast(message, "short", "bottom");
-//};
+    this.setPartnerParameters = function(partnerParameters) {
+        this.partnerParameters = partnerParameters;
+    };
+}
 
-//Toast.hide = function () {
-  //RCTToast.hide();
-//};
+var AdjustConfig = function(appToken, environment) {
+    this.appToken = appToken;
+    this.environment = environment;
 
-//module.exports = Toast;
+    this.sdkPrefix = "react_native4.10.0";
+
+    this.logLevel = null;
+    this.defaultTracker = null;
+
+    this.attributionCallbackListener = null;
+    this.eventTrackingSuccessfulCallbackListener = null;
+    this.eventTrackingFailedCallbackListener = null;
+    this.sessionTrackingSuccessfulCallbackListener = null;
+    this.sessionTrackingFailedCallbackListener = null;
+    this.deeplinkCallbackListener = null;
+
+    this.eventBufferingEnabled = null;
+    this.shouldLaunchDeeplink = null;
+    this.referrer = null;
+    this.sendInBackground = null;
+
+    this.userAgent = null;
+    this.delayStart = 0.0;
+
+    // Android only
+    this.processName = null;
+}
+
+AdjustConfig.EnvironmentSandbox    = "sandbox";
+AdjustConfig.EnvironmentProduction = "production";
+
+AdjustConfig.LogLevelVerbose       = "VERBOSE";
+AdjustConfig.LogLevelDebug         = "DEBUG";
+AdjustConfig.LogLevelInfo          = "INFO";
+AdjustConfig.LogLevelWarn          = "WARN";
+AdjustConfig.LogLevelError         = "ERROR";
+AdjustConfig.LogLevelAssert        = "ASSERT";
+AdjustConfig.LogLevelSuppress      = "SUPPRESS";
+
+//GETTERS
+//===========================
+AdjustConfig.prototype.getAttributionCallback = function() {
+    return this.attributionCallbackListener;
+};
+
+AdjustConfig.prototype.getEventTrackingSuccessfulCallback = function() {
+    return this.eventTrackingSuccessfulCallbackListener;
+};
+
+AdjustConfig.prototype.getEventTrackingFailedCallback = function() {
+    return this.eventTrackingFailedCallbackListener;
+};
+
+AdjustConfig.prototype.getSessionTrackingSuccessfulCallback = function() {
+    return this.eventTrackingSuccessfulCallbackListener;
+};
+
+AdjustConfig.prototype.getSessionTrackingFailedCallback = function() {
+    return this.eventTrackingFailedCallbackListener;
+};
+
+AdjustConfig.prototype.getDeeplinkCallback = function() {
+    return this.deeplinkCallbackListener;
+};
+
+AdjustConfig.prototype.getUserAgent = function() {
+    return this.userAgent;
+}
+
+AdjustConfig.prototype.getDelayStart = function() {
+    return this.delayStart;
+}
+
+AdjustConfig.prototype.getReferrer = function() {
+    return this.referrer;
+}
+
+AdjustConfig.prototype.getSendInBackground = function() {
+    return this.sendInBackground;
+}
+
+AdjustConfig.prototype.getShouldLaunchDeeplink = function() {
+    return this.shouldLaunchDeeplink;
+}
+
+//SETTERS
+//===========================
+AdjustConfig.prototype.setEventBufferingEnabled = function(isEnabled) {
+    this.eventBufferingEnabled = isEnabled;
+};
+
+AdjustConfig.prototype.setLogLevel = function(logLevel) {
+    this.logLevel = logLevel;
+};
+
+AdjustConfig.prototype.setProcessName = function(processName) {
+    this.processName = processName;
+};
+
+AdjustConfig.prototype.setDefaultTracker = function(defaultTracker) {
+    this.defaultTracker = defaultTracker;
+};
+
+AdjustConfig.prototype.setUserAgent = function(userAgent) {
+    this.userAgent = userAgent;
+}
+
+AdjustConfig.prototype.setDelayStart = function(delayStart) {
+    this.delayStart = delayStart;
+}
+
+AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {
+    this.attributionCallbackListener = attributionCallbackListener;
+};
+
+AdjustConfig.prototype.setEventTrackingSuccessfulCallbackListener 
+    = function(eventTrackingSuccessfulCallbackListener) {
+        this.eventTrackingSuccessfulCallbackListener = eventTrackingSuccessfulCallbackListener;
+    };
+
+AdjustConfig.prototype.setEventTrackingFailedCallbackListener 
+    = function(eventTrackingFailedCallbackListener) {
+        this.eventTrackingFailedCallbackListener = eventTrackingFailedCallbackListener;
+    };
+
+AdjustConfig.prototype.setSessionTrackingSuccessfulCallbackListener 
+    = function(eventTrackingSuccessfulCallbackListener) {
+        this.eventTrackingSuccessfulCallbackListener = eventTrackingSuccessfulCallbackListener;
+    };
+
+AdjustConfig.prototype.setSessionTrackingFailedCallbackListener 
+    = function(eventTrackingFailedCallbackListener) {
+        this.eventTrackingFailedCallbackListener = eventTrackingFailedCallbackListener;
+    };
+
+AdjustConfig.prototype.setDeeplinkCallbackListener 
+    = function(deeplinkCallbackListener) {
+        this.deeplinkCallbackListener = deeplinkCallbackListener;
+    };
+
+AdjustConfig.prototype.setReferrer = function(referrer) {
+    this.referrer = referrer;
+}
+
+AdjustConfig.prototype.setSendInBackground = function(sendInBackground) {
+    this.sendInBackground = sendInBackground;
+}
+
+AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) {
+    this.shouldLaunchDeeplink = shouldLaunchDeeplink;
+}
+
+//HAS
+//=================================
+
+AdjustConfig.prototype.hasAttributionListener = function() {
+    return this.attributionCallbackListener != null;
+};
+
+AdjustConfig.prototype.hasEventTrackingSuccessfulListener = function() {
+    return this.eventTrackingSuccessfulCallbackListener != null;
+};
+
+AdjustConfig.prototype.hasEventTrackingFailedListener = function() {
+    return this.eventTrackingFailedCallbackListener != null;
+};
+
+AdjustConfig.prototype.hasSessionTrackingSuccessfulListener = function() {
+    return this.eventTrackingSuccessfulCallbackListener != null;
+};
+
+AdjustConfig.prototype.hasSessionTrackingFailedListener = function() {
+    return this.eventTrackingFailedCallbackListener != null;
+};
+
+AdjustConfig.prototype.hasDeeplinkCallbackListener = function() {
+    return this.deeplinkCallbackListener != null;
+};
+
+module.exports = { Adjust, AdjustEvent, AdjustConfig }

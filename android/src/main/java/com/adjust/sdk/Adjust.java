@@ -6,6 +6,8 @@ import com.facebook.common.logging.FLog;
 import com.facebook.react.bridge.*;
 import android.util.Log;
 import android.net.Uri;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.adjust.sdk.*;
 
@@ -41,8 +43,32 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void trackEvent(ReadableMap event) {
+    public void trackEvent(ReadableMap map) {
         Log.d(TAG, ">>> trackEvent()");
+
+        final String eventToken = map.getString("eventToken");
+        final Double revenue = map.getDouble("revenue");
+        final String currency = map.getString("currency");
+        final Map<String, Object> callbackParameters  = AdjustUtil.toMap(map.getMap("callbackParameters"));
+        final Map<String, Object> partnerParameters  = AdjustUtil.toMap(map.getMap("partnerParameters"));
+        //Log.d(TAG, ">>> trackEvent(): eventToken: " + eventToken);
+        //Log.d(TAG, ">>> trackEvent(): revenue: " + revenue);
+        //Log.d(TAG, ">>> trackEvent(): currency: " + currency);
+        //Log.d(TAG, ">>> trackEvent(): first CallbackParam value: " + callbackParameters.get("DUMMY_KEY"));
+        //Log.d(TAG, ">>> trackEvent(): second CallbackParam value: " + callbackParameters.get("DUMMY_KEY_2"));
+        //Log.d(TAG, ">>> trackEvent(): first partnerParam value: " + partnerParameters.get("DUMMY_KEY"));
+        //Log.d(TAG, ">>> trackEvent(): second partnerParam value: " + partnerParameters.get("DUMMY_KEY_2"));
+
+        AdjustEvent event = new AdjustEvent(eventToken);
+        event.setRevenue(revenue, currency);
+
+        for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
+            event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
+        }
+
+        for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
+            event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+        }
     }
 
     @ReactMethod
@@ -52,7 +78,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void isEnabled(Callback callback) {
-        callback.invoke(false);
+        callback.invoke(true);
     }
 
     @ReactMethod

@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react';
-var Adjust = require('react-native-adjust');
+import { Adjust, AdjustEvent, AdjustConfig } from 'react-native-adjust';
 import {
     AppRegistry,
     StyleSheet,
@@ -79,9 +79,21 @@ export default class sample extends Component {
 
         Adjust.isEnabled( (isEnabled) => {
             if(isEnabled) {
-                //var adjustEvent = new AdjustEvent("uqg17r");
-                //Adjust.trackEvent(adjustEvent);
-                Adjust.trackEvent(null);
+                var adjustEvent = new AdjustEvent("uqg17r");
+                adjustEvent.setRevenue(10.0, "USD");
+                console.log("adjustEvent.eventToken: " + adjustEvent.eventToken);
+                console.log("adjustEvent.currency: " + adjustEvent.currency);
+                console.log("adjustEvent.revenue: " + adjustEvent.revenue);
+
+                var callbackParams = { "DUMMY_KEY": "DUMMY_VALUE", 
+                    "DUMMY_KEY_2": "DUMMY_VALUE_2" };
+
+                var partnerParams = { "DUMMY_KEY": "DUMMY_VALUE", 
+                    "DUMMY_KEY_2": "DUMMY_VALUE_2" };
+
+                adjustEvent.setCallbackParameters(callbackParams);
+                adjustEvent.setPartnerParameters(partnerParams);
+                Adjust.trackEvent(adjustEvent);
             } else {
                 console.log(">> SDK is disabled");
             }

@@ -1,3 +1,12 @@
+//
+//  AdjustPackage.java
+//  Adjust
+//
+//  Created by Abdullah Obaied on 2016-10-19.
+//  Copyright (c) 2016 adjust GmbH. All rights reserved.
+//  See the file MIT-LICENSE for copying permission.
+//
+
 package com.adjust.nativemodule;
 
 import java.util.Arrays;

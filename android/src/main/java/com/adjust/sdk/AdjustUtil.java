@@ -1,14 +1,24 @@
+//
+//  AdjustUtil.java
+//  Adjust
+//
+//  Created by Abdullah Obaied on 2016-10-19.
+//  Copyright (c) 2016 adjust GmbH. All rights reserved.
+//  See the file MIT-LICENSE for copying permission.
+//
+
 package com.adjust.nativemodule;
 
-import com.facebook.react.bridge.ReadableArray; 
-import com.facebook.react.bridge.ReadableMap; 
-import com.facebook.react.bridge.ReadableType; 
- 
+import com.facebook.react.modules.core.*;
+import com.facebook.react.bridge.*;
+
 import java.util.ArrayList;
+import android.net.Uri;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
- 
+import com.adjust.sdk.*;
+
 import javax.annotation.Nullable; 
 
 /** 
@@ -138,4 +148,90 @@ final class AdjustUtil {
 
         return result;
     } 
+
+    public static boolean isFieldValid(String field) {
+        if (field != null) {
+            if (!field.equals("") && !field.equals("null")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static WritableMap attributionToMap(AdjustAttribution attribution) {
+        WritableMap map = Arguments.createMap();
+        map.putString("trackerToken", attribution.trackerToken);
+        map.putString("trackerName", attribution.trackerName);
+        map.putString("network", attribution.network);
+        map.putString("campaign", attribution.campaign);
+        map.putString("adgroup", attribution.adgroup);
+        map.putString("creative", attribution.creative);
+        map.putString("clickLabel", attribution.clickLabel);
+
+        return map;
+    }
+
+    public static WritableMap eventSuccessToMap(AdjustEventSuccess eventSuccess) {
+        WritableMap map = Arguments.createMap();
+        map.putString("message", eventSuccess.message);
+        map.putString("timestamp", eventSuccess.timestamp);
+        map.putString("adid", eventSuccess.adid);
+        map.putString("eventToken", eventSuccess.eventToken);
+
+        if(eventSuccess.jsonResponse != null) {
+            map.putString("jsonResponse", eventSuccess.jsonResponse.toString());
+        }
+
+        return map;
+    }
+
+    public static WritableMap eventFailureToMap(AdjustEventFailure eventFailure) {
+        WritableMap map = Arguments.createMap();
+        map.putString("message", eventFailure.message);
+        map.putString("timestamp", eventFailure.timestamp);
+        map.putString("adid", eventFailure.adid);
+        map.putString("eventToken", eventFailure.eventToken);
+        map.putBoolean("willRetry", eventFailure.willRetry);
+
+        if(eventFailure.jsonResponse != null) {
+            map.putString("jsonResponse", eventFailure.jsonResponse.toString());
+        }
+
+        return map;
+    }
+
+    public static WritableMap sessionSuccessToMap(AdjustSessionSuccess sessionSuccess) {
+        WritableMap map = Arguments.createMap();
+        map.putString("message", sessionSuccess.message);
+        map.putString("timestamp", sessionSuccess.timestamp);
+        map.putString("adid", sessionSuccess.adid);
+
+        if(sessionSuccess.jsonResponse != null) {
+            map.putString("jsonResponse", sessionSuccess.jsonResponse.toString());
+        }
+
+        return map;
+    }
+
+    public static WritableMap sessionFailureToMap(AdjustSessionFailure sessionFailure) {
+        WritableMap map = Arguments.createMap();
+        map.putString("message", sessionFailure.message);
+        map.putString("timestamp", sessionFailure.timestamp);
+        map.putString("adid", sessionFailure.adid);
+        map.putBoolean("willRetry", sessionFailure.willRetry);
+
+        if(sessionFailure.jsonResponse != null) {
+            map.putString("jsonResponse", sessionFailure.jsonResponse.toString());
+        }
+
+        return map;
+    }
+
+    public static WritableMap deferredDeeplinkToMap(Uri uri) {
+        WritableMap map = Arguments.createMap();
+        map.putString("uri", uri.toString());
+
+        return map;
+    }
 }

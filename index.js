@@ -1,5 +1,6 @@
 'use strict';
 
+import { DeviceEventEmitter } from 'react-native';
 var ReactNative = require('react-native');
 var {
     NativeModules
@@ -7,6 +8,10 @@ var {
 
 var module_adjust = NativeModules.Adjust;
 var Adjust = {};
+
+Adjust.create = function(adjustConfig) {
+    module_adjust.create(adjustConfig);
+};
 
 Adjust.trackEvent = function (adjustEvent) {
     module_adjust.trackEvent(adjustEvent);
@@ -87,92 +92,65 @@ var AdjustEvent = function (eventToken) {
     this.setPartnerParameters = function(partnerParameters) {
         this.partnerParameters = partnerParameters;
     };
-}
+};
 
 var AdjustConfig = function(appToken, environment) {
     this.appToken = appToken;
     this.environment = environment;
 
     this.sdkPrefix = "react_native4.10.0";
+    this.logLevel = AdjustConfig.LogLevelInfo;
 
-    this.logLevel = null;
-    this.defaultTracker = null;
+    this.eventBufferingEnabled = false;
+    this.shouldLaunchDeeplink = false;
+    this.sendInBackground = false;
 
-    this.attributionCallbackListener = null;
-    this.eventTrackingSuccessfulCallbackListener = null;
-    this.eventTrackingFailedCallbackListener = null;
-    this.sessionTrackingSuccessfulCallbackListener = null;
-    this.sessionTrackingFailedCallbackListener = null;
-    this.deeplinkCallbackListener = null;
-
-    this.eventBufferingEnabled = null;
-    this.shouldLaunchDeeplink = null;
-    this.referrer = null;
-    this.sendInBackground = null;
-
-    this.userAgent = null;
     this.delayStart = 0.0;
+
+    this.defaultTracker = null;
+    this.referrer = null;
+    this.userAgent = null;
 
     // Android only
     this.processName = null;
-}
-
-AdjustConfig.EnvironmentSandbox    = "sandbox";
-AdjustConfig.EnvironmentProduction = "production";
-
-AdjustConfig.LogLevelVerbose       = "VERBOSE";
-AdjustConfig.LogLevelDebug         = "DEBUG";
-AdjustConfig.LogLevelInfo          = "INFO";
-AdjustConfig.LogLevelWarn          = "WARN";
-AdjustConfig.LogLevelError         = "ERROR";
-AdjustConfig.LogLevelAssert        = "ASSERT";
-AdjustConfig.LogLevelSuppress      = "SUPPRESS";
-
-//GETTERS
-//===========================
-AdjustConfig.prototype.getAttributionCallback = function() {
-    return this.attributionCallbackListener;
 };
 
-AdjustConfig.prototype.getEventTrackingSuccessfulCallback = function() {
-    return this.eventTrackingSuccessfulCallbackListener;
-};
+AdjustConfig.EnvironmentSandbox                   = "sandbox";
+AdjustConfig.EnvironmentProduction                = "production";
 
-AdjustConfig.prototype.getEventTrackingFailedCallback = function() {
-    return this.eventTrackingFailedCallbackListener;
-};
-
-AdjustConfig.prototype.getSessionTrackingSuccessfulCallback = function() {
-    return this.eventTrackingSuccessfulCallbackListener;
-};
-
-AdjustConfig.prototype.getSessionTrackingFailedCallback = function() {
-    return this.eventTrackingFailedCallbackListener;
-};
-
-AdjustConfig.prototype.getDeeplinkCallback = function() {
-    return this.deeplinkCallbackListener;
-};
+AdjustConfig.LogLevelVerbose                      = "VERBOSE";
+AdjustConfig.LogLevelDebug                        = "DEBUG";
+AdjustConfig.LogLevelInfo                         = "INFO";
+AdjustConfig.LogLevelWarn                         = "WARN";
+AdjustConfig.LogLevelError                        = "ERROR";
+AdjustConfig.LogLevelAssert                       = "ASSERT";
+AdjustConfig.LogLevelSuppress                     = "SUPPRESS";
+AdjustConfig.AttributionSubscription              = null;
+AdjustConfig.EventTrackingSucceededSubscription   = null;
+AdjustConfig.EventTrackingFailedSubscription      = null;
+AdjustConfig.SessionTrackingSucceededSubscription = null;
+AdjustConfig.SessionTrackingFailedSubscription    = null;
+AdjustConfig.DeferredDeeplinkSubscription         = null;
 
 AdjustConfig.prototype.getUserAgent = function() {
     return this.userAgent;
-}
+};
 
 AdjustConfig.prototype.getDelayStart = function() {
     return this.delayStart;
-}
+};
 
 AdjustConfig.prototype.getReferrer = function() {
     return this.referrer;
-}
+};
 
 AdjustConfig.prototype.getSendInBackground = function() {
     return this.sendInBackground;
-}
+};
 
 AdjustConfig.prototype.getShouldLaunchDeeplink = function() {
     return this.shouldLaunchDeeplink;
-}
+};
 
 //SETTERS
 //===========================
@@ -194,78 +172,91 @@ AdjustConfig.prototype.setDefaultTracker = function(defaultTracker) {
 
 AdjustConfig.prototype.setUserAgent = function(userAgent) {
     this.userAgent = userAgent;
-}
+};
 
 AdjustConfig.prototype.setDelayStart = function(delayStart) {
     this.delayStart = delayStart;
-}
-
-AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {
-    this.attributionCallbackListener = attributionCallbackListener;
 };
 
-AdjustConfig.prototype.setEventTrackingSuccessfulCallbackListener 
-    = function(eventTrackingSuccessfulCallbackListener) {
-        this.eventTrackingSuccessfulCallbackListener = eventTrackingSuccessfulCallbackListener;
+AdjustConfig.prototype.setReferrer = function(referrer) {
+    this.referrer = referrer;
+};
+
+AdjustConfig.prototype.setSendInBackground = function(sendInBackground) {
+    this.sendInBackground = sendInBackground;
+};
+
+AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) {
+    this.shouldLaunchDeeplink = shouldLaunchDeeplink;
+};
+
+AdjustConfig.prototype.setAttributionCallbackListener 
+    = function(attributionCallbackListener) {
+        module_adjust.setAttributionCallbackListener();
+        AdjustConfig.AttributionSubscription = DeviceEventEmitter.addListener('attribution', attributionCallbackListener);
+    };
+
+AdjustConfig.prototype.setEventTrackingSucceededCallbackListener 
+    = function(eventTrackingSucceededCallbackListener) {
+        module_adjust.setEventTrackingSucceededCallbackListener();
+        AdjustConfig.EventTrackingSucceededSubscription = DeviceEventEmitter.addListener('eventTrackingSucceeded', eventTrackingSucceededCallbackListener);
     };
 
 AdjustConfig.prototype.setEventTrackingFailedCallbackListener 
     = function(eventTrackingFailedCallbackListener) {
-        this.eventTrackingFailedCallbackListener = eventTrackingFailedCallbackListener;
+        module_adjust.setEventTrackingFailedCallbackListener();
+        AdjustConfig.EventTrackingFailedSubscription = DeviceEventEmitter.addListener('eventTrackingFailed', eventTrackingFailedCallbackListener);
     };
 
-AdjustConfig.prototype.setSessionTrackingSuccessfulCallbackListener 
-    = function(eventTrackingSuccessfulCallbackListener) {
-        this.eventTrackingSuccessfulCallbackListener = eventTrackingSuccessfulCallbackListener;
+AdjustConfig.prototype.setSessionTrackingSucceededCallbackListener 
+    = function(sessionTrackingSucceededCallbackListener) {
+        module_adjust.setSessionTrackingSucceededCallbackListener();
+        AdjustConfig.SessionTrackingSucceededSubscription = DeviceEventEmitter.addListener('sessionTrackingSucceeded', sessionTrackingSucceededCallbackListener);
     };
 
 AdjustConfig.prototype.setSessionTrackingFailedCallbackListener 
-    = function(eventTrackingFailedCallbackListener) {
-        this.eventTrackingFailedCallbackListener = eventTrackingFailedCallbackListener;
+    = function(sessionTrackingFailedCallbackListener) {
+        module_adjust.setSessionTrackingFailedCallbackListener();
+        AdjustConfig.SessionTrackingFailedSubscription = DeviceEventEmitter.addListener('sessionTrackingFailed', sessionTrackingFailedCallbackListener);
     };
 
-AdjustConfig.prototype.setDeeplinkCallbackListener 
-    = function(deeplinkCallbackListener) {
-        this.deeplinkCallbackListener = deeplinkCallbackListener;
+AdjustConfig.prototype.setDeferredDeeplinkCallbackListener 
+    = function(deferredDeeplinkCallbackListener) {
+        module_adjust.setDeferredDeeplinkCallbackListener();
+        AdjustConfig.DeferredDeeplinkSubscription = DeviceEventEmitter.addListener('deferredDeeplink', deferredDeeplinkCallbackListener);
     };
 
-AdjustConfig.prototype.setReferrer = function(referrer) {
-    this.referrer = referrer;
-}
+Adjust.componentWillUnmount = function() {
 
-AdjustConfig.prototype.setSendInBackground = function(sendInBackground) {
-    this.sendInBackground = sendInBackground;
-}
+    if (AdjustConfig.AttributionSubscription) {
+        AdjustConfig.AttributionSubscription.remove();
+        module_adjust.clearAttributionCallbackListener();
+    }
 
-AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) {
-    this.shouldLaunchDeeplink = shouldLaunchDeeplink;
-}
+    if (AdjustConfig.EventTrackingSucceededSubscription) {
+        AdjustConfig.EventTrackingSucceededSubscription.remove();
+        module_adjust.clearEventTrackingSucceededListener();
+    }
 
-//HAS
-//=================================
+    if (AdjustConfig.EventTrackingFailedSubscription) {
+        AdjustConfig.EventTrackingFailedSubscription.remove();
+        module_adjust.clearEventTrackingFailedListener();
+    }
 
-AdjustConfig.prototype.hasAttributionListener = function() {
-    return this.attributionCallbackListener != null;
-};
+    if (AdjustConfig.SessionTrackingSucceededSubscription) {
+        AdjustConfig.SessionTrackingSucceededSubscription.remove();
+        module_adjust.clearSessionTrackingSucceededListener();
+    }
 
-AdjustConfig.prototype.hasEventTrackingSuccessfulListener = function() {
-    return this.eventTrackingSuccessfulCallbackListener != null;
-};
+    if (AdjustConfig.SessionTrackingFailedSubscription) {
+        AdjustConfig.SessionTrackingFailedSubscription.remove();
+        module_adjust.clearSessionTrackingFailedListener();
+    }
 
-AdjustConfig.prototype.hasEventTrackingFailedListener = function() {
-    return this.eventTrackingFailedCallbackListener != null;
-};
-
-AdjustConfig.prototype.hasSessionTrackingSuccessfulListener = function() {
-    return this.eventTrackingSuccessfulCallbackListener != null;
-};
-
-AdjustConfig.prototype.hasSessionTrackingFailedListener = function() {
-    return this.eventTrackingFailedCallbackListener != null;
-};
-
-AdjustConfig.prototype.hasDeeplinkCallbackListener = function() {
-    return this.deeplinkCallbackListener != null;
+    if (AdjustConfig.DeferredDeeplinkSubscription) {
+        AdjustConfig.DeferredDeeplinkSubscription.remove();
+        module_adjust.clearDeferredDeeplinkCallbackListener();
+    }
 };
 
 module.exports = { Adjust, AdjustEvent, AdjustConfig }

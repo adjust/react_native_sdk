@@ -15,9 +15,7 @@ import {
 } from 'react-native';
 
 export default class sample extends Component {
-    constructor(props) {
-        super(props);
-
+    componentWillMount() {
         this._onPress_trackSimpleEvent   = this._onPress_trackSimpleEvent.bind(this);
         this._onPress_trackRevenueEvent  = this._onPress_trackRevenueEvent.bind(this);
         this._onPress_trackCallbackEvent = this._onPress_trackCallbackEvent.bind(this);
@@ -27,7 +25,97 @@ export default class sample extends Component {
         this._onPress_isSdkEnabled       = this._onPress_isSdkEnabled.bind(this);
 
         this.isOffline = false;
+
+        var adjustConfig = new AdjustConfig("rb4g27fje5ej", AdjustConfig.EnvironmentSandbox);
+
+        adjustConfig.setShouldLaunchDeeplink(true);
+        //adjustConfig.setEventBufferingEnabled(true);
+        //
+        adjustConfig.setAttributionCallbackListener(function(attribution) {
+            console.log(">>> attribution callback received");
+
+            console.log("Tracker token = " + attribution.trackerToken);
+            console.log("Tracker name = " + attribution.trackerName);
+            console.log("Network = " + attribution.network);
+            console.log("Campaign = " + attribution.campaign);
+            console.log("Adgroup = " + attribution.adgroup);
+            console.log("Creative = " + attribution.creative);
+            console.log("Click label = " + attribution.clickLabel);
+        });
+
+        adjustConfig.setEventTrackingSucceededCallbackListener(function(eventSuccess) {
+            console.log(">>> event tracking succeeded callback received");
+
+            console.log("message: " + eventSuccess.message);
+            console.log("timestamp: " + eventSuccess.timestamp);
+            console.log("adid: " + eventSuccess.adid);
+            console.log("eventToken: " + eventSuccess.eventToken);
+            console.log("json response: " + eventSuccess.jsonResponse );
+        });
+
+        adjustConfig.setEventTrackingFailedCallbackListener(function(eventFailed) {
+            console.log(">>> event tracking failed callback received");
+
+            console.log("message: " + eventFailed.message);
+            console.log("timestamp: " + eventFailed.timestamp);
+            console.log("adid: " + eventFailed.adid);
+            console.log("eventToken: " + eventFailed.eventToken);
+            console.log("will retry: " + eventFailed.willRetry);
+            console.log("json response: " + eventFailed.jsonResponse);
+        });
+
+        adjustConfig.setSessionTrackingSucceededCallbackListener(function(sessionSuccess) {
+            console.log(">>> session tracking succeeded callback received");
+
+            console.log("message: " + sessionSuccess.message);
+            console.log("timestamp: " + sessionSuccess.timestamp);
+            console.log("adid: " + sessionSuccess.adid);
+            console.log("json response: " + sessionSuccess.jsonResponse);
+        });
+
+        adjustConfig.setSessionTrackingFailedCallbackListener(function(sessionFailed) {
+            console.log(">>> session tracking failed callback received");
+
+            console.log("message: " + sessionFailed.message);
+            console.log("timestamp: " + sessionFailed.timestamp);
+            console.log("adid: " + sessionFailed.adid);
+            console.log("will retry: " + sessionFailed.willRetry);
+            console.log("json response: " + sessionFailed.jsonResponse);
+        });
+
+        adjustConfig.setDeferredDeeplinkCallbackListener(function(uri) {
+            console.log(">>> Deferred Deeplink Callback received");
+
+            console.log("uri: " + uri.uri);
+        });
+
+        Adjust.addSessionCallbackParameter("dummy_foo", "dummy_bar");
+        Adjust.addSessionCallbackParameter("dummy_foo_foo", "dummy_bar");
+
+        Adjust.addSessionPartnerParameter("dummy_foo", "dummy_bar");
+        Adjust.addSessionPartnerParameter("dummy_foo_foo", "dummy_bar");
+
+        Adjust.removeSessionCallbackParameter("dummy_foo");
+        Adjust.removeSessionPartnerParameter("dummy_foo");
+
+        //Adjust.resetSessionCallbackParameters();
+        //Adjust.resetSessionPartnerParameters();
+
+        adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
+
+        adjustConfig.setDelayStart(3.0);
+        adjustConfig.setUserAgent("little_bunny_foo_foo");
+
+        Adjust.create(adjustConfig);
+
+        Adjust.setPushToken("bunny_foo_foo");
+        //Adjust.sendFirstPackages();
     } 
+
+    componentWillUnmount() {
+        console.log(">>> componentWillUnmount");
+        Adjust.componentWillUnmount();
+    }
 
     render() {
         return (
@@ -37,36 +125,43 @@ export default class sample extends Component {
                 </Text>
 
                 <TouchableHighlight
+                    style={styles.buttons}
                     onPress={this._onPress_trackSimpleEvent}>
                     <Text>Track Simple Event</Text>
                 </TouchableHighlight>
 
                 <TouchableHighlight
+                    style={styles.buttons}
                     onPress={this._onPress_trackRevenueEvent}>
                     <Text>Track Revenue Event</Text>
                 </TouchableHighlight>
 
                 <TouchableHighlight
+                    style={styles.buttons}
                     onPress={this._onPress_trackCallbackEvent}>
                     <Text>Track Callback Event</Text>
                 </TouchableHighlight>
 
                 <TouchableHighlight
+                    style={styles.buttons}
                     onPress={this._onPress_trackPartnerEvent}>
                     <Text>Track Partner Event</Text>
                 </TouchableHighlight>
 
                 <TouchableHighlight
+                    style={styles.buttons}
                     onPress={this._onPress_toggleOfflineMode}>
                     <Text>Toggle Offline Mode</Text>
                 </TouchableHighlight>
 
                 <TouchableHighlight
+                    style={styles.buttons}
                     onPress={this._onPress_toggleSdk}>
                     <Text>Toggle SDK</Text>
                 </TouchableHighlight>
 
                 <TouchableHighlight
+                    style={styles.buttons}
                     onPress={this._onPress_isSdkEnabled}>
                     <Text>is SDK Enabled?</Text>
                 </TouchableHighlight>
@@ -80,19 +175,6 @@ export default class sample extends Component {
         Adjust.isEnabled( (isEnabled) => {
             if(isEnabled) {
                 var adjustEvent = new AdjustEvent("uqg17r");
-                adjustEvent.setRevenue(10.0, "USD");
-                console.log("adjustEvent.eventToken: " + adjustEvent.eventToken);
-                console.log("adjustEvent.currency: " + adjustEvent.currency);
-                console.log("adjustEvent.revenue: " + adjustEvent.revenue);
-
-                var callbackParams = { "DUMMY_KEY": "DUMMY_VALUE", 
-                    "DUMMY_KEY_2": "DUMMY_VALUE_2" };
-
-                var partnerParams = { "DUMMY_KEY": "DUMMY_VALUE", 
-                    "DUMMY_KEY_2": "DUMMY_VALUE_2" };
-
-                adjustEvent.setCallbackParameters(callbackParams);
-                adjustEvent.setPartnerParameters(partnerParams);
                 Adjust.trackEvent(adjustEvent);
             } else {
                 console.log(">> SDK is disabled");
@@ -105,9 +187,9 @@ export default class sample extends Component {
 
         Adjust.isEnabled( (isEnabled) => {
             if(isEnabled) {
-                //var adjustEvent = new AdjustEvent("71iltz");
-                //Adjust.trackEvent(adjustEvent);
-                Adjust.trackEvent(null);
+                var adjustEvent = new AdjustEvent("71iltz");
+                adjustEvent.setRevenue(10.0, "USD");
+                Adjust.trackEvent(adjustEvent);
             } else {
                 console.log(">> SDK is disabled");
             }
@@ -119,9 +201,12 @@ export default class sample extends Component {
 
         Adjust.isEnabled( (isEnabled) => {
             if(isEnabled) {
-                //var adjustEvent = new AdjustEvent("1ziip1");
-                //Adjust.trackEvent(adjustEvent);
-                Adjust.trackEvent(null);
+                var adjustEvent = new AdjustEvent("1ziip1");
+                var callbackParams = { "DUMMY_KEY": "DUMMY_VALUE", 
+                    "DUMMY_KEY_2": "DUMMY_VALUE_2" };
+
+                adjustEvent.setCallbackParameters(callbackParams);
+                Adjust.trackEvent(adjustEvent);
             } else {
                 console.log(">> SDK is disabled");
             }
@@ -133,9 +218,12 @@ export default class sample extends Component {
 
         Adjust.isEnabled( (isEnabled) => {
             if(isEnabled) {
-                //var adjustEvent = new AdjustEvent("9s4lqn");
-                //Adjust.trackEvent(adjustEvent);
-                Adjust.trackEvent(null);
+                var adjustEvent = new AdjustEvent("9s4lqn");
+                var partnerParams = { "DUMMY_KEY": "DUMMY_VALUE", 
+                    "DUMMY_KEY_2": "DUMMY_VALUE_2" };
+
+                adjustEvent.setPartnerParameters(partnerParams);
+                Adjust.trackEvent(adjustEvent);
             } else {
                 console.log(">> SDK is disabled");
             }
@@ -195,6 +283,10 @@ const styles = StyleSheet.create({
         color: '#333333',
         marginBottom: 5,
     },
+    buttons: {
+        margin: 10,
+        padding: 10
+    }
 });
 
 AppRegistry.registerComponent('sample', () => sample);

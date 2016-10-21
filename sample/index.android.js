@@ -11,11 +11,21 @@ import {
     StyleSheet,
     Text,
     TouchableHighlight,
-    View
+    View,
+    Linking
 } from 'react-native';
 
 export default class sample extends Component {
     componentWillMount() {
+        const url = Linking.getInitialURL().then(url => {
+            if (url) {
+                const route = url.replace(/.*?:\/\//g, "");
+                console.log("Received deeplink: " + url);
+                //this._navigator.replace(this.state.routes[route]);
+                Adjust.appWillOpenUrl(url);
+            }
+        });
+
         this._onPress_trackSimpleEvent   = this._onPress_trackSimpleEvent.bind(this);
         this._onPress_trackRevenueEvent  = this._onPress_trackRevenueEvent.bind(this);
         this._onPress_trackCallbackEvent = this._onPress_trackCallbackEvent.bind(this);

@@ -5,6 +5,7 @@
  */
 
 import React, { Component } from 'react';
+import { Adjust } from 'react-native-adjust';
 import {
     AppRegistry,
     StyleSheet,
@@ -13,6 +14,12 @@ import {
 } from 'react-native';
 
 export default class sample extends Component {
+    constructor() {
+        super();
+
+        Adjust.test();
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -28,7 +35,7 @@ export default class sample extends Component {
                 </Text>
             </View>
             );
-  }
+    }
 }
 
 const styles = StyleSheet.create({

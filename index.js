@@ -9,6 +9,11 @@ var {
 var module_adjust = NativeModules.Adjust;
 var Adjust = {};
 
+//testing iOS
+Adjust.test = function() {
+    module_adjust.test();
+};
+
 Adjust.create = function(adjustConfig) {
     module_adjust.create(adjustConfig);
 };

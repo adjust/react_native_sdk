@@ -15,13 +15,13 @@ GREEN='\033[0;32m' # Green color
 NC='\033[0m' # No Color
 
 # Removing the old Android JAR file
-echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
-cd ${SDK_DIR}
-rm -rfv android/libs/*
+#echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
+#cd ${SDK_DIR}
+#rm -rfv android/libs/*
 
-# Building the Android JAR file
-echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
-ext/android/build.sh
+## Building the Android JAR file
+#echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
+#ext/android/build.sh
 
 # Remove and unlink node module from sample project
 echo -e "${GREEN}>>> Uninstall and unlink current module ${NC}"
@@ -42,5 +42,5 @@ echo -e "${GREEN}>>> Establish linkage to ${SDK_NAME} ${NC}"
 cd ${SAMPLE_DIR}
 rnpm link ${SDK_NAME}
 
-echo -e "${GREEN}>>> Building & Running on Android ${NC}"
-react-native run-android
+echo -e "${GREEN}>>> Building & Running on iOS ${NC}"
+react-native run-ios

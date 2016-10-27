@@ -10,7 +10,7 @@ SDK_DIR="$(dirname "$SDK_DIR")"
 SDK_DIR="$(dirname "$SDK_DIR")"
 
 SRC_DIR=ext/iOS/sdk
-LIB_OUT_DIR=src/iOS
+LIB_OUT_DIR=ios/libs
 SCRIPT_DIR=scripts
 
 RED='\033[0;31m' # Red color
@@ -27,7 +27,7 @@ xcodebuild -target AdjustStatic -configuration Release
 
 echo -e "${GREEN}>>> Copy built framework to designated location ${NC}"
 cd ${SDK_DIR}
-\cp -Rv ${SRC_DIR}/Frameworks/Static/AdjustSdk.framework ${LIB_OUT_DIR}
+mv -v ${SRC_DIR}/Frameworks/Static/AdjustSdk.framework ${LIB_OUT_DIR}
 
 echo -e "${GREEN}>>> Running symlink fix ${NC}"
-${SCRIPT_DIR}/symlink_fix.sh
+#${SCRIPT_DIR}/symlink_fix.sh

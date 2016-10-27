@@ -22,61 +22,61 @@ Adjust.trackEvent = function (adjustEvent) {
     module_adjust.trackEvent(adjustEvent);
 };
 
-Adjust.setEnabled = function(enabled) {
-    module_adjust.setEnabled(enabled);
-};
+//Adjust.setEnabled = function(enabled) {
+    //module_adjust.setEnabled(enabled);
+//};
 
-Adjust.isEnabled = function(callback) {
-    module_adjust.isEnabled(callback);
-};
+//Adjust.isEnabled = function(callback) {
+    //module_adjust.isEnabled(callback);
+//};
 
-Adjust.appWillOpenUrl = function(uri) {
-    module_adjust.appWillOpenUrl(uri);
-};
+//Adjust.appWillOpenUrl = function(uri) {
+    //module_adjust.appWillOpenUrl(uri);
+//};
 
-Adjust.setReferrer = function(referrer) {
-    module_adjust.setReferrer(referrer);
-};
+//Adjust.setReferrer = function(referrer) {
+    //module_adjust.setReferrer(referrer);
+//};
 
-Adjust.setOfflineMode = function(enabled) {
-    module_adjust.setOfflineMode(enabled);
-};
+//Adjust.setOfflineMode = function(enabled) {
+    //module_adjust.setOfflineMode(enabled);
+//};
 
-Adjust.sendFirstPackages = function() {
-    module_adjust.sendFirstPackages();
-};
+//Adjust.sendFirstPackages = function() {
+    //module_adjust.sendFirstPackages();
+//};
 
-Adjust.isEnabled = function(callback) {
-    module_adjust.isEnabled(callback);
-};
+//Adjust.isEnabled = function(callback) {
+    //module_adjust.isEnabled(callback);
+//};
 
-Adjust.addSessionCallbackParameter = function(key, value) {
-    module_adjust.addSessionCallbackParameter(key, value);
-};
+//Adjust.addSessionCallbackParameter = function(key, value) {
+    //module_adjust.addSessionCallbackParameter(key, value);
+//};
 
-Adjust.addSessionPartnerParameter = function(key, value) {
-    module_adjust.addSessionPartnerParameter(key, value);
-};
+//Adjust.addSessionPartnerParameter = function(key, value) {
+    //module_adjust.addSessionPartnerParameter(key, value);
+//};
 
-Adjust.removeSessionCallbackParameter = function(key) {
-    module_adjust.removeSessionCallbackParameter(key);
-};
+//Adjust.removeSessionCallbackParameter = function(key) {
+    //module_adjust.removeSessionCallbackParameter(key);
+//};
 
-Adjust.removeSessionPartnerParameter = function(key) {
-    module_adjust.removeSessionPartnerParameter(key);
-};
+//Adjust.removeSessionPartnerParameter = function(key) {
+    //module_adjust.removeSessionPartnerParameter(key);
+//};
 
-Adjust.resetSessionCallbackParameters = function() {
-    module_adjust.resetSessionCallbackParameters();
-};
+//Adjust.resetSessionCallbackParameters = function() {
+    //module_adjust.resetSessionCallbackParameters();
+//};
 
-Adjust.resetSessionPartnerParameters = function() {
-    module_adjust.resetSessionPartnerParameters();
-};
+//Adjust.resetSessionPartnerParameters = function() {
+    //module_adjust.resetSessionPartnerParameters();
+//};
 
-Adjust.setPushToken = function(token) {
-    module_adjust.setPushToken(token);
-};
+//Adjust.setPushToken = function(token) {
+    //module_adjust.setPushToken(token);
+//};
 
 var AdjustEvent = function (eventToken) {
     this.eventToken = eventToken;
@@ -197,6 +197,7 @@ AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) 
 
 AdjustConfig.prototype.setAttributionCallbackListener 
     = function(attributionCallbackListener) {
+        module_adjust.test();
         module_adjust.setAttributionCallbackListener();
         AdjustConfig.AttributionSubscription = DeviceEventEmitter.addListener('attribution', attributionCallbackListener);
     };

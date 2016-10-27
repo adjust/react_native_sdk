@@ -22,7 +22,7 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		A7CE2739AD984F6B884EBB07 /* libadjustSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B189A2B25BBF4035B1732153 /* libadjustSdk.a */; };
+		7E33A8954995400EA01BCB89 /* libadjustSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ECF433D8F885413899857F57 /* libadjustSdk.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,8 +127,8 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = ../node_modules/react-native/React/React.xcodeproj; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = ../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = ../node_modules/react-native/Libraries/Text/RCTText.xcodeproj; sourceTree = "<group>"; };
-		600BF9D98B194677A807BC21 /* adjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "adjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/adjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		B189A2B25BBF4035B1732153 /* libadjustSdk.a */ = {isa = PBXFileReference; name = "libadjustSdk.a"; path = "libadjustSdk.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		62EBF37101554DBD8B81C663 /* adjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "adjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/adjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		ECF433D8F885413899857F57 /* libadjustSdk.a */ = {isa = PBXFileReference; name = "libadjustSdk.a"; path = "libadjustSdk.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,7 +154,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				A7CE2739AD984F6B884EBB07 /* libadjustSdk.a in Frameworks */,
+				7E33A8954995400EA01BCB89 /* libadjustSdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +277,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				600BF9D98B194677A807BC21 /* adjustSdk.xcodeproj */,
+				62EBF37101554DBD8B81C663 /* adjustSdk.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";

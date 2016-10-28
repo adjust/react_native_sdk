@@ -1,5 +1,5 @@
 {
-    "name": "@adjust/react-native-adjust",
+    "name": "react-native-adjust",
     "description": "Adjust React Native SDK",
     "version": "4.10.0",
     "main": "index.js",

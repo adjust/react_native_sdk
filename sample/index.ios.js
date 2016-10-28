@@ -11,11 +11,13 @@ import {
     StyleSheet,
     TouchableHighlight,
     Text,
-    View
+    View,
+    Linking
 } from 'react-native';
 
 export default class sample extends Component {
     componentWillMount() {
+        Linking.addEventListener('url', this.handleDeepLink);
 
         this._onPress_trackSimpleEvent   = this._onPress_trackSimpleEvent.bind(this);
         this._onPress_trackRevenueEvent  = this._onPress_trackRevenueEvent.bind(this);
@@ -30,64 +32,64 @@ export default class sample extends Component {
         var adjustConfig = new AdjustConfig("rb4g27fje5ej", AdjustConfig.EnvironmentSandbox);
 
         adjustConfig.setAttributionCallbackListener(function(attribution) {
-        console.log(">>> attribution callback received");
+            console.log(">>> attribution callback received");
 
-        console.log("Tracker token = " + attribution.trackerToken);
-        console.log("Tracker name = " + attribution.trackerName);
-        console.log("Network = " + attribution.network);
-        console.log("Campaign = " + attribution.campaign);
-        console.log("Adgroup = " + attribution.adgroup);
-        console.log("Creative = " + attribution.creative);
-        console.log("Click label = " + attribution.clickLabel);
+            console.log("Tracker token = " + attribution.trackerToken);
+            console.log("Tracker name = " + attribution.trackerName);
+            console.log("Network = " + attribution.network);
+            console.log("Campaign = " + attribution.campaign);
+            console.log("Adgroup = " + attribution.adgroup);
+            console.log("Creative = " + attribution.creative);
+            console.log("Click label = " + attribution.clickLabel);
         });
 
         adjustConfig.setEventTrackingSucceededCallbackListener(function(eventSuccess) {
-        console.log(">>> event tracking succeeded callback received");
+            console.log(">>> event tracking succeeded callback received");
 
-        console.log("message: " + eventSuccess.message);
-        console.log("timestamp: " + eventSuccess.timestamp);
-        console.log("adid: " + eventSuccess.adid);
-        console.log("eventToken: " + eventSuccess.eventToken);
-        console.log("json response: " + eventSuccess.jsonResponse );
+            console.log("message: " + eventSuccess.message);
+            console.log("timeStamp: " + eventSuccess.timeStamp);
+            console.log("adid: " + eventSuccess.adid);
+            console.log("eventToken: " + eventSuccess.eventToken);
+            console.log("json response: " + eventSuccess.jsonResponse );
         });
 
         adjustConfig.setEventTrackingFailedCallbackListener(function(eventFailed) {
-        console.log(">>> event tracking failed callback received");
+            console.log(">>> event tracking failed callback received");
 
-        console.log("message: " + eventFailed.message);
-        console.log("timestamp: " + eventFailed.timestamp);
-        console.log("adid: " + eventFailed.adid);
-        console.log("eventToken: " + eventFailed.eventToken);
-        console.log("will retry: " + eventFailed.willRetry);
-        console.log("json response: " + eventFailed.jsonResponse);
+            console.log("message: " + eventFailed.message);
+            console.log("timeStamp: " + eventFailed.timeStamp);
+            console.log("adid: " + eventFailed.adid);
+            console.log("eventToken: " + eventFailed.eventToken);
+            console.log("will retry: " + eventFailed.willRetry);
+            console.log("json response: " + eventFailed.jsonResponse);
         });
 
         adjustConfig.setSessionTrackingSucceededCallbackListener(function(sessionSuccess) {
-        console.log(">>> session tracking succeeded callback received");
+            console.log(">>> session tracking succeeded callback received");
 
-        console.log("message: " + sessionSuccess.message);
-        console.log("timestamp: " + sessionSuccess.timestamp);
-        console.log("adid: " + sessionSuccess.adid);
-        console.log("json response: " + sessionSuccess.jsonResponse);
+            console.log("message: " + sessionSuccess.message);
+            console.log("timeStamp: " + sessionSuccess.timeStamp);
+            console.log("adid: " + sessionSuccess.adid);
+            console.log("json response: " + sessionSuccess.jsonResponse);
         });
 
         adjustConfig.setSessionTrackingFailedCallbackListener(function(sessionFailed) {
-        console.log(">>> session tracking failed callback received");
+            console.log(">>> session tracking failed callback received");
 
-        console.log("message: " + sessionFailed.message);
-        console.log("timestamp: " + sessionFailed.timestamp);
-        console.log("adid: " + sessionFailed.adid);
-        console.log("will retry: " + sessionFailed.willRetry);
-        console.log("json response: " + sessionFailed.jsonResponse);
+            console.log("message: " + sessionFailed.message);
+            console.log("timeStamp: " + sessionFailed.timeStamp);
+            console.log("adid: " + sessionFailed.adid);
+            console.log("will retry: " + sessionFailed.willRetry);
+            console.log("json response: " + sessionFailed.jsonResponse);
         });
 
         adjustConfig.setDeferredDeeplinkCallbackListener(function(uri) {
-        console.log(">>> Deferred Deeplink Callback received");
+            console.log(">>> Deferred Deeplink Callback received");
 
-        console.log("uri: " + uri.uri);
+            console.log("uri: " + uri.uri);
         });
 
-        //adjustConfig.setShouldLaunchDeeplink(true);
+        adjustConfig.setShouldLaunchDeeplink(true);
         //adjustConfig.setEventBufferingEnabled(true);
 
         Adjust.addSessionCallbackParameter("dummy_foo", "dummy_bar");
@@ -99,9 +101,9 @@ export default class sample extends Component {
         Adjust.removeSessionCallbackParameter("dummy_foo");
         Adjust.removeSessionPartnerParameter("dummy_foo");
 
-        //Adjust.resetSessionCallbackParameters();
-        //Adjust.resetSessionPartnerParameters();
-        //Adjust.setPushToken("bunny_foo_foo");
+        Adjust.resetSessionCallbackParameters();
+        Adjust.resetSessionPartnerParameters();
+        Adjust.setPushToken("bunny_foo_foo");
 
         adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
 
@@ -110,12 +112,22 @@ export default class sample extends Component {
 
         Adjust.create(adjustConfig);
 
-        //Adjust.sendFirstPackages();
+        Adjust.sendFirstPackages();
     }
 
     componentWillUnmount() {
         console.log(">>> componentWillUnmount");
-        //Adjust.componentWillUnmount();
+
+        Linking.removeEventListener('url', this.handleDeepLink);
+        Adjust.componentWillUnmount();
+    }
+
+    handleDeepLink(e) {
+        const route = e.url.replace(/.*?:\/\//g, "");
+        console.log("Received deeplink - url: " + e.url);
+        console.log("Received deeplink - route: " + route);
+        //this._navigator.replace(this.state.routes[route]);
+        Adjust.appWillOpenUrl(e.url);
     }
 
     render() {

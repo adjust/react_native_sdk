@@ -33,7 +33,6 @@ RCT_EXPORT_METHOD(test)
 
 RCT_EXPORT_METHOD(create:(NSDictionary *)dict)
 {
-    NSLog(@">>> create");
     NSString *appToken = dict[@"appToken"];
     NSString *environment = dict[@"environment"];
     NSString *logLevel = dict[@"logLevel"];
@@ -45,11 +44,11 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict)
     NSString *userAgent = dict[@"userAgent"];
     NSNumber *delayStart = dict[@"delayStart"];
 
-    NSLog(@">>> appToken: %@", appToken);
-    NSLog(@">>> environment: %@", environment);
-    NSLog(@">>> logLevel: %@", logLevel);
-    NSLog(@">>> sdkPrefix: %@", sdkPrefix);
-    NSLog(@">>> defaultTracker: %@", defaultTracker);
+    //NSLog(@">>> appToken: %@", appToken);
+    //NSLog(@">>> environment: %@", environment);
+    //NSLog(@">>> logLevel: %@", logLevel);
+    //NSLog(@">>> sdkPrefix: %@", sdkPrefix);
+    //NSLog(@">>> defaultTracker: %@", defaultTracker);
 
     BOOL allowSuppressLogLevel = false;
 
@@ -129,7 +128,7 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict)
     NSDictionary *callbackParameters = dict[@"callbackParameters"];
     NSDictionary *partnerParameters = dict[@"partnerParameters"];
 
-    NSLog(@">>> eventToken: %@", eventToken);
+    //NSLog(@">>> eventToken: %@", eventToken);
 
     ADJEvent *adjustEvent = [ADJEvent eventWithEventToken:eventToken];
 
@@ -141,28 +140,28 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict)
         }
 
         if ([self isFieldValid:callbackParameters]) {
-            NSLog(@">>> size of callbackParameters: %lu: " , [callbackParameters count]);
+            //NSLog(@">>> size of callbackParameters: %lu: " , [callbackParameters count]);
             for (NSString *key in callbackParameters) {
                 NSLog(@">>> Hello <<<");
                 NSString *value = [callbackParameters objectForKey:key];
 
-                NSLog(@">>> <<<");
-                NSLog(@">>> callbackParameter: key: %@", key);
-                NSLog(@">>> callbackParameter: value: %@", value);
-                NSLog(@">>> <<<");
+                //NSLog(@">>> <<<");
+                //NSLog(@">>> callbackParameter: key: %@", key);
+                //NSLog(@">>> callbackParameter: value: %@", value);
+                //NSLog(@">>> <<<");
                 [adjustEvent addCallbackParameter:key value:value];
             }
         }
 
         if ([self isFieldValid:partnerParameters]) {
-            NSLog(@">>> size of partnerParameters: %lu: " , [partnerParameters count]);
+            //NSLog(@">>> size of partnerParameters: %lu: " , [partnerParameters count]);
             for (NSString *key in partnerParameters) {
                 NSString *value = [partnerParameters objectForKey:key];
 
-                NSLog(@">>> <<<");
-                NSLog(@">>> partnerParameter: key: %@", key);
-                NSLog(@">>> partnerParameter: value: %@", value);
-                NSLog(@">>> <<<");
+                //NSLog(@">>> <<<");
+                //NSLog(@">>> partnerParameter: key: %@", key);
+                //NSLog(@">>> partnerParameter: value: %@", value);
+                //NSLog(@">>> <<<");
                 [adjustEvent addPartnerParameter:key value:value];
             }
         }
@@ -273,7 +272,7 @@ RCT_EXPORT_METHOD(resetSessionPartnerParameters)
 
 RCT_EXPORT_METHOD(setPushToken:(NSString *)token)
 {
-    NSLog(@">>> setPushToken");
+    NSLog(@">>> setPushToken with token: %@", token);
 
     if (!([self isFieldValid:token])) {
         return;
@@ -344,13 +343,13 @@ RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener)
 
 - (void)adjustAttributionChanged:(ADJAttribution *)attr {
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-        @"trackerToken", attr.trackerToken,
-        @"trackerName", attr.trackerName,
-        @"network", attr.network,
-        @"campaign", attr.campaign,
-        @"adgroup", attr.adgroup,
-        @"creative", attr.creative,
-        @"clickLabel", attr.clickLabel,
+        attr.trackerToken, @"trackerToken", 
+        attr.trackerName, @"trackerName", 
+        attr.network, @"network", 
+        attr.campaign, @"campaign", 
+        attr.adgroup, @"adgroup", 
+        attr.creative, @"creative", 
+        attr.clickLabel, @"clickLabel", 
         nil];
 
     [self.bridge.eventDispatcher sendAppEventWithName:@"attribution" body:dict];
@@ -362,11 +361,11 @@ RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener)
     NSString * jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-        @"message", event.message,
-        @"timeStamp", event.timeStamp,
-        @"adid", event.adid,
-        @"eventToken", event.eventToken,
-        @"jsonResponse", jsonResponseStr,
+        event.message, @"message", 
+        event.timeStamp, @"timeStamp", 
+        event.adid, @"adid", 
+        event.eventToken, @"eventToken", 
+        jsonResponseStr, @"jsonResponse", 
         nil];
 
     [self.bridge.eventDispatcher sendAppEventWithName:@"eventTrackingSucceeded" body:dict];
@@ -380,12 +379,12 @@ RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener)
     NSNumber *willRetryNum = [NSNumber numberWithBool:event.willRetry];
 
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-        @"message", event.message,
-        @"timeStamp", event.timeStamp,
-        @"adid", event.adid,
-        @"eventToken", event.eventToken,
-        @"willRetry", willRetryNum,
-        @"jsonResponse", jsonResponseStr,
+        event.message, @"message", 
+        event.timeStamp, @"timeStamp", 
+        event.adid, @"adid", 
+        event.eventToken, @"eventToken", 
+        jsonResponseStr, @"jsonResponse", 
+        willRetryNum, @"willRetry", 
         nil];
 
     [self.bridge.eventDispatcher sendAppEventWithName:@"eventTrackingFailed" body:dict];
@@ -397,10 +396,10 @@ RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener)
     NSString * jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-        @"message", session.message,
-        @"timeStamp", session.timeStamp,
-        @"adid", session.adid,
-        @"jsonResponse", jsonResponseStr,
+        session.message, @"message", 
+        session.timeStamp, @"timeStamp", 
+        session.adid, @"adid", 
+        jsonResponseStr, @"jsonResponse", 
         nil];
 
     [self.bridge.eventDispatcher sendAppEventWithName:@"sessionTrackingSucceeded" body:dict];
@@ -414,11 +413,11 @@ RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener)
     NSNumber *willRetryNum = [NSNumber numberWithBool:session.willRetry];
 
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-        @"message", session.message,
-        @"timeStamp", session.timeStamp,
-        @"willRetry", willRetryNum,
-        @"adid", session.adid,
-        @"jsonResponse", jsonResponseStr,
+        session.message, @"message", 
+        session.timeStamp, @"timeStamp", 
+        session.adid, @"adid", 
+        jsonResponseStr, @"jsonResponse", 
+        willRetryNum, @"willRetry", 
         nil];
 
     [self.bridge.eventDispatcher sendAppEventWithName:@"sessionTrackingFailed" body:dict];

@@ -1,7 +1,7 @@
 {
     "name": "@adjust/react-native-adjust",
-    "version": "4.10.0",
     "description": "Adjust React Native SDK",
+    "version": "4.10.0",
     "main": "index.js",
     "author": {
         "name": "Abdullah Obaied",
@@ -10,12 +10,9 @@
     "license": "MIT",
     "keywords": [
         "react-native",
-        "react-component",
         "ios",
         "android",
-        "position",
-        "remobile",
-        "mobile"
+        "adjust"
     ],
     "homepage": "https://github.com/adjust/react_native_sdk",
     "bugs": {

@@ -47,31 +47,31 @@ Adjust.isEnabled = function(callback) {
 };
 
 Adjust.addSessionCallbackParameter = function(key, value) {
-module_adjust.addSessionCallbackParameter(key, value);
+    module_adjust.addSessionCallbackParameter(key, value);
 };
 
 Adjust.addSessionPartnerParameter = function(key, value) {
-module_adjust.addSessionPartnerParameter(key, value);
+    module_adjust.addSessionPartnerParameter(key, value);
 };
 
 Adjust.removeSessionCallbackParameter = function(key) {
-module_adjust.removeSessionCallbackParameter(key);
+    module_adjust.removeSessionCallbackParameter(key);
 };
 
 Adjust.removeSessionPartnerParameter = function(key) {
-module_adjust.removeSessionPartnerParameter(key);
+    module_adjust.removeSessionPartnerParameter(key);
 };
 
 Adjust.resetSessionCallbackParameters = function() {
-module_adjust.resetSessionCallbackParameters();
+    module_adjust.resetSessionCallbackParameters();
 };
 
 Adjust.resetSessionPartnerParameters = function() {
-module_adjust.resetSessionPartnerParameters();
+    module_adjust.resetSessionPartnerParameters();
 };
 
 Adjust.setPushToken = function(token) {
-module_adjust.setPushToken(token);
+    module_adjust.setPushToken(token);
 };
 
 var AdjustEvent = function (eventToken) {

@@ -1,7 +1,6 @@
 package com.sample;
 
 import com.facebook.react.ReactActivity;
-import com.adjust.nativemodule.AdjustPackage;
 
 public class MainActivity extends ReactActivity {
 

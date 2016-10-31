@@ -9,8 +9,8 @@ import { Adjust, AdjustEvent, AdjustConfig } from 'react-native-adjust';
 import {
     AppRegistry,
     StyleSheet,
-    TouchableHighlight,
     Text,
+    TouchableHighlight,
     View,
     Linking
 } from 'react-native';

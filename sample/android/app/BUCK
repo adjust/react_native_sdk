@@ -46,13 +46,13 @@ android_library(
 
 android_build_config(
   name = 'build_config',
-  package = 'com.sample',
+  package = 'com.adjust.example',
 )
 
 android_resource(
   name = 'res',
   res = 'src/main/res',
-  package = 'com.sample',
+  package = 'com.adjust.example',
 )
 
 android_binary(

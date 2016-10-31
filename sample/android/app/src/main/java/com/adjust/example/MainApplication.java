@@ -1,4 +1,4 @@
-package com.sample;
+package com.adjust.example;
 
 import android.app.Application;
 import android.util.Log;

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # End script if one of the lines fails
-set -e
+#set -e
 
 # Get the current directory
 SDK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"

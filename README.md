@@ -54,7 +54,7 @@ We will describe the steps to integrate the adjust SDK into your React Native pr
 First, download the library from npm:
 
 ```
-$ npm install react-native-maps --save
+$ npm install react-native-adjust --save
 ```
 
 Then you must install the native dependencies: You can use rnpm (now part of react-native core) to add native dependencies automatically then continue the directions below depending on your target OS.

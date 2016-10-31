@@ -103,7 +103,7 @@ var AdjustConfig = function(appToken, environment) {
     this.logLevel = AdjustConfig.LogLevelInfo;
 
     this.eventBufferingEnabled = false;
-    this.shouldLaunchDeeplink = false;
+    this.shouldLaunchDeeplink = true;
     this.sendInBackground = false;
 
     this.delayStart = 0.0;

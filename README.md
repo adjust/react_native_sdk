@@ -2,8 +2,6 @@
 
 This is the React Native SDK of adjust™. You can read more about adjust™ at [adjust.com].
 
-TODO: supported Android & iOS versions
-
 ## Table of contents
 
 * [Example app](#example-app)
@@ -34,12 +32,14 @@ TODO: supported Android & iOS versions
     * [Push token](#push-token)
     * [Pre-installed trackers](#pre-installed-trackers)
     * [Deep linking](#deeplinking)
-        * [Standard deep linking scenario](#deeplinking-standard)
-        * [Deep linking on Android & iOS 8 and earlier](#deeplinking-android-ios-old)
-        * [Deep linking on iOS 9 and later](#deeplinking-ios-new)
+        * [Deep linking](#deeplinking-standard)
         * [Deferred deep linking scenario](#deeplinking-deferred)
         * [Reattribution via deep links](#deeplinking-reattribution)
 * [License](#license)
+
+## Supported versions
+- react-native-cli: 1.0.0
+- react-native: 0.36.0
 
 ## <a id="example-apps"></a>Example apps
 
@@ -63,6 +63,35 @@ Then you must install the native dependencies: You can use rnpm (now part of rea
 $ react-native link
 ```
 
+for **iOS**, you don't need to do much of anything else.
+
+for **Android**, you need to include the native module's package manually.
+
+- Go to your app's `MainApplication.java` class. It should be located in `./android/app/src/main/java/[your app]/MainApplication.java`
+- There is a method called `getPackages()` that looks like this by default:
+```java
+@Override
+protected List<ReactPackage> getPackages() {
+  return Arrays.<ReactPackage>asList(
+      new MainReactPackage()
+  );
+}
+```
+- You'l have to add `new AdjustPackage()` to the list of packages like this:
+```java
+@Override
+protected List<ReactPackage> getPackages() {
+  return Arrays.<ReactPackage>asList(
+      new MainReactPackage(),
+      new AdjustPackage()
+  );
+}
+```
+- Also, don't forget to add the import statement on top of the `MainApplication.java` file: 
+```
+import com.adjust.nativemodule.AdjustPackage;
+```
+
 ### <a id="sdk-integrate"></a>Integrate the SDK into your app
 
 You should use the following import statement on top of your `.js` file
@@ -76,7 +105,6 @@ In your `index.android.js` or `index.ios.js` file, add the following code to ini
 ```javascript
 componentWillMount() {
     var adjustConfig = new AdjustConfig("{YourAppToken}", AdjustConfig.EnvironmentSandbox);
-
     Adjust.create(adjustConfig);
 }
 ```
@@ -554,14 +582,106 @@ If you want to use the adjust SDK to recognize users that found your app pre-ins
     Default tracker: 'abc123'
     ```
 
-### <a id="deeplinking"></a>Deep linking
-TODO: deeplinking. Take stuff from https://www.lullabot.com/articles/navigation-and-deep-linking-with-react-native
+### <a id="deeplinking-standard"></a>Deep linking
 
-### <a id="deeplinking-ios-new"></a> Deep linking on iOS 9 and later
+To support deep linking in Android, the app's `AndroidManifest.xml` file will need to be modified. Please refer to this [page of our Android SDK][android-sdk-deeplink] for the needed modifications to `AndroidManifest.xml`.
 
-### <a id="deeplinking-deferred"></a>Deferred deep linking scenario
+To support deep linking in iOS, the app's `info.plist` file will need to be modified. Please refer to this [page of our iOS SDK][ios-sdk-deeplink] for the needed modifications to `info.plist`.
+
+After that, please refer to this page of the [React Native offical docs][rn-linking] for instructions on how to support both platforms. In basic terms, your React component will have to add `Linking` component, as follows:
+```js
+import {
+  StyleSheet,
+  Platform,
+  Text,
+  View,
+  ToolbarAndroid,
+  Linking //This is important
+} from 'react-native';
+```
+
+And then on your React component you'll be able to listen to the events on `Linking` as follows: 
+```js
+componentDidMount() {
+  Linking.addEventListener('url', this._handleOpenURL);
+},
+componentWillUnmount() {
+  Linking.removeEventListener('url', this._handleOpenURL);
+},
+_handleOpenURL(event) {
+  console.log(event.url);
+}
+```
+
+Please refer to the [React Native offical docs][rn-linking] for the detailed steps.
+
+### <a id="deeplinking-deferred"></a>Deferred deep linking
+
+While deferred deep linking is not supported out of the box on Android and iOS, our adjust SDK makes it possible.
+ 
+In order to get info about the URL content in a deferred deep linking scenario, you should set a callback method on the 
+`AdjustConfig` object which will receive one parameter where the content of the URL will be delivered. You should set this 
+method on the config object by calling the method `setDeeplinkCallbackListener`:
+
+```js
+var adjustConfig = new AdjustConfig(appToken, environment);
+
+adjustConfig.setDeferredDeeplinkCallbackListener(function(deeplink) {
+    console.log("Deferred deep link URL content: " + deeplink);
+});
+
+Adjust.create(adjustConfig);
+```
+
+In deferred deep linking scenario, there is one additional setting which can be set on the `AdjustConfig` object. Once the 
+adjust SDK gets the deferred deep link info, we are offering you the possibility to choose whether our SDK should open this 
+URL or not. You can choose to set this option by calling the `setShouldLaunchDeeplink` method on the config object:
+
+
+```js
+var adjustConfig = new AdjustConfig(appToken, environment);
+
+adjustConfig.setShouldLaunchDeeplink(true);
+// or adjustConfig.setShouldLaunchDeeplink(false);
+
+adjustConfig.setDeeplinkCallbackListener(function(deeplink) {
+    console.log("Deferred deep link URL content: " + deeplink);
+});
+
+Adjust.create(adjustConfig);
+```
+
+If nothing is set, **the adjust SDK will always try to launch the URL by default**.
 
 ### <a id="deeplinking-reattribution"></a>Reattribution via deep links
+
+Adjust enables you to run re-engagement campaigns by using deep links. For more information on this, please check our 
+[official docs][reattribution-with-deeplinks].
+
+If you are using this feature, in order for your user to be properly reattributed, you need to make one additional call to the 
+adjust SDK in your app.
+
+Once you have received deep link content information in your app, add a call to `appWillOpenUrl` method of the `Adjust` 
+instance. By making this call, the adjust SDK will try to find if there is any new attribution info inside of the deep link 
+and if any, it will be sent to the adjust backend. If your user should be reattributed due to a click on the adjust tracker 
+URL with deep link content in it, you will see the [attribution callback](#attribution-callback) in your app being triggered 
+with new attribution info for this user.
+
+Call to the `appWillOpenUrl` method in a React component would look like this:
+
+```js
+componentDidMount() {
+  Linking.addEventListener('url', this._handleOpenURL);
+},
+componentWillUnmount() {
+  Linking.removeEventListener('url', this._handleOpenURL);
+},
+_handleOpenURL(event) {
+  console.log(event.url);
+
+  Adjust.appWillOpenUrl(event.url);
+}
+```
 
 [dashboard]:    http://adjust.com
 [adjust.com]:   http://adjust.com
@@ -580,7 +700,9 @@ TODO: deeplinking. Take stuff from https://www.lullabot.com/articles/navigation-
 [currency-conversion]:    https://docs.adjust.com/en/event-tracking/#tracking-purchases-in-different-currencies
 [google-play-services]:   http://developer.android.com/google/play-services/index.html
 
+[android-sdk-deeplink]: https://github.com/adjust/android_sdk#deeplinking-standard
 [reattribution-with-deeplinks]: https://docs.adjust.com/en/deeplinking/#manually-appending-attribution-data-to-a-deep-link
+[rn-linking]: https://facebook.github.io/react-native/docs/linking.html
 
 ## <a id="license"></a>License
 

@@ -6,7 +6,7 @@
 # - Copy the JAR file to the root dir
 
 # End script if one of the lines fails
-set -e
+#set -e
 
 # Get the current directory (ext/android/)
 SDK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -29,4 +29,5 @@ echo -e "${GREEN}>>> Running Gradle tasks: clean clearJar makeJar ${NC}"
 ./gradlew clean clearJar makeJar
 
 echo -e "${GREEN}>>> Moving the jar from ${JAR_IN_DIR} to ${JAR_OUT_DIR} ${NC}"
-mv -v ${JAR_IN_DIR}/*.jar ${SDK_DIR}/${JAR_OUT_DIR}
+mkdir ${SDK_DIR}/${JAR_OUT_DIR}
+mv -v ${JAR_IN_DIR}/*.jar ${SDK_DIR}/${JAR_OUT_DIR}/

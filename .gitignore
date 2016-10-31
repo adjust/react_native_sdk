@@ -6,7 +6,6 @@
 *.iml
 .gradle
 .idea
-node_modules
 npm-debug.log
 /android/build
 /ios/**/*xcuserdata*

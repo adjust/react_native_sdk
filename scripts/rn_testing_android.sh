@@ -14,9 +14,12 @@ RED='\033[0;31m' # Red color
 GREEN='\033[0;32m' # Green color
 NC='\033[0m' # No Color
 
+echo -e "${GREEN}>>> Updating Git submodules ${NC}"
+cd ${SDK_DIR}
+git submodule update --init --recursive
+
 # Removing the old Android JAR file
 echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
-cd ${SDK_DIR}
 rm -rfv android/libs/*
 
 # Building the Android JAR file

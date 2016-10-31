@@ -23,6 +23,10 @@ NC='\033[0m' # No Color
 #echo -e "${GREEN}>>> Building the ios framework ${NC}"
 #ext/ios/build.sh
 
+echo -e "${GREEN}>>> Updating Git submodules ${NC}"
+cd ${SDK_DIR}
+git submodule update --init --recursive
+
 # Remove and unlink node module from sample project
 echo -e "${GREEN}>>> Uninstall and unlink current module ${NC}"
 cd ${SDK_DIR}/${SAMPLE_DIR}

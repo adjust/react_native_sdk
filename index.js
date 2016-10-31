@@ -193,7 +193,6 @@ AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) 
 
 AdjustConfig.prototype.setAttributionCallbackListener 
     = function(attributionCallbackListener) {
-        module_adjust.test();
         module_adjust.setAttributionCallbackListener();
         AdjustConfig.AttributionSubscription = DeviceEventEmitter.addListener('attribution', attributionCallbackListener);
     };

@@ -217,10 +217,10 @@ export default class sample extends Component {
         Adjust.isEnabled( (isEnabled) => {
             if(isEnabled) {
                 var adjustEvent = new AdjustEvent("1ziip1");
-                var callbackParams = { "DUMMY_KEY": "DUMMY_VALUE", 
-                    "DUMMY_KEY_2": "DUMMY_VALUE_2" };
 
-                adjustEvent.setCallbackParameters(callbackParams);
+                adjustEvent.addCallbackParameters("DUMMY_KEY", "DUMMY_VALUE");
+                adjustEvent.addCallbackParameters("DUMMY_KEY_2", "DUMMY_VALUE_2");
+
                 Adjust.trackEvent(adjustEvent);
             } else {
                 console.log(">> SDK is disabled");
@@ -234,10 +234,10 @@ export default class sample extends Component {
         Adjust.isEnabled( (isEnabled) => {
             if(isEnabled) {
                 var adjustEvent = new AdjustEvent("9s4lqn");
-                var partnerParams = { "DUMMY_KEY": "DUMMY_VALUE", 
-                    "DUMMY_KEY_2": "DUMMY_VALUE_2" };
 
-                adjustEvent.setPartnerParameters(partnerParams);
+                adjustEvent.addPartnerParameters("DUMMY_KEY", "DUMMY_VALUE");
+                adjustEvent.addPartnerParameters("DUMMY_KEY_2", "DUMMY_VALUE_2");
+
                 Adjust.trackEvent(adjustEvent);
             } else {
                 console.log(">> SDK is disabled");

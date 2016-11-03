@@ -9,11 +9,6 @@ var {
 var module_adjust = NativeModules.Adjust;
 var Adjust = {};
 
-//testing iOS
-Adjust.test = function() {
-    module_adjust.test();
-};
-
 Adjust.create = function(adjustConfig) {
     module_adjust.create(adjustConfig);
 };
@@ -78,20 +73,20 @@ var AdjustEvent = function (eventToken) {
     this.eventToken = eventToken;
     this.revenue = 0.0;
     this.currency = null;
-    this.callbackParameters = null;
-    this.partnerParameters = null;
+    this.callbackParameters = {};
+    this.partnerParameters = {};
 
     this.setRevenue = function(revenue, currency) {
         this.revenue = revenue;
         this.currency = currency;
     };
 
-    this.setCallbackParameters = function(callbackParameters) {
-        this.callbackParameters = callbackParameters;
+    this.addCallbackParameters = function(key, value) {
+        this.callbackParameters[key] = value;
     };
 
-    this.setPartnerParameters = function(partnerParameters) {
-        this.partnerParameters = partnerParameters;
+    this.addPartnerParameters = function(key, value) {
+        this.partnerParameters[key] = value;
     };
 };
 
@@ -100,13 +95,13 @@ var AdjustConfig = function(appToken, environment) {
     this.environment = environment;
 
     this.sdkPrefix = "react_native4.10.0";
-    this.logLevel = AdjustConfig.LogLevelInfo;
+    this.logLevel = null;
 
-    this.eventBufferingEnabled = false;
-    this.shouldLaunchDeeplink = true;
-    this.sendInBackground = false;
+    this.eventBufferingEnabled = null;
+    this.shouldLaunchDeeplink = null;
+    this.sendInBackground = null;
 
-    this.delayStart = 0.0;
+    this.delayStart = null;
 
     this.defaultTracker = null;
     this.referrer = null;

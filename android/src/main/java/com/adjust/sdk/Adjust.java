@@ -38,7 +38,7 @@ public class Adjust extends ReactContextBaseJavaModule
     private boolean sessionTrackingSucceededCallback;
     private boolean sessionTrackingFailedCallback;
     private boolean deferredDeeplinkCallback;
-    private boolean shouldLaunchDeeplink;
+    private boolean shouldLaunchDeeplink = true;
 
     public Adjust(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -64,7 +64,6 @@ public class Adjust extends ReactContextBaseJavaModule
 
     @Override
     public void onHostResume() {
-        Log.d(TAG, ">>> onHostResume()");
         com.adjust.sdk.Adjust.onResume();
     }
 
@@ -101,26 +100,36 @@ public class Adjust extends ReactContextBaseJavaModule
 
     @ReactMethod
     public void create(ReadableMap mapConfig) {
-        Log.d(TAG, ">>> create()");
-        final String appToken               = mapConfig.getString("appToken");
-        final String environment            = mapConfig.getString("environment");
-        final String defaultTracker         = mapConfig.getString("defaultTracker");
-        final String processName            = mapConfig.getString("processName");
-        final String sdkPrefix              = mapConfig.getString("sdkPrefix");
-        final String logLevel               = mapConfig.getString("logLevel");
-        final Boolean eventBufferingEnabled = mapConfig.getBoolean("eventBufferingEnabled");
-        final String userAgent              = mapConfig.getString("userAgent");
-        final Boolean sendInBackground      = mapConfig.getBoolean("sendInBackground");
-        final Boolean shouldLaunchDeeplink  = mapConfig.getBoolean("shouldLaunchDeeplink");
-        final Double delayStart             = mapConfig.getDouble("delayStart");
+        String environment            = null;
+        String appToken               = null;
+        String defaultTracker         = null;
+        String processName            = null;
+        String sdkPrefix              = null;
+        String logLevel               = null;
+        boolean eventBufferingEnabled = false;
+        String userAgent              = null;
+        boolean sendInBackground      = false;
+        boolean shouldLaunchDeeplink  = false;
+        double delayStart             = 0.0;
+        boolean isLogLevelSuppress    = false;
 
-        Log.d(TAG, ">>> appToken: " + appToken);
-        Log.d(TAG, ">>> environment: " + environment);
-        Log.d(TAG, ">>> delayStart: " + delayStart);
+        //check for isLogLevelSuppress
+        if (!mapConfig.isNull("logLevel")) {
+            logLevel = mapConfig.getString("logLevel");
 
-        boolean isLogLevelSuppress = false;
-        if (AdjustUtil.isFieldValid(logLevel) && logLevel.equals("SUPPRESS")) {
-            isLogLevelSuppress = true;
+            if(logLevel.equals("SUPPRESS")) {
+                isLogLevelSuppress = true;
+            }
+        }
+
+        //check for appToken and environment
+        if(!mapConfig.isNull("appToken") 
+                && !mapConfig.isNull("environment")) {
+            appToken    = mapConfig.getString("appToken");
+            environment = mapConfig.getString("environment");
+        } else {
+            appToken    = "";
+            environment = "";
         }
 
         final AdjustConfig adjustConfig 
@@ -130,9 +139,12 @@ public class Adjust extends ReactContextBaseJavaModule
                     environment, 
                     isLogLevelSuppress);
 
+
         if (adjustConfig.isValid()) {
             // Log level
-            if (AdjustUtil.isFieldValid(logLevel)) {
+            if (!mapConfig.isNull("logLevel")) {
+                logLevel = mapConfig.getString("logLevel");
+
                 if (logLevel.equals("VERBOSE")) {
                     adjustConfig.setLogLevel(LogLevel.VERBOSE);
                 } else if (logLevel.equals("DEBUG")) {
@@ -153,36 +165,52 @@ public class Adjust extends ReactContextBaseJavaModule
             }
 
             // Event buffering
-            adjustConfig.setEventBufferingEnabled(eventBufferingEnabled);
+            if(!mapConfig.isNull("eventBufferingEnabled")) {
+                eventBufferingEnabled = mapConfig.getBoolean("eventBufferingEnabled");
+                adjustConfig.setEventBufferingEnabled(eventBufferingEnabled);
+            }
 
             // SDK prefix
-            if (AdjustUtil.isFieldValid(sdkPrefix)) {
+            if (!mapConfig.isNull("sdkPrefix")) {
+                sdkPrefix = mapConfig.getString("sdkPrefix");
                 adjustConfig.setSdkPrefix(sdkPrefix);
             }
 
             // Main process name
-            if (AdjustUtil.isFieldValid(processName)) {
+            if (!mapConfig.isNull("processName")) {
+                processName = mapConfig.getString("processName");
                 adjustConfig.setProcessName(processName);
             }
 
             // Default tracker
-            if (AdjustUtil.isFieldValid(defaultTracker)) {
+            if (!mapConfig.isNull("defaultTracker")) {
+                defaultTracker = mapConfig.getString("defaultTracker");
                 adjustConfig.setDefaultTracker(defaultTracker);
             }
 
             // User agent
-            if (AdjustUtil.isFieldValid(userAgent)) {
+            if (!mapConfig.isNull("userAgent") ) {
+                userAgent = mapConfig.getString("userAgent");
                 adjustConfig.setUserAgent(userAgent);
             }
 
             // Background tracking
-            adjustConfig.setSendInBackground(sendInBackground);
+            if(!mapConfig.isNull("sendInBackground")) {
+                sendInBackground = mapConfig.getBoolean("sendInBackground");
+                adjustConfig.setSendInBackground(sendInBackground);
+            }
 
             // Launching deferred deep link
-            this.shouldLaunchDeeplink = shouldLaunchDeeplink;
+            if(!mapConfig.isNull("shouldLaunchDeeplink")) {
+                shouldLaunchDeeplink = mapConfig.getBoolean("shouldLaunchDeeplink");
+                this.shouldLaunchDeeplink = shouldLaunchDeeplink;
+            }
 
             // Delayed start
-            adjustConfig.setDelayStart(delayStart);
+            if(!mapConfig.isNull("delayStart")) {
+                delayStart = mapConfig.getDouble("delayStart");
+                adjustConfig.setDelayStart(delayStart);
+            }
 
             // Attribution callback
             if (attributionCallback) {
@@ -221,11 +249,9 @@ public class Adjust extends ReactContextBaseJavaModule
 
     @ReactMethod
     public void trackEvent(ReadableMap mapEvent) {
-        Log.d(TAG, ">>> trackEvent()");
-
         //if(!com.adjust.sdk.Adjust.isEnabled() ) {
-            //Log.d(TAG, ">>> SDK is not initialized");
-            //return;
+        //Log.d(TAG, ">>> SDK is not initialized");
+        //return;
         //}
 
         final String eventToken = mapEvent.getString("eventToken");
@@ -256,7 +282,6 @@ public class Adjust extends ReactContextBaseJavaModule
 
     @ReactMethod
     public void setEnabled(Boolean enabled) {
-        Log.d(TAG, ">>> setEnabled()");
         com.adjust.sdk.Adjust.setEnabled(enabled);
     }
 
@@ -267,78 +292,57 @@ public class Adjust extends ReactContextBaseJavaModule
 
     @ReactMethod
     public void appWillOpenUrl(String strUri) {
-        Log.d(TAG, ">>> appWillOpenUrl()");
-
         final Uri uri = Uri.parse(strUri);
         com.adjust.sdk.Adjust.appWillOpenUrl(uri);
     }
 
     @ReactMethod
     public void setReferrer(String referrer) {
-        Log.d(TAG, ">>> setReferrer()");
-
         com.adjust.sdk.Adjust.setReferrer(referrer);
     }
 
     @ReactMethod
     public void setOfflineMode(Boolean enabled) {
-        Log.d(TAG, ">>> setOfflineMode()");
         com.adjust.sdk.Adjust.setOfflineMode(enabled);
     }
 
     @ReactMethod
     public void sendFirstPackages() {
-        Log.d(TAG, ">>> sendFirstPackages()");
-
         com.adjust.sdk.Adjust.sendFirstPackages();
     }
 
     @ReactMethod
     public void addSessionCallbackParameter(String key, String value) {
-        Log.d(TAG, ">>> addSessionCallbackParameter()");
-
         com.adjust.sdk.Adjust.addSessionCallbackParameter(key, value);
     }
 
     @ReactMethod
     public void addSessionPartnerParameter(String key, String value) {
-        Log.d(TAG, ">>> addSessionPartnerParameter()");
-
         com.adjust.sdk.Adjust.addSessionPartnerParameter(key, value);
     }
 
     @ReactMethod
     public void removeSessionCallbackParameter(String key) {
-        Log.d(TAG, ">>> removeSessionCallbackParameter()");
-
         com.adjust.sdk.Adjust.removeSessionCallbackParameter(key);
     }
 
     @ReactMethod
     public void removeSessionPartnerParameter(String key) {
-        Log.d(TAG, ">>> removeSessionPartnerParameter()");
-
         com.adjust.sdk.Adjust.removeSessionPartnerParameter(key);
     }
 
     @ReactMethod
     public void resetSessionCallbackParameters() {
-        Log.d(TAG, ">>> resetSessionCallbackParameters()");
-
         com.adjust.sdk.Adjust.resetSessionCallbackParameters();
     }
 
     @ReactMethod
     public void resetSessionPartnerParameters() {
-        Log.d(TAG, ">>> resetSessionPartnerParameters()");
-
         com.adjust.sdk.Adjust.resetSessionPartnerParameters();
     }
 
     @ReactMethod
     public void setPushToken(String token) {
-        Log.d(TAG, ">>> setPushToken()");
-
         com.adjust.sdk.Adjust.setPushToken(token);
     }
 

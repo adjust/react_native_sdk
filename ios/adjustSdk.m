@@ -23,11 +23,6 @@ BOOL _sessionTrackingSucceededCallback;
 BOOL _sessionTrackingFailedCallback;
 BOOL _deferredDeeplinkCallback;
 
-RCT_EXPORT_METHOD(test)
-{
-    NSLog(@"Test works");
-}
-
 - (BOOL)isFieldValid:(NSObject *)field {
     if (![field isKindOfClass:[NSNull class]]) {
         if (field != nil) {
@@ -279,7 +274,7 @@ RCT_EXPORT_METHOD(resetSessionPartnerParameters)
 
 RCT_EXPORT_METHOD(setPushToken:(NSString *)token)
 {
-    NSLog(@">>> setPushToken with token: %@", token);
+    //NSLog(@">>> setPushToken with token: %@", token);
 
     if (!([self isFieldValid:token])) {
         return;

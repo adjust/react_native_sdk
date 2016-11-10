@@ -38,8 +38,8 @@ This is the React Native SDK of adjust™. You can read more about adjust™ at 
 * [License](#license)
 
 ## Supported versions
-- react-native-cli: 1.0.0
-- react-native: 0.36.0
+- react-native-cli: 1.2.0
+- react-native: 0.37.0
 
 ## <a id="example-apps"></a>Example apps
 

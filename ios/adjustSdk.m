@@ -15,7 +15,7 @@
 
 RCT_EXPORT_MODULE(Adjust);
 
-BOOL _shouldLaunchDeeplink;
+BOOL _shouldLaunchDeeplink = YES;
 BOOL _attributionCallback;
 BOOL _eventTrackingSucceededCallback;
 BOOL _eventTrackingFailedCallback;
@@ -45,12 +45,6 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict)
     NSNumber *shouldLaunchDeeplink = dict[@"shouldLaunchDeeplink"];
     NSString *userAgent = dict[@"userAgent"];
     NSNumber *delayStart = dict[@"delayStart"];
-
-    //NSLog(@">>> appToken: %@", appToken);
-    //NSLog(@">>> environment: %@", environment);
-    //NSLog(@">>> logLevel: %@", logLevel);
-    //NSLog(@">>> sdkPrefix: %@", sdkPrefix);
-    //NSLog(@">>> defaultTracker: %@", defaultTracker);
 
     BOOL allowSuppressLogLevel = false;
 
@@ -130,8 +124,6 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict)
     NSDictionary *callbackParameters = dict[@"callbackParameters"];
     NSDictionary *partnerParameters = dict[@"partnerParameters"];
 
-    //NSLog(@">>> eventToken: %@", eventToken);
-
     ADJEvent *adjustEvent = [ADJEvent eventWithEventToken:eventToken];
 
     if ([adjustEvent isValid]) {
@@ -142,28 +134,18 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict)
         }
 
         if ([self isFieldValid:callbackParameters]) {
-            //NSLog(@">>> size of callbackParameters: %lu: " , [callbackParameters count]);
             for (NSString *key in callbackParameters) {
                 NSLog(@">>> Hello <<<");
                 NSString *value = [callbackParameters objectForKey:key];
 
-                //NSLog(@">>> <<<");
-                //NSLog(@">>> callbackParameter: key: %@", key);
-                //NSLog(@">>> callbackParameter: value: %@", value);
-                //NSLog(@">>> <<<");
                 [adjustEvent addCallbackParameter:key value:value];
             }
         }
 
         if ([self isFieldValid:partnerParameters]) {
-            //NSLog(@">>> size of partnerParameters: %lu: " , [partnerParameters count]);
             for (NSString *key in partnerParameters) {
                 NSString *value = [partnerParameters objectForKey:key];
 
-                //NSLog(@">>> <<<");
-                //NSLog(@">>> partnerParameter: key: %@", key);
-                //NSLog(@">>> partnerParameter: value: %@", value);
-                //NSLog(@">>> <<<");
                 [adjustEvent addPartnerParameter:key value:value];
             }
         }
@@ -182,10 +164,8 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict)
             }
         }
 
-        if (NO == isTransactionIdSet) {
-            if ([self isFieldValid:transactionId]) {
-                [adjustEvent setTransactionId:transactionId];
-            }
+        if ([self isFieldValid:transactionId]) {
+            [adjustEvent setTransactionId:transactionId];
         }
 
         [Adjust trackEvent:adjustEvent];
@@ -354,7 +334,7 @@ RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener)
         attr.clickLabel, @"clickLabel", 
         nil];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"attribution" body:dict];
+    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_attribution" body:dict];
 }
 
 - (void)adjustEventTrackingSucceeded:(ADJEventSuccess *)event {
@@ -370,7 +350,7 @@ RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener)
         jsonResponseStr, @"jsonResponse", 
         nil];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"eventTrackingSucceeded" body:dict];
+    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingSucceeded" body:dict];
 }
 
 - (void)adjustEventTrackingFailed:(ADJEventFailure *)event {
@@ -389,7 +369,7 @@ RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener)
         willRetryNum, @"willRetry", 
         nil];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"eventTrackingFailed" body:dict];
+    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingFailed" body:dict];
 }
 
 - (void)adjustSessionTrackingSucceeded:(ADJSessionSuccess *)session {
@@ -404,7 +384,7 @@ RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener)
         jsonResponseStr, @"jsonResponse", 
         nil];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"sessionTrackingSucceeded" body:dict];
+    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingSucceeded" body:dict];
 }
 
 - (void)adjustSessionTrackingFailed:(ADJSessionFailure *)session {
@@ -422,13 +402,13 @@ RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener)
         willRetryNum, @"willRetry", 
         nil];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"sessionTrackingFailed" body:dict];
+    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingFailed" body:dict];
 }
 
 - (BOOL)adjustDeeplinkResponse:(NSURL *)deeplink {
     NSString *path = [deeplink absoluteString];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"deferredDeeplink"
+    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_deferredDeeplink"
                                                  body:@{@"uri": path}];
     return _shouldLaunchDeeplink;
 }

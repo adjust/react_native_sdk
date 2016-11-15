@@ -31,7 +31,6 @@ public class Adjust extends ReactContextBaseJavaModule
                OnSessionTrackingSucceededListener,
                OnSessionTrackingFailedListener,
                OnDeeplinkResponseListener {
-    public static final String TAG = "AdjustNativeModule";
     private boolean attributionCallback;
     private boolean eventTrackingSucceededCallback;
     private boolean eventTrackingFailedCallback;
@@ -69,32 +68,32 @@ public class Adjust extends ReactContextBaseJavaModule
 
     @Override
     public void onAttributionChanged(AdjustAttribution attribution) {
-        sendEvent(getReactApplicationContext(), "attribution", AdjustUtil.attributionToMap(attribution));
+        sendEvent(getReactApplicationContext(), "adjust_attribution", AdjustUtil.attributionToMap(attribution));
     }
 
     @Override
     public void onFinishedEventTrackingSucceeded(AdjustEventSuccess event) {
-        sendEvent(getReactApplicationContext(), "eventTrackingSucceeded", AdjustUtil.eventSuccessToMap(event));
+        sendEvent(getReactApplicationContext(), "adjust_eventTrackingSucceeded", AdjustUtil.eventSuccessToMap(event));
     }
 
     @Override
     public void onFinishedEventTrackingFailed(AdjustEventFailure event) {
-        sendEvent(getReactApplicationContext(), "eventTrackingFailed", AdjustUtil.eventFailureToMap(event));
+        sendEvent(getReactApplicationContext(), "adjust_eventTrackingFailed", AdjustUtil.eventFailureToMap(event));
     }
 
     @Override
     public void onFinishedSessionTrackingSucceeded(AdjustSessionSuccess session) {
-        sendEvent(getReactApplicationContext(), "sessionTrackingSucceeded", AdjustUtil.sessionSuccessToMap(session));
+        sendEvent(getReactApplicationContext(), "adjust_sessionTrackingSucceeded", AdjustUtil.sessionSuccessToMap(session));
     }
 
     @Override
     public void onFinishedSessionTrackingFailed(AdjustSessionFailure session) {
-        sendEvent(getReactApplicationContext(), "sessionTrackingFailed", AdjustUtil.sessionFailureToMap(session));
+        sendEvent(getReactApplicationContext(), "adjust_sessionTrackingFailed", AdjustUtil.sessionFailureToMap(session));
     }
 
     @Override
     public boolean launchReceivedDeeplink(Uri uri) {
-        sendEvent(getReactApplicationContext(), "deferredDeeplink", AdjustUtil.deferredDeeplinkToMap(uri));
+        sendEvent(getReactApplicationContext(), "adjust_deferredDeeplink", AdjustUtil.deferredDeeplinkToMap(uri));
         return this.shouldLaunchDeeplink;
     }
 
@@ -123,14 +122,8 @@ public class Adjust extends ReactContextBaseJavaModule
         }
 
         //check for appToken and environment
-        if(!mapConfig.isNull("appToken") 
-                && !mapConfig.isNull("environment")) {
-            appToken    = mapConfig.getString("appToken");
-            environment = mapConfig.getString("environment");
-        } else {
-            appToken    = "";
-            environment = "";
-        }
+        appToken    = mapConfig.getString("appToken");
+        environment = mapConfig.getString("environment");
 
         final AdjustConfig adjustConfig 
             = new AdjustConfig(
@@ -249,11 +242,6 @@ public class Adjust extends ReactContextBaseJavaModule
 
     @ReactMethod
     public void trackEvent(ReadableMap mapEvent) {
-        //if(!com.adjust.sdk.Adjust.isEnabled() ) {
-        //Log.d(TAG, ">>> SDK is not initialized");
-        //return;
-        //}
-
         final String eventToken = mapEvent.getString("eventToken");
         final Double revenue = mapEvent.getDouble("revenue");
         final String currency = mapEvent.getString("currency");
@@ -274,6 +262,13 @@ public class Adjust extends ReactContextBaseJavaModule
                 for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
                     event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
                 }
+            }
+
+            if(!mapEvent.isNull("transactionId")) {
+                final String transactionId 
+                    = mapEvent.getString("transactionId");
+
+                event.setOrderId(transactionId);
             }
 
             com.adjust.sdk.Adjust.trackEvent(event);

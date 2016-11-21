@@ -30,7 +30,7 @@ git submodule update --init --recursive
 # Remove and unlink node module from sample project
 echo -e "${GREEN}>>> Uninstall and unlink current module ${NC}"
 cd ${SDK_DIR}/${SAMPLE_DIR}
-rnpm uninstall ${SDK_NAME}
+react-native uninstall ${SDK_NAME}
 
 # Create a new directory with SDK_NAME
 echo -e "${GREEN}>>> Create new directory in node_modules ${NC}"
@@ -44,7 +44,7 @@ rsync -a . ${SAMPLE_DIR}/node_modules/${SDK_NAME} --exclude=sample --exclude=ext
 # Establish link
 echo -e "${GREEN}>>> Establish linkage to ${SDK_NAME} ${NC}"
 cd ${SAMPLE_DIR}
-rnpm link ${SDK_NAME}
+react-native link ${SDK_NAME}
 
 echo -e "${GREEN}>>> Building & Running on iOS ${NC}"
-react-native run-ios
+#react-native run-ios

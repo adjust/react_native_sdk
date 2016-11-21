@@ -39,6 +39,7 @@
 		2068FAA51DC0F7DB00816E17 /* NSData+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2068FAA01DC0F7DB00816E17 /* NSData+ADJAdditions.m */; };
 		2068FAA61DC0F7DB00816E17 /* NSString+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2068FAA21DC0F7DB00816E17 /* NSString+ADJAdditions.m */; };
 		2068FAA71DC0F7DB00816E17 /* UIDevice+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2068FAA41DC0F7DB00816E17 /* UIDevice+ADJAdditions.m */; };
+		20A410BC1DDF47E6003ED776 /* AdjustSdkDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A410BB1DDF47E6003ED776 /* AdjustSdkDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -120,6 +121,8 @@
 		2068FAA21DC0F7DB00816E17 /* NSString+ADJAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ADJAdditions.m"; path = "Adjust/ADJAdditions/NSString+ADJAdditions.m"; sourceTree = "<group>"; };
 		2068FAA31DC0F7DB00816E17 /* UIDevice+ADJAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+ADJAdditions.h"; path = "Adjust/ADJAdditions/UIDevice+ADJAdditions.h"; sourceTree = "<group>"; };
 		2068FAA41DC0F7DB00816E17 /* UIDevice+ADJAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+ADJAdditions.m"; path = "Adjust/ADJAdditions/UIDevice+ADJAdditions.m"; sourceTree = "<group>"; };
+		20A410BA1DDF47E6003ED776 /* AdjustSdkDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdjustSdkDelegate.h; path = Adjust/AdjustSdkDelegate.h; sourceTree = "<group>"; };
+		20A410BB1DDF47E6003ED776 /* AdjustSdkDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdjustSdkDelegate.m; path = Adjust/AdjustSdkDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +232,8 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				20A410BA1DDF47E6003ED776 /* AdjustSdkDelegate.h */,
+				20A410BB1DDF47E6003ED776 /* AdjustSdkDelegate.m */,
 				2068FA471DC0F7A400816E17 /* Adjust */,
 				13BE3DEC1AC21097009241FE /* adjustSdk.h */,
 				13BE3DED1AC21097009241FE /* adjustSdk.m */,
@@ -299,6 +304,7 @@
 				2068FA981DC0F7B400816E17 /* ADJSessionSuccess.m in Sources */,
 				2068FA871DC0F7B400816E17 /* ADJAttribution.m in Sources */,
 				2068FA951DC0F7B400816E17 /* ADJSdkClickHandler.m in Sources */,
+				20A410BC1DDF47E6003ED776 /* AdjustSdkDelegate.m in Sources */,
 				2068FA931DC0F7B400816E17 /* ADJRequestHandler.m in Sources */,
 				13BE3DEE1AC21097009241FE /* adjustSdk.m in Sources */,
 				2068FA911DC0F7B400816E17 /* ADJPackageBuilder.m in Sources */,

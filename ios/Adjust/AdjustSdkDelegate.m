@@ -6,10 +6,11 @@
 //  Copyright (c) 2012-2016 adjust GmbH. All rights reserved.
 //
 
+#import "RCTEventDispatcher.h"
 #import <objc/runtime.h>
 #import "adjustSdkDelegate.h"
 
-@implementation adjustSdkDelegate
+@implementation AdjustSdkDelegate
 
 + (id)getInstanceWithSwizzleOfAttributionCallback:(BOOL)swizzleAttributionCallback
                            eventSucceededCallback:(BOOL)swizzleEventSucceededCallback
@@ -18,12 +19,14 @@
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink
+                                       withBridge:(RCTBridge *)bridge;
+
 {
     static dispatch_once_t onceToken;
-    static adjustSdkDelegate *defaultInstance = nil;
+    static AdjustSdkDelegate *defaultInstance = nil;
     
     dispatch_once(&onceToken, ^{
-        defaultInstance = [[adjustSdkDelegate alloc] init];
+        defaultInstance = [[AdjustSdkDelegate alloc] init];
 
         // Do the swizzling where and if needed.
         if (swizzleAttributionCallback) {
@@ -57,6 +60,7 @@
         }
 
         [defaultInstance setShouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink];
+        [defaultInstance setBridge:bridge];
     });
     
     return defaultInstance;
@@ -73,7 +77,7 @@
 }
 
 - (void)adjustAttributionChangedWannabe:(ADJAttribution *)attr {
-    if (attribution == nil) {
+    if (attr == nil) {
         return;
     }
 
@@ -90,8 +94,8 @@
     [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_attribution" body:dict];
 }
 
-- (void)adjustEventTrackingSucceededWannabe:(ADJEventSuccess *)eventSuccessResponseData {
-    if (nil == eventSuccessResponseData) {
+- (void)adjustEventTrackingSucceededWannabe:(ADJEventSuccess *)event {
+    if (nil == event) {
         return;
     }
 
@@ -111,14 +115,17 @@
 
 }
 
-- (void)adjustEventTrackingFailedWannabe:(ADJEventFailure *)eventFailureResponseData {
-    if (nil == eventFailureResponseData) {
+- (void)adjustEventTrackingFailedWannabe:(ADJEventFailure *)event {
+    if (nil == event) {
         return;
     }
 
     NSError * err;
-    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:event.jsonResponse options:0 error:&err]; 
-    NSString * jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString * jsonResponseStr = @"";
+    if (event.jsonResponse != nil) {
+        NSData * jsonData = [NSJSONSerialization dataWithJSONObject:event.jsonResponse options:0 error:&err];
+        jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
 
     NSNumber *willRetryNum = [NSNumber numberWithBool:event.willRetry];
 
@@ -134,8 +141,8 @@
     [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingFailed" body:dict];
 }
 
-- (void)adjustSessionTrackingSucceededWannabe:(ADJSessionSuccess *)sessionSuccessResponseData {
-    if (nil == sessionSuccessResponseData) {
+- (void)adjustSessionTrackingSucceededWannabe:(ADJSessionSuccess *)session {
+    if (nil == session) {
         return;
     }
 
@@ -153,8 +160,8 @@
     [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingSucceeded" body:dict];
 }
 
-- (void)adjustSessionTrackingFailedWananbe:(ADJSessionFailure *)sessionFailureResponseData {
-    if (nil == sessionFailureResponseData) {
+- (void)adjustSessionTrackingFailedWananbe:(ADJSessionFailure *)session {
+    if (nil == session) {
         return;
     }
 
@@ -180,7 +187,7 @@
 
     [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_deferredDeeplink"
                                                  body:@{@"uri": path}];
-    return _shouldLaunchDeeplink;
+    return _shouldLaunchDeferredDeeplink;
 }
 
 - (void)swizzleCallbackMethod:(SEL)originalSelector

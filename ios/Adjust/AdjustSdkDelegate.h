@@ -7,12 +7,12 @@
 //
 
 #import "RCTBridge.h"
-#import "RCTEventDispatcher.h"
 #import "adjustSdk.h"
 
-@interface adjustSdkDelegate : NSObject<AdjustDelegate>
+@interface AdjustSdkDelegate : NSObject<AdjustDelegate>
 
 @property (nonatomic) BOOL shouldLaunchDeferredDeeplink;
+@property (nonatomic) RCTBridge* bridge;
 
 + (id)getInstanceWithSwizzleOfAttributionCallback:(BOOL)swizzleAttributionCallback
 						   eventSucceededCallback:(BOOL)swizzleEventSucceededCallback
@@ -20,6 +20,7 @@
 						 sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
 						    sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
 					     deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
-                     shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink;
+                     shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink
+                                       withBridge:(RCTBridge *)bridge;
 
 @end

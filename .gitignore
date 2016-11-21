@@ -1,12 +1,94 @@
-*.[aod]
-*.DS_Store
+# OS X
 .DS_Store
+
+# Xcode
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+profile
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+
+# CocoaPods
+Pods
+
+# git files
+*.orig
+# Copyright: Benjamin Weiss (keyboardsurfer) https://github.com/keyboardsurfer
+# Under CC-BY-SA V3.0 (https://creativecommons.org/licenses/by-sa/3.0/legalcode)
+
+# orig files
+*.orig
+
+# built application files
+*.apk
+*.ap_
 *.jar
-*Thumbs.db
-*.iml
-.gradle
+
+# lint folder
+lint
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+classes/
+gen-external-apklibs/
+
+# maven output folder
+target
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Eclipse project files
+.classpath
+.project
+.metadata
+.settings
+
+# IntelliJ files
 .idea
-npm-debug.log
-/android/build
-/ios/**/*xcuserdata*
-/ios/**/*xcshareddata*
+*.iml
+
+# OSX files
+.DS_Store
+
+# Windows files
+Thumbs.db
+
+# vi swap files
+*.swp
+
+# backup files
+*.bak
+
+# gradle directory
+.gradle
+.gradletasknamecache
+gradlew
+gradlew.bat
+gradle/
+build/
+
+# for oh-my-zsh jira plugin (https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins#jira)
+.jira-url
+atlassian-ide-plugin.xml
+
+# exceptions
+!*adjust-android.jar

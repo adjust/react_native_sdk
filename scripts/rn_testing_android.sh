@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Exit if any errors occur
-set -e
+#set -e
 
 # Get the current directory (/scripts/ directory)
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -19,16 +19,19 @@ cd ${SDK_DIR}
 git submodule update --init --recursive
 
 # Removing the old Android JAR file
-echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
+echo -e "${GREEN}>>> Removing the Android JAR file ${NC}"
 rm -rfv android/libs/*
 
 # Building the Android JAR file
 echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
 ext/android/build.sh
 
+echo -e "${GREEN}>>> Running npm install on sample project${NC}"
+cd ${SDK_DIR}/${SAMPLE_DIR}
+npm install
+
 # Remove and unlink node module from sample project
 echo -e "${GREEN}>>> Uninstall and unlink current module ${NC}"
-cd ${SDK_DIR}/${SAMPLE_DIR}
 react-native uninstall ${SDK_NAME}
 
 # Create a new directory with SDK_NAME

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Exit if any errors occur
-set -e
+#set -e
 
 # Get the current directory (/scripts/ directory)
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -14,22 +14,17 @@ RED='\033[0;31m' # Red color
 GREEN='\033[0;32m' # Green color
 NC='\033[0m' # No Color
 
-# Removing the old Android JAR file
-#echo -e "${GREEN}>>> Removing the ios framework ${NC}"
-#cd ${SDK_DIR}
-#rm -rfv ios/libs/*
-
-# Building the Android JAR file
-#echo -e "${GREEN}>>> Building the ios framework ${NC}"
-#ext/ios/build.sh
-
 echo -e "${GREEN}>>> Updating Git submodules ${NC}"
 cd ${SDK_DIR}
 git submodule update --init --recursive
 
+
+echo -e "${GREEN}>>> Running npm install on sample project${NC}"
+cd ${SDK_DIR}/${SAMPLE_DIR}
+npm install
+
 # Remove and unlink node module from sample project
 echo -e "${GREEN}>>> Uninstall and unlink current module ${NC}"
-cd ${SDK_DIR}/${SAMPLE_DIR}
 react-native uninstall ${SDK_NAME}
 
 # Create a new directory with SDK_NAME
@@ -47,4 +42,4 @@ cd ${SAMPLE_DIR}
 react-native link ${SDK_NAME}
 
 echo -e "${GREEN}>>> Building & Running on iOS ${NC}"
-#react-native run-ios
+react-native run-ios

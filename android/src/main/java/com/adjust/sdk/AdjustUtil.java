@@ -72,7 +72,7 @@ final class AdjustUtil {
                 result = toList(readableMap.getArray(key));
                 break; 
             default: 
-                Log.e("Adjust", "Could not convert object with key: " + key + ".");
+                AdjustFactory.getLogger().error("Could not convert object with key: " + key + ".");
         } 
 
         return result;
@@ -99,6 +99,7 @@ final class AdjustUtil {
             String key = iterator.nextKey();
             String value = toObject(readableMap, key);
             if(value == null) {
+                AdjustFactory.getLogger().warn("Null parameter inside key-value pair with key: " + key)
                 continue;
             }
 
@@ -147,7 +148,7 @@ final class AdjustUtil {
                     result = toList(readableArray.getArray(index));
                     break; 
                 default: 
-                    Log.e("Adjust", "Could not convert object with index: " + index + ".");
+                    AdjustFactory.getLogger().error("Could not convert object with index: " + index + ".");
             } 
         } 
 

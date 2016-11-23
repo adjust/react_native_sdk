@@ -14,6 +14,7 @@ import com.facebook.react.bridge.*;
 
 import java.util.ArrayList;
 import android.net.Uri;
+import android.util.Log;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,7 @@ final class AdjustUtil {
      * @param key The key for the value to be converted 
      * @return The converted POJO 
      */ 
-    public static Object toObject(@Nullable ReadableMap readableMap, String key) {
+    private static Object toObject(@Nullable ReadableMap readableMap, String key) {
         if (readableMap == null) {
             return null; 
         } 
@@ -47,7 +48,7 @@ final class AdjustUtil {
         ReadableType readableType = readableMap.getType(key);
         switch (readableType) {
             case Null: 
-                result = key;
+                result = null;
                 break; 
             case Boolean: 
                 result = readableMap.getBoolean(key);
@@ -71,7 +72,7 @@ final class AdjustUtil {
                 result = toList(readableMap.getArray(key));
                 break; 
             default: 
-                throw new IllegalArgumentException("Could not convert object with key: " + key + ".");
+                Log.e("Adjust", "Could not convert object with key: " + key + ".");
         } 
 
         return result;
@@ -96,7 +97,12 @@ final class AdjustUtil {
         Map<String, Object> result = new HashMap<>();
         while (iterator.hasNextKey()) {
             String key = iterator.nextKey();
-            result.put(key, toObject(readableMap, key));
+            String value = toObject(readableMap, key);
+            if(value == null) {
+                continue;
+            }
+
+            result.put(key, value);
         } 
 
         return result;
@@ -118,7 +124,6 @@ final class AdjustUtil {
             ReadableType readableType = readableArray.getType(index);
             switch (readableType) {
                 case Null: 
-                    result.add(String.valueOf(index));
                     break; 
                 case Boolean: 
                     result.add(readableArray.getBoolean(index));
@@ -142,7 +147,7 @@ final class AdjustUtil {
                     result = toList(readableArray.getArray(index));
                     break; 
                 default: 
-                    throw new IllegalArgumentException("Could not convert object with index: " + index + ".");
+                    Log.e("Adjust", "Could not convert object with index: " + index + ".");
             } 
         } 
 

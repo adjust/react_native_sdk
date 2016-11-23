@@ -101,6 +101,12 @@
 
     NSError * err;
     NSData * jsonData = [NSJSONSerialization dataWithJSONObject:event.jsonResponse options:0 error:&err]; 
+
+    if (err != nil || jsonData == nil) {
+        NSLog(@"Adjust: Failed to parse jsonResponse in EventTrackingSucceeded callback");
+        return;
+    }
+
     NSString * jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -124,6 +130,12 @@
     NSString * jsonResponseStr = @"";
     if (event.jsonResponse != nil) {
         NSData * jsonData = [NSJSONSerialization dataWithJSONObject:event.jsonResponse options:0 error:&err];
+
+    if (err != nil || jsonData == nil) {
+        NSLog(@"Adjust: Failed to parse jsonResponse in EventTrackingFailed callback");
+        return;
+    }
+
         jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     }
 
@@ -148,6 +160,12 @@
 
     NSError * err;
     NSData * jsonData = [NSJSONSerialization dataWithJSONObject:session.jsonResponse options:0 error:&err]; 
+
+    if (err != nil || jsonData == nil) {
+        NSLog(@"Adjust: Failed to parse jsonResponse in SessionTrackingSucceeded callback");
+        return;
+    }
+
     NSString * jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -167,6 +185,12 @@
 
     NSError * err;
     NSData * jsonData = [NSJSONSerialization dataWithJSONObject:session.jsonResponse options:0 error:&err]; 
+
+    if (err != nil || jsonData == nil) {
+        NSLog(@"Adjust: Failed to parse jsonResponse in SessionTrackingFailed callback");
+        return;
+    }
+
     NSString * jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 
     NSNumber *willRetryNum = [NSNumber numberWithBool:session.willRetry];
@@ -192,35 +216,35 @@
 
 - (void)swizzleCallbackMethod:(SEL)originalSelector
              swizzledSelector:(SEL)swizzledSelector {
-    Class class = [self class];
+                 Class class = [self class];
 
-    Method originalMethod = class_getInstanceMethod(class, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+                 Method originalMethod = class_getInstanceMethod(class, originalSelector);
+                 Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
 
-    BOOL didAddMethod = class_addMethod(class,
-                                        originalSelector,
-                                        method_getImplementation(swizzledMethod),
-                                        method_getTypeEncoding(swizzledMethod));
+                 BOOL didAddMethod = class_addMethod(class,
+                         originalSelector,
+                         method_getImplementation(swizzledMethod),
+                         method_getTypeEncoding(swizzledMethod));
 
-    if (didAddMethod) {
-        class_replaceMethod(class,
-                            swizzledSelector,
-                            method_getImplementation(originalMethod),
-                            method_getTypeEncoding(originalMethod));
-    } else {
-        method_exchangeImplementations(originalMethod, swizzledMethod);
-    }
-}
+                 if (didAddMethod) {
+                     class_replaceMethod(class,
+                             swizzledSelector,
+                             method_getImplementation(originalMethod),
+                             method_getTypeEncoding(originalMethod));
+                 } else {
+                     method_exchangeImplementations(originalMethod, swizzledMethod);
+                 }
+             }
 
 - (void)addValueOrEmpty:(NSMutableDictionary *)dictionary
                     key:(NSString *)key
                   value:(NSObject *)value {
-    if (nil != value) {
-        [dictionary setObject:[NSString stringWithFormat:@"%@", value] forKey:key];
-    } else {
-        [dictionary setObject:@"" forKey:key];
-    }
-}
+                      if (nil != value) {
+                          [dictionary setObject:[NSString stringWithFormat:@"%@", value] forKey:key];
+                      } else {
+                          [dictionary setObject:@"" forKey:key];
+                      }
+                  }
 
 
 @end

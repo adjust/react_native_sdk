@@ -1,4 +1,4 @@
-rootProject.name = 'sample'
+rootProject.name = 'Example'
 
 include ':app'
 include ':react-native-adjust'

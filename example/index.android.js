@@ -1,5 +1,5 @@
 /**
- * Sample React Native App
+ * Example React Native App
  * https://github.com/facebook/react-native
  * @flow
  */
@@ -15,7 +15,7 @@ import {
     Linking
 } from 'react-native';
 
-export default class sample extends Component {
+export default class Example extends Component {
     componentDidMount() {
         Linking.addEventListener('url', this.handleDeepLink);
     }
@@ -300,4 +300,4 @@ const styles = StyleSheet.create({
     }
 });
 
-AppRegistry.registerComponent('sample', () => sample);
+AppRegistry.registerComponent('Example', () => Example);

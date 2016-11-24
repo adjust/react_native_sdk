@@ -1,5 +1,5 @@
 //
-//  adjustSdk.h
+//  AdjustSdk.h
 //  Adjust
 //
 //  Created by Abdullah Obaied on 2016-10-25.
@@ -8,6 +8,6 @@
 #import "RCTBridgeModule.h"
 #import "Adjust.h"
 
-@interface adjustSdk : NSObject <RCTBridgeModule>
+@interface AdjustSdk : NSObject <RCTBridgeModule>
 
 @end

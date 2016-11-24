@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		13BE3DEE1AC21097009241FE /* adjustSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* adjustSdk.m */; };
+		13BE3DEE1AC21097009241FE /* AdjustSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* AdjustSdk.m */; };
 		2068FA821DC0F7B400816E17 /* ADJActivityHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2068FA491DC0F7B300816E17 /* ADJActivityHandler.m */; };
 		2068FA831DC0F7B400816E17 /* ADJActivityKind.m in Sources */ = {isa = PBXBuildFile; fileRef = 2068FA4B1DC0F7B300816E17 /* ADJActivityKind.m */; };
 		2068FA841DC0F7B400816E17 /* ADJActivityPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2068FA4D1DC0F7B300816E17 /* ADJActivityPackage.m */; };
@@ -55,9 +55,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		134814201AA4EA6300B7C361 /* libadjustSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libadjustSdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		13BE3DEC1AC21097009241FE /* adjustSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = adjustSdk.h; sourceTree = "<group>"; };
-		13BE3DED1AC21097009241FE /* adjustSdk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = adjustSdk.m; sourceTree = "<group>"; };
+		134814201AA4EA6300B7C361 /* libAdjustSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAdjustSdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		13BE3DEC1AC21097009241FE /* AdjustSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustSdk.h; sourceTree = "<group>"; };
+		13BE3DED1AC21097009241FE /* AdjustSdk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustSdk.m; sourceTree = "<group>"; };
 		2068FA481DC0F7B300816E17 /* ADJActivityHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADJActivityHandler.h; path = Adjust/ADJActivityHandler.h; sourceTree = "<group>"; };
 		2068FA491DC0F7B300816E17 /* ADJActivityHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADJActivityHandler.m; path = Adjust/ADJActivityHandler.m; sourceTree = "<group>"; };
 		2068FA4A1DC0F7B300816E17 /* ADJActivityKind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADJActivityKind.h; path = Adjust/ADJActivityKind.h; sourceTree = "<group>"; };
@@ -139,7 +139,7 @@
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				134814201AA4EA6300B7C361 /* libadjustSdk.a */,
+				134814201AA4EA6300B7C361 /* libAdjustSdk.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -235,8 +235,8 @@
 				20A410BA1DDF47E6003ED776 /* AdjustSdkDelegate.h */,
 				20A410BB1DDF47E6003ED776 /* AdjustSdkDelegate.m */,
 				2068FA471DC0F7A400816E17 /* Adjust */,
-				13BE3DEC1AC21097009241FE /* adjustSdk.h */,
-				13BE3DED1AC21097009241FE /* adjustSdk.m */,
+				13BE3DEC1AC21097009241FE /* AdjustSdk.h */,
+				13BE3DED1AC21097009241FE /* AdjustSdk.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				200D309B1DC0DB5F0029DABA /* Frameworks */,
 			);
@@ -245,9 +245,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		58B511DA1A9E6C8500147676 /* adjustSdk */ = {
+		58B511DA1A9E6C8500147676 /* AdjustSdk */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "adjustSdk" */;
+			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "AdjustSdk" */;
 			buildPhases = (
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
@@ -257,9 +257,9 @@
 			);
 			dependencies = (
 			);
-			name = adjustSdk;
+			name = AdjustSdk;
 			productName = RCTDataManager;
-			productReference = 134814201AA4EA6300B7C361 /* libadjustSdk.a */;
+			productReference = 134814201AA4EA6300B7C361 /* libAdjustSdk.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -276,7 +276,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "adjustSdk" */;
+			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "AdjustSdk" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -288,7 +288,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58B511DA1A9E6C8500147676 /* adjustSdk */,
+				58B511DA1A9E6C8500147676 /* AdjustSdk */,
 			);
 		};
 /* End PBXProject section */
@@ -306,7 +306,7 @@
 				2068FA951DC0F7B400816E17 /* ADJSdkClickHandler.m in Sources */,
 				20A410BC1DDF47E6003ED776 /* AdjustSdkDelegate.m in Sources */,
 				2068FA931DC0F7B400816E17 /* ADJRequestHandler.m in Sources */,
-				13BE3DEE1AC21097009241FE /* adjustSdk.m in Sources */,
+				13BE3DEE1AC21097009241FE /* AdjustSdk.m in Sources */,
 				2068FA911DC0F7B400816E17 /* ADJPackageBuilder.m in Sources */,
 				2068FA831DC0F7B400816E17 /* ADJActivityKind.m in Sources */,
 				2068FA901DC0F7B400816E17 /* ADJLogger.m in Sources */,
@@ -425,7 +425,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = adjustSdk;
+				PRODUCT_NAME = AdjustSdk;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -444,7 +444,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = adjustSdk;
+				PRODUCT_NAME = AdjustSdk;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -452,7 +452,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "adjustSdk" */ = {
+		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "AdjustSdk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511ED1A9E6C8500147676 /* Debug */,
@@ -461,7 +461,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "adjustSdk" */ = {
+		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "AdjustSdk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511F01A9E6C8500147676 /* Debug */,

@@ -54,12 +54,10 @@ public class Adjust extends ReactContextBaseJavaModule
     }
 
     @Override
-    public void onHostPause() {
-    }
+    public void onHostPause() {}
 
     @Override
-    public void onHostDestroy() {
-    }
+    public void onHostDestroy() {}
 
     @Override
     public void onHostResume() {
@@ -112,26 +110,20 @@ public class Adjust extends ReactContextBaseJavaModule
         double delayStart             = 0.0;
         boolean isLogLevelSuppress    = false;
 
-        //check for isLogLevelSuppress
+        // Check for isLogLevelSuppress.
         if (!mapConfig.isNull("logLevel")) {
             logLevel = mapConfig.getString("logLevel");
 
-            if(logLevel.equals("SUPPRESS")) {
+            if (logLevel.equals("SUPPRESS")) {
                 isLogLevelSuppress = true;
             }
         }
 
-        //check for appToken and environment
+        // Check for appToken and environment.
         appToken    = mapConfig.getString("appToken");
         environment = mapConfig.getString("environment");
 
-        final AdjustConfig adjustConfig 
-            = new AdjustConfig(
-                getReactApplicationContext(), 
-                appToken, 
-                environment, 
-                isLogLevelSuppress);
-
+        final AdjustConfig adjustConfig = new AdjustConfig(getReactApplicationContext(), appToken, environment, isLogLevelSuppress);
 
         if (!adjustConfig.isValid()) {
             return;
@@ -191,19 +183,19 @@ public class Adjust extends ReactContextBaseJavaModule
         }
 
         // Background tracking
-        if(!mapConfig.isNull("sendInBackground")) {
+        if (!mapConfig.isNull("sendInBackground")) {
             sendInBackground = mapConfig.getBoolean("sendInBackground");
             adjustConfig.setSendInBackground(sendInBackground);
         }
 
         // Launching deferred deep link
-        if(!mapConfig.isNull("shouldLaunchDeeplink")) {
+        if (!mapConfig.isNull("shouldLaunchDeeplink")) {
             shouldLaunchDeeplink = mapConfig.getBoolean("shouldLaunchDeeplink");
             this.shouldLaunchDeeplink = shouldLaunchDeeplink;
         }
 
         // Delayed start
-        if(!mapConfig.isNull("delayStart")) {
+        if (!mapConfig.isNull("delayStart")) {
             delayStart = mapConfig.getDouble("delayStart");
             adjustConfig.setDelayStart(delayStart);
         }
@@ -251,24 +243,24 @@ public class Adjust extends ReactContextBaseJavaModule
         final Map<String, Object> partnerParameters  = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
 
         AdjustEvent event = new AdjustEvent(eventToken);
-        if(event.isValid()) {
+        
+        if (event.isValid()) {
             event.setRevenue(revenue, currency);
 
-            if(callbackParameters != null) {
+            if (callbackParameters != null) {
                 for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
                     event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
                 }
             }
 
-            if(partnerParameters != null) {
+            if (partnerParameters != null) {
                 for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
                     event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
                 }
             }
 
-            if(!mapEvent.isNull("transactionId")) {
-                final String transactionId 
-                    = mapEvent.getString("transactionId");
+            if (!mapEvent.isNull("transactionId")) {
+                final String transactionId = mapEvent.getString("transactionId");
 
                 event.setOrderId(transactionId);
             }
@@ -403,12 +395,9 @@ public class Adjust extends ReactContextBaseJavaModule
         this.deferredDeeplinkCallback = false;
     }
 
-    private void sendEvent(ReactContext reactContext,
-            String eventName,
-            @Nullable WritableMap params) {
+    private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
         reactContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(eventName, params);
     }
-
 }

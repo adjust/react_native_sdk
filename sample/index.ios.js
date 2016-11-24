@@ -31,10 +31,13 @@ export default class sample extends Component {
 
         this.isOffline = false;
 
-        var adjustConfig = new AdjustConfig("rb4g27fje5ej", AdjustConfig.EnvironmentSandbox);
+        var adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
+        adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
+        adjustConfig.setDelayStart(6.0);
+        adjustConfig.setUserAgent("little_bunny_foo_foo");
 
         adjustConfig.setAttributionCallbackListener(function(attribution) {
-            console.log(">>> attribution callback received");
+            console.log(">>> Attribution callback received");
 
             console.log("Tracker token = " + attribution.trackerToken);
             console.log("Tracker name = " + attribution.trackerName);
@@ -46,53 +49,53 @@ export default class sample extends Component {
         });
 
         adjustConfig.setEventTrackingSucceededCallbackListener(function(eventSuccess) {
-            console.log(">>> event tracking succeeded callback received");
+            console.log(">>> Event tracking succeeded callback received");
 
-            console.log("message: " + eventSuccess.message);
-            console.log("timeStamp: " + eventSuccess.timeStamp);
-            console.log("adid: " + eventSuccess.adid);
-            console.log("eventToken: " + eventSuccess.eventToken);
-            console.log("json response: " + eventSuccess.jsonResponse );
+            console.log("Message: " + eventSuccess.message);
+            console.log("Timestamp: " + eventSuccess.timeStamp);
+            console.log("Adid: " + eventSuccess.adid);
+            console.log("Event token: " + eventSuccess.eventToken);
+            console.log("JSON response: " + eventSuccess.jsonResponse );
         });
 
         adjustConfig.setEventTrackingFailedCallbackListener(function(eventFailed) {
-            console.log(">>> event tracking failed callback received");
+            console.log(">>> Event tracking failed callback received");
 
-            console.log("message: " + eventFailed.message);
-            console.log("timeStamp: " + eventFailed.timeStamp);
-            console.log("adid: " + eventFailed.adid);
-            console.log("eventToken: " + eventFailed.eventToken);
-            console.log("will retry: " + eventFailed.willRetry);
-            console.log("json response: " + eventFailed.jsonResponse);
+            console.log("Message: " + eventFailed.message);
+            console.log("Timestamp: " + eventFailed.timeStamp);
+            console.log("Adid: " + eventFailed.adid);
+            console.log("Event token: " + eventFailed.eventToken);
+            console.log("Will retry: " + eventFailed.willRetry);
+            console.log("JSON response: " + eventFailed.jsonResponse);
         });
 
         adjustConfig.setSessionTrackingSucceededCallbackListener(function(sessionSuccess) {
-            console.log(">>> session tracking succeeded callback received");
+            console.log(">>> Session tracking succeeded callback received");
 
-            console.log("message: " + sessionSuccess.message);
-            console.log("timeStamp: " + sessionSuccess.timeStamp);
-            console.log("adid: " + sessionSuccess.adid);
-            console.log("json response: " + sessionSuccess.jsonResponse);
+            console.log("Message: " + sessionSuccess.message);
+            console.log("Timestamp: " + sessionSuccess.timeStamp);
+            console.log("Adid: " + sessionSuccess.adid);
+            console.log("JSON response: " + sessionSuccess.jsonResponse);
         });
 
         adjustConfig.setSessionTrackingFailedCallbackListener(function(sessionFailed) {
-            console.log(">>> session tracking failed callback received");
+            console.log(">>> Session tracking failed callback received");
 
-            console.log("message: " + sessionFailed.message);
-            console.log("timeStamp: " + sessionFailed.timeStamp);
-            console.log("adid: " + sessionFailed.adid);
-            console.log("will retry: " + sessionFailed.willRetry);
-            console.log("json response: " + sessionFailed.jsonResponse);
+            console.log("Message: " + sessionFailed.message);
+            console.log("Timestamp: " + sessionFailed.timeStamp);
+            console.log("Adid: " + sessionFailed.adid);
+            console.log("Will retry: " + sessionFailed.willRetry);
+            console.log("JSON response: " + sessionFailed.jsonResponse);
         });
 
         adjustConfig.setDeferredDeeplinkCallbackListener(function(uri) {
             console.log(">>> Deferred Deeplink Callback received");
 
-            console.log("uri: " + uri.uri);
+            console.log("URL: " + uri.uri);
         });
 
         adjustConfig.setShouldLaunchDeeplink(true);
-        //adjustConfig.setEventBufferingEnabled(true);
+        // adjustConfig.setEventBufferingEnabled(true);
 
         Adjust.addSessionCallbackParameter("dummy_foo", "dummy_bar");
         Adjust.addSessionCallbackParameter("dummy_foo_foo", "dummy_bar");
@@ -105,14 +108,10 @@ export default class sample extends Component {
 
         Adjust.resetSessionCallbackParameters();
         Adjust.resetSessionPartnerParameters();
-        Adjust.setPushToken("bunny_foo_foo");
-
-        adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
-
-        adjustConfig.setDelayStart(3.0);
-        adjustConfig.setUserAgent("little_bunny_foo_foo");
 
         Adjust.create(adjustConfig);
+
+        Adjust.setPushToken("bunny_foo_foo");
 
         Adjust.sendFirstPackages();
     }
@@ -126,15 +125,18 @@ export default class sample extends Component {
 
     handleDeepLink(e) {
         const route = e.url.replace(/.*?:\/\//g, "");
+
         console.log("Received deeplink - url: " + e.url);
         console.log("Received deeplink - route: " + route);
-        //this._navigator.replace(this.state.routes[route]);
+
+        // this._navigator.replace(this.state.routes[route]);
+        
         Adjust.appWillOpenUrl(e.url);
     }
 
     render() {
         return (
-            <View style={styles.container}>
+            fView style={styles.container}>
                 <Text style={styles.welcome}>
                     Welcome to Adjust SDK
                 </Text>
@@ -185,86 +187,80 @@ export default class sample extends Component {
     }
 
     _onPress_trackSimpleEvent() {
-        console.log(">> trackSimpleEvent()");
-
-        Adjust.isEnabled( (isEnabled) => {
-            if(isEnabled) {
-                var adjustEvent = new AdjustEvent("uqg17r");
+        Adjust.isEnabled((isEnabled) => {
+            if (isEnabled) {
+                var adjustEvent = new AdjustEvent("g3mfiw");
 
                 Adjust.trackEvent(adjustEvent);
             } else {
-                console.log(">> SDK is disabled");
+                console.log(">>> SDK is disabled");
             }
         });
     }
 
     _onPress_trackRevenueEvent() {
-        console.log(">> trackRevenueEvent()");
-
-        Adjust.isEnabled( (isEnabled) => {
-            if(isEnabled) {
-                var adjustEvent = new AdjustEvent("71iltz");
+        Adjust.isEnabled((isEnabled) => {
+            if (isEnabled) {
+                var adjustEvent = new AdjustEvent("a4fd35");
                 adjustEvent.setRevenue(10.0, "USD");
                 Adjust.trackEvent(adjustEvent);
             } else {
-                console.log(">> SDK is disabled");
+                console.log(">>> SDK is disabled");
             }
         });
     }
 
     _onPress_trackCallbackEvent() {
-        console.log(">> trackCallbackEvent()");
-
-        Adjust.isEnabled( (isEnabled) => {
-            if(isEnabled) {
-                var adjustEvent = new AdjustEvent("1ziip1");
+        Adjust.isEnabled((isEnabled) => {
+            if (isEnabled) {
+                var adjustEvent = new AdjustEvent("34vgg9");
 
                 adjustEvent.addCallbackParameters("DUMMY_KEY", "DUMMY_VALUE");
                 adjustEvent.addCallbackParameters("DUMMY_KEY_2", "DUMMY_VALUE_2");
 
                 Adjust.trackEvent(adjustEvent);
             } else {
-                console.log(">> SDK is disabled");
+                console.log(">>> SDK is disabled");
             }
         });
     }
 
     _onPress_trackPartnerEvent() {
-        console.log(">> trackPartnerEvent()");
-
-        Adjust.isEnabled( (isEnabled) => {
-            if(isEnabled) {
-                var adjustEvent = new AdjustEvent("9s4lqn");
+        Adjust.isEnabled((isEnabled) => {
+            if (isEnabled) {
+                var adjustEvent = new AdjustEvent("w788qs");
 
                 adjustEvent.addPartnerParameters("DUMMY_KEY", "DUMMY_VALUE");
                 adjustEvent.addPartnerParameters("DUMMY_KEY_2", "DUMMY_VALUE_2");
 
                 Adjust.trackEvent(adjustEvent);
             } else {
-                console.log(">> SDK is disabled");
+                console.log(">>> SDK is disabled");
             }
         });
     }
 
     _onPress_toggleOfflineMode() {
-        Adjust.isEnabled( (isEnabled) => {
-            if(isEnabled) {
+        Adjust.isEnabled((isEnabled) => {
+            if (isEnabled) {
                 this.isOffline = !this.isOffline;
-                console.log(">> toggleOfflineMode(): SDK is " + this.isOffline);
+                
                 Adjust.setOfflineMode(this.isOffline);
             } else {
-                console.log(">> SDK is disabled");
+                console.log(">>> SDK is disabled");
             }
         });
     }
 
     _onPress_toggleSdk() {
         Adjust.isEnabled( (isEnabled) => {
-            if(isEnabled) {
-                console.log(">> toggleSdk(): SDK Disabled");
+            if (isEnabled) {
+                console.log(">>> SDK disabled");
+                
                 Adjust.setEnabled(false);
             } else {
-                console.log(">> toggleSdk(): SDK Enabled");
+                console.log(">>> SDK enabled");
+                
                 Adjust.setEnabled(true);
                 Adjust.setOfflineMode(false);
             }
@@ -274,9 +270,9 @@ export default class sample extends Component {
     _onPress_isSdkEnabled() {
         Adjust.isEnabled( (isEnabled) => {
             if(isEnabled) {
-                console.log(">> isSdkEnabled(): SDK is enabled");
+                console.log(">>> SDK is enabled");
             } else {
-                console.log(">> isSdkEnabled(): SDK is disabled");
+                console.log(">>> SDK is disabled");
             }
         });
     }

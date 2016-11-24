@@ -32,8 +32,7 @@ BOOL _isDeferredDeeplinkCallbackImplemented;
     return NO;
 }
 
-RCT_EXPORT_METHOD(create:(NSDictionary *)dict)
-{
+RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSString *appToken = dict[@"appToken"];
     NSString *environment = dict[@"environment"];
     NSString *logLevel = dict[@"logLevel"];
@@ -83,8 +82,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict)
             _isEventTrackingFailedCallbackImplemented ||
             _isSessionTrackingSucceededCallbackImplemented ||
             _isSessionTrackingFailedCallbackImplemented ||
-            _isDeferredDeeplinkCallbackImplemented)
-        {
+            _isDeferredDeeplinkCallbackImplemented) {
             [adjustConfig setDelegate:
              [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
                                                      eventSucceededCallback:_isEventTrackingSucceededCallbackImplemented
@@ -121,8 +119,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict)
     }
 }
 
-RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict)
-{
+RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
     NSString *eventToken = dict[@"eventToken"];
     NSString *revenue = dict[@"revenue"];
     NSString *currency = dict[@"currency"];
@@ -143,7 +140,6 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict)
         
         if ([self isFieldValid:callbackParameters]) {
             for (NSString *key in callbackParameters) {
-                NSLog(@">>> Hello <<<");
                 NSString *value = [callbackParameters objectForKey:key];
                 
                 [adjustEvent addCallbackParameter:key value:value];
@@ -180,13 +176,11 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict)
     }
 }
 
-RCT_EXPORT_METHOD(setOfflineMode:(NSNumber * _Nonnull)isEnabled)
-{
+RCT_EXPORT_METHOD(setOfflineMode:(NSNumber * _Nonnull)isEnabled) {
     [Adjust setOfflineMode:[isEnabled boolValue]];
 }
 
-RCT_EXPORT_METHOD(appWillOpenUrl:(NSString *)urlStr)
-{
+RCT_EXPORT_METHOD(appWillOpenUrl:(NSString *)urlStr) {
     if (urlStr == nil) {
         return;
     }
@@ -196,26 +190,22 @@ RCT_EXPORT_METHOD(appWillOpenUrl:(NSString *)urlStr)
     [Adjust appWillOpenUrl:url];
 }
 
-RCT_EXPORT_METHOD(setEnabled:(NSNumber * _Nonnull)isEnabled)
-{
+RCT_EXPORT_METHOD(setEnabled:(NSNumber * _Nonnull)isEnabled) {
     [Adjust setEnabled:[isEnabled boolValue]];
 }
 
-RCT_EXPORT_METHOD(isEnabled:(RCTResponseSenderBlock)callback)
-{
+RCT_EXPORT_METHOD(isEnabled:(RCTResponseSenderBlock)callback) {
     BOOL isEnabled = [Adjust isEnabled];
     NSNumber *boolNumber = [NSNumber numberWithBool:isEnabled];
     
     callback(@[boolNumber]);
 }
 
-RCT_EXPORT_METHOD(sendFirstPackages)
-{
+RCT_EXPORT_METHOD(sendFirstPackages) {
     [Adjust sendFirstPackages];
 }
 
-RCT_EXPORT_METHOD(addSessionCallbackParameter:(NSString *)key value:(NSString *)value)
-{
+RCT_EXPORT_METHOD(addSessionCallbackParameter:(NSString *)key value:(NSString *)value) {
     if (!([self isFieldValid:key]) || !([self isFieldValid:value])) {
         return;
     }
@@ -223,8 +213,7 @@ RCT_EXPORT_METHOD(addSessionCallbackParameter:(NSString *)key value:(NSString *)
     [Adjust addSessionCallbackParameter:key value:value];
 }
 
-RCT_EXPORT_METHOD(removeSessionCallbackParameter:(NSString *)key)
-{
+RCT_EXPORT_METHOD(removeSessionCallbackParameter:(NSString *)key) {
     if (!([self isFieldValid:key])) {
         return;
     }
@@ -232,13 +221,11 @@ RCT_EXPORT_METHOD(removeSessionCallbackParameter:(NSString *)key)
     [Adjust removeSessionCallbackParameter:key];
 }
 
-RCT_EXPORT_METHOD(resetSessionCallbackParameters)
-{
+RCT_EXPORT_METHOD(resetSessionCallbackParameters) {
     [Adjust resetSessionCallbackParameters];
 }
 
-RCT_EXPORT_METHOD(addSessionPartnerParameter:(NSString *)key value:(NSString *)value)
-{
+RCT_EXPORT_METHOD(addSessionPartnerParameter:(NSString *)key value:(NSString *)value) {
     if (!([self isFieldValid:key]) || !([self isFieldValid:value])) {
         return;
     }
@@ -246,8 +233,7 @@ RCT_EXPORT_METHOD(addSessionPartnerParameter:(NSString *)key value:(NSString *)v
     [Adjust addSessionPartnerParameter:key value:value];
 }
 
-RCT_EXPORT_METHOD(removeSessionPartnerParameter:(NSString *)key)
-{
+RCT_EXPORT_METHOD(removeSessionPartnerParameter:(NSString *)key) {
     if (!([self isFieldValid:key])) {
         return;
     }
@@ -255,13 +241,11 @@ RCT_EXPORT_METHOD(removeSessionPartnerParameter:(NSString *)key)
     [Adjust removeSessionPartnerParameter:key];
 }
 
-RCT_EXPORT_METHOD(resetSessionPartnerParameters)
-{
+RCT_EXPORT_METHOD(resetSessionPartnerParameters) {
     [Adjust resetSessionPartnerParameters];
 }
 
-RCT_EXPORT_METHOD(setPushToken:(NSString *)token)
-{
+RCT_EXPORT_METHOD(setPushToken:(NSString *)token) {
     if (!([self isFieldValid:token])) {
         return;
     }
@@ -269,63 +253,51 @@ RCT_EXPORT_METHOD(setPushToken:(NSString *)token)
     [Adjust setDeviceToken:[token dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
-RCT_EXPORT_METHOD(setAttributionCallbackListener)
-{
+RCT_EXPORT_METHOD(setAttributionCallbackListener) {
     _isAttributionCallbackImplemented = true;
 }
 
-RCT_EXPORT_METHOD(setEventTrackingSucceededCallbackListener)
-{
+RCT_EXPORT_METHOD(setEventTrackingSucceededCallbackListener) {
     _isEventTrackingSucceededCallbackImplemented = true;
 }
 
-RCT_EXPORT_METHOD(setEventTrackingFailedCallbackListener)
-{
+RCT_EXPORT_METHOD(setEventTrackingFailedCallbackListener) {
     _isEventTrackingFailedCallbackImplemented = true;
 }
 
-RCT_EXPORT_METHOD(setSessionTrackingSucceededCallbackListener)
-{
+RCT_EXPORT_METHOD(setSessionTrackingSucceededCallbackListener) {
     _isSessionTrackingSucceededCallbackImplemented = true;
 }
 
-RCT_EXPORT_METHOD(setSessionTrackingFailedCallbackListener)
-{
+RCT_EXPORT_METHOD(setSessionTrackingFailedCallbackListener) {
     _isSessionTrackingFailedCallbackImplemented = true;
 }
 
-RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener)
-{
+RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener) {
     _isDeferredDeeplinkCallbackImplemented = true;
 }
 
-RCT_EXPORT_METHOD(clearAttributionCallbackListener)
-{
+RCT_EXPORT_METHOD(clearAttributionCallbackListener) {
     _isAttributionCallbackImplemented = false;
 }
 
-RCT_EXPORT_METHOD(clearEventTrackingSucceededCallbackListener)
-{
+RCT_EXPORT_METHOD(clearEventTrackingSucceededCallbackListener) {
     _isEventTrackingSucceededCallbackImplemented = false;
 }
 
-RCT_EXPORT_METHOD(clearEventTrackingFailedCallbackListener)
-{
+RCT_EXPORT_METHOD(clearEventTrackingFailedCallbackListener) {
     _isEventTrackingFailedCallbackImplemented = false;
 }
 
-RCT_EXPORT_METHOD(clearSessionTrackingSucceededCallbackListener)
-{
+RCT_EXPORT_METHOD(clearSessionTrackingSucceededCallbackListener) {
     _isSessionTrackingSucceededCallbackImplemented = false;
 }
 
-RCT_EXPORT_METHOD(clearSessionTrackingFailedCallbackListener)
-{
+RCT_EXPORT_METHOD(clearSessionTrackingFailedCallbackListener) {
     _isSessionTrackingFailedCallbackImplemented = false;
 }
 
-RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener)
-{
+RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener) {
     _isDeferredDeeplinkCallbackImplemented = false;
 }
 

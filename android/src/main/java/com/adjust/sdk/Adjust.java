@@ -54,12 +54,10 @@ public class Adjust extends ReactContextBaseJavaModule
     }
 
     @Override
-    public void onHostPause() {
-    }
+    public void onHostPause() {}
 
     @Override
-    public void onHostDestroy() {
-    }
+    public void onHostDestroy() {}
 
     @Override
     public void onHostResume() {
@@ -112,132 +110,128 @@ public class Adjust extends ReactContextBaseJavaModule
         double delayStart             = 0.0;
         boolean isLogLevelSuppress    = false;
 
-        //check for isLogLevelSuppress
+        // Check for isLogLevelSuppress.
         if (!mapConfig.isNull("logLevel")) {
             logLevel = mapConfig.getString("logLevel");
 
-            if(logLevel.equals("SUPPRESS")) {
+            if (logLevel.equals("SUPPRESS")) {
                 isLogLevelSuppress = true;
             }
         }
 
-        //check for appToken and environment
+        // Check for appToken and environment.
         appToken    = mapConfig.getString("appToken");
         environment = mapConfig.getString("environment");
 
-        final AdjustConfig adjustConfig 
-            = new AdjustConfig(
-                    getReactApplicationContext(), 
-                    appToken, 
-                    environment, 
-                    isLogLevelSuppress);
+        final AdjustConfig adjustConfig = new AdjustConfig(getReactApplicationContext(), appToken, environment, isLogLevelSuppress);
 
-
-        if (adjustConfig.isValid()) {
-            // Log level
-            if (!mapConfig.isNull("logLevel")) {
-                logLevel = mapConfig.getString("logLevel");
-
-                if (logLevel.equals("VERBOSE")) {
-                    adjustConfig.setLogLevel(LogLevel.VERBOSE);
-                } else if (logLevel.equals("DEBUG")) {
-                    adjustConfig.setLogLevel(LogLevel.DEBUG);
-                } else if (logLevel.equals("INFO")) {
-                    adjustConfig.setLogLevel(LogLevel.INFO);
-                } else if (logLevel.equals("WARN")) {
-                    adjustConfig.setLogLevel(LogLevel.WARN);
-                } else if (logLevel.equals("ERROR")) {
-                    adjustConfig.setLogLevel(LogLevel.ERROR);
-                } else if (logLevel.equals("ASSERT")) {
-                    adjustConfig.setLogLevel(LogLevel.ASSERT);
-                } else if (logLevel.equals("SUPPRESS")) {
-                    adjustConfig.setLogLevel(LogLevel.SUPRESS);
-                } else {
-                    adjustConfig.setLogLevel(LogLevel.INFO);
-                }
-            }
-
-            // Event buffering
-            if(!mapConfig.isNull("eventBufferingEnabled")) {
-                eventBufferingEnabled = mapConfig.getBoolean("eventBufferingEnabled");
-                adjustConfig.setEventBufferingEnabled(eventBufferingEnabled);
-            }
-
-            // SDK prefix
-            if (!mapConfig.isNull("sdkPrefix")) {
-                sdkPrefix = mapConfig.getString("sdkPrefix");
-                adjustConfig.setSdkPrefix(sdkPrefix);
-            }
-
-            // Main process name
-            if (!mapConfig.isNull("processName")) {
-                processName = mapConfig.getString("processName");
-                adjustConfig.setProcessName(processName);
-            }
-
-            // Default tracker
-            if (!mapConfig.isNull("defaultTracker")) {
-                defaultTracker = mapConfig.getString("defaultTracker");
-                adjustConfig.setDefaultTracker(defaultTracker);
-            }
-
-            // User agent
-            if (!mapConfig.isNull("userAgent") ) {
-                userAgent = mapConfig.getString("userAgent");
-                adjustConfig.setUserAgent(userAgent);
-            }
-
-            // Background tracking
-            if(!mapConfig.isNull("sendInBackground")) {
-                sendInBackground = mapConfig.getBoolean("sendInBackground");
-                adjustConfig.setSendInBackground(sendInBackground);
-            }
-
-            // Launching deferred deep link
-            if(!mapConfig.isNull("shouldLaunchDeeplink")) {
-                shouldLaunchDeeplink = mapConfig.getBoolean("shouldLaunchDeeplink");
-                this.shouldLaunchDeeplink = shouldLaunchDeeplink;
-            }
-
-            // Delayed start
-            if(!mapConfig.isNull("delayStart")) {
-                delayStart = mapConfig.getDouble("delayStart");
-                adjustConfig.setDelayStart(delayStart);
-            }
-
-            // Attribution callback
-            if (attributionCallback) {
-                adjustConfig.setOnAttributionChangedListener(this);
-            }
-
-            // Event tracking succeeded callback
-            if (eventTrackingSucceededCallback) {
-                adjustConfig.setOnEventTrackingSucceededListener(this);
-            }
-
-            // Event tracking failed callback
-            if (eventTrackingFailedCallback) {
-                adjustConfig.setOnEventTrackingFailedListener(this);
-            }
-
-            // Session tracking succeeded callback
-            if (sessionTrackingSucceededCallback) {
-                adjustConfig.setOnSessionTrackingSucceededListener(this);
-            }
-
-            // Session tracking failed callback
-            if (sessionTrackingFailedCallback) {
-                adjustConfig.setOnSessionTrackingFailedListener(this);
-            }
-
-            // Deferred deeplink callback listener
-            if (deferredDeeplinkCallback) {
-                adjustConfig.setOnDeeplinkResponseListener(this);
-            }
-
-            com.adjust.sdk.Adjust.onCreate(adjustConfig);
-            com.adjust.sdk.Adjust.onResume();
+        if (!adjustConfig.isValid()) {
+            return;
         }
+
+        // Log level
+        if (!mapConfig.isNull("logLevel")) {
+            logLevel = mapConfig.getString("logLevel");
+
+            if (logLevel.equals("VERBOSE")) {
+                adjustConfig.setLogLevel(LogLevel.VERBOSE);
+            } else if (logLevel.equals("DEBUG")) {
+                adjustConfig.setLogLevel(LogLevel.DEBUG);
+            } else if (logLevel.equals("INFO")) {
+                adjustConfig.setLogLevel(LogLevel.INFO);
+            } else if (logLevel.equals("WARN")) {
+                adjustConfig.setLogLevel(LogLevel.WARN);
+            } else if (logLevel.equals("ERROR")) {
+                adjustConfig.setLogLevel(LogLevel.ERROR);
+            } else if (logLevel.equals("ASSERT")) {
+                adjustConfig.setLogLevel(LogLevel.ASSERT);
+            } else if (logLevel.equals("SUPPRESS")) {
+                adjustConfig.setLogLevel(LogLevel.SUPRESS);
+            } else {
+                adjustConfig.setLogLevel(LogLevel.INFO);
+            }
+        }
+
+        // Event buffering
+        if(!mapConfig.isNull("eventBufferingEnabled")) {
+            eventBufferingEnabled = mapConfig.getBoolean("eventBufferingEnabled");
+            adjustConfig.setEventBufferingEnabled(eventBufferingEnabled);
+        }
+
+        // SDK prefix
+        if (!mapConfig.isNull("sdkPrefix")) {
+            sdkPrefix = mapConfig.getString("sdkPrefix");
+            adjustConfig.setSdkPrefix(sdkPrefix);
+        }
+
+        // Main process name
+        if (!mapConfig.isNull("processName")) {
+            processName = mapConfig.getString("processName");
+            adjustConfig.setProcessName(processName);
+        }
+
+        // Default tracker
+        if (!mapConfig.isNull("defaultTracker")) {
+            defaultTracker = mapConfig.getString("defaultTracker");
+            adjustConfig.setDefaultTracker(defaultTracker);
+        }
+
+        // User agent
+        if (!mapConfig.isNull("userAgent") ) {
+            userAgent = mapConfig.getString("userAgent");
+            adjustConfig.setUserAgent(userAgent);
+        }
+
+        // Background tracking
+        if (!mapConfig.isNull("sendInBackground")) {
+            sendInBackground = mapConfig.getBoolean("sendInBackground");
+            adjustConfig.setSendInBackground(sendInBackground);
+        }
+
+        // Launching deferred deep link
+        if (!mapConfig.isNull("shouldLaunchDeeplink")) {
+            shouldLaunchDeeplink = mapConfig.getBoolean("shouldLaunchDeeplink");
+            this.shouldLaunchDeeplink = shouldLaunchDeeplink;
+        }
+
+        // Delayed start
+        if (!mapConfig.isNull("delayStart")) {
+            delayStart = mapConfig.getDouble("delayStart");
+            adjustConfig.setDelayStart(delayStart);
+        }
+
+        // Attribution callback
+        if (attributionCallback) {
+            adjustConfig.setOnAttributionChangedListener(this);
+        }
+
+        // Event tracking succeeded callback
+        if (eventTrackingSucceededCallback) {
+            adjustConfig.setOnEventTrackingSucceededListener(this);
+        }
+
+        // Event tracking failed callback
+        if (eventTrackingFailedCallback) {
+            adjustConfig.setOnEventTrackingFailedListener(this);
+        }
+
+        // Session tracking succeeded callback
+        if (sessionTrackingSucceededCallback) {
+            adjustConfig.setOnSessionTrackingSucceededListener(this);
+        }
+
+        // Session tracking failed callback
+        if (sessionTrackingFailedCallback) {
+            adjustConfig.setOnSessionTrackingFailedListener(this);
+        }
+
+        // Deferred deeplink callback listener
+        if (deferredDeeplinkCallback) {
+            adjustConfig.setOnDeeplinkResponseListener(this);
+        }
+
+        com.adjust.sdk.Adjust.onCreate(adjustConfig);
+        com.adjust.sdk.Adjust.onResume();
     }
 
     @ReactMethod
@@ -249,24 +243,24 @@ public class Adjust extends ReactContextBaseJavaModule
         final Map<String, Object> partnerParameters  = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
 
         AdjustEvent event = new AdjustEvent(eventToken);
-        if(event.isValid()) {
+        
+        if (event.isValid()) {
             event.setRevenue(revenue, currency);
 
-            if(callbackParameters != null) {
+            if (callbackParameters != null) {
                 for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
                     event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
                 }
             }
 
-            if(partnerParameters != null) {
+            if (partnerParameters != null) {
                 for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
                     event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
                 }
             }
 
-            if(!mapEvent.isNull("transactionId")) {
-                final String transactionId 
-                    = mapEvent.getString("transactionId");
+            if (!mapEvent.isNull("transactionId")) {
+                final String transactionId = mapEvent.getString("transactionId");
 
                 event.setOrderId(transactionId);
             }
@@ -401,12 +395,9 @@ public class Adjust extends ReactContextBaseJavaModule
         this.deferredDeeplinkCallback = false;
     }
 
-    private void sendEvent(ReactContext reactContext,
-            String eventName,
-            @Nullable WritableMap params) {
+    private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
         reactContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(eventName, params);
     }
-
 }

@@ -9,6 +9,8 @@
 #import "RCTEventDispatcher.h"
 #import <objc/runtime.h>
 #import "adjustSdkDelegate.h"
+#import "ADJAdjustFactory.h"
+#import "ADJUtil.h"
 
 @implementation AdjustSdkDelegate
 
@@ -27,38 +29,38 @@
     
     dispatch_once(&onceToken, ^{
         defaultInstance = [[AdjustSdkDelegate alloc] init];
-
+        
         // Do the swizzling where and if needed.
         if (swizzleAttributionCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustAttributionChanged:)
                                   swizzledSelector:@selector(adjustAttributionChangedWannabe:)];
         }
-
+        
         if (swizzleEventSucceededCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustEventTrackingSucceeded:)
                                   swizzledSelector:@selector(adjustEventTrackingSucceededWannabe:)];
         }
-
+        
         if (swizzleEventFailedCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustEventTrackingFailed:)
                                   swizzledSelector:@selector(adjustEventTrackingFailedWannabe:)];
         }
-
+        
         if (swizzleSessionSucceededCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustSessionTrackingSucceeded:)
                                   swizzledSelector:@selector(adjustSessionTrackingSucceededWannabe:)];
         }
-
+        
         if (swizzleSessionFailedCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustSessionTrackingFailed:)
                                   swizzledSelector:@selector(adjustSessionTrackingFailedWananbe:)];
         }
-
+        
         if (swizzleDeferredDeeplinkCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustDeeplinkResponse:)
                                   swizzledSelector:@selector(adjustDeeplinkResponseWannabe:)];
         }
-
+        
         [defaultInstance setShouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink];
         [defaultInstance setBridge:bridge];
     });
@@ -80,17 +82,17 @@
     if (attr == nil) {
         return;
     }
-
+    
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-        attr.trackerToken, @"trackerToken", 
-        attr.trackerName, @"trackerName", 
-        attr.network, @"network", 
-        attr.campaign, @"campaign", 
-        attr.adgroup, @"adgroup", 
-        attr.creative, @"creative", 
-        attr.clickLabel, @"clickLabel", 
-        nil];
-
+                          attr.trackerToken, @"trackerToken",
+                          attr.trackerName, @"trackerName",
+                          attr.network, @"network",
+                          attr.campaign, @"campaign",
+                          attr.adgroup, @"adgroup",
+                          attr.creative, @"creative",
+                          attr.clickLabel, @"clickLabel",
+                          nil];
+    
     [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_attribution" body:dict];
 }
 
@@ -98,46 +100,72 @@
     if (nil == event) {
         return;
     }
-
+    
     NSError * err;
-    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:event.jsonResponse options:0 error:&err]; 
+    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:event.jsonResponse options:0 error:&err];
+    
+    if (err != nil) {
+        NSString *errorMessage = err.localizedDescription;
+        [ADJAdjustFactory.logger error:errorMessage];
+        return;
+    }
+    
+    if ([ADJUtil isNull:jsonData])  {
+        NSString *errorMessage = @"EventTrackingSucceeded: jsonData is null";
+        [ADJAdjustFactory.logger error:errorMessage];
+        return;
+    }
+    
     NSString * jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
+    
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-        event.message, @"message", 
-        event.timeStamp, @"timeStamp", 
-        event.adid, @"adid", 
-        event.eventToken, @"eventToken", 
-        jsonResponseStr, @"jsonResponse", 
-        nil];
-
+                          event.message, @"message",
+                          event.timeStamp, @"timeStamp",
+                          event.adid, @"adid",
+                          event.eventToken, @"eventToken",
+                          jsonResponseStr, @"jsonResponse",
+                          nil];
+    
     [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingSucceeded" body:dict];
-
+    
 }
 
 - (void)adjustEventTrackingFailedWannabe:(ADJEventFailure *)event {
     if (nil == event) {
         return;
     }
-
+    
     NSError * err;
     NSString * jsonResponseStr = @"";
     if (event.jsonResponse != nil) {
         NSData * jsonData = [NSJSONSerialization dataWithJSONObject:event.jsonResponse options:0 error:&err];
+        
+        if (err != nil) {
+            NSString *errorMessage = err.localizedDescription;
+            [ADJAdjustFactory.logger error:errorMessage];
+            return;
+        }
+        
+        if ([ADJUtil isNull:jsonData])  {
+            NSString *errorMessage = @"EventTrackingFailed: jsonData is null";
+            [ADJAdjustFactory.logger error:errorMessage];
+            return;
+        }
+        
         jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     }
-
+    
     NSNumber *willRetryNum = [NSNumber numberWithBool:event.willRetry];
-
+    
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-        event.message, @"message", 
-        event.timeStamp, @"timeStamp", 
-        event.adid, @"adid", 
-        event.eventToken, @"eventToken", 
-        jsonResponseStr, @"jsonResponse", 
-        willRetryNum, @"willRetry", 
-        nil];
-
+                          event.message, @"message",
+                          event.timeStamp, @"timeStamp",
+                          event.adid, @"adid",
+                          event.eventToken, @"eventToken",
+                          jsonResponseStr, @"jsonResponse",
+                          willRetryNum, @"willRetry",
+                          nil];
+    
     [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingFailed" body:dict];
 }
 
@@ -145,18 +173,31 @@
     if (nil == session) {
         return;
     }
-
+    
     NSError * err;
-    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:session.jsonResponse options:0 error:&err]; 
+    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:session.jsonResponse options:0 error:&err];
+    
+    if (err != nil) {
+        NSString *errorMessage = err.localizedDescription;
+        [ADJAdjustFactory.logger error:errorMessage];
+        return;
+    }
+    
+    if ([ADJUtil isNull:jsonData])  {
+        NSString *errorMessage = @"SessionTrackingSucceeded: jsonData is null";
+        [ADJAdjustFactory.logger error:errorMessage];
+        return;
+    }
+    
     NSString * jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
+    
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-        session.message, @"message", 
-        session.timeStamp, @"timeStamp", 
-        session.adid, @"adid", 
-        jsonResponseStr, @"jsonResponse", 
-        nil];
-
+                          session.message, @"message",
+                          session.timeStamp, @"timeStamp",
+                          session.adid, @"adid",
+                          jsonResponseStr, @"jsonResponse",
+                          nil];
+    
     [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingSucceeded" body:dict];
 }
 
@@ -164,27 +205,40 @@
     if (nil == session) {
         return;
     }
-
+    
     NSError * err;
-    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:session.jsonResponse options:0 error:&err]; 
+    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:session.jsonResponse options:0 error:&err];
+    
+    if (err != nil) {
+        NSString *errorMessage = err.localizedDescription;
+        [ADJAdjustFactory.logger error:errorMessage];
+        return;
+    }
+    
+    if ([ADJUtil isNull:jsonData])  {
+        NSString *errorMessage = @"SessionTrackingFailed: jsonData is null";
+        [ADJAdjustFactory.logger error:errorMessage];
+        return;
+    }
+    
     NSString * jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
+    
     NSNumber *willRetryNum = [NSNumber numberWithBool:session.willRetry];
-
+    
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-        session.message, @"message", 
-        session.timeStamp, @"timeStamp", 
-        session.adid, @"adid", 
-        jsonResponseStr, @"jsonResponse", 
-        willRetryNum, @"willRetry", 
-        nil];
-
+                          session.message, @"message",
+                          session.timeStamp, @"timeStamp",
+                          session.adid, @"adid",
+                          jsonResponseStr, @"jsonResponse",
+                          willRetryNum, @"willRetry",
+                          nil];
+    
     [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingFailed" body:dict];
 }
 
 - (BOOL)adjustDeeplinkResponseWannabe:(NSURL *)deeplink {
     NSString *path = [deeplink absoluteString];
-
+    
     [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_deferredDeeplink"
                                                  body:@{@"uri": path}];
     return _shouldLaunchDeferredDeeplink;
@@ -193,15 +247,15 @@
 - (void)swizzleCallbackMethod:(SEL)originalSelector
              swizzledSelector:(SEL)swizzledSelector {
     Class class = [self class];
-
+    
     Method originalMethod = class_getInstanceMethod(class, originalSelector);
     Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-
+    
     BOOL didAddMethod = class_addMethod(class,
                                         originalSelector,
                                         method_getImplementation(swizzledMethod),
                                         method_getTypeEncoding(swizzledMethod));
-
+    
     if (didAddMethod) {
         class_replaceMethod(class,
                             swizzledSelector,

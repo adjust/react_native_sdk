@@ -14,6 +14,7 @@ import com.facebook.react.bridge.*;
 
 import java.util.ArrayList;
 import android.net.Uri;
+import android.util.Log;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,17 +38,17 @@ final class AdjustUtil {
      * @param key The key for the value to be converted 
      * @return The converted POJO 
      */ 
-    public static Object toObject(@Nullable ReadableMap readableMap, String key) {
+    private static Object toObject(@Nullable ReadableMap readableMap, String key) {
         if (readableMap == null) {
             return null; 
-        } 
+        }
 
         Object result;
 
         ReadableType readableType = readableMap.getType(key);
         switch (readableType) {
             case Null: 
-                result = key;
+                result = null;
                 break; 
             case Boolean: 
                 result = readableMap.getBoolean(key);
@@ -55,11 +56,13 @@ final class AdjustUtil {
             case Number: 
                 // Can be int or double. 
                 double tmp = readableMap.getDouble(key);
-                if (tmp == (int) tmp) {
-                    result = (int) tmp;
+                
+                if (tmp == (int)tmp) {
+                    result = (int)tmp;
                 } else { 
                     result = tmp;
-                } 
+                }
+
                 break; 
             case String: 
                 result = readableMap.getString(key);
@@ -71,11 +74,11 @@ final class AdjustUtil {
                 result = toList(readableMap.getArray(key));
                 break; 
             default: 
-                throw new IllegalArgumentException("Could not convert object with key: " + key + ".");
-        } 
+                AdjustFactory.getLogger().error("Could not convert object with key: " + key + ".");
+        }
 
         return result;
-    } 
+    }
 
     /** 
      * toMap converts a {@link ReadableMap} into a HashMap. 
@@ -86,21 +89,30 @@ final class AdjustUtil {
     public static Map<String, Object> toMap(@Nullable ReadableMap readableMap) {
         if (readableMap == null) {
             return null; 
-        } 
+        }
 
         com.facebook.react.bridge.ReadableMapKeySetIterator iterator = readableMap.keySetIterator();
+        
         if (!iterator.hasNextKey()) {
             return null; 
-        } 
+        }
 
         Map<String, Object> result = new HashMap<>();
+        
         while (iterator.hasNextKey()) {
             String key = iterator.nextKey();
-            result.put(key, toObject(readableMap, key));
-        } 
+            String value = toObject(readableMap, key);
+            
+            if (value == null) {
+                AdjustFactory.getLogger().warn("Null parameter inside key-value pair with key: " + key)
+                continue;
+            }
+
+            result.put(key, value);
+        }
 
         return result;
-    } 
+    }
 
     /** 
      * toList converts a {@link ReadableArray} into an ArrayList. 
@@ -111,14 +123,15 @@ final class AdjustUtil {
     public static List<Object> toList(@Nullable ReadableArray readableArray) {
         if (readableArray == null) {
             return null; 
-        } 
+        }
 
         List<Object> result = new ArrayList<>(readableArray.size());
+
         for (int index = 0; index < readableArray.size(); index++) {
             ReadableType readableType = readableArray.getType(index);
+            
             switch (readableType) {
                 case Null: 
-                    result.add(String.valueOf(index));
                     break; 
                 case Boolean: 
                     result.add(readableArray.getBoolean(index));
@@ -126,11 +139,13 @@ final class AdjustUtil {
                 case Number: 
                     // Can be int or double. 
                     double tmp = readableArray.getDouble(index);
-                    if (tmp == (int) tmp) {
-                        result.add((int) tmp);
+                    
+                    if (tmp == (int)tmp) {
+                        result.add((int)tmp);
                     } else { 
                         result.add(tmp);
-                    } 
+                    }
+
                     break; 
                 case String: 
                     result.add(readableArray.getString(index));
@@ -142,7 +157,7 @@ final class AdjustUtil {
                     result = toList(readableArray.getArray(index));
                     break; 
                 default: 
-                    throw new IllegalArgumentException("Could not convert object with index: " + index + ".");
+                    AdjustFactory.getLogger().error("Could not convert object with index: " + index + ".");
             } 
         } 
 
@@ -161,6 +176,7 @@ final class AdjustUtil {
 
     public static WritableMap attributionToMap(AdjustAttribution attribution) {
         WritableMap map = Arguments.createMap();
+
         map.putString("trackerToken", attribution.trackerToken);
         map.putString("trackerName", attribution.trackerName);
         map.putString("network", attribution.network);
@@ -174,12 +190,13 @@ final class AdjustUtil {
 
     public static WritableMap eventSuccessToMap(AdjustEventSuccess eventSuccess) {
         WritableMap map = Arguments.createMap();
+
         map.putString("message", eventSuccess.message);
         map.putString("timestamp", eventSuccess.timestamp);
         map.putString("adid", eventSuccess.adid);
         map.putString("eventToken", eventSuccess.eventToken);
 
-        if(eventSuccess.jsonResponse != null) {
+        if (eventSuccess.jsonResponse != null) {
             map.putString("jsonResponse", eventSuccess.jsonResponse.toString());
         }
 
@@ -188,13 +205,14 @@ final class AdjustUtil {
 
     public static WritableMap eventFailureToMap(AdjustEventFailure eventFailure) {
         WritableMap map = Arguments.createMap();
+        
         map.putString("message", eventFailure.message);
         map.putString("timestamp", eventFailure.timestamp);
         map.putString("adid", eventFailure.adid);
         map.putString("eventToken", eventFailure.eventToken);
         map.putBoolean("willRetry", eventFailure.willRetry);
 
-        if(eventFailure.jsonResponse != null) {
+        if (eventFailure.jsonResponse != null) {
             map.putString("jsonResponse", eventFailure.jsonResponse.toString());
         }
 
@@ -203,11 +221,12 @@ final class AdjustUtil {
 
     public static WritableMap sessionSuccessToMap(AdjustSessionSuccess sessionSuccess) {
         WritableMap map = Arguments.createMap();
+        
         map.putString("message", sessionSuccess.message);
         map.putString("timestamp", sessionSuccess.timestamp);
         map.putString("adid", sessionSuccess.adid);
 
-        if(sessionSuccess.jsonResponse != null) {
+        if (sessionSuccess.jsonResponse != null) {
             map.putString("jsonResponse", sessionSuccess.jsonResponse.toString());
         }
 
@@ -216,12 +235,13 @@ final class AdjustUtil {
 
     public static WritableMap sessionFailureToMap(AdjustSessionFailure sessionFailure) {
         WritableMap map = Arguments.createMap();
+        
         map.putString("message", sessionFailure.message);
         map.putString("timestamp", sessionFailure.timestamp);
         map.putString("adid", sessionFailure.adid);
         map.putBoolean("willRetry", sessionFailure.willRetry);
 
-        if(sessionFailure.jsonResponse != null) {
+        if (sessionFailure.jsonResponse != null) {
             map.putString("jsonResponse", sessionFailure.jsonResponse.toString());
         }
 
@@ -230,6 +250,7 @@ final class AdjustUtil {
 
     public static WritableMap deferredDeeplinkToMap(Uri uri) {
         WritableMap map = Arguments.createMap();
+
         map.putString("uri", uri.toString());
 
         return map;

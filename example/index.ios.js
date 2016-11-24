@@ -137,7 +137,7 @@ export default class Example extends Component {
 
     render() {
         return (
-            fView style={styles.container}>
+            <View style={styles.container}>
                 <Text style={styles.welcome}>
                     Welcome to Adjust SDK
                 </Text>

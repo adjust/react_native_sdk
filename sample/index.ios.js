@@ -33,7 +33,7 @@ export default class sample extends Component {
 
         var adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
         adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
-        adjustConfig.setDelayStart(3.0);
+        adjustConfig.setDelayStart(6.0);
         adjustConfig.setUserAgent("little_bunny_foo_foo");
 
         adjustConfig.setAttributionCallbackListener(function(attribution) {
@@ -108,9 +108,10 @@ export default class sample extends Component {
 
         Adjust.resetSessionCallbackParameters();
         Adjust.resetSessionPartnerParameters();
-        Adjust.setPushToken("bunny_foo_foo");
 
         Adjust.create(adjustConfig);
+
+        Adjust.setPushToken("bunny_foo_foo");
 
         Adjust.sendFirstPackages();
     }
@@ -124,15 +125,18 @@ export default class sample extends Component {
 
     handleDeepLink(e) {
         const route = e.url.replace(/.*?:\/\//g, "");
+
         console.log("Received deeplink - url: " + e.url);
         console.log("Received deeplink - route: " + route);
-        //this._navigator.replace(this.state.routes[route]);
+
+        // this._navigator.replace(this.state.routes[route]);
+        
         Adjust.appWillOpenUrl(e.url);
     }
 
     render() {
         return (
-            <View style={styles.container}>
+            fView style={styles.container}>
                 <Text style={styles.welcome}>
                     Welcome to Adjust SDK
                 </Text>
@@ -240,8 +244,6 @@ export default class sample extends Component {
         Adjust.isEnabled((isEnabled) => {
             if (isEnabled) {
                 this.isOffline = !this.isOffline;
-                
-                console.log(">>> SDK is " + this.isOffline);
                 
                 Adjust.setOfflineMode(this.isOffline);
             } else {

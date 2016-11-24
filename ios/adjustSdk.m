@@ -140,7 +140,6 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
         
         if ([self isFieldValid:callbackParameters]) {
             for (NSString *key in callbackParameters) {
-                NSLog(@">>> Hello <<<");
                 NSString *value = [callbackParameters objectForKey:key];
                 
                 [adjustEvent addCallbackParameter:key value:value];

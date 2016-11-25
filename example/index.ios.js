@@ -53,7 +53,7 @@ export default class Example extends Component {
             console.log(">>> Event tracking succeeded callback received");
 
             console.log("Message: " + eventSuccess.message);
-            console.log("Timestamp: " + eventSuccess.timeStamp);
+            console.log("Timestamp: " + eventSuccess.timestamp);
             console.log("Adid: " + eventSuccess.adid);
             console.log("Event token: " + eventSuccess.eventToken);
             console.log("JSON response: " + eventSuccess.jsonResponse );
@@ -63,7 +63,7 @@ export default class Example extends Component {
             console.log(">>> Event tracking failed callback received");
 
             console.log("Message: " + eventFailed.message);
-            console.log("Timestamp: " + eventFailed.timeStamp);
+            console.log("Timestamp: " + eventFailed.timestamp);
             console.log("Adid: " + eventFailed.adid);
             console.log("Event token: " + eventFailed.eventToken);
             console.log("Will retry: " + eventFailed.willRetry);
@@ -74,7 +74,7 @@ export default class Example extends Component {
             console.log(">>> Session tracking succeeded callback received");
 
             console.log("Message: " + sessionSuccess.message);
-            console.log("Timestamp: " + sessionSuccess.timeStamp);
+            console.log("Timestamp: " + sessionSuccess.timestamp);
             console.log("Adid: " + sessionSuccess.adid);
             console.log("JSON response: " + sessionSuccess.jsonResponse);
         });
@@ -83,7 +83,7 @@ export default class Example extends Component {
             console.log(">>> Session tracking failed callback received");
 
             console.log("Message: " + sessionFailed.message);
-            console.log("Timestamp: " + sessionFailed.timeStamp);
+            console.log("Timestamp: " + sessionFailed.timestamp);
             console.log("Adid: " + sessionFailed.adid);
             console.log("Will retry: " + sessionFailed.willRetry);
             console.log("JSON response: " + sessionFailed.jsonResponse);

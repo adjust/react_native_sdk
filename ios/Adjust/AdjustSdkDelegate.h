@@ -1,5 +1,5 @@
 //
-//  adjustSdkDelegate.h
+//  AdjustSdkDelegate.h
 //  Adjust
 //
 //  Created by Abdullah on 2016-11-17
@@ -7,12 +7,12 @@
 //
 
 #import "RCTBridge.h"
-#import "adjustSdk.h"
+#import "AdjustSdk.h"
 
 @interface AdjustSdkDelegate : NSObject<AdjustDelegate>
 
 @property (nonatomic) BOOL shouldLaunchDeferredDeeplink;
-@property (nonatomic) RCTBridge* bridge;
+@property (nonatomic) RCTBridge *bridge;
 
 + (id)getInstanceWithSwizzleOfAttributionCallback:(BOOL)swizzleAttributionCallback
 						   eventSucceededCallback:(BOOL)swizzleEventSucceededCallback

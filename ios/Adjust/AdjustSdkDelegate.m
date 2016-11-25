@@ -1,16 +1,15 @@
 //
-//  adjustSdkDelegate.m
+//  AdjustSdkDelegate.m
 //  Adjust
 //
 //  Created by Abdullah Obaied on 2016-11-18.
 //  Copyright (c) 2012-2016 adjust GmbH. All rights reserved.
 //
 
-#import "RCTEventDispatcher.h"
 #import <objc/runtime.h>
-#import "adjustSdkDelegate.h"
-#import "ADJAdjustFactory.h"
-#import "ADJUtil.h"
+
+#import "AdjustSdkDelegate.h"
+#import "RCTEventDispatcher.h"
 
 @implementation AdjustSdkDelegate
 
@@ -21,9 +20,7 @@
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink
-                                       withBridge:(RCTBridge *)bridge;
-
-{
+                                       withBridge:(RCTBridge *)bridge {
     static dispatch_once_t onceToken;
     static AdjustSdkDelegate *defaultInstance = nil;
     
@@ -78,169 +75,94 @@
     return self;
 }
 
-- (void)adjustAttributionChangedWannabe:(ADJAttribution *)attr {
-    if (attr == nil) {
+- (void)adjustAttributionChangedWannabe:(ADJAttribution *)attribution {
+    if (attribution == nil) {
         return;
     }
     
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                          attr.trackerToken, @"trackerToken",
-                          attr.trackerName, @"trackerName",
-                          attr.network, @"network",
-                          attr.campaign, @"campaign",
-                          attr.adgroup, @"adgroup",
-                          attr.creative, @"creative",
-                          attr.clickLabel, @"clickLabel",
-                          nil];
-    
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_attribution" body:dict];
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+
+    [self addValueOrEmpty:dictionary key:@"trackerToken" value:attribution.trackerToken];
+    [self addValueOrEmpty:dictionary key:@"trackerName" value:attribution.trackerName];
+    [self addValueOrEmpty:dictionary key:@"network" value:attribution.network];
+    [self addValueOrEmpty:dictionary key:@"campaign" value:attribution.campaign];
+    [self addValueOrEmpty:dictionary key:@"creative" value:attribution.creative];
+    [self addValueOrEmpty:dictionary key:@"adgroup" value:attribution.adgroup];
+    [self addValueOrEmpty:dictionary key:@"clickLabel" value:attribution.clickLabel];
+
+    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_attribution" body:dictionary];
 }
 
-- (void)adjustEventTrackingSucceededWannabe:(ADJEventSuccess *)event {
-    if (nil == event) {
+- (void)adjustEventTrackingSucceededWannabe:(ADJEventSuccess *)eventSuccessResponseData {
+    if (nil == eventSuccessResponseData) {
         return;
     }
-    
-    NSError * err;
-    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:event.jsonResponse options:0 error:&err];
-    
-    if (err != nil) {
-        NSString *errorMessage = err.localizedDescription;
-        [ADJAdjustFactory.logger error:errorMessage];
-        return;
-    }
-    
-    if ([ADJUtil isNull:jsonData])  {
-        NSString *errorMessage = @"EventTrackingSucceeded: jsonData is null";
-        [ADJAdjustFactory.logger error:errorMessage];
-        return;
-    }
-    
-    NSString * jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                          event.message, @"message",
-                          event.timeStamp, @"timeStamp",
-                          event.adid, @"adid",
-                          event.eventToken, @"eventToken",
-                          jsonResponseStr, @"jsonResponse",
-                          nil];
-    
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingSucceeded" body:dict];
-    
+
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+
+    [self addValueOrEmpty:dictionary key:@"message" value:eventSuccessResponseData.message];
+    [self addValueOrEmpty:dictionary key:@"timestamp" value:eventSuccessResponseData.timeStamp];
+    [self addValueOrEmpty:dictionary key:@"adid" value:eventSuccessResponseData.adid];
+    [self addValueOrEmpty:dictionary key:@"eventToken" value:eventSuccessResponseData.eventToken];
+    [self addValueOrEmpty:dictionary key:@"jsonResponse" value:eventSuccessResponseData.jsonResponse];
+
+    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingSucceeded" body:dictionary];
 }
 
-- (void)adjustEventTrackingFailedWannabe:(ADJEventFailure *)event {
-    if (nil == event) {
+- (void)adjustEventTrackingFailedWannabe:(ADJEventFailure *)eventFailureResponseData {
+    if (nil == eventFailureResponseData) {
         return;
     }
-    
-    NSError * err;
-    NSString * jsonResponseStr = @"";
-    if (event.jsonResponse != nil) {
-        NSData * jsonData = [NSJSONSerialization dataWithJSONObject:event.jsonResponse options:0 error:&err];
-        
-        if (err != nil) {
-            NSString *errorMessage = err.localizedDescription;
-            [ADJAdjustFactory.logger error:errorMessage];
-            return;
-        }
-        
-        if ([ADJUtil isNull:jsonData])  {
-            NSString *errorMessage = @"EventTrackingFailed: jsonData is null";
-            [ADJAdjustFactory.logger error:errorMessage];
-            return;
-        }
-        
-        jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    }
-    
-    NSNumber *willRetryNum = [NSNumber numberWithBool:event.willRetry];
-    
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                          event.message, @"message",
-                          event.timeStamp, @"timeStamp",
-                          event.adid, @"adid",
-                          event.eventToken, @"eventToken",
-                          jsonResponseStr, @"jsonResponse",
-                          willRetryNum, @"willRetry",
-                          nil];
-    
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingFailed" body:dict];
+
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+
+    [self addValueOrEmpty:dictionary key:@"message" value:eventFailureResponseData.message];
+    [self addValueOrEmpty:dictionary key:@"timestamp" value:eventFailureResponseData.timeStamp];
+    [self addValueOrEmpty:dictionary key:@"adid" value:eventFailureResponseData.adid];
+    [self addValueOrEmpty:dictionary key:@"eventToken" value:eventFailureResponseData.eventToken];
+    [dictionary setObject:(eventFailureResponseData.willRetry ? @"true" : @"false") forKey:@"willRetry"];
+    [self addValueOrEmpty:dictionary key:@"jsonResponse" value:eventFailureResponseData.jsonResponse];
+
+    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingFailed" body:dictionary];
 }
 
-- (void)adjustSessionTrackingSucceededWannabe:(ADJSessionSuccess *)session {
-    if (nil == session) {
+
+- (void)adjustSessionTrackingSucceededWannabe:(ADJSessionSuccess *)sessionSuccessResponseData {
+    if (nil == sessionSuccessResponseData) {
         return;
     }
-    
-    NSError * err;
-    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:session.jsonResponse options:0 error:&err];
-    
-    if (err != nil) {
-        NSString *errorMessage = err.localizedDescription;
-        [ADJAdjustFactory.logger error:errorMessage];
-        return;
-    }
-    
-    if ([ADJUtil isNull:jsonData])  {
-        NSString *errorMessage = @"SessionTrackingSucceeded: jsonData is null";
-        [ADJAdjustFactory.logger error:errorMessage];
-        return;
-    }
-    
-    NSString * jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                          session.message, @"message",
-                          session.timeStamp, @"timeStamp",
-                          session.adid, @"adid",
-                          jsonResponseStr, @"jsonResponse",
-                          nil];
-    
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingSucceeded" body:dict];
+
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+
+    [self addValueOrEmpty:dictionary key:@"message" value:sessionSuccessResponseData.message];
+    [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionSuccessResponseData.timeStamp];
+    [self addValueOrEmpty:dictionary key:@"adid" value:sessionSuccessResponseData.adid];
+    [self addValueOrEmpty:dictionary key:@"jsonResponse" value:sessionSuccessResponseData.jsonResponse];
+
+    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingSucceeded" body:dictionary];
 }
 
-- (void)adjustSessionTrackingFailedWananbe:(ADJSessionFailure *)session {
-    if (nil == session) {
+- (void)adjustSessionTrackingFailedWananbe:(ADJSessionFailure *)sessionFailureResponseData {
+    if (nil == sessionFailureResponseData) {
         return;
     }
-    
-    NSError * err;
-    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:session.jsonResponse options:0 error:&err];
-    
-    if (err != nil) {
-        NSString *errorMessage = err.localizedDescription;
-        [ADJAdjustFactory.logger error:errorMessage];
-        return;
-    }
-    
-    if ([ADJUtil isNull:jsonData])  {
-        NSString *errorMessage = @"SessionTrackingFailed: jsonData is null";
-        [ADJAdjustFactory.logger error:errorMessage];
-        return;
-    }
-    
-    NSString * jsonResponseStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
-    NSNumber *willRetryNum = [NSNumber numberWithBool:session.willRetry];
-    
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                          session.message, @"message",
-                          session.timeStamp, @"timeStamp",
-                          session.adid, @"adid",
-                          jsonResponseStr, @"jsonResponse",
-                          willRetryNum, @"willRetry",
-                          nil];
-    
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingFailed" body:dict];
+
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+
+    [self addValueOrEmpty:dictionary key:@"message" value:sessionFailureResponseData.message];
+    [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionFailureResponseData.timeStamp];
+    [self addValueOrEmpty:dictionary key:@"adid" value:sessionFailureResponseData.adid];
+    [dictionary setObject:(sessionFailureResponseData.willRetry ? @"true" : @"false") forKey:@"willRetry"];
+    [self addValueOrEmpty:dictionary key:@"jsonResponse" value:sessionFailureResponseData.jsonResponse];
+
+    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingFailed" body:dictionary];
 }
 
 - (BOOL)adjustDeeplinkResponseWannabe:(NSURL *)deeplink {
     NSString *path = [deeplink absoluteString];
     
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_deferredDeeplink"
-                                                 body:@{@"uri": path}];
+    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_deferredDeeplink" body:@{@"uri": path}];
+
     return _shouldLaunchDeferredDeeplink;
 }
 
@@ -275,6 +197,5 @@
         [dictionary setObject:@"" forKey:key];
     }
 }
-
 
 @end

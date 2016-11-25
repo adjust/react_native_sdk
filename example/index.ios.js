@@ -118,8 +118,6 @@ export default class Example extends Component {
     }
 
     componentWillUnmount() {
-        console.log(">>> componentWillUnmount");
-
         Linking.removeEventListener('url', this.handleDeepLink);
         Adjust.componentWillUnmount();
     }

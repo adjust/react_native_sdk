@@ -15,7 +15,6 @@
 
 RCT_EXPORT_MODULE(Adjust);
 
-BOOL _shouldLaunchDeeplink = YES;
 BOOL _isAttributionCallbackImplemented;
 BOOL _isEventTrackingSucceededCallbackImplemented;
 BOOL _isEventTrackingFailedCallbackImplemented;
@@ -78,6 +77,8 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
         }
         
         // Attribution delegate & other delegates
+        BOOL shouldLaunchDeferredDeeplink = [self isFieldValid:shouldLaunchDeeplink] ? [shouldLaunchDeeplink boolValue] : YES;
+
         if (_isAttributionCallbackImplemented ||
             _isEventTrackingSucceededCallbackImplemented ||
             _isEventTrackingFailedCallbackImplemented ||
@@ -91,18 +92,13 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
                                                    sessionSucceededCallback:_isSessionTrackingSucceededCallbackImplemented
                                                       sessionFailedCallback:_isSessionTrackingFailedCallbackImplemented
                                                    deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
-                                               shouldLaunchDeferredDeeplink:_shouldLaunchDeeplink
+                                               shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink
                                                                  withBridge:_bridge]];
         }
         
         // Send in background
         if ([self isFieldValid:sendInBackground]) {
             [adjustConfig setSendInBackground:[sendInBackground boolValue]];
-        }
-        
-        // Should launch deeplink
-        if ([self isFieldValid:shouldLaunchDeeplink]) {
-            _shouldLaunchDeeplink = [shouldLaunchDeeplink boolValue];
         }
         
         // User agent

@@ -43,7 +43,7 @@ final class AdjustUtil {
             return null; 
         }
 
-        Object result;
+        Object result = null;
 
         ReadableType readableType = readableMap.getType(key);
         switch (readableType) {
@@ -101,10 +101,10 @@ final class AdjustUtil {
         
         while (iterator.hasNextKey()) {
             String key = iterator.nextKey();
-            String value = toObject(readableMap, key);
+            String value = toObject(readableMap, key).toString();
             
             if (value == null) {
-                AdjustFactory.getLogger().warn("Null parameter inside key-value pair with key: " + key)
+                AdjustFactory.getLogger().warn("Null parameter inside key-value pair with key: " + key);
                 continue;
             }
 

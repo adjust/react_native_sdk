@@ -120,9 +120,7 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
     NSString *eventToken = dict[@"eventToken"];
     NSString *revenue = dict[@"revenue"];
     NSString *currency = dict[@"currency"];
-    NSString *receipt = dict[@"receipt"];
     NSString *transactionId = dict[@"transactionId"];
-    NSNumber *isReceiptSet = dict[@"isReceiptSet"];
     NSDictionary *callbackParameters = dict[@"callbackParameters"];
     NSDictionary *partnerParameters = dict[@"partnerParameters"];
     
@@ -148,20 +146,6 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
                 NSString *value = [partnerParameters objectForKey:key];
                 
                 [adjustEvent addPartnerParameter:key value:value];
-            }
-        }
-        
-        BOOL isTransactionIdSet = false;
-        
-        if ([self isFieldValid:isReceiptSet]) {
-            if ([isReceiptSet boolValue]) {
-                [adjustEvent setReceipt:[receipt dataUsingEncoding:NSUTF8StringEncoding] transactionId:transactionId];
-            } else {
-                if ([self isFieldValid:transactionId]) {
-                    [adjustEvent setTransactionId:transactionId];
-                    
-                    isTransactionIdSet = YES;
-                }
             }
         }
         

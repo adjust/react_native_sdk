@@ -9,17 +9,16 @@
 
 package com.adjust.nativemodule;
 
-import android.view.Gravity;
-
-import com.facebook.common.logging.FLog;
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
-import javax.annotation.Nullable;
-import android.util.Log;
-import android.net.Uri;
+
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import android.net.Uri;
+
+import javax.annotation.Nullable;
 
 import com.adjust.sdk.*;
 

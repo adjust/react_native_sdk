@@ -189,7 +189,6 @@ export default class Example extends Component {
         Adjust.isEnabled((isEnabled) => {
             if (isEnabled) {
                 var adjustEvent = new AdjustEvent("g3mfiw");
-
                 Adjust.trackEvent(adjustEvent);
             } else {
                 console.log(">>> SDK is disabled");
@@ -243,7 +242,6 @@ export default class Example extends Component {
         Adjust.isEnabled((isEnabled) => {
             if (isEnabled) {
                 this.isOffline = !this.isOffline;
-                
                 Adjust.setOfflineMode(this.isOffline);
             } else {
                 console.log(">>> SDK is disabled");
@@ -254,14 +252,11 @@ export default class Example extends Component {
     _onPress_toggleSdk() {
         Adjust.isEnabled( (isEnabled) => {
             if (isEnabled) {
-                console.log(">>> SDK disabled");
-                
                 Adjust.setEnabled(false);
+                console.log(">>> SDK disabled");
             } else {
-                console.log(">>> SDK enabled");
-                
                 Adjust.setEnabled(true);
-                Adjust.setOfflineMode(false);
+                console.log(">>> SDK enabled");
             }
         });
     }

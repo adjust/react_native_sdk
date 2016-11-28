@@ -170,33 +170,45 @@ AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) 
 };
 
 AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {
-    module_adjust.setAttributionCallbackListener();
-    AdjustConfig.AttributionSubscription = DeviceEventEmitter.addListener('adjust_attribution', attributionCallbackListener);
+    if (null != AdjustConfig.AttributionSubscription) {
+        module_adjust.setAttributionCallbackListener();
+        AdjustConfig.AttributionSubscription = DeviceEventEmitter.addListener('adjust_attribution', attributionCallbackListener);
+    }
 };
 
 AdjustConfig.prototype.setEventTrackingSucceededCallbackListener = function(eventTrackingSucceededCallbackListener) {
-    module_adjust.setEventTrackingSucceededCallbackListener();
-    AdjustConfig.EventTrackingSucceededSubscription = DeviceEventEmitter.addListener('adjust_eventTrackingSucceeded', eventTrackingSucceededCallbackListener);
+    if (null != AdjustConfig.EventTrackingSucceededSubscription) {
+        module_adjust.setEventTrackingSucceededCallbackListener();
+        AdjustConfig.EventTrackingSucceededSubscription = DeviceEventEmitter.addListener('adjust_eventTrackingSucceeded', eventTrackingSucceededCallbackListener);
+    }
 };
 
 AdjustConfig.prototype.setEventTrackingFailedCallbackListener = function(eventTrackingFailedCallbackListener) {
-    module_adjust.setEventTrackingFailedCallbackListener();
-    AdjustConfig.EventTrackingFailedSubscription = DeviceEventEmitter.addListener('adjust_eventTrackingFailed', eventTrackingFailedCallbackListener);
+    if (null != AdjustConfig.EventTrackingFailedSubscription) {
+        module_adjust.setEventTrackingFailedCallbackListener();
+        AdjustConfig.EventTrackingFailedSubscription = DeviceEventEmitter.addListener('adjust_eventTrackingFailed', eventTrackingFailedCallbackListener);
+    }
 };
 
 AdjustConfig.prototype.setSessionTrackingSucceededCallbackListener = function(sessionTrackingSucceededCallbackListener) {
-    module_adjust.setSessionTrackingSucceededCallbackListener();
-    AdjustConfig.SessionTrackingSucceededSubscription = DeviceEventEmitter.addListener('adjust_sessionTrackingSucceeded', sessionTrackingSucceededCallbackListener);
+    if (null != AdjustConfig.SessionTrackingSucceededSubscription) {
+        module_adjust.setSessionTrackingSucceededCallbackListener();
+        AdjustConfig.SessionTrackingSucceededSubscription = DeviceEventEmitter.addListener('adjust_sessionTrackingSucceeded', sessionTrackingSucceededCallbackListener);
+    }
 };
 
 AdjustConfig.prototype.setSessionTrackingFailedCallbackListener = function(sessionTrackingFailedCallbackListener) {
-    module_adjust.setSessionTrackingFailedCallbackListener();
-    AdjustConfig.SessionTrackingFailedSubscription = DeviceEventEmitter.addListener('adjust_sessionTrackingFailed', sessionTrackingFailedCallbackListener);
+    if (null != AdjustConfig.SessionTrackingFailedSubscription) {
+        module_adjust.setSessionTrackingFailedCallbackListener();
+        AdjustConfig.SessionTrackingFailedSubscription = DeviceEventEmitter.addListener('adjust_sessionTrackingFailed', sessionTrackingFailedCallbackListener);
+    }
 };
 
 AdjustConfig.prototype.setDeferredDeeplinkCallbackListener = function(deferredDeeplinkCallbackListener) {
-    module_adjust.setDeferredDeeplinkCallbackListener();
-    AdjustConfig.DeferredDeeplinkSubscription = DeviceEventEmitter.addListener('adjust_deferredDeeplink', deferredDeeplinkCallbackListener);
+    if (null != AdjustConfig.DeferredDeeplinkSubscription) {
+        module_adjust.setDeferredDeeplinkCallbackListener();
+        AdjustConfig.DeferredDeeplinkSubscription = DeviceEventEmitter.addListener('adjust_deferredDeeplink', deferredDeeplinkCallbackListener);
+    }
 };
 
 Adjust.componentWillUnmount = function() {
@@ -207,22 +219,22 @@ Adjust.componentWillUnmount = function() {
 
     if (AdjustConfig.EventTrackingSucceededSubscription) {
         AdjustConfig.EventTrackingSucceededSubscription.remove();
-        module_adjust.clearEventTrackingSucceededListener();
+        module_adjust.clearEventTrackingSucceededCallbackListener();
     }
 
     if (AdjustConfig.EventTrackingFailedSubscription) {
         AdjustConfig.EventTrackingFailedSubscription.remove();
-        module_adjust.clearEventTrackingFailedListener();
+        module_adjust.clearEventTrackingFailedCallbackListener();
     }
 
     if (AdjustConfig.SessionTrackingSucceededSubscription) {
         AdjustConfig.SessionTrackingSucceededSubscription.remove();
-        module_adjust.clearSessionTrackingSucceededListener();
+        module_adjust.clearSessionTrackingSucceededCallbackListener();
     }
 
     if (AdjustConfig.SessionTrackingFailedSubscription) {
         AdjustConfig.SessionTrackingFailedSubscription.remove();
-        module_adjust.clearSessionTrackingFailedListener();
+        module_adjust.clearSessionTrackingFailedCallbackListener();
     }
 
     if (AdjustConfig.DeferredDeeplinkSubscription) {

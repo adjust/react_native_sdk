@@ -17,7 +17,11 @@ import {
 
 export default class Example extends Component {
     componentDidMount() {
-        Linking.addEventListener('url', this.handleDeepLink);
+        const url = Linking.getInitialURL().then(url => {
+            if (url) {
+                Adjust.appWillOpenUrl(url);
+            }
+        });
     }
 
     componentWillMount() {
@@ -117,18 +121,7 @@ export default class Example extends Component {
     } 
 
     componentWillUnmount() {
-        Linking.removeEventListener('url', this.handleDeepLink);
         Adjust.componentWillUnmount();
-    }
-
-    handleDeepLink(e) {
-        const route = e.url.replace(/.*?:\/\//g, "");
-        console.log("Received deeplink - url: " + e.url);
-        console.log("Received deeplink - route: " + route);
-
-        //this._navigator.replace(this.state.routes[route]);
-
-        Adjust.appWillOpenUrl(e.url);
     }
 
     render() {

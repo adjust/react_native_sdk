@@ -1,12 +1,6 @@
 package com.adjust.examples;
 
-import android.net.Uri;
-import android.os.Bundle;
-import android.content.Intent;
-
 import com.facebook.react.ReactActivity;
-
-import com.adjust.sdk.Adjust;
 
 public class MainActivity extends ReactActivity {
 
@@ -18,13 +12,4 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "Example";
     }
-
-    @Override
-	protected void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-
-	    Intent intent = getIntent();
-        Uri data = intent.getData();
-        Adjust.appWillOpenUrl(data);
-	}
 }

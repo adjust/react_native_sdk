@@ -54,15 +54,17 @@ public class Adjust extends ReactContextBaseJavaModule
     }
 
     @Override
-    public void onHostPause() {}
-
-    @Override
-    public void onHostDestroy() {}
+    public void onHostPause() {
+        com.adjust.sdk.Adjust.onPause();
+    }
 
     @Override
     public void onHostResume() {
         com.adjust.sdk.Adjust.onResume();
     }
+
+    @Override
+    public void onHostDestroy() {}
 
     @Override
     public void onAttributionChanged(AdjustAttribution attribution) {

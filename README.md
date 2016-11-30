@@ -647,7 +647,7 @@ If you want to use the adjust SDK to recognize users that found your app pre-ins
     Default tracker: 'abc123'
     ```
 
-### <a id="deeplinking-standard"></a>Deep linking
+### <a id="deeplinking"></a>Deep linking
 
 If you are using the adjust tracker URL with an option to deep link into your app from the URL, there is the possibility to 
 get info about the deep link URL and its content. Hitting the URL can happen when the user has your app already installed 

@@ -4,18 +4,20 @@ This is the React Native SDK of adjust™. You can read more about adjust™ at 
 
 ## Table of contents
 
+* [Supported versions](#supported-versions)
 * [Example app](#example-app)
 * [Basic integration](#basic-integration)
    * [Get the SDK](#sdk-get)
    * [Add the SDK to your project](#sdk-add)
    * [Integrate the SDK into your app](#sdk-integrate)
    * [Adjust logging](#adjust-logging)
-   * [Google Play Services](#google-play-services)
+   * [Add Google Play Services](#sdk-gps)
+   * [Add permissions](#sdk-permissions)
+   * [Proguard settings](#sdk-proguard)
 * [Additional features](#additional-features)
    * [Event tracking](#event-tracking)
       * [Revenue tracking](#revenue-tracking)
       * [Revenue deduplication](#revenue-deduplication)
-      * [In-App Purchase verification](#iap-verification)
       * [Callback parameters](#callback-parameters)
       * [Partner parameters](#partner-parameters)
     * [Session parameters](#session-parameters)
@@ -28,7 +30,6 @@ This is the React Native SDK of adjust™. You can read more about adjust™ at 
     * [Offline mode](#offline-mode)
     * [Event buffering](#event-buffering)
     * [Background tracking](#background-tracking)
-    * [Device IDs](#device-ids)
     * [Push token](#push-token)
     * [Pre-installed trackers](#pre-installed-trackers)
     * [Deep linking](#deeplinking)
@@ -37,13 +38,13 @@ This is the React Native SDK of adjust™. You can read more about adjust™ at 
         * [Reattribution via deep links](#deeplinking-reattribution)
 * [License](#license)
 
-## Supported versions
+## <a id="supported-versions"></a>Supported versions
 - react-native-cli: 1.2.0
 - react-native: 0.37.0
 
 ## <a id="example-apps"></a>Example apps
 
-There is an example app inside the [`examples` directory][example]
+There is an example app inside the [`example` directory][example]
 
 ## <a id="basic-integration"></a>Basic integration
 
@@ -51,21 +52,21 @@ We will describe the steps to integrate the adjust SDK into your React Native pr
 
 ### <a id="sdk-get"></a>Get the SDK
 
-First, download the library from npm:
+First, download the library from `npm`:
 
 ```
 $ npm install react-native-adjust --save
 ```
 
-Then you must install the native dependencies: You can use rnpm (now part of react-native core) to add native dependencies automatically then continue the directions below depending on your target OS.
+Then you must install the native dependencies: You can use `react-native` cli tool to add native dependencies automatically then continue the directions below depending on your target OS.
 
 ```
 $ react-native link
 ```
 
-for **iOS**, you don't need to do much of anything else.
+For **iOS**, you don't need to do much of anything else.
 
-for **Android**, you need to include the native module's package manually.
+For **Android**, you need to include the native module's package manually.
 
 - Go to your app's `MainApplication.java` class. It should be located in `./android/app/src/main/java/[your app]/MainApplication.java`
 - There is a method called `getPackages()` that looks like this by default:
@@ -77,7 +78,7 @@ protected List<ReactPackage> getPackages() {
   );
 }
 ```
-- You'l have to add `new AdjustPackage()` to the list of packages like this:
+- You'll have to add `new AdjustPackage()` to the list of packages like this:
 ```java
 @Override
 protected List<ReactPackage> getPackages() {
@@ -106,6 +107,10 @@ In your `index.android.js` or `index.ios.js` file, add the following code to ini
 componentWillMount() {
     var adjustConfig = new AdjustConfig("{YourAppToken}", AdjustConfig.EnvironmentSandbox);
     Adjust.create(adjustConfig);
+}
+
+componentWillUnmount() {
+    Adjust.componentWillUnmount();
 }
 ```
 
@@ -137,7 +142,90 @@ adjustConfig.setLogLevel(AdjustConfig.LogLevelAssert);    // disable errors as w
 adjustConfig.setLogLevel(AdjustConfig.LogLevelSuppress);  // disable all logging
 ```
 
-### <a id="google-play-services"></a>Google Play Services
+### <a id="sdk-gps"></a>Add Google Play Services
+
+Please refer to our Android SDK README page 
+
+Since the 1st of August of 2014, apps in the Google Play Store must use the [Google Advertising ID][google_ad_id] to
+uniquely identify devices. To allow the adjust SDK to use the Google Advertising ID, you must integrate the
+[Google Play Services][google_play_services]. If you haven't done this yet, follow these steps:
+
+1. Open your app's `build.gradle` file of your app and find the `dependencies` block. Add the following line:
+
+    ```
+    compile 'com.google.android.gms:play-services-analytics:9.8.0'
+    ```
+
+    ![][gradle_gps]
+
+### <a id="sdk-permissions"></a>Add permissions
+
+In the Package Explorer open the `AndroidManifest.xml` of your Android project. Add the `uses-permission` tag for
+`INTERNET` if it's not present already.
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+If you are **not targeting the Google Play Store**, add both of these permissions instead:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+```
+
+![][manifest_permissions]
+
+### <a id="sdk-proguard"></a>Proguard settings
+
+If you are using Proguard, add these lines to your Proguard file:
+
+```
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep class com.adjust.sdk.plugin.MacAddressUtil {
+    java.lang.String getMacAddress(android.content.Context);
+}
+-keep class com.adjust.sdk.plugin.AndroidIdUtil {
+    java.lang.String getAndroidId(android.content.Context);
+}
+-keep class com.google.android.gms.common.ConnectionResult {
+    int SUCCESS;
+}
+-keep class com.google.android.gms.ads.identifier.AdvertisingIdClient {
+    com.google.android.gms.ads.identifier.AdvertisingIdClient$Info getAdvertisingIdInfo(android.content.Context);
+}
+-keep class com.google.android.gms.ads.identifier.AdvertisingIdClient$Info {
+    java.lang.String getId();
+    boolean isLimitAdTrackingEnabled();
+}
+-keep class dalvik.system.VMRuntime {
+    java.lang.String getRuntime();
+}
+-keep class android.os.Build {
+    java.lang.String[] SUPPORTED_ABIS;
+    java.lang.String CPU_ABI;
+}
+-keep class android.content.res.Configuration {
+    android.os.LocaledList getLocales();
+    java.util.Locale locale;
+}
+-keep class android.os.LocaledList {
+    java.util.Locale get(int);
+}
+```
+
+If you are **not targeting the Google Play Store**, you can remove the `com.google.android.gms` rules.
+
+![][proguard]
+
+**Important**: If you are using an `-overloadaggressively` flag in your Proguard file, then in order for the adjust SDK to
+work properly you should consider one of two possible scenarios:
+
+* Remove `-overloadaggressively` if it is not necessary
+* Add a `-useuniqueclassmembernames` flag to your Proguard file
 
 
 ## <a id="additional-features"></a>Additional features
@@ -170,7 +258,7 @@ When you set a currency token, adjust will automatically convert the incoming re
 choice. Read more about [currency conversion here][currency-conversion].
 
 
-### <a id="revenue-deduplication"></a>Revenue deduplication
+### <a id="revenue-deduplication"></a>Revenue Deduplication
 
 You can also add an optional transaction ID to avoid tracking duplicate revenues. The last ten transaction IDs are remembered, 
 and revenue events with duplicate transaction IDs are skipped. This is especially useful for In-App Purchase tracking. You can 
@@ -189,8 +277,6 @@ Adjust.trackEvent(adjustEvent);
 ```
 
 **Note**: Transaction ID is the iOS term, unique identifier for successfully finished Android In-App-Purchases is named **Order ID**.
-
-### <a id="iap-verification"></a>In-App Purchase verification
 
 ### <a id="callback-parameters"></a>Callback parameters
 
@@ -520,34 +606,6 @@ Adjust.create(adjustConfig);
 
 If nothing is set, sending in background is **disabled by default**.
 
-### <a id="device-ids"></a>Device IDs
-
-Certain services (such as Google Analytics) require you to coordinate Device and Client IDs in order to prevent duplicate
-reporting.
-
-### Android
-
-If you need to obtain the Google Advertising ID, you can call the function `getGoogleAdId`. To get it in the callback method 
-you pass to the call:
-
-```js
-Adjust.getGoogleAdId(function(googleAdId) {
-    // Use googleAdId value.
-});
-```
-
-Inside the callback method you will have access to the Google Advertising ID as the variable `googleAdId`.
-
-### iOS
-
-To obtain the IDFA, call the function `getIdfa` in the same way as the method `getGoogleAdId`:
-
-```js
-Adjust.getIdfa(function(idfa) {
-    // Use idfa value.
-});
-```
-
 ### <a id="push-token"></a>Push token
 
 To send us the push notification token, add the following call to Adjust **whenever you get your token in the app or 
@@ -586,34 +644,11 @@ If you want to use the adjust SDK to recognize users that found your app pre-ins
 
 To support deep linking in Android, the app's `AndroidManifest.xml` file will need to be modified. Please refer to this [page of our Android SDK][android-sdk-deeplink] for the needed modifications to `AndroidManifest.xml`.
 
-To support deep linking in iOS, the app's `info.plist` file will need to be modified. Please refer to this [page of our iOS SDK][ios-sdk-deeplink] for the needed modifications to `info.plist`.
+To support deep linking in iOS 8 or earlier, the app's `info.plist` file will need to be modified. Please refer to this [page of our iOS SDK][ios-sdk-deeplink-early] for the needed modifications to `info.plist`.
 
-After that, please refer to this page of the [React Native offical docs][rn-linking] for instructions on how to support both platforms. In basic terms, your React component will have to add `Linking` component, as follows:
-```js
-import {
-  StyleSheet,
-  Platform,
-  Text,
-  View,
-  ToolbarAndroid,
-  Linking //This is important
-} from 'react-native';
-```
+To support deep linking in iOS 9 or later, your app would have to handle Universal Links. Please refer to this [page of our iOS SDK][ios-sdk-deeplink-late] for the needed modifications.
 
-And then on your React component you'll be able to listen to the events on `Linking` as follows: 
-```js
-componentDidMount() {
-  Linking.addEventListener('url', this._handleOpenURL);
-},
-componentWillUnmount() {
-  Linking.removeEventListener('url', this._handleOpenURL);
-},
-_handleOpenURL(event) {
-  console.log(event.url);
-}
-```
-
-Please refer to the [React Native offical docs][rn-linking] for the detailed steps.
+After that, refer to this page of the [React Native offical docs][rn-linking] for instructions on how to support both platforms. 
 
 ### <a id="deeplinking-deferred"></a>Deferred deep linking
 
@@ -659,7 +694,7 @@ Adjust enables you to run re-engagement campaigns by using deep links. For more 
 [official docs][reattribution-with-deeplinks].
 
 If you are using this feature, in order for your user to be properly reattributed, you need to make one additional call to the 
-adjust SDK in your app.
+adjust SDK in your app. Please refer to the [React Native official linking docs][rn-linking] for more info on intercepting the deeplink in code.
 
 Once you have received deep link content information in your app, add a call to `appWillOpenUrl` method of the `Adjust` 
 instance. By making this call, the adjust SDK will try to find if there is any new attribution info inside of the deep link 
@@ -667,7 +702,19 @@ and if any, it will be sent to the adjust backend. If your user should be reattr
 URL with deep link content in it, you will see the [attribution callback](#attribution-callback) in your app being triggered 
 with new attribution info for this user.
 
-Call to the `appWillOpenUrl` method in a React component would look like this:
+Call to the `appWillOpenUrl` method in a React component for **Android** would look like this:
+
+```js
+componentDidMount() {
+  const url = Linking.getInitialURL().then(url => {
+      if (url) {
+          Adjust.appWillOpenUrl(url);
+      }
+  });
+}
+```
+
+And like the following for **iOS**:
 
 ```js
 componentDidMount() {
@@ -677,16 +724,29 @@ componentWillUnmount() {
   Linking.removeEventListener('url', this._handleOpenURL);
 },
 _handleOpenURL(event) {
-  console.log(event.url);
-
   Adjust.appWillOpenUrl(event.url);
+}
+```
+
+#### NOTE FOR IOS 9 OR LATER USING UNIVERSAL DEEP LINKS
+There is a bug in version 1.2.0 of React Native where deep linking for universal links in iOS 9 or later only work if the app is open in the background already. If you are following the [React Native official linking docs][rn-linking] for iOS, you will encounter this issue.
+
+As a quick fix, you can bypass the Javascript layer and add the deep link interception call directly to your `AppDelegate.m`. It would look like this:
+
+```objc
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+  if ([[userActivity activityType] isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+    [Adjust appWillOpenUrl:[userActivity webpageURL]];
+  }
+  
+  return YES;
 }
 ```
 
 [dashboard]:    http://adjust.com
 [adjust.com]:   http://adjust.com
 
-[example]:      http://github.com/adjust/ios_sdk/tree/master/examples
+[example]:      http://github.com/adjust/react_native_sdk/tree/master/example
 [npm-repo]:     https://www.npmjs.com/package/react-native-adjust
 
 [google-ad-id]:         https://developer.android.com/google/play-services/id.html
@@ -701,8 +761,14 @@ _handleOpenURL(event) {
 [google-play-services]:   http://developer.android.com/google/play-services/index.html
 
 [android-sdk-deeplink]: https://github.com/adjust/android_sdk#deeplinking-standard
+[ios-sdk-deeplink-early]: https://github.com/adjust/ios_sdk#-deep-linking-on-ios-8-and-earlier
+[ios-sdk-deeplink-late]: https://github.com/adjust/ios_sdk#-deep-linking-on-ios-9-and-later
 [reattribution-with-deeplinks]: https://docs.adjust.com/en/deeplinking/#manually-appending-attribution-data-to-a-deep-link
 [rn-linking]: https://facebook.github.io/react-native/docs/linking.html
+
+[proguard]:                     https://raw.github.com/adjust/sdks/master/Resources/android/v4/08_proguard_new.png
+[gradle_gps]:                   https://raw.github.com/adjust/sdks/master/Resources/android/v4/05_gradle_gps.png
+[manifest_gps]:                 https://raw.github.com/adjust/sdks/master/Resources/android/v4/06_manifest_gps.png
 
 ## <a id="license"></a>License
 

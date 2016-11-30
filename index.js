@@ -82,11 +82,11 @@ var AdjustEvent = function (eventToken) {
         this.currency = currency;
     };
 
-    this.addCallbackParameters = function(key, value) {
+    this.addCallbackParameter = function(key, value) {
         this.callbackParameters[key] = value;
     };
 
-    this.addPartnerParameters = function(key, value) {
+    this.addPartnerParameter = function(key, value) {
         this.partnerParameters[key] = value;
     };
 

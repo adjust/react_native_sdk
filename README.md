@@ -32,7 +32,7 @@ This is the React Native SDK of adjust™. You can read more about adjust™ at 
     * [Push token](#push-token)
     * [Pre-installed trackers](#pre-installed-trackers)
     * [Deep linking](#deeplinking)
-        * [Deep linking](#deeplinking-standard)
+        * [Standard deep linking scenario](#deeplinking-standard)
         * [Deferred deep linking scenario](#deeplinking-deferred)
         * [Reattribution via deep links](#deeplinking-reattribution)
 * [License](#license)
@@ -649,6 +649,12 @@ If you want to use the adjust SDK to recognize users that found your app pre-ins
 
 ### <a id="deeplinking-standard"></a>Deep linking
 
+If you are using the adjust tracker URL with an option to deep link into your app from the URL, there is the possibility to 
+get info about the deep link URL and its content. Hitting the URL can happen when the user has your app already installed 
+(standard deep linking scenario) or if they don't have the app on their device (deferred deep linking scenario).
+
+### <a id="deeplinking-standard"></a>Standard deep linking scenario
+
 To support deep linking in Android, the app's `AndroidManifest.xml` file will need to be modified. Please refer to this 
 [page of our Android SDK][android-sdk-deeplink] for the needed modifications to `AndroidManifest.xml`.
 
@@ -659,9 +665,9 @@ To support deep linking in iOS 9 or later, your app would have to handle Univers
 [page of our iOS SDK][ios-sdk-deeplink-late] for the needed modifications.
 
 After that, refer to this page of the [React Native offical docs][rn-linking] for instructions on how to support both 
-platforms. 
+platforms and obtain deep link URL in your JavaScript code.
 
-### <a id="deeplinking-deferred"></a>Deferred deep linking
+### <a id="deeplinking-deferred"></a>Deferred deep linking scenario
 
 While deferred deep linking is not supported out of the box on Android and iOS, our adjust SDK makes it possible.
  
@@ -705,14 +711,11 @@ Adjust enables you to run re-engagement campaigns by using deep links. For more 
 [official docs][reattribution-with-deeplinks].
 
 If you are using this feature, in order for your user to be properly reattributed, you need to make one additional call to 
-the adjust SDK in your app. Please refer to the [React Native official linking docs][rn-linking] for more info on 
-intercepting the deeplink in code.
-
-Once you have received deep link content information in your app, add a call to `appWillOpenUrl` method of the `Adjust` 
-instance. By making this call, the adjust SDK will try to find if there is any new attribution info inside of the deep link 
-and if any, it will be sent to the adjust backend. If your user should be reattributed due to a click on the adjust tracker 
-URL with deep link content in it, you will see the [attribution callback](#attribution-callback) in your app being triggered 
-with new attribution info for this user.
+the adjust SDK in your app. Once you have received deep link content information in your app, add a call to `appWillOpenUrl` 
+method of the `Adjust` instance. By making this call, the adjust SDK will try to find if there is any new attribution info 
+inside of the deep link and if any, it will be sent to the adjust backend. If your user should be reattributed due to a 
+click on the adjust tracker URL with deep link content in it, you will see the [attribution callback](#attribution-callback) 
+in your app being triggered with new attribution info for this user.
 
 Call to the `appWillOpenUrl` method in a React component for **Android** would look like this:
 
@@ -742,11 +745,10 @@ _handleOpenURL(event) {
 }
 ```
 
-** WARNING: Deep linking with default react-native callback mechanism**
-There is a bug in version 1.2.0 of React Native where deep linking for universal links only works if the app is opened in 
-the background already. If app is closed and not running in the background, opening it by click on an universal link **will 
-not deliver universal link URL info to your callback method in JavaScript**. This will also cause that call to 
-`Adjust.appWillOpenUrl` was not being made and if reattribution for this user should have happen, it won't.
+**Warning:** There is a bug in version 1.2.0 of React Native where deep link URL delivery to JavaScript only works if the 
+app is opened in the background already. If app is closed and not running in the background, opening it by click on an 
+universal link **will not deliver universal link URL info to your callback method in JavaScript**. This will also cause that 
+call to `Adjust.appWillOpenUrl` will not be made and, if reattribution for this user should have happen, it won't.
 
 If you are following the [React Native official linking docs][rn-linking] for iOS, you will encounter this issue.
 
@@ -754,6 +756,10 @@ As a quick fix, you can bypass the JavaScript layer and add a call to our SDK di
 look like this:
 
 ```objc
+#include "Adjust.h"
+
+// ...
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     [Adjust appWillOpenUrl:url];
  

@@ -213,8 +213,8 @@ export default class Example extends Component {
             if (isEnabled) {
                 var adjustEvent = new AdjustEvent("34vgg9");
 
-                adjustEvent.addCallbackParameters("DUMMY_KEY", "DUMMY_VALUE");
-                adjustEvent.addCallbackParameters("DUMMY_KEY_2", "DUMMY_VALUE_2");
+                adjustEvent.addCallbackParameter("DUMMY_KEY", "DUMMY_VALUE");
+                adjustEvent.addCallbackParameter("DUMMY_KEY_2", "DUMMY_VALUE_2");
 
                 Adjust.trackEvent(adjustEvent);
             } else {
@@ -228,8 +228,8 @@ export default class Example extends Component {
             if (isEnabled) {
                 var adjustEvent = new AdjustEvent("w788qs");
 
-                adjustEvent.addPartnerParameters("DUMMY_KEY", "DUMMY_VALUE");
-                adjustEvent.addPartnerParameters("DUMMY_KEY_2", "DUMMY_VALUE_2");
+                adjustEvent.addPartnerParameter("DUMMY_KEY", "DUMMY_VALUE");
+                adjustEvent.addPartnerParameter("DUMMY_KEY_2", "DUMMY_VALUE_2");
 
                 Adjust.trackEvent(adjustEvent);
             } else {

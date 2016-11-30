@@ -258,28 +258,4 @@ RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener) {
     _isDeferredDeeplinkCallbackImplemented = true;
 }
 
-RCT_EXPORT_METHOD(clearAttributionCallbackListener) {
-    _isAttributionCallbackImplemented = false;
-}
-
-RCT_EXPORT_METHOD(clearEventTrackingSucceededCallbackListener) {
-    _isEventTrackingSucceededCallbackImplemented = false;
-}
-
-RCT_EXPORT_METHOD(clearEventTrackingFailedCallbackListener) {
-    _isEventTrackingFailedCallbackImplemented = false;
-}
-
-RCT_EXPORT_METHOD(clearSessionTrackingSucceededCallbackListener) {
-    _isSessionTrackingSucceededCallbackImplemented = false;
-}
-
-RCT_EXPORT_METHOD(clearSessionTrackingFailedCallbackListener) {
-    _isSessionTrackingFailedCallbackImplemented = false;
-}
-
-RCT_EXPORT_METHOD(clearDeferredDeeplinkCallbackListener) {
-    _isDeferredDeeplinkCallbackImplemented = false;
-}
-
 @end

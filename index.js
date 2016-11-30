@@ -211,36 +211,4 @@ AdjustConfig.prototype.setDeferredDeeplinkCallbackListener = function(deferredDe
     }
 };
 
-Adjust.componentWillUnmount = function() {
-    if (AdjustConfig.AttributionSubscription) {
-        AdjustConfig.AttributionSubscription.remove();
-        module_adjust.clearAttributionCallbackListener();
-    }
-
-    if (AdjustConfig.EventTrackingSucceededSubscription) {
-        AdjustConfig.EventTrackingSucceededSubscription.remove();
-        module_adjust.clearEventTrackingSucceededCallbackListener();
-    }
-
-    if (AdjustConfig.EventTrackingFailedSubscription) {
-        AdjustConfig.EventTrackingFailedSubscription.remove();
-        module_adjust.clearEventTrackingFailedCallbackListener();
-    }
-
-    if (AdjustConfig.SessionTrackingSucceededSubscription) {
-        AdjustConfig.SessionTrackingSucceededSubscription.remove();
-        module_adjust.clearSessionTrackingSucceededCallbackListener();
-    }
-
-    if (AdjustConfig.SessionTrackingFailedSubscription) {
-        AdjustConfig.SessionTrackingFailedSubscription.remove();
-        module_adjust.clearSessionTrackingFailedCallbackListener();
-    }
-
-    if (AdjustConfig.DeferredDeeplinkSubscription) {
-        AdjustConfig.DeferredDeeplinkSubscription.remove();
-        module_adjust.clearDeferredDeeplinkCallbackListener();
-    }
-};
-
 module.exports = { Adjust, AdjustEvent, AdjustConfig }

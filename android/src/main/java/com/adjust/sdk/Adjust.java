@@ -366,36 +366,6 @@ public class Adjust extends ReactContextBaseJavaModule
         this.deferredDeeplinkCallback = true;
     }
 
-    @ReactMethod
-    public void clearAttributionCallbackListener() {
-        this.attributionCallback = false;
-    }
-
-    @ReactMethod
-    public void clearEventTrackingSucceededCallbackListener() {
-        this.eventTrackingSucceededCallback = false;
-    }
-
-    @ReactMethod
-    public void clearEventTrackingFailedCallbackListener() {
-        this.eventTrackingFailedCallback = false;
-    }
-
-    @ReactMethod
-    public void clearSessionTrackingSucceededCallbackListener() {
-        this.sessionTrackingSucceededCallback = false;
-    }
-
-    @ReactMethod
-    public void clearSessionTrackingFailedCallbackListener() {
-        this.sessionTrackingFailedCallback = false;
-    }
-
-    @ReactMethod
-    public void clearDeferredDeeplinkCallbackListener() {
-        this.deferredDeeplinkCallback = false;
-    }
-
     private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
         reactContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)

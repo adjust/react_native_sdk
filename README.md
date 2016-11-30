@@ -778,7 +778,7 @@ look like this:
 [dashboard]:    http://adjust.com
 [adjust.com]:   http://adjust.com
 
-[example]:      http://github.com/adjust/react_native_sdk/tree/master/example
+[example]:      ./example
 [npm-repo]:     https://www.npmjs.com/package/react-native-adjust
 
 [rn-linking]:           https://facebook.github.io/react-native/docs/linking.html

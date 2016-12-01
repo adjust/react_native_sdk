@@ -1,12 +1,9 @@
 {
     "name": "react-native-adjust",
     "description": "Adjust React Native SDK",
-    "version": "4.10.0",
+    "version": "0.0.1",
     "main": "index.js",
-    "author": {
-        "name": "Abdullah Obaied",
-        "email": "abdullah@adjust.com"
-    },
+    "author": "adjust GmbH",
     "license": "MIT",
     "keywords": [
         "react-native",

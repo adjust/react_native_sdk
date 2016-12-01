@@ -238,35 +238,31 @@ public class Adjust extends ReactContextBaseJavaModule
     @ReactMethod
     public void trackEvent(ReadableMap mapEvent) {
         final String eventToken = mapEvent.getString("eventToken");
+        final String currency = mapEvent.getString("currency");
+        final String transactionId = mapEvent.getString("transactionId");
+        final Map<String, Object> callbackParameters  = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
+        final Map<String, Object> partnerParameters  = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
+
         AdjustEvent event = new AdjustEvent(eventToken);
-
+        
         if (event.isValid()) {
-            if (!mapEvent.isNull("revenue") && !mapEvent.isNull("currency")) {
-                String currency = mapEvent.getString("currency");
-                Double revenue = mapEvent.getDouble("revenue");
-                event.setRevenue(revenue, currency);
+            if (!mapEvent.isNull("revenue")) {
+                event.setRevenue(mapEvent.getDouble("revenue"), currency);
             }
 
-            if (!mapEvent.isNull("callbackParameters") && !mapEvent.isNull("partnerParameters")) {
-                Map<String, Object> callbackParameters  = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
-                Map<String, Object> partnerParameters  = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
-
-                if (callbackParameters != null) {
-                    for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
-                        event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
-                    }
-                }
-
-                if (partnerParameters != null) {
-                    for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
-                        event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
-                    }
+            if (null != callbackParameters) {
+                for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
+                    event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
                 }
             }
 
-            if (!mapEvent.isNull("transactionId")) {
-                final String transactionId = mapEvent.getString("transactionId");
+            if (null != partnerParameters) {
+                for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
+                    event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+                }
+            }
 
+            if (null != transactionId) {
                 event.setOrderId(transactionId);
             }
 

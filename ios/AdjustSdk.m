@@ -44,12 +44,12 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSString *userAgent = dict[@"userAgent"];
     NSNumber *delayStart = dict[@"delayStart"];
     
-    BOOL allowSuppressLogLevel = false;
+    BOOL allowSuppressLogLevel = NO;
     
     // Log level
     if ([self isFieldValid:logLevel]) {
-        if ([ADJLogger LogLevelFromString:[logLevel lowercaseString]] == ADJLogLevelSuppress) {
-            allowSuppressLogLevel = true;
+        if ([logLevel isEqualToString:@"SUPPRESS"]) {
+            allowSuppressLogLevel = YES;
         }
     }
     
@@ -58,7 +58,11 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     if ([adjustConfig isValid]) {
         // Log level
         if ([self isFieldValid:logLevel]) {
-            [adjustConfig setLogLevel:[ADJLogger LogLevelFromString:[logLevel lowercaseString]]];
+            if (NO == allowSuppressLogLevel) {
+                [adjustConfig setLogLevel:[ADJLogger LogLevelFromString:[logLevel lowercaseString]]];
+            } else {
+                [adjustConfig setLogLevel:ADJLogLevelSuppress];
+            }
         }
         
         // Event buffering

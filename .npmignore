@@ -10,3 +10,7 @@ node_modules
 /ios/**/*xcuserdata*
 /ios/**/*xcshareddata*
 
+# Adjust SDK
+ext/
+scripts/
+example/

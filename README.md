@@ -67,10 +67,11 @@ $ react-native link
 
 For **iOS**, you don't need to do anything else.
 
-For **Android**, you need to include the native module's package manually.
+For **Android**, you need to check if adjust package was added to the native module's package list.
 
 - Go to your app's `MainApplication.java` class. It should be located in
 `./android/app/src/main/java/[your app]/MainApplication.java`
+
 - There is a method called `getPackages()` that looks like this by default:
 ```java
 @Override
@@ -80,8 +81,14 @@ protected List<ReactPackage> getPackages() {
   );
 }
 ```
-- You'll have to add the `new AdjustPackage()` to the list of packages like this:
+
+- After adding adjust SDK via `npm` and running `react-native link` command, adjust package should be added autoatically to 
+  this list and it should look something like this:
 ```java
+import com.adjust.nativemodule.AdjustPackage;
+
+// ...
+
 @Override
 protected List<ReactPackage> getPackages() {
   return Arrays.<ReactPackage>asList(
@@ -90,7 +97,9 @@ protected List<ReactPackage> getPackages() {
   );
 }
 ```
-- Also, don't forget to add the import statement on top of the `MainApplication.java` file:
+
+- In case that the line `new AdjustPackage()` was not added automatically, you'll have to add it to the list of packages by 
+  yourself like described above. Also, don't forget to add the import statement on top of the `MainApplication.java` file:
 ```
 import com.adjust.nativemodule.AdjustPackage;
 ```

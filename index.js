@@ -71,7 +71,7 @@ Adjust.setPushToken = function(token) {
 
 var AdjustEvent = function (eventToken) {
     this.eventToken = eventToken;
-    this.revenue = 0.0;
+    this.revenue = null;
     this.currency = null;
     this.transactionId = null;
     this.callbackParameters = {};

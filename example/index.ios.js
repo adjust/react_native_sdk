@@ -35,7 +35,11 @@ export default class Example extends Component {
         var adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
         adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
         adjustConfig.setDelayStart(6.0);
-        adjustConfig.setUserAgent("little_bunny_foo_foo");
+        adjustConfig.setShouldLaunchDeeplink(true);
+        adjustConfig.setSendInBackground(true);
+
+        // adjustConfig.setEventBufferingEnabled(true);
+        // adjustConfig.setUserAgent("little_bunny_foo_foo");
 
         adjustConfig.setAttributionCallbackListener(function(attribution) {
             console.log(">>> Attribution callback received");
@@ -95,9 +99,6 @@ export default class Example extends Component {
             console.log("URL: " + uri.uri);
         });
 
-        adjustConfig.setShouldLaunchDeeplink(true);
-        // adjustConfig.setEventBufferingEnabled(true);
-
         Adjust.addSessionCallbackParameter("dummy_foo", "dummy_bar");
         Adjust.addSessionCallbackParameter("dummy_foo_foo", "dummy_bar");
 
@@ -107,12 +108,12 @@ export default class Example extends Component {
         Adjust.removeSessionCallbackParameter("dummy_foo");
         Adjust.removeSessionPartnerParameter("dummy_foo");
 
-        Adjust.resetSessionCallbackParameters();
-        Adjust.resetSessionPartnerParameters();
-
-        Adjust.create(adjustConfig);
+        // Adjust.resetSessionCallbackParameters();
+        // Adjust.resetSessionPartnerParameters();
 
         Adjust.setPushToken("bunny_foo_foo");
+
+        Adjust.create(adjustConfig);
 
         Adjust.sendFirstPackages();
     }
@@ -122,13 +123,6 @@ export default class Example extends Component {
     }
 
     handleDeepLink(e) {
-        const route = e.url.replace(/.*?:\/\//g, "");
-
-        console.log("Received deeplink - url: " + e.url);
-        console.log("Received deeplink - route: " + route);
-
-        // this._navigator.replace(this.state.routes[route]);
-        
         Adjust.appWillOpenUrl(e.url);
     }
 

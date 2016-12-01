@@ -654,8 +654,8 @@ get info about the deep link URL and its content. Hitting the URL can happen whe
 To support deep linking in Android, the app's `AndroidManifest.xml` file will need to be modified. Please refer to this
 [page of our Android SDK][android-sdk-deeplink] for the needed modifications to `AndroidManifest.xml`.
 
-To support deep linking in iOS 8 or earlier, the app's `info.plist` file will need to be modified. Please refer to this
-[page of our iOS SDK][ios-sdk-deeplink-early] for the needed modifications to `info.plist`.
+To support deep linking in iOS 8 or earlier, the app's `Info.plist` file will need to be modified. Please refer to this
+[page of our iOS SDK][ios-sdk-deeplink-early] for the needed modifications to `Info.plist`.
 
 To support deep linking in iOS 9 or later, your app would have to handle Universal Links. Please refer to this
 [page of our iOS SDK][ios-sdk-deeplink-late] for the needed modifications.

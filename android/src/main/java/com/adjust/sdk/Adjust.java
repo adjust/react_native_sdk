@@ -238,25 +238,29 @@ public class Adjust extends ReactContextBaseJavaModule
     @ReactMethod
     public void trackEvent(ReadableMap mapEvent) {
         final String eventToken = mapEvent.getString("eventToken");
-        final Double revenue = mapEvent.getDouble("revenue");
-        final String currency = mapEvent.getString("currency");
-        final Map<String, Object> callbackParameters  = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
-        final Map<String, Object> partnerParameters  = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
-
         AdjustEvent event = new AdjustEvent(eventToken);
-        
-        if (event.isValid()) {
-            event.setRevenue(revenue, currency);
 
-            if (callbackParameters != null) {
-                for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
-                    event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
-                }
+        if (event.isValid()) {
+            if (!mapEvent.isNull("revenue") && !mapEvent.isNull("currency")) {
+                String currency = mapEvent.getString("currency");
+                Double revenue = mapEvent.getDouble("revenue");
+                event.setRevenue(revenue, currency);
             }
 
-            if (partnerParameters != null) {
-                for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
-                    event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+            if (!mapEvent.isNull("callbackParameters") && !mapEvent.isNull("partnerParameters")) {
+                Map<String, Object> callbackParameters  = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
+                Map<String, Object> partnerParameters  = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
+
+                if (callbackParameters != null) {
+                    for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
+                        event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
+                    }
+                }
+
+                if (partnerParameters != null) {
+                    for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
+                        event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+                    }
                 }
             }
 

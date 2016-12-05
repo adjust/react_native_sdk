@@ -660,11 +660,11 @@ componentDidMount() {
 }
 
 componentWillUnmount() {
-  Linking.removeEventListener('url', this.handleDeepLink);
+    Linking.removeEventListener('url', this.handleDeepLink);
 }
 
 handleDeepLink(event) {
-  Adjust.appWillOpenUrl(event.url);
+    Adjust.appWillOpenUrl(event.url);
 }
 ```
 

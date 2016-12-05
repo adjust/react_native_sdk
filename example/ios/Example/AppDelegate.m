@@ -8,9 +8,8 @@
  */
 
 #import "AppDelegate.h"
-
-#import "Adjust.h"
 #import "RCTRootView.h"
+#import "RCTLinkingManager.h"
 #import "RCTBundleURLProvider.h"
 
 @implementation AppDelegate
@@ -37,22 +36,16 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-  NSLog(@"openURL method called with URL: %@", url);
-  
-  [Adjust appWillOpenUrl:url];
-  
-  return YES;
+  return [RCTLinkingManager application:application
+                                openURL:url
+                      sourceApplication:sourceApplication
+                             annotation:annotation];
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-  if ([[userActivity activityType] isEqualToString:NSUserActivityTypeBrowsingWeb]) {
-    NSLog(@"continueUserActivity method called with URL: %@", [userActivity webpageURL]);
-    
-    [Adjust convertUniversalLink:[userActivity webpageURL] scheme:@"adjustExample"];
-    [Adjust appWillOpenUrl:[userActivity webpageURL]];
-  }
-  
-  return YES;
+  return [RCTLinkingManager application:application
+                   continueUserActivity:userActivity
+                     restorationHandler:restorationHandler];
 }
 
 @end

@@ -19,6 +19,11 @@ import {
 export default class Example extends Component {
     componentDidMount() {
         Linking.addEventListener('url', this.handleDeepLink);
+        Linking.getInitialURL().then((url) => {
+            if (url) {
+                this.handleDeepLink({ url });
+            }
+        })
     }
 
     componentWillMount() {

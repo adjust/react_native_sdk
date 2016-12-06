@@ -18,11 +18,12 @@ import {
 
 export default class Screen1 extends Component {
     componentDidMount() {
-        const url = Linking.getInitialURL().then(url => {
+        Linking.addEventListener('url', this.handleDeepLink);
+        Linking.getInitialURL().then((url) => {
             if (url) {
-                Adjust.appWillOpenUrl(url);
+                this.handleDeepLink({ url });
             }
-        });
+        })
     }
 
     componentWillMount() {
@@ -124,8 +125,11 @@ export default class Screen1 extends Component {
     } 
 
     componentWillUnmount() {
-        console.log(">>> componentWillUnmount()")
-        Adjust.componentWillUnmount();
+        Linking.removeEventListener('url', this.handleDeepLink);
+    }
+
+    handleDeepLink(e) {
+        Adjust.appWillOpenUrl(e.url);
     }
 
     render() {

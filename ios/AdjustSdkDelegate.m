@@ -9,7 +9,11 @@
 #import <objc/runtime.h>
 
 #import "AdjustSdkDelegate.h"
+#if __has_include("RCTEventDispatcher.h")
 #import "RCTEventDispatcher.h"
+#else
+#import <React/RCTEventDispatcher.h>
+#endif
 
 @implementation AdjustSdkDelegate
 

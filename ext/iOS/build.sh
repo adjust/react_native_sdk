@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 # End script if one of the lines fails
-#set -e
+# set -e
 
 # Get the current directory
 SDK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # Traverse up to get to the root directory
 SDK_DIR="$(dirname "$SDK_DIR")"
 SDK_DIR="$(dirname "$SDK_DIR")"
@@ -23,11 +24,11 @@ rm -rfv ${LIB_OUT_DIR}/AdjustSdk.framework
 
 echo -e "${GREEN}>>> building new framework ${NC}"
 cd ${SDK_DIR}/${SRC_DIR}
-xcodebuild -target AdjustStatic -configuration Release
+xcodebuild -target AdjustStatic -configuration Release clean build
 
 echo -e "${GREEN}>>> Copy built framework to designated location ${NC}"
 cd ${SDK_DIR}
 mv -v ${SRC_DIR}/Frameworks/Static/AdjustSdk.framework ${LIB_OUT_DIR}
 
-echo -e "${GREEN}>>> Running symlink fix ${NC}"
-#${SCRIPT_DIR}/symlink_fix.sh
+# echo -e "${GREEN}>>> Running symlink fix ${NC}"
+# ${SCRIPT_DIR}/symlink_fix.sh

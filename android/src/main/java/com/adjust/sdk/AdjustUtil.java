@@ -30,6 +30,7 @@ final class AdjustUtil {
     private static final String ATTRIBUTION_ADGROUP         = "adgroup";
     private static final String ATTRIBUTION_CREATIVE        = "creative";
     private static final String ATTRIBUTION_CLICK_LABEL     = "clickLabel";
+    private static final String ATTRIBUTION_ADID            = "adid";
 
     private static final String EVENT_SUCCESS_MESSAGE       = "message";
     private static final String EVENT_SUCCESS_TIMESTAMP     = "timestamp";
@@ -58,6 +59,10 @@ final class AdjustUtil {
     public static WritableMap attributionToMap(AdjustAttribution attribution) {
         WritableMap map = Arguments.createMap();
 
+        if (null == attribution) {
+            return map;
+        }
+
         map.putString(ATTRIBUTION_TRACKER_TOKEN, null != attribution.trackerToken ? attribution.trackerToken : "");
         map.putString(ATTRIBUTION_TRACKER_NAME, null != attribution.trackerName ? attribution.trackerName : "");
         map.putString(ATTRIBUTION_NETWORK, null != attribution.network ? attribution.network : "");
@@ -65,12 +70,17 @@ final class AdjustUtil {
         map.putString(ATTRIBUTION_ADGROUP, null != attribution.adgroup ? attribution.adgroup : "");
         map.putString(ATTRIBUTION_CREATIVE, null != attribution.creative ? attribution.creative : "");
         map.putString(ATTRIBUTION_CLICK_LABEL, null != attribution.clickLabel ? attribution.clickLabel : "");
+        map.putString(ATTRIBUTION_ADID, null != attribution.adid ? attribution.adid : "");
 
         return map;
     }
 
     public static WritableMap eventSuccessToMap(AdjustEventSuccess eventSuccess) {
         WritableMap map = Arguments.createMap();
+
+        if (null == eventSuccess) {
+            return map;
+        }
 
         map.putString(EVENT_SUCCESS_MESSAGE, null != eventSuccess.message ? eventSuccess.message : "");
         map.putString(EVENT_SUCCESS_TIMESTAMP, null != eventSuccess.timestamp ? eventSuccess.timestamp : "");
@@ -84,6 +94,10 @@ final class AdjustUtil {
     public static WritableMap eventFailureToMap(AdjustEventFailure eventFailure) {
         WritableMap map = Arguments.createMap();
 
+        if (null == eventFailure) {
+            return map;
+        }
+
         map.putString(EVENT_FAILED_MESSAGE, null != eventFailure.message ? eventFailure.message : "");
         map.putString(EVENT_FAILED_TIMESTAMP, null != eventFailure.timestamp ? eventFailure.timestamp : "");
         map.putString(EVENT_FAILED_ADID, null != eventFailure.adid ? eventFailure.adid : "");
@@ -96,6 +110,10 @@ final class AdjustUtil {
 
     public static WritableMap sessionSuccessToMap(AdjustSessionSuccess sessionSuccess) {
         WritableMap map = Arguments.createMap();
+
+        if (null == sessionSuccess) {
+            return map;
+        }
         
         map.putString(SESSION_SUCCESS_MESSAGE, null != sessionSuccess.message ? sessionSuccess.message : "");
         map.putString(SESSION_SUCCESS_TIMESTAMP, null != sessionSuccess.timestamp ? sessionSuccess.timestamp : "");
@@ -107,6 +125,10 @@ final class AdjustUtil {
 
     public static WritableMap sessionFailureToMap(AdjustSessionFailure sessionFailure) {
         WritableMap map = Arguments.createMap();
+
+        if (null == sessionFailure) {
+            return map;
+        }
         
         map.putString(SESSION_FAILED_MESSAGE, null != sessionFailure.message ? sessionFailure.message : "");
         map.putString(SESSION_FAILED_TIMESTAMP, null != sessionFailure.timestamp ? sessionFailure.timestamp : "");
@@ -119,6 +141,10 @@ final class AdjustUtil {
 
     public static WritableMap deferredDeeplinkToMap(Uri uri) {
         WritableMap map = Arguments.createMap();
+
+        if (null == uri) {
+            return map;
+        }
 
         map.putString("uri", uri.toString());
 

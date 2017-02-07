@@ -10,13 +10,16 @@ This is the React Native SDK of adjust™. You can read more about adjust™ at 
    * [Get the SDK](#sdk-get)
    * [Integrate the SDK into your app](#sdk-integrate)
    * [Adjust logging](#adjust-logging)
-   * [Add Google Play Services](#sdk-gps)
-   * [Add permissions](#sdk-permissions)
-   * [Proguard settings](#sdk-proguard)
+   * [Adjust project settings](#adjust-project-settings)
+      * [Android permissions](#android-permissions)
+      * [Google Play Services](#android-gps)
+      * [Proguard settings](#android-proguard)
+      * [Android install referrer](#android-broadcast-receiver)
 * [Additional features](#additional-features)
    * [Event tracking](#event-tracking)
       * [Revenue tracking](#revenue-tracking)
       * [Revenue deduplication](#revenue-deduplication)
+      * [In-App Purchase verification](#iap-verification)
       * [Callback parameters](#callback-parameters)
       * [Partner parameters](#partner-parameters)
     * [Session parameters](#session-parameters)
@@ -29,21 +32,25 @@ This is the React Native SDK of adjust™. You can read more about adjust™ at 
     * [Offline mode](#offline-mode)
     * [Event buffering](#event-buffering)
     * [Background tracking](#background-tracking)
+    * [Device IDs](#device-ids)
+      * [iOS advertising identifier](#di-idfa)
+      * [Google Play Services advertising identifier](#di-gps-adid)
+      * [Adjust device identifier](#di-adid)
     * [Push token](#push-token)
     * [Pre-installed trackers](#pre-installed-trackers)
     * [Deep linking](#deeplinking)
-        * [Standard deep linking scenario](#deeplinking-standard)
-        * [Deferred deep linking scenario](#deeplinking-deferred)
-        * [Reattribution via deep links](#deeplinking-reattribution)
+      * [Standard deep linking scenario](#deeplinking-standard)
+      * [Deferred deep linking scenario](#deeplinking-deferred)
+      * [Reattribution via deep links](#deeplinking-reattribution)
 * [License](#license)
 
 ## <a id="supported-versions"></a>Supported versions
 - react-native-cli: 1.2.0
-- react-native: 0.37.0
+- react-native: 0.37.0, 0.40.0
 
 ## <a id="example-app"></a>Example app
 
-There is an example app inside the [`example` directory][example]
+There is an example app inside the [`example` directory][example].
 
 ## <a id="basic-integration"></a>Basic integration
 
@@ -80,8 +87,7 @@ protected List<ReactPackage> getPackages() {
 }
 ```
 
-- After adding adjust SDK via `npm` and running `react-native link` command, adjust package should be added autoatically to 
-  this list and it should look something like this:
+- After adding adjust SDK via `npm` and running `react-native link` command, adjust package should be added autoatically to this list and it should look something like this:
 ```java
 import com.adjust.nativemodule.AdjustPackage;
 
@@ -96,8 +102,7 @@ protected List<ReactPackage> getPackages() {
 }
 ```
 
-- In case that the line `new AdjustPackage()` was not added automatically, you'll have to add it to the list of packages by 
-  yourself like described above. Also, don't forget to add the import statement on top of the `MainApplication.java` file:
+- In case that the line `new AdjustPackage()` was not added automatically, you'll have to add it to the list of packages by yourself like described above. Also, don't forget to add the import statement on top of the `MainApplication.java` file:
 ```
 import com.adjust.nativemodule.AdjustPackage;
 ```
@@ -146,19 +151,11 @@ adjustConfig.setLogLevel(AdjustConfig.LogLevelAssert);    // disable errors as w
 adjustConfig.setLogLevel(AdjustConfig.LogLevelSuppress);  // disable all logging
 ```
 
-### <a id="sdk-gps"></a>Add Google Play Services
+### <a id="adjust-project-settings">Adjust project settings
 
-Please refer to our Android SDK README page
+Once the Adjust SDK has been added to your app, certain tweeks are being performed so that the Adjust SDK can work properly. Below you can find a description of every additional thing that the Adjust SDK performs after you've added it to your app and what needs to be done by you in order for Adjust SDK to work properly.
 
-Since the 1st of August of 2014, apps in the Google Play Store must use the [Google Advertising ID][google-ad-id] to uniquely identify devices. To allow the adjust SDK to use the Google Advertising ID, you must integrate the [Google Play Services][google-play-services]. If you haven't done this yet, follow these steps:
-
-1. Open your app's `build.gradle` file of your app and find the `dependencies` block. Add the following line:
-
-    ```
-    compile 'com.google.android.gms:play-services-analytics:9.8.0'
-    ```
-
-### <a id="sdk-permissions"></a>Add permissions
+### <a id="sdk-permissions"></a>Android permissions
 
 The adjust SDK by default adds two permissions to your app's `AndroidManifest.xml` file:
 
@@ -167,35 +164,26 @@ The adjust SDK by default adds two permissions to your app's `AndroidManifest.xm
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 ```
 
-General rule of thumb is that if you are targeting the Google Play Store and using Google Play Services in your app, then we just need `INTERNET` permission:
+The `INTERNET` permission might be needed by our SDK at any point in time. The `ACCESS_WIFI_STATE` permission is needed by the Adjust SDK if your app is not targeting the Google Play Store and doesn't use Google Play Services. If you are targeting the Google Play Store and you are using Google Play Services, the Adjust SDK doesn't need this permission and, if you don't need it anywhere else in your app, you can remove it.
 
-```xml
-<uses-permission android:name="android.permission.INTERNET" />
-```
+### <a id="sdk-gps"></a>Google Play Services
 
-If you are **not targeting the Google Play Store**, both of these permissions are needed to be present in your app's
-`AndroidManifest.xml` file:
+Since the 1st of August of 2014, apps in the Google Play Store must use the [Google Advertising ID][google-ad-id] to uniquely identify devices. To allow the adjust SDK to use the Google Advertising ID, you must integrate the [Google Play Services][google-play-services]. 
 
-```xml
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-```
+In order to do this, open your app's `build.gradle` file of your app and find the `dependencies` block. Add the following line:
 
-### <a id="sdk-proguard"></a>Proguard settings
+    ```
+    compile 'com.google.android.gms:play-services-analytics:10.0.1'
+    ```
+    
+**Note**: Version of the Google Play Services library is not relevant for the Adjust SDK, as long as analytics part of the library is present in your app. In the example above we just used the latest version of the library in the moment when we wrote this.
+
+### <a id="android-proguard">Proguard settings
 
 If you are using Proguard, add these lines to your Proguard file:
 
 ```
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
--keep class com.adjust.sdk.plugin.MacAddressUtil {
-    java.lang.String getMacAddress(android.content.Context);
-}
--keep class com.adjust.sdk.plugin.AndroidIdUtil {
-    java.lang.String getAndroidId(android.content.Context);
-}
+-keep public class com.adjust.sdk.** { *; }
 -keep class com.google.android.gms.common.ConnectionResult {
     int SUCCESS;
 }
@@ -205,6 +193,9 @@ If you are using Proguard, add these lines to your Proguard file:
 -keep class com.google.android.gms.ads.identifier.AdvertisingIdClient$Info {
     java.lang.String getId();
     boolean isLimitAdTrackingEnabled();
+}
+-keep class dalvik.system.VMRuntime {
+    java.lang.String getRuntime();
 }
 -keep class android.os.Build {
     java.lang.String[] SUPPORTED_ABIS;
@@ -219,12 +210,20 @@ If you are using Proguard, add these lines to your Proguard file:
 }
 ```
 
-If you are **not targeting the Google Play Store**, you can remove the `com.google.android.gms` rules.
+### <a id="android-broadcast-receiver">Android install referrer
 
-**Important**: If you are using an `-overloadaggressively` flag in your Proguard file, then in order for the adjust SDK to work properly you should consider one of two possible scenarios:
+The Adjust install referrer broadcast receiver is added to your app by default. For more information, you can check our native [Android SDK README][broadcast-receiver]. You can see in the `AndroidManifest.xml` file which is part of our React Native plugin:
 
-* Remove `-overloadaggressively` if it is not necessary
-* Add a `-useuniqueclassmembernames` flag to your Proguard file
+```xml
+<receiver android:name="com.adjust.sdk.AdjustReferrerReceiver" 
+          android:exported="true" >
+    <intent-filter>
+        <action android:name="com.android.vending.INSTALL_REFERRER" />
+    </intent-filter>
+</receiver>
+```
+
+Please bear in mind that, if you are using your own broadcast receiver which handles the INSTALL_REFERRER intent, you don't need to add the Adjust broadcast receiver to your manifest file. You can remove it, but inside your own receiver add the call to the Adjust broadcast receiver as described in our [Android guide][broadcast-receiver-custom].
 
 ## <a id="additional-features"></a>Additional features
 
@@ -269,6 +268,10 @@ Adjust.trackEvent(adjustEvent);
 ```
 
 **Note**: Transaction ID is the iOS term, unique identifier for successfully finished Android In-App-Purchases is named **Order ID**.
+
+### <a id="iap-verification">In-App Purchase verification
+
+In-App Purchase Verification can be done with React Native purchase SDK which is currently being developed and will soon be publicly available. For more information, please contact support@adjust.com.
 
 ### <a id="callback-parameters"></a>Callback parameters
 
@@ -402,6 +405,7 @@ adjustConfig.setAttributionCallbackListener(function(attribution) {
     console.log(attribution.adgroup);
     console.log(attribution.creative);
     console.log(attribution.clickLabel);
+    console.log(attribution.adid);
 });
 
 Adjust.create(adjustConfig);
@@ -416,6 +420,7 @@ Within the listener function you have access to the `attribution` parameters. He
 - `adgroup`         the ad group grouping level of the current install.
 - `creative`        the creative grouping level of the current install.
 - `clickLabel`      the click label of the current install.
+- `adid`            the Adjust device identifier.
 
 Please make sure to consider our [applicable attribution data policies][attribution-data].
 
@@ -560,6 +565,61 @@ Adjust.create(adjustConfig);
 
 If nothing is set, sending in background is **disabled by default**.
 
+### <a id="device-ids">Device IDs
+
+Certain services (such as Google Analytics) require you to coordinate Device and Client IDs in order to prevent duplicate reporting.
+
+### <a id="di-idfa">iOS advertising identifier
+
+You can access the IDFA value of an iOS device by invoking `getIdfa` method of the `Adjust` instance and by passing it a callback that will get triggered once IDFA value is obtained by native iOS SDK:
+
+```javascript
+Adjust.getIdfa((idfa) => {
+    console.log("IDFA = " + idfa);
+});
+```
+
+### <a id="di-gps-adid">Google Play Services advertising identifier
+
+The Adjust SDK provides you with the possibility to read the Google advertising identifier of the Android device on which your app is running. In order to do this, call `getGoogleAdId` method of the `Adjust` instance and pass your callback as a parameter. Once obtained by native Android SDK, you will receive the Google advertising identifier value in your callback method:
+
+```javascript
+Adjust.getGoogleAdId((googleAdId) => {
+    console.log("Google Ad Id = " + googleAdId);
+});
+```
+
+### <a id="di-adid"></a>Adjust device identifier
+
+For every device with your app installed on it, the Adjust backend generates a unique **Adjust device identifier** (**adid**). In order to obtain this identifier, call the `getAdid` method of the `Adjust` instance and pass your callback as a parameter to which **adid** value will be sent once obtained:
+
+```javascript
+Adjust.getAdid((adid) => {
+    console.log("Adid = " + adid);
+});
+```
+
+**Note**: Information about the **adid** is only available after an app installation has been tracked by the Adjust backend. From that moment on, the Adjust SDK has information about the device **adid** and you can access it with this method. So, **it is not possible** to access the **adid** value before the SDK has been initialised and installation of your app has been successfully tracked.
+
+### <a id="user-attribution"></a>User attribution
+
+As described in the [attribution callback section](#attribution-callback), this callback is triggered, providing you with information about a new attribution whenever it changes. If you want to access information about a user's current attribution whenever you need it, you can make a call to the `getAttribution` method of the `Adjust` instance and pass your callback as a parameter to which attribution value will be sent once obtained:
+
+```javascript
+Adjust.getAttribution((attribution) => {
+    console.log("Tracker token = " + attribution.trackerToken);
+    console.log("Tracker name = " + attribution.trackerName);
+    console.log("Network = " + attribution.network);
+    console.log("Campaign = " + attribution.campaign);
+    console.log("Adgroup = " + attribution.adgroup);
+    console.log("Creative = " + attribution.creative);
+    console.log("Click label = " + attribution.clickLabel);
+    console.log("Adid = " + attribution.adid);
+});
+```
+
+**Note**: Information about current attribution is only available after an app installation has been tracked by the Adjust backend and the attribution callback has been triggered. From that moment on, the Adjust SDK has information about a user's attribution and you can access it with this method. So, **it is not possible** to access a user's attribution value before the SDK has been initialised and an attribution callback has been triggered.
+
 ### <a id="push-token"></a>Push token
 
 To send us the push notification token, add the following call to Adjust **whenever you get your token in the app or when it gets updated**:
@@ -668,7 +728,6 @@ handleDeepLink(event) {
 }
 ```
 
-
 [dashboard]:    http://adjust.com
 [adjust.com]:   http://adjust.com
 
@@ -682,14 +741,16 @@ handleDeepLink(event) {
 [callbacks-guide]:      https://docs.adjust.com/en/callbacks
 [attribution-data]:     https://github.com/adjust/sdks/blob/master/doc/attribution-data.md
 [special-partners]:     https://docs.adjust.com/en/special-partners
+[broadcast-receiver]:   https://github.com/adjust/android_sdk#sdk-broadcast-receiver
 
-[google-launch-modes]:    http://developer.android.com/guide/topics/manifest/activity-element.html#lmode
-[currency-conversion]:    https://docs.adjust.com/en/event-tracking/#tracking-purchases-in-different-currencies
-[google-play-services]:   http://developer.android.com/google/play-services/index.html
-[android-sdk-deeplink]:   https://github.com/adjust/android_sdk#deeplinking-standard
-[google-play-services]:   http://developer.android.com/google/play-services/setup.html
-[ios-sdk-deeplink-late]:  https://github.com/adjust/ios_sdk#-deep-linking-on-ios-9-and-later
-[ios-sdk-deeplink-early]: https://github.com/adjust/ios_sdk#-deep-linking-on-ios-8-and-earlier
+[google-launch-modes]:        http://developer.android.com/guide/topics/manifest/activity-element.html#lmode
+[currency-conversion]:        https://docs.adjust.com/en/event-tracking/#tracking-purchases-in-different-currencies
+[google-play-services]:       http://developer.android.com/google/play-services/index.html
+[android-sdk-deeplink]:       https://github.com/adjust/android_sdk#deeplinking-standard
+[google-play-services]:       http://developer.android.com/google/play-services/setup.html
+[ios-sdk-deeplink-late]:      https://github.com/adjust/ios_sdk#-deep-linking-on-ios-9-and-later
+[ios-sdk-deeplink-early]:     https://github.com/adjust/ios_sdk#-deep-linking-on-ios-8-and-earlier
+[broadcast-receiver-custom]:  https://github.com/adjust/android_sdk/blob/master/doc/english/referrer.md
 
 [reattribution-with-deeplinks]: https://docs.adjust.com/en/deeplinking/#manually-appending-attribution-data-to-a-deep-link
 
@@ -697,7 +758,7 @@ handleDeepLink(event) {
 
 The adjust SDK is licensed under the MIT License.
 
-Copyright (c) 2012-2016 adjust GmbH,
+Copyright (c) 2012-2017 adjust GmbH,
 http://www.adjust.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of

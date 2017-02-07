@@ -93,6 +93,7 @@
     [self addValueOrEmpty:dictionary key:@"creative" value:attribution.creative];
     [self addValueOrEmpty:dictionary key:@"adgroup" value:attribution.adgroup];
     [self addValueOrEmpty:dictionary key:@"clickLabel" value:attribution.clickLabel];
+    [self addValueOrEmpty:dictionary key:@"adid" value:attribution.adid];
 
     [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_attribution" body:dictionary];
 }

@@ -166,7 +166,7 @@ The adjust SDK by default adds two permissions to your app's `AndroidManifest.xm
 
 The `INTERNET` permission might be needed by our SDK at any point in time. The `ACCESS_WIFI_STATE` permission is needed by the Adjust SDK if your app is not targeting the Google Play Store and doesn't use Google Play Services. If you are targeting the Google Play Store and you are using Google Play Services, the Adjust SDK doesn't need this permission and, if you don't need it anywhere else in your app, you can remove it.
 
-### <a id="sdk-gps"></a>Google Play Services
+### <a id="android-gps"></a>Google Play Services
 
 Since the 1st of August of 2014, apps in the Google Play Store must use the [Google Advertising ID][google-ad-id] to uniquely identify devices. To allow the adjust SDK to use the Google Advertising ID, you must integrate the [Google Play Services][google-play-services]. 
 
@@ -223,7 +223,7 @@ The Adjust install referrer broadcast receiver is added to your app by default. 
 </receiver>
 ```
 
-Please bear in mind that, if you are using your own broadcast receiver which handles the INSTALL_REFERRER intent, you don't need to add the Adjust broadcast receiver to your manifest file. You can remove it, but inside your own receiver add the call to the Adjust broadcast receiver as described in our [Android guide][broadcast-receiver-custom].
+Please bear in mind that, if you are using your own broadcast receiver which handles the `INSTALL_REFERRER` intent, you don't need to add the Adjust broadcast receiver to your manifest file. You can remove it, but inside your own receiver add the call to the Adjust broadcast receiver as described in our [Android guide][broadcast-receiver-custom].
 
 ## <a id="additional-features"></a>Additional features
 

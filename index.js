@@ -25,20 +25,20 @@ Adjust.isEnabled = function(callback) {
     module_adjust.isEnabled(callback);
 };
 
-Adjust.appWillOpenUrl = function(uri) {
-    module_adjust.appWillOpenUrl(uri);
-};
-
 Adjust.setOfflineMode = function(enabled) {
     module_adjust.setOfflineMode(enabled);
 };
 
-Adjust.sendFirstPackages = function() {
-    module_adjust.sendFirstPackages();
+Adjust.setPushToken = function(token) {
+    module_adjust.setPushToken(token);
 };
 
-Adjust.isEnabled = function(callback) {
-    module_adjust.isEnabled(callback);
+Adjust.appWillOpenUrl = function(uri) {
+    module_adjust.appWillOpenUrl(uri);
+};
+
+Adjust.sendFirstPackages = function() {
+    module_adjust.sendFirstPackages();
 };
 
 Adjust.addSessionCallbackParameter = function(key, value) {
@@ -65,8 +65,12 @@ Adjust.resetSessionPartnerParameters = function() {
     module_adjust.resetSessionPartnerParameters();
 };
 
-Adjust.setPushToken = function(token) {
-    module_adjust.setPushToken(token);
+Adjust.getAdid = function(callback) {
+    module_adjust.getAdid(callback);
+};
+
+Adjust.getAttribution = function(callback) {
+    module_adjust.getAttribution(callback);
 };
 
 var AdjustEvent = function (eventToken) {

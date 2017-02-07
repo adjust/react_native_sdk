@@ -1,5 +1,6 @@
 ### Version 4.11.0 (xxth February 2017)
 #### Added
+- Added support for react native `0.40.0` (thanks to @philipheinser).
 - Added `adid` property to the attribution callback response.
 - Added `getIdfa` method to the `Adjust` instance to be able to obtain iOS advertising identifier (IDFA).
 - Added `getGoogleAdId` method to the `Adjust` instance to be able to obtain Google Play Services advertising identifier.

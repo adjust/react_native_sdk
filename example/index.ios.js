@@ -56,6 +56,7 @@ export default class Example extends Component {
             console.log("Adgroup = " + attribution.adgroup);
             console.log("Creative = " + attribution.creative);
             console.log("Click label = " + attribution.clickLabel);
+            console.log("Adid = " + attribution.adid);
         });
 
         adjustConfig.setEventTrackingSucceededCallbackListener(function(eventSuccess) {
@@ -115,6 +116,21 @@ export default class Example extends Component {
 
         // Adjust.resetSessionCallbackParameters();
         // Adjust.resetSessionPartnerParameters();
+
+        Adjust.getAttribution((attribution) => {
+            console.log("Tracker token = " + attribution.trackerToken);
+            console.log("Tracker name = " + attribution.trackerName);
+            console.log("Network = " + attribution.network);
+            console.log("Campaign = " + attribution.campaign);
+            console.log("Adgroup = " + attribution.adgroup);
+            console.log("Creative = " + attribution.creative);
+            console.log("Click label = " + attribution.clickLabel);
+            console.log("Adid = " + attribution.adid);
+        });
+
+        Adjust.getAdid((adid) => {
+            console.log("Adid = " + adid);
+        });
 
         Adjust.setPushToken("bunny_foo_foo");
 
@@ -186,6 +202,10 @@ export default class Example extends Component {
     _onPress_trackSimpleEvent() {
         Adjust.isEnabled((isEnabled) => {
             if (isEnabled) {
+                Adjust.getAdid((adid) => {
+                    console.log("Adid = " + adid);
+                });
+
                 var adjustEvent = new AdjustEvent("g3mfiw");
                 Adjust.trackEvent(adjustEvent);
             } else {
@@ -197,6 +217,17 @@ export default class Example extends Component {
     _onPress_trackRevenueEvent() {
         Adjust.isEnabled((isEnabled) => {
             if (isEnabled) {
+                Adjust.getAttribution((attribution) => {
+                    console.log("Tracker token = " + attribution.trackerToken);
+                    console.log("Tracker name = " + attribution.trackerName);
+                    console.log("Network = " + attribution.network);
+                    console.log("Campaign = " + attribution.campaign);
+                    console.log("Adgroup = " + attribution.adgroup);
+                    console.log("Creative = " + attribution.creative);
+                    console.log("Click label = " + attribution.clickLabel);
+                    console.log("Adid = " + attribution.adid);
+                });
+
                 var adjustEvent = new AdjustEvent("a4fd35");
                 adjustEvent.setRevenue(10.0, "USD");
                 Adjust.trackEvent(adjustEvent);
@@ -261,7 +292,7 @@ export default class Example extends Component {
 
     _onPress_isSdkEnabled() {
         Adjust.isEnabled( (isEnabled) => {
-            if(isEnabled) {
+            if (isEnabled) {
                 console.log(">>> SDK is enabled");
             } else {
                 console.log(">>> SDK is disabled");

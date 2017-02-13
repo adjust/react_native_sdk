@@ -335,6 +335,21 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
+    public void getIdfa(Callback callback) {
+        callback.invoke("");
+    }
+
+    @ReactMethod
+    public void getGoogleAdId(final Callback callback) {
+        com.adjust.sdk.Adjust.getGoogleAdId(getReactApplicationContext(), new com.adjust.sdk.OnDeviceIdsRead() {
+            @Override
+            public void onGoogleAdIdRead(String googleAdId) {
+                callback.invoke(googleAdId);
+            }
+        });
+    }
+
+    @ReactMethod
     public void getAdid(Callback callback) {
         callback.invoke(com.adjust.sdk.Adjust.getAdid());
     }

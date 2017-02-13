@@ -248,6 +248,20 @@ RCT_EXPORT_METHOD(resetSessionPartnerParameters) {
     [Adjust resetSessionPartnerParameters];
 }
 
+RCT_EXPORT_METHOD(getIdfa:(RCTResponseSenderBlock)callback) {
+    NSString *idfa = [Adjust idfa];
+
+    if (nil == idfa) {
+        callback(@[@""]);
+    } else {
+        callback(@[idfa]);
+    }
+}
+
+RCT_EXPORT_METHOD(getGoogleAdId:(RCTResponseSenderBlock)callback) {
+    callback(@[@""]);
+}
+
 RCT_EXPORT_METHOD(getAdid:(RCTResponseSenderBlock)callback) {
     NSString *adid = [Adjust adid];
 

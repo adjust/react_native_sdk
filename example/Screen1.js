@@ -213,6 +213,14 @@ export default class Screen1 extends Component {
                     console.log("Adid = " + adid);
                 });
 
+                Adjust.getIdfa((idfa) => {
+                    console.log("IDFA = " + idfa);
+                });
+
+                Adjust.getGoogleAdId((googleAdId) => {
+                    console.log("Google Ad Id = " + googleAdId);
+                });
+
                 var adjustEvent = new AdjustEvent("g3mfiw");
                 Adjust.trackEvent(adjustEvent);
             } else {

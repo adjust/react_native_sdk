@@ -65,6 +65,14 @@ Adjust.resetSessionPartnerParameters = function() {
     module_adjust.resetSessionPartnerParameters();
 };
 
+Adjust.getIdfa = function(callback) {
+    module_adjust.getIdfa(callback);
+};
+
+Adjust.getGoogleAdId = function(callback) {
+    module_adjust.getGoogleAdId(callback);
+};
+
 Adjust.getAdid = function(callback) {
     module_adjust.getAdid(callback);
 };

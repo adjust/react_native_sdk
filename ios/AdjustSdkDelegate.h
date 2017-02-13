@@ -6,8 +6,12 @@
 //  Copyright (c) 2012-2016 adjust GmbH. All rights reserved.
 //
 
-#import "RCTBridge.h"
 #import "AdjustSdk.h"
+#if __has_include("RCTBridge.h")
+#import "RCTBridge.h"
+#else
+#import <React/RCTBridge.h>
+#endif
 
 @interface AdjustSdkDelegate : NSObject<AdjustDelegate>
 

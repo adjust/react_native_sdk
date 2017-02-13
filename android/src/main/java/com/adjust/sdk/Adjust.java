@@ -9,27 +9,25 @@
 
 package com.adjust.nativemodule;
 
-import com.facebook.react.bridge.*;
-import com.facebook.react.modules.core.*;
-
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import android.net.Uri;
-
 import javax.annotation.Nullable;
+
+import com.facebook.react.bridge.*;
+import com.facebook.react.modules.core.*;
 
 import com.adjust.sdk.*;
 
-public class Adjust extends ReactContextBaseJavaModule 
-    implements LifecycleEventListener,
-               OnAttributionChangedListener, 
-               OnEventTrackingSucceededListener,
-               OnEventTrackingFailedListener,
-               OnSessionTrackingSucceededListener,
-               OnSessionTrackingFailedListener,
-               OnDeeplinkResponseListener {
+public class Adjust extends ReactContextBaseJavaModule implements LifecycleEventListener, 
+                OnAttributionChangedListener, 
+                OnEventTrackingSucceededListener,
+                OnEventTrackingFailedListener,
+                OnSessionTrackingSucceededListener,
+                OnSessionTrackingFailedListener,
+                OnDeeplinkResponseListener {
     private boolean attributionCallback;
     private boolean eventTrackingSucceededCallback;
     private boolean eventTrackingFailedCallback;
@@ -281,12 +279,6 @@ public class Adjust extends ReactContextBaseJavaModule
     }
 
     @ReactMethod
-    public void appWillOpenUrl(String strUri) {
-        final Uri uri = Uri.parse(strUri);
-        com.adjust.sdk.Adjust.appWillOpenUrl(uri);
-    }
-
-    @ReactMethod
     public void setReferrer(String referrer) {
         com.adjust.sdk.Adjust.setReferrer(referrer);
     }
@@ -294,6 +286,17 @@ public class Adjust extends ReactContextBaseJavaModule
     @ReactMethod
     public void setOfflineMode(Boolean enabled) {
         com.adjust.sdk.Adjust.setOfflineMode(enabled);
+    }
+
+    @ReactMethod
+    public void setPushToken(String token) {
+        com.adjust.sdk.Adjust.setPushToken(token);
+    }
+
+    @ReactMethod
+    public void appWillOpenUrl(String strUri) {
+        final Uri uri = Uri.parse(strUri);
+        com.adjust.sdk.Adjust.appWillOpenUrl(uri);
     }
 
     @ReactMethod
@@ -332,8 +335,28 @@ public class Adjust extends ReactContextBaseJavaModule
     }
 
     @ReactMethod
-    public void setPushToken(String token) {
-        com.adjust.sdk.Adjust.setPushToken(token);
+    public void getIdfa(Callback callback) {
+        callback.invoke("");
+    }
+
+    @ReactMethod
+    public void getGoogleAdId(final Callback callback) {
+        com.adjust.sdk.Adjust.getGoogleAdId(getReactApplicationContext(), new com.adjust.sdk.OnDeviceIdsRead() {
+            @Override
+            public void onGoogleAdIdRead(String googleAdId) {
+                callback.invoke(googleAdId);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void getAdid(Callback callback) {
+        callback.invoke(com.adjust.sdk.Adjust.getAdid());
+    }
+
+    @ReactMethod
+    public void getAttribution(Callback callback) {
+        callback.invoke(AdjustUtil.attributionToMap(com.adjust.sdk.Adjust.getAttribution()));
     }
 
     @ReactMethod

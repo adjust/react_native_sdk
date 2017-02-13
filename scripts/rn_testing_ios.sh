@@ -18,7 +18,6 @@ echo -e "${GREEN}>>> Updating Git submodules ${NC}"
 cd ${SDK_DIR}
 git submodule update --init --recursive
 
-
 echo -e "${GREEN}>>> Running npm install on example project${NC}"
 cd ${SDK_DIR}/${EXAMPLE_DIR}
 npm install

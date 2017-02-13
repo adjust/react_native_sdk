@@ -9,7 +9,11 @@
 #import <objc/runtime.h>
 
 #import "AdjustSdkDelegate.h"
+#if __has_include("RCTEventDispatcher.h")
 #import "RCTEventDispatcher.h"
+#else
+#import <React/RCTEventDispatcher.h>
+#endif
 
 @implementation AdjustSdkDelegate
 
@@ -89,6 +93,7 @@
     [self addValueOrEmpty:dictionary key:@"creative" value:attribution.creative];
     [self addValueOrEmpty:dictionary key:@"adgroup" value:attribution.adgroup];
     [self addValueOrEmpty:dictionary key:@"clickLabel" value:attribution.clickLabel];
+    [self addValueOrEmpty:dictionary key:@"adid" value:attribution.adid];
 
     [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_attribution" body:dictionary];
 }

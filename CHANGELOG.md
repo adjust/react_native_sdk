@@ -1,4 +1,4 @@
-### Version 4.11.0 (xxth February 2017)
+### Version 4.11.0 (13th February 2017)
 #### Added
 - Added support for react native `0.40.0` (thanks to @philipheinser).
 - Added `adid` property to the attribution callback response.

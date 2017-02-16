@@ -7,10 +7,10 @@
 //
 
 #import "Adjust.h"
-#if __has_include("RCTBridgeModule.h")
-#import "RCTBridgeModule.h"
-#else
+#if __has_include(<React/RCTAssert.h>)
 #import <React/RCTBridgeModule.h>
+#else // back compatibility for RN version < 0.40
+#import "RCTBridgeModule.h"
 #endif
 
 @interface AdjustSdk : NSObject <RCTBridgeModule>

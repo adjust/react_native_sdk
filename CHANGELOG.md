@@ -1,6 +1,18 @@
+### Version 4.11.1 (20th February 2017)
+#### Added
+- Added support for React Native `0.40.0++` (thanks to @philipheinser, @philipshurpik and @dhorelik)
+
+#### Fixed
+- Fixed `Duplicate interface definition for class 'RCTBridge'` error messages.
+
+#### Native SDKs
+- [iOS@v4.11.0][ios_sdk_v4.11.0]
+- [Android@v4.11.0][android_sdk_v4.11.0]
+
+---
+
 ### Version 4.11.0 (13th February 2017)
 #### Added
-- Added support for react native `0.40.0` (thanks to @philipheinser).
 - Added `adid` property to the attribution callback response.
 - Added `getIdfa` method to the `Adjust` instance to be able to obtain iOS advertising identifier (IDFA).
 - Added `getGoogleAdId` method to the `Adjust` instance to be able to obtain Google Play Services advertising identifier.

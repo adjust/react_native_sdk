@@ -7,9 +7,10 @@
 //
 
 #import "Adjust.h"
+
 #if __has_include(<React/RCTAssert.h>)
 #import <React/RCTBridgeModule.h>
-#else // back compatibility for RN version < 0.40
+#else
 #import "RCTBridgeModule.h"
 #endif
 

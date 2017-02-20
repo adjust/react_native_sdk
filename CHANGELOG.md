@@ -1,6 +1,6 @@
 ### Version 4.11.1 (20th February 2017)
 #### Added
-- Added support for React Native `0.40.0++` (thanks to @philipheinser, @philipshurpik and @dhorelik)
+- Added support for React Native `0.40.0`++ (thanks to @philipheinser, @philipshurpik and @dhorelik)
 
 #### Fixed
 - Fixed `Duplicate interface definition for class 'RCTBridge'` error messages.

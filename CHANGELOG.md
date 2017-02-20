@@ -3,7 +3,7 @@
 - Added support for React Native `0.40.0`++ (thanks to @philipheinser, @philipshurpik and @dhorelik)
 
 #### Fixed
-- Fixed `Duplicate interface definition for class 'RCTBridge'` error messages.
+- Fixed `Duplicate interface definition for class` error messages.
 
 #### Native SDKs
 - [iOS@v4.11.0][ios_sdk_v4.11.0]

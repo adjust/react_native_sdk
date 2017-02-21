@@ -1,9 +1,12 @@
-### Version 4.11.1 (20th February 2017)
+### Version 4.11.1 (21st February 2017)
 #### Added
 - Added support for React Native `0.40.0`++ (thanks to @philipheinser, @philipshurpik and @dhorelik)
 
 #### Fixed
 - Fixed `Duplicate interface definition for class` error messages.
+
+#### Changed
+- Updated iOS and Android example apps build scripts.
 
 #### Native SDKs
 - [iOS@v4.11.0][ios_sdk_v4.11.0]

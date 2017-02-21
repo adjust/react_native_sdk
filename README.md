@@ -44,10 +44,6 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
       * [Reattribution via deep links](#deeplinking-reattribution)
 * [License](#license)
 
-## <a id="supported-versions"></a>Supported versions
-- react-native-cli: 1.2.0
-- react-native: 0.37.0, 0.40.0
-
 ## <a id="example-app"></a>Example app
 
 There is an example app inside the [`example` directory][example].

@@ -9,10 +9,10 @@
 #import <objc/runtime.h>
 
 #import "AdjustSdkDelegate.h"
-#if __has_include("RCTEventDispatcher.h")
-#import "RCTEventDispatcher.h"
-#else
+#if __has_include(<React/RCTAssert.h>)
 #import <React/RCTEventDispatcher.h>
+#else // back compatibility for RN version < 0.40
+#import "RCTEventDispatcher.h"
 #endif
 
 @implementation AdjustSdkDelegate

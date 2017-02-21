@@ -111,7 +111,7 @@ var AdjustConfig = function(appToken, environment) {
     this.appToken = appToken;
     this.environment = environment;
 
-    this.sdkPrefix = "react_native4.11.0";
+    this.sdkPrefix = "react_native4.11.1";
     this.logLevel = null;
 
     this.eventBufferingEnabled = null;

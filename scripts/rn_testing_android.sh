@@ -30,7 +30,7 @@ echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
 ext/android/build.sh
 
 # Remove node_modules from the example project
-rm -rf ${EXAMPLE_DIR}/node_modules
+rm -rf ${EXAMPLE_DIR}/node_modules/${SDK_NAME}
 
 echo -e "${GREEN}>>> Running npm install on example project${NC}"
 cd ${SDK_DIR}/${EXAMPLE_DIR}

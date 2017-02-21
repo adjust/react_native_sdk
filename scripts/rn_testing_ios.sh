@@ -22,7 +22,7 @@ cd ${SDK_DIR}
 git submodule update --init --recursive
 
 # Remove node_modules from the example project
-rm -rf ${EXAMPLE_DIR}/node_modules
+rm -rf ${EXAMPLE_DIR}/node_modules/${SDK_NAME}
 
 echo -e "${GREEN}>>> Running npm install on example project${NC}"
 cd ${SDK_DIR}/${EXAMPLE_DIR}

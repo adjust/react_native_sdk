@@ -40,6 +40,7 @@
 		9D9741D01E49E2DF0016F8D4 /* ADJTimerOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741AE1E49E2DF0016F8D4 /* ADJTimerOnce.m */; };
 		9D9741D11E49E2DF0016F8D4 /* Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741B01E49E2DF0016F8D4 /* Adjust.m */; };
 		9D9741D21E49E2DF0016F8D4 /* ADJUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741B21E49E2DF0016F8D4 /* ADJUtil.m */; };
+		9DB413561E9B691500F688C8 /* ADJConnectionValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB413551E9B691500F688C8 /* ADJConnectionValidator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -123,6 +124,8 @@
 		9D9741B11E49E2DF0016F8D4 /* ADJUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJUtil.h; sourceTree = "<group>"; };
 		9D9741B21E49E2DF0016F8D4 /* ADJUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJUtil.m; sourceTree = "<group>"; };
 		9D9741B31E49E2DF0016F8D4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DB413541E9B691500F688C8 /* ADJConnectionValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJConnectionValidator.h; sourceTree = "<group>"; };
+		9DB413551E9B691500F688C8 /* ADJConnectionValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJConnectionValidator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +227,8 @@
 				9D9741B01E49E2DF0016F8D4 /* Adjust.m */,
 				9D9741B11E49E2DF0016F8D4 /* ADJUtil.h */,
 				9D9741B21E49E2DF0016F8D4 /* ADJUtil.m */,
+				9DB413541E9B691500F688C8 /* ADJConnectionValidator.h */,
+				9DB413551E9B691500F688C8 /* ADJConnectionValidator.m */,
 				9D9741B31E49E2DF0016F8D4 /* Info.plist */,
 			);
 			path = Adjust;
@@ -318,6 +323,7 @@
 				9D9741C21E49E2DF0016F8D4 /* ADJEventFailure.m in Sources */,
 				9D9741BB1E49E2DF0016F8D4 /* ADJAdjustFactory.m in Sources */,
 				9D9741CC1E49E2DF0016F8D4 /* ADJSessionParameters.m in Sources */,
+				9DB413561E9B691500F688C8 /* ADJConnectionValidator.m in Sources */,
 				9D9741B61E49E2DF0016F8D4 /* ADJActivityPackage.m in Sources */,
 				9D9741D01E49E2DF0016F8D4 /* ADJTimerOnce.m in Sources */,
 				9D9741BF1E49E2DF0016F8D4 /* ADJConfig.m in Sources */,

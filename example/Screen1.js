@@ -35,6 +35,8 @@ export default class Screen1 extends Component {
         this._onPress_toggleSdk          = this._onPress_toggleSdk.bind(this);
         this._onPress_isSdkEnabled       = this._onPress_isSdkEnabled.bind(this);
         this._onPress_jumpToNextPage     = this._onPress_jumpToNextPage.bind(this);
+        this._onPress_getIds             = this._onPress_getIds.bind(this);
+        this._onPress_sendPushToken      = this._onPress_sendPushToken.bind(this);
 
         this.isOffline = false;
 
@@ -118,22 +120,22 @@ export default class Screen1 extends Component {
         // Adjust.resetSessionCallbackParameters();
         // Adjust.resetSessionPartnerParameters();
 
-        Adjust.getAttribution((attribution) => {
-            console.log("Tracker token = " + attribution.trackerToken);
-            console.log("Tracker name = " + attribution.trackerName);
-            console.log("Network = " + attribution.network);
-            console.log("Campaign = " + attribution.campaign);
-            console.log("Adgroup = " + attribution.adgroup);
-            console.log("Creative = " + attribution.creative);
-            console.log("Click label = " + attribution.clickLabel);
-            console.log("Adid = " + attribution.adid);
-        });
+        //Adjust.getAttribution((attribution) => {
+            //console.log("Tracker token = " + attribution.trackerToken);
+            //console.log("Tracker name = " + attribution.trackerName);
+            //console.log("Network = " + attribution.network);
+            //console.log("Campaign = " + attribution.campaign);
+            //console.log("Adgroup = " + attribution.adgroup);
+            //console.log("Creative = " + attribution.creative);
+            //console.log("Click label = " + attribution.clickLabel);
+            //console.log("Adid = " + attribution.adid);
+        //});
 
-        Adjust.getAdid((adid) => {
-            console.log("Adid = " + adid);
-        });
+        //Adjust.getAdid((adid) => {
+            //console.log("Adid = " + adid);
+        //});
 
-        Adjust.setPushToken("bunny_foo_foo");
+        //Adjust.setPushToken("bunny_foo_foo");
 
         Adjust.create(adjustConfig);
 
@@ -199,6 +201,18 @@ export default class Screen1 extends Component {
 
                 <TouchableHighlight
                     style={styles.buttons}
+                    onPress={this._onPress_sendPushToken}>
+                    <Text>Send Push Token</Text>
+                </TouchableHighlight>
+
+                <TouchableHighlight
+                    style={styles.buttons}
+                    onPress={this._onPress_getIds}>
+                    <Text>Get Ids</Text>
+                </TouchableHighlight>
+
+                <TouchableHighlight
+                    style={styles.buttons}
                     onPress={this._onPress_jumpToNextPage}>
                     <Text>Jump to Next Page</Text>
                 </TouchableHighlight>
@@ -209,18 +223,6 @@ export default class Screen1 extends Component {
     _onPress_trackSimpleEvent() {
         Adjust.isEnabled((isEnabled) => {
             if (isEnabled) {
-                Adjust.getAdid((adid) => {
-                    console.log("Adid = " + adid);
-                });
-
-                Adjust.getIdfa((idfa) => {
-                    console.log("IDFA = " + idfa);
-                });
-
-                Adjust.getGoogleAdId((googleAdId) => {
-                    console.log("Google Ad Id = " + googleAdId);
-                });
-
                 var adjustEvent = new AdjustEvent("g3mfiw");
                 Adjust.trackEvent(adjustEvent);
             } else {
@@ -309,6 +311,35 @@ export default class Screen1 extends Component {
         Adjust.isEnabled( (isEnabled) => {
             if (isEnabled) {
                 console.log(">>> SDK is enabled");
+            } else {
+                console.log(">>> SDK is disabled");
+            }
+        });
+    }
+    _onPress_sendPushToken() {
+        Adjust.isEnabled((isEnabled) => {
+            if (isEnabled) {
+                Adjust.setPushToken("bunny_foo_foo");
+            } else {
+                console.log(">>> SDK is disabled");
+            }
+        });
+    }
+    _onPress_getIds() {
+        Adjust.isEnabled((isEnabled) => {
+            if (isEnabled) {
+                Adjust.getAdid((adid) => {
+                    console.log("Adid = " + adid);
+                });
+
+                Adjust.getIdfa((idfa) => {
+                    console.log("IDFA = " + idfa);
+                });
+
+                Adjust.getGoogleAdId((googleAdId) => {
+                    console.log("Google Ad Id = " + googleAdId);
+                });
+
             } else {
                 console.log(">>> SDK is disabled");
             }

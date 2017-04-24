@@ -17,7 +17,7 @@
 - **[iOS]** Updated native iOS SDK to version **4.11.3**.
 - **[AND]** Updated native Android SDK to version **4.11.3**.
 - **[REPO]** Introduced `[iOS]`, `[AND]`, `[WIN]` and `[REPO]` tags to `CHANGELOG` to highlight the platform the change is referring to.
-- **[REPO]** Example app update.
+- **[REPO]** Updated example app.
 
 #### Native SDKs
 - **[iOS]** [iOS@v4.11.3][ios_sdk_v4.11.3]

@@ -8,6 +8,7 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
 * [Example app](#example-app)
 * [Basic integration](#basic-integration)
    * [Get the SDK](#sdk-get)
+   * [Add the AdSupport and iAd framework](#sdk-frameworks)
    * [Integrate the SDK into your app](#sdk-integrate)
    * [Adjust logging](#adjust-logging)
    * [Adjust project settings](#adjust-project-settings)
@@ -102,6 +103,10 @@ protected List<ReactPackage> getPackages() {
 ```
 import com.adjust.nativemodule.AdjustPackage;
 ```
+
+### <a id="sdk-frameworks"></a>Add the AdSupport and iAd framework
+
+Select your project in the Project Navigator. In the left hand side of the main view, select your target. In the tab `Build Phases`, expand the group `Link Binary with Libraries`. On the bottom of that section click on the `+` button. Select the `AdSupport.framework` and click the `Add` button. Unless you are using tvOS, repeat the same steps to add the `iAd.framework`. Change the `Status` of both frameworks to `Optional`.
 
 ### <a id="sdk-integrate"></a>Integrate the SDK into your app
 

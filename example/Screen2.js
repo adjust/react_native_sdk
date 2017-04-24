@@ -1,15 +1,8 @@
 'use strict';
 
-import React, {
-  Component
-} from 'react';
-
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableHighlight,
-} from 'react-native';
+import React, { Component } from 'react';
+import { Adjust, AdjustEvent, AdjustConfig } from 'react-native-adjust';
+import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 
 export default class Screen2 extends Component {
 
@@ -17,6 +10,15 @@ export default class Screen2 extends Component {
     super(props);
 
     this._onPress = this._onPress.bind(this);
+
+    Adjust.isEnabled((isEnabled) => {
+        if (isEnabled) {
+            var adjustEvent = new AdjustEvent("g3mfiw");
+            Adjust.trackEvent(adjustEvent);
+        } else {
+            console.log(">>> SDK is disabled");
+        }
+    });
   }
 
   render() {

@@ -1,14 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  Navigator,
-  TouchableHighlight
-} from 'react-native';
+import { AppRegistry, StyleSheet, Text, View, Navigator, TouchableHighlight } from 'react-native';
 
 import Screen1 from './Screen1';
 import Screen2 from './Screen2';

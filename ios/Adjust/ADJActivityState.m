@@ -7,10 +7,13 @@
 //
 
 #import "ADJKeychain.h"
+#import "ADJAdjustFactory.h"
 #import "ADJActivityState.h"
 #import "UIDevice+ADJAdditions.h"
+#import "NSString+ADJAdditions.h"
 
 static const int kTransactionIdCount = 10;
+static NSString *appToken = nil;
 
 @implementation ADJActivityState
 
@@ -18,13 +21,13 @@ static const int kTransactionIdCount = 10;
 
 - (id)init {
     self = [super init];
-
+    
     if (self == nil) {
         return nil;
     }
-
+    
     [self assignUuid:[UIDevice.currentDevice adjCreateUuid]];
-
+    
     self.eventCount         = 0;
     self.sessionCount       = 0;
     self.subsessionCount    = -1;   // -1 means unknown
@@ -37,11 +40,17 @@ static const int kTransactionIdCount = 10;
     self.deviceToken        = nil;
     self.transactionIds     = [NSMutableArray arrayWithCapacity:kTransactionIdCount];
     self.updatePackages  = NO;
-
+    
     return self;
 }
 
 #pragma mark - Public methods
+
++ (void)saveAppToken:(NSString *)appTokenToSave {
+    @synchronized (self) {
+        appToken = appTokenToSave;
+    }
+}
 
 - (void)resetSessionAttributes:(double)now {
     self.subsessionCount = 1;
@@ -56,12 +65,12 @@ static const int kTransactionIdCount = 10;
     if (self.transactionIds == nil) {
         self.transactionIds = [NSMutableArray arrayWithCapacity:kTransactionIdCount];
     }
-
+    
     // Make space.
     if (self.transactionIds.count == kTransactionIdCount) {
         [self.transactionIds removeObjectAtIndex:0];
     }
-
+    
     // Add the new ID.
     [self.transactionIds addObject:transactionId];
 }
@@ -78,13 +87,31 @@ static const int kTransactionIdCount = 10;
     // If not, use given UUID and store it to keychain.
     //      If successfully written, flag it.
     //      If writing failed, don't flat it.
+    // Small addition as of iOS 10.3:
+    // Keychain needs to be written in different way in order to persist value between (un)installs.
 
-    NSString *persistedUuid = [ADJKeychain valueForKeychainKey:@"adjust_persisted_uuid" service:@"deviceInfo"];
+    // Check if device supports new writing method.
+    // kSecAttrAccessGroupToken available since iOS 10.0.
+    if (NULL == &kSecAttrAccessGroupToken) {
+        // This device's iOS version doesn't support new writing method.
+        [self assignUuidOldMethod:uuid];
+        return;
+    } else {
+        // This device's iOS version supports new writing method.
+        [self assignUuidNewMethod:uuid];
+        return;
+    }
+}
 
-    // Check if value existed in keychain.
+- (void)assignUuidOldMethod:(NSString *)uuid {
+    NSString *persistedUuid = [ADJKeychain valueForKeychainKeyOld:@"adjust_persisted_uuid" service:@"deviceInfo"];
+
+    // Check if value exists in keychain.
     if (persistedUuid != nil) {
         // Check if value has UUID format.
         if ((bool)[[NSUUID alloc] initWithUUIDString:persistedUuid]) {
+            [[ADJAdjustFactory logger] verbose:@"Value found and read from the keychain old way"];
+
             // Value written in keychain seems to have UUID format.
             self.uuid = persistedUuid;
             self.isPersisted = YES;
@@ -101,6 +128,65 @@ static const int kTransactionIdCount = 10;
     self.isPersisted = [ADJKeychain setValue:self.uuid forKeychainKey:@"adjust_persisted_uuid" inService:@"deviceInfo"];
 }
 
+- (NSString *)generateUniqueKey {
+    if (appToken == nil) {
+        return nil;
+    }
+
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+
+    if (bundleIdentifier == nil) {
+        return nil;
+    }
+
+    NSString *joinedKey = [NSString stringWithFormat:@"%@%@", bundleIdentifier, appToken];
+
+    return [joinedKey adjSha1];
+}
+
+- (void)assignUuidNewMethod:(NSString *)uuid {
+    // First check if we have the key written with app's unique key name.
+    NSString *uniqueKey = [self generateUniqueKey];
+    NSString *persistedUuidUnique = [ADJKeychain valueForKeychainKeyNew:uniqueKey service:@"deviceInfo"];
+    
+    if (persistedUuidUnique != nil) {
+        // Check if value has UUID format.
+        if ((bool)[[NSUUID alloc] initWithUUIDString:persistedUuidUnique]) {
+            [[ADJAdjustFactory logger] verbose:@"Value found and read from the keychain new way"];
+            
+            // Value written in keychain seems to have UUID format.
+            self.uuid = persistedUuidUnique;
+            self.isPersisted = YES;
+            
+            return;
+        }
+    }
+
+    // At this point, UUID was not persisted with unique key or if persisted, didn't have proper UUID format.
+
+    // Check if it's still saved in the keychain with old writing method.
+    NSString *persistedUuidOld = [ADJKeychain valueForKeychainKeyOld:@"adjust_persisted_uuid" service:@"deviceInfo"];
+
+    if (persistedUuidOld != nil) {
+        // Check if value has UUID format.
+        if ((bool)[[NSUUID alloc] initWithUUIDString:persistedUuidOld]) {
+            [[ADJAdjustFactory logger] verbose:@"Value found and read from the keychain old way"];
+
+            // Since we have the value in the keychain written with old method, we'll use it to save it with new one.
+            self.uuid = persistedUuidOld;
+        } else {
+            // Since found value in the keychain doesn't have propper UUID format, we'll use passed UUID value.
+            self.uuid = uuid;
+        }
+    } else {
+        // Since we didn't find anything in the keychain with old method as well, we'll use the passed UUID value.
+        self.uuid = uuid;
+    }
+
+    // Try to save that value to the keychain and flag if successfully written.
+    self.isPersisted = [ADJKeychain setValue:self.uuid forKeychainKey:uniqueKey inService:@"deviceInfo"];
+}
+
 - (NSString *)description {
     return [NSString stringWithFormat:@"ec:%d sc:%d ssc:%d ask:%d sl:%.1f ts:%.1f la:%.1f dt:%@",
             self.eventCount, self.sessionCount, self.subsessionCount, self.askingAttribution, self.sessionLength,
@@ -111,67 +197,67 @@ static const int kTransactionIdCount = 10;
 
 - (id)initWithCoder:(NSCoder *)decoder {
     self = [super init];
-
+    
     if (self == nil) {
         return nil;
     }
-
+    
     self.eventCount         = [decoder decodeIntForKey:@"eventCount"];
     self.sessionCount       = [decoder decodeIntForKey:@"sessionCount"];
     self.subsessionCount    = [decoder decodeIntForKey:@"subsessionCount"];
     self.sessionLength      = [decoder decodeDoubleForKey:@"sessionLength"];
     self.timeSpent          = [decoder decodeDoubleForKey:@"timeSpent"];
     self.lastActivity       = [decoder decodeDoubleForKey:@"lastActivity"];
-
+    
     // Default values for migrating devices
     if ([decoder containsValueForKey:@"uuid"]) {
         [self assignUuid:[decoder decodeObjectForKey:@"uuid"]];
     }
-
+    
     if (self.uuid == nil) {
         [self assignUuid:[UIDevice.currentDevice adjCreateUuid]];
     }
-
+    
     if ([decoder containsValueForKey:@"transactionIds"]) {
         self.transactionIds = [decoder decodeObjectForKey:@"transactionIds"];
     }
-
+    
     if (self.transactionIds == nil) {
         self.transactionIds = [NSMutableArray arrayWithCapacity:kTransactionIdCount];
     }
-
+    
     if ([decoder containsValueForKey:@"enabled"]) {
         self.enabled = [decoder decodeBoolForKey:@"enabled"];
     } else {
         self.enabled = YES;
     }
-
+    
     if ([decoder containsValueForKey:@"askingAttribution"]) {
         self.askingAttribution = [decoder decodeBoolForKey:@"askingAttribution"];
     } else {
         self.askingAttribution = NO;
     }
-
+    
     if ([decoder containsValueForKey:@"deviceToken"]) {
         self.deviceToken        = [decoder decodeObjectForKey:@"deviceToken"];
     }
-
+    
     if ([decoder containsValueForKey:@"updatePackages"]) {
         self.updatePackages     = [decoder decodeBoolForKey:@"updatePackages"];
     } else {
         self.updatePackages     = NO;
     }
-
+    
     if ([decoder containsValueForKey:@"adid"]) {
         self.adid               = [decoder decodeObjectForKey:@"adid"];
     }
-
+    
     if ([decoder containsValueForKey:@"attributionDetails"]) {
         self.attributionDetails = [decoder decodeObjectForKey:@"attributionDetails"];
     }
-
+    
     self.lastInterval = -1;
-
+    
     return self;
 }
 
@@ -192,10 +278,12 @@ static const int kTransactionIdCount = 10;
     [encoder encodeObject:self.attributionDetails forKey:@"attributionDetails"];
 }
 
+#pragma mark - NSCopying protocol methods
+
 - (id)copyWithZone:(NSZone *)zone {
     ADJActivityState *copy = [[[self class] allocWithZone:zone] init];
-
-    // copy only values used by package builder
+    
+    // Copy only values used by package builder.
     if (copy) {
         copy.sessionCount       = self.sessionCount;
         copy.subsessionCount    = self.subsessionCount;

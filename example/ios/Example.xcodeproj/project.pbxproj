@@ -1070,6 +1070,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = QGUGW9AUMK;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../node_modules/react-native/Libraries/LinkingIOS\"/**";
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1090,6 +1091,7 @@
 				CODE_SIGN_ENTITLEMENTS = Example/Example.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QGUGW9AUMK;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../node_modules/react-native/Libraries/LinkingIOS\"/**";
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (

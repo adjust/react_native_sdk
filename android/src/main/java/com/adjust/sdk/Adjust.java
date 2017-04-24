@@ -96,6 +96,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void create(ReadableMap mapConfig) {
+        if (com.adjust.sdk.Adjust.isEnabled()) {
+            return;
+        }
+
         String environment            = null;
         String appToken               = null;
         String defaultTracker         = null;

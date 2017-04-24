@@ -6,15 +6,7 @@
 
 import React, { Component } from 'react';
 import { Adjust, AdjustEvent, AdjustConfig } from 'react-native-adjust';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    TouchableHighlight,
-    View,
-    Linking,
-    Navigator
-} from 'react-native';
+import { AppRegistry, StyleSheet, Text, TouchableHighlight, View, Linking, Navigator } from 'react-native';
 
 export default class Screen1 extends Component {
     componentDidMount() {
@@ -120,22 +112,7 @@ export default class Screen1 extends Component {
         // Adjust.resetSessionCallbackParameters();
         // Adjust.resetSessionPartnerParameters();
 
-        //Adjust.getAttribution((attribution) => {
-            //console.log("Tracker token = " + attribution.trackerToken);
-            //console.log("Tracker name = " + attribution.trackerName);
-            //console.log("Network = " + attribution.network);
-            //console.log("Campaign = " + attribution.campaign);
-            //console.log("Adgroup = " + attribution.adgroup);
-            //console.log("Creative = " + attribution.creative);
-            //console.log("Click label = " + attribution.clickLabel);
-            //console.log("Adid = " + attribution.adid);
-        //});
-
-        //Adjust.getAdid((adid) => {
-            //console.log("Adid = " + adid);
-        //});
-
-        //Adjust.setPushToken("bunny_foo_foo");
+        // Adjust.setPushToken("bunny_foo_foo");
 
         Adjust.create(adjustConfig);
 
@@ -316,6 +293,7 @@ export default class Screen1 extends Component {
             }
         });
     }
+
     _onPress_sendPushToken() {
         Adjust.isEnabled((isEnabled) => {
             if (isEnabled) {
@@ -325,6 +303,7 @@ export default class Screen1 extends Component {
             }
         });
     }
+
     _onPress_getIds() {
         Adjust.isEnabled((isEnabled) => {
             if (isEnabled) {

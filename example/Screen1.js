@@ -308,15 +308,15 @@ export default class Screen1 extends Component {
         Adjust.isEnabled((isEnabled) => {
             if (isEnabled) {
                 Adjust.getAdid((adid) => {
-                    console.log("Adid = " + adid);
+                    console.log(">>> Adid = " + adid);
                 });
 
                 Adjust.getIdfa((idfa) => {
-                    console.log("IDFA = " + idfa);
+                    console.log(">>> IDFA = " + idfa);
                 });
 
                 Adjust.getGoogleAdId((googleAdId) => {
-                    console.log("Google Ad Id = " + googleAdId);
+                    console.log(">>> Google Ad Id = " + googleAdId);
                 });
 
             } else {
@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     buttons: {
-        margin: 10,
-        padding: 10
+        margin: 5,
+        padding: 5
     }
 });

@@ -43,6 +43,10 @@ BOOL _isDeferredDeeplinkCallbackImplemented;
 }
 
 RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
+    if ([Adjust isEnabled]) {
+        return;
+    }
+
     NSString *appToken = dict[@"appToken"];
     NSString *environment = dict[@"environment"];
     NSString *logLevel = dict[@"logLevel"];

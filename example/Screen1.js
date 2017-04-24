@@ -98,8 +98,6 @@ export default class Screen1 extends Component {
             console.log(">>> Deferred Deeplink Callback received");
 
             console.log("URL: " + uri.uri);
-
-            Adjust.appWillOpenUrl(uri.uri);
         });
 
         Adjust.addSessionCallbackParameter("dummy_foo", "dummy_bar");

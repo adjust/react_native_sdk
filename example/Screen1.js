@@ -211,19 +211,11 @@ export default class Screen1 extends Component {
     _onPress_trackRevenueEvent() {
         Adjust.isEnabled((isEnabled) => {
             if (isEnabled) {
-                Adjust.getAttribution((attribution) => {
-                    console.log("Tracker token = " + attribution.trackerToken);
-                    console.log("Tracker name = " + attribution.trackerName);
-                    console.log("Network = " + attribution.network);
-                    console.log("Campaign = " + attribution.campaign);
-                    console.log("Adgroup = " + attribution.adgroup);
-                    console.log("Creative = " + attribution.creative);
-                    console.log("Click label = " + attribution.clickLabel);
-                    console.log("Adid = " + attribution.adid);
-                });
-
                 var adjustEvent = new AdjustEvent("a4fd35");
+
                 adjustEvent.setRevenue(10.0, "USD");
+                adjustEvent.setTransactionId("DUMMY_TRANSACTION_ID");
+
                 Adjust.trackEvent(adjustEvent);
             } else {
                 console.log(">>> SDK is disabled");
@@ -319,6 +311,17 @@ export default class Screen1 extends Component {
                     console.log(">>> Google Ad Id = " + googleAdId);
                 });
 
+                Adjust.getAttribution((attribution) => {
+                    console.log(">>> Attribution:");
+                    console.log("Tracker token = " + attribution.trackerToken);
+                    console.log("Tracker name = " + attribution.trackerName);
+                    console.log("Network = " + attribution.network);
+                    console.log("Campaign = " + attribution.campaign);
+                    console.log("Adgroup = " + attribution.adgroup);
+                    console.log("Creative = " + attribution.creative);
+                    console.log("Click label = " + attribution.clickLabel);
+                    console.log("Adid = " + attribution.adid);
+                });
             } else {
                 console.log(">>> SDK is disabled");
             }

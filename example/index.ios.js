@@ -1,7 +1,8 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View, Navigator, TouchableHighlight } from 'react-native';
+import { AppRegistry, StyleSheet, Text, View, Navigator, Linking, TouchableHighlight } from 'react-native';
+import { Adjust, AdjustEvent, AdjustConfig } from 'react-native-adjust';
 
 export class example extends Component {
     componentDidMount() {

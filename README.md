@@ -67,6 +67,12 @@ Then you must install the native dependencies. You can use `react-native` cli to
 $ react-native link
 ```
 
+**Or** if you use CocoaPods for **iOS**, add the following to your `Podfile` and run `pod install` afterwards:
+
+```
+pod 'react-native-adjust', :path => '../node_modules/react-native-adjust'
+```
+
 For **iOS**, you don't need to do anything else.
 
 For **Android**, you *may* need to check if Adjust package was added to the native module's package list.

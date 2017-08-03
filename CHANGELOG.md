@@ -1,3 +1,16 @@
+### Version 4.11.4 (3rd August 2017)
+#### Added
+- **[AND]** Added support for `React Native 0.47.0 and higher` (thanks to @robertmerten and @ruiaraujo).
+
+#### Changed
+- **[REPO]** Example app built `React Native 0.47.0`.
+
+#### Native SDKs
+- **[iOS]** [iOS@v4.11.4][ios_sdk_v4.11.4]
+- **[AND]** [Android@v4.11.4][android_sdk_v4.11.4]
+
+---
+
 ### Version 4.11.3 (15th May 2017)
 #### Added
 - **[iOS][AND]** Added check if `sdk_click` package response contains attribution information.

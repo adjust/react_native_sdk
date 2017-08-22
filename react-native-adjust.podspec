@@ -3,7 +3,7 @@ require 'json'
 package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
 
 Pod::Spec.new do |s|
-  s.name           = 'react-native-adjust'
+  s.name           = package['name']
   s.version        = package['version']
   s.summary        = package['description']
   s.description    = package['description']
@@ -18,6 +18,5 @@ Pod::Spec.new do |s|
   s.preserve_paths = 'LICENSE', 'README.md', 'package.json', 'index.js'
   s.source_files   = 'ios/*.{h,m}'
   
-  s.dependency 'Adjust'
-  s.dependency 'React'
+  s.dependency 'Adjust', '~> 4.11.4'
 end

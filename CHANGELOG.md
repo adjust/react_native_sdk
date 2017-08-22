@@ -1,3 +1,13 @@
+### Version 4.11.5 (22nd August 2017)
+#### Added
+- **[iOS]** Added `Podspec` file for Cocoapods support (thanks to @pietropizzi, @tecbot and @dan-manges).
+
+#### Native SDKs
+- **[iOS]** [iOS@v4.11.4][ios_sdk_v4.11.4]
+- **[AND]** [Android@v4.11.4][android_sdk_v4.11.4]
+
+---
+
 ### Version 4.11.4 (3rd August 2017)
 #### Added
 - **[AND]** Added support for `React Native 0.47.0 and higher` (thanks to @robertmerten and @ruiaraujo).

@@ -90,6 +90,9 @@ build/
 .jira-url
 atlassian-ide-plugin.xml
 
+# node 5
+package-lock.json
+
 # exceptions
 !*adjust-android.jar
 !android/libs/adjust*.jar

@@ -511,6 +511,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* exampleTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				9DDA88861F7A61A200C66612 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -525,6 +526,14 @@
 				2D02E4901E0B4A5D006451C7 /* example-tvOSTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9DDA88861F7A61A200C66612 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				BFC922DBF74D4E2EB5C22FAE /* libAdjustSdk.a */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		9DEF02161F33221100B0FA1B /* Products */ = {

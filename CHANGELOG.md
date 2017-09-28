@@ -1,3 +1,17 @@
+### Version 4.11.6 (28th September 2017)
+#### Added
+- **[iOS]** Improved iOS 11 support.
+
+#### Changed
+- **[iOS]** Removed iOS connection validity checks.
+- **[iOS]** Updated native iOS SDK to version **4.11.5**.
+
+#### Native SDKs
+- **[iOS]** [iOS@v4.11.5][ios_sdk_v4.11.5]
+- **[AND]** [Android@v4.11.4][android_sdk_v4.11.4]
+
+---
+
 ### Version 4.11.5 (22nd August 2017)
 #### Added
 - **[iOS]** Added `Podspec` file for Cocoapods support (thanks to @pietropizzi, @tecbot and @dan-manges).
@@ -118,6 +132,7 @@
 [ios_sdk_v4.11.0]: https://github.com/adjust/ios_sdk/tree/v4.11.0
 [ios_sdk_v4.11.3]: https://github.com/adjust/ios_sdk/tree/v4.11.3
 [ios_sdk_v4.11.4]: https://github.com/adjust/ios_sdk/tree/v4.11.4
+[ios_sdk_v4.11.5]: https://github.com/adjust/ios_sdk/tree/v4.11.5
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0

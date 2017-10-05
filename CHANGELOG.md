@@ -1,3 +1,16 @@
+### Version 4.11.7 (5th October 2017)
+#### Added
+- **[iOS]** Added support for `use_frameworks!` option in `Podfile` (thanks to @jimmy-devine).
+
+#### Changed
+- **[iOS]** Updated Adjust pod version to `4.11.5` in `react-native-adjust.podspec`.
+
+#### Native SDKs
+- **[iOS]** [iOS@v4.11.5][ios_sdk_v4.11.5]
+- **[AND]** [Android@v4.11.4][android_sdk_v4.11.4]
+
+---
+
 ### Version 4.11.6 (28th September 2017)
 #### Added
 - **[iOS]** Improved iOS 11 support.

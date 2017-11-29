@@ -420,13 +420,13 @@ Adjust.create(adjustConfig);
 
 Within the listener function you have access to the `attribution` parameters. Here is a quick summary of its properties:
 
-- `trackerToken`    the tracker token of the current install.
-- `trackerName`     the tracker name of the current install.
-- `network`         the network grouping level of the current install.
-- `campaign`        the campaign grouping level of the current install.
-- `adgroup`         the ad group grouping level of the current install.
-- `creative`        the creative grouping level of the current install.
-- `clickLabel`      the click label of the current install.
+- `trackerToken`    the tracker token of the current attribution.
+- `trackerName`     the tracker name of the current attribution.
+- `network`         the network grouping level of the current attribution.
+- `campaign`        the campaign grouping level of the current attribution.
+- `adgroup`         the ad group grouping level of the current attribution.
+- `creative`        the creative grouping level of the current attribution.
+- `clickLabel`      the click label of the current attribution.
 - `adid`            the Adjust device identifier.
 
 Please make sure to consider our [applicable attribution data policies][attribution-data].

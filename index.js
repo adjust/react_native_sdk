@@ -124,6 +124,12 @@ var AdjustConfig = function(appToken, environment) {
     this.referrer = null;
     this.userAgent = null;
 
+    this.secretId = null;
+    this.info1 = null;
+    this.info2 = null;
+    this.info3 = null;
+    this.info4 = null;
+
     // Android only
     this.processName = null;
 };
@@ -163,6 +169,14 @@ AdjustConfig.prototype.setDefaultTracker = function(defaultTracker) {
 
 AdjustConfig.prototype.setUserAgent = function(userAgent) {
     this.userAgent = userAgent;
+};
+
+AdjustConfig.prototype.setAppSecret = function(secretId, info1, info2, info3, info4) {
+    this.secretId = secretId.toString();
+    this.info1 = info1;
+    this.info2 = info2;
+    this.info3 = info3;
+    this.info4 = info4;
 };
 
 AdjustConfig.prototype.setDelayStart = function(delayStart) {

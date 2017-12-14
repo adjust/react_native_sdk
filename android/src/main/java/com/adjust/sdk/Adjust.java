@@ -104,6 +104,8 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         String logLevel               = null;
         boolean eventBufferingEnabled = false;
         String userAgent              = null;
+        String secretId               = null;
+        String appSecret              = null;
         boolean sendInBackground      = false;
         boolean shouldLaunchDeeplink  = false;
         double delayStart             = 0.0;
@@ -179,6 +181,17 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (!mapConfig.isNull("userAgent") ) {
             userAgent = mapConfig.getString("userAgent");
             adjustConfig.setUserAgent(userAgent);
+        }
+
+        // App secret
+        if (!mapConfig.isNull("secretId") && 
+                !mapConfig.isNull("info1")) {
+            secretId = mapConfig.getString("secretId");
+            info1 = mapConfig.getString("info1");
+            info2 = mapConfig.getString("info2");
+            info3 = mapConfig.getString("info3");
+            info4 = mapConfig.getString("info4");
+            adjustConfig.setAppSecret(secretId, appSecret);
         }
 
         // Background tracking

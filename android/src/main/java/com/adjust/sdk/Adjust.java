@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
+import android.util.Log;
 
 import com.adjust.sdk.*;
 
@@ -104,8 +105,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         String logLevel               = null;
         boolean eventBufferingEnabled = false;
         String userAgent              = null;
-        String secretId               = null;
-        String appSecret              = null;
+        long secretId                 = 0L;
+        long info1                    = 0L;
+        long info2                    = 0L;
+        long info3                    = 0L;
+        long info4                    = 0L;
         boolean sendInBackground      = false;
         boolean shouldLaunchDeeplink  = false;
         double delayStart             = 0.0;
@@ -184,14 +188,21 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         }
 
         // App secret
-        if (!mapConfig.isNull("secretId") && 
-                !mapConfig.isNull("info1")) {
-            secretId = mapConfig.getString("secretId");
-            info1 = mapConfig.getString("info1");
-            info2 = mapConfig.getString("info2");
-            info3 = mapConfig.getString("info3");
-            info4 = mapConfig.getString("info4");
-            adjustConfig.setAppSecret(secretId, appSecret);
+        if (!mapConfig.isNull("secretId") 
+                && !mapConfig.isNull("info1")
+                && !mapConfig.isNull("info2")
+                && !mapConfig.isNull("info3")
+                && !mapConfig.isNull("info4")
+                ) {
+            try {
+                secretId = Long.parseLong(mapConfig.getString("secretId"), 10);
+                info1    = Long.parseLong(mapConfig.getString("info1"), 10);
+                info2    = Long.parseLong(mapConfig.getString("info2"), 10);
+                info3    = Long.parseLong(mapConfig.getString("info3"), 10);
+                info4    = Long.parseLong(mapConfig.getString("info4"), 10);
+                //Log.d("AdjustBridge", ": " + info1 + ": " + info2 + ": " + info3 + ": " + info4);
+                adjustConfig.setAppSecret(secretId, info1, info2, info3, info4);
+            } catch(NumberFormatException ignore) { }
         }
 
         // Background tracking
@@ -293,7 +304,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void setReferrer(String referrer) {
-        com.adjust.sdk.Adjust.setReferrer(referrer);
+        com.adjust.sdk.Adjust.setReferrer(
+                referrer,
+                getReactApplicationContext()
+                );
     }
 
     @ReactMethod

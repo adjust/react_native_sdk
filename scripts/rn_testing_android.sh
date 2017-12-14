@@ -17,17 +17,19 @@ NC='\033[0m' # No Color
 # Kill any previously running packager instance
 killall -9 node
 
-echo -e "${GREEN}>>> Updating Git submodules ${NC}"
-cd ${SDK_DIR}
-git submodule update --init --recursive
+#echo -e "${GREEN}>>> Updating Git submodules ${NC}"
+#cd ${SDK_DIR}
+#git submodule update --init --recursive
 
-# Removing the old Android JAR file
 echo -e "${GREEN}>>> Removing the Android JAR file ${NC}"
 rm -rfv android/libs/*
 
+echo -e "${GREEN}>>> Removing app from test device ${NC}"
+adb uninstall com.adjust.examples
+
 # Building the Android JAR file
 echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
-ext/android/build.sh
+ext/android/build.sh release
 
 # Remove node_modules from the example project
 rm -rf ${EXAMPLE_DIR}/node_modules/${SDK_NAME}

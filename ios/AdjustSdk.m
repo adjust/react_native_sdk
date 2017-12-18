@@ -54,6 +54,12 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSString *userAgent = dict[@"userAgent"];
     NSNumber *delayStart = dict[@"delayStart"];
 
+    NSString *secretId_str = dict[@"secretId"];
+    NSString *info1_str = dict[@"info1"];
+    NSString *info2_str = dict[@"info2"];
+    NSString *info3_str = dict[@"info3"];
+    NSString *info4_str = dict[@"info4"];
+
     BOOL allowSuppressLogLevel = NO;
 
     // Log level
@@ -68,11 +74,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     if ([adjustConfig isValid]) {
         // Log level
         if ([self isFieldValid:logLevel]) {
-            if (NO == allowSuppressLogLevel) {
-                [adjustConfig setLogLevel:[ADJLogger LogLevelFromString:[logLevel lowercaseString]]];
-            } else {
-                [adjustConfig setLogLevel:ADJLogLevelSuppress];
-            }
+            [adjustConfig setLogLevel:[ADJLogger logLevelFromString:[logLevel lowercaseString]]];
         }
 
         // Event buffering
@@ -118,6 +120,26 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
         // User agent
         if ([self isFieldValid:userAgent]) {
             [adjustConfig setUserAgent:userAgent];
+        }
+
+        // App Secret
+        if ([self isFieldValid:secretId_str]
+            && [self isFieldValid:info1_str]
+            && [self isFieldValid:info2_str]
+            && [self isFieldValid:info3_str]
+            && [self isFieldValid:info4_str]
+            ) {
+            NSNumber *secretId = [NSNumber numberWithLongLong: [secretId_str longLongValue]];
+            NSNumber *info1 = [NSNumber numberWithLongLong: [info1_str longLongValue]];
+            NSNumber *info2 = [NSNumber numberWithLongLong: [info2_str longLongValue]];
+            NSNumber *info3 = [NSNumber numberWithLongLong: [info3_str longLongValue]];
+            NSNumber *info4 = [NSNumber numberWithLongLong: [info4_str longLongValue]];
+
+            [adjustConfig setAppSecret:secretId.unsignedIntegerValue
+                                info1:info1.unsignedIntegerValue
+                                 info2:info2.unsignedIntegerValue
+                                 info3:info3.unsignedIntegerValue
+                                 info4:info4.unsignedIntegerValue];
         }
 
         // Delay start
@@ -259,6 +281,10 @@ RCT_EXPORT_METHOD(getIdfa:(RCTResponseSenderBlock)callback) {
 }
 
 RCT_EXPORT_METHOD(getGoogleAdId:(RCTResponseSenderBlock)callback) {
+    callback(@[@""]);
+}
+
+RCT_EXPORT_METHOD(getAmazonAdId:(RCTResponseSenderBlock)callback) {
     callback(@[@""]);
 }
 

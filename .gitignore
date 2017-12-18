@@ -96,3 +96,6 @@ package-lock.json
 # exceptions
 !*adjust-android.jar
 !android/libs/adjust*.jar
+
+ios/Build/
+ios/Index/

@@ -114,6 +114,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         boolean shouldLaunchDeeplink  = false;
         double delayStart             = 0.0;
         boolean isLogLevelSuppress    = false;
+        boolean isUserKnown           = false;
 
         // Check for isLogLevelSuppress.
         if (!mapConfig.isNull("logLevel")) {
@@ -209,6 +210,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (!mapConfig.isNull("sendInBackground")) {
             sendInBackground = mapConfig.getBoolean("sendInBackground");
             adjustConfig.setSendInBackground(sendInBackground);
+        }
+
+        // Set User Known
+        if (!mapConfig.isNull("isUserKnown")) {
+            isUserKnown = mapConfig.getBoolean("isUserKnown");
+            adjustConfig.setUserKnown(isUserKnown);
         }
 
         // Launching deferred deep link
@@ -379,6 +386,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     @ReactMethod
     public void getAdid(Callback callback) {
         callback.invoke(com.adjust.sdk.Adjust.getAdid());
+    }
+
+    @ReactMethod
+    public void getAmazonAdId(Callback callback) {
+        callback.invoke(com.adjust.sdk.Adjust.getAmazonAdId(getReactApplicationContext()));
     }
 
     @ReactMethod

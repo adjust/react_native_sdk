@@ -35,6 +35,8 @@ export class example extends Component {
 
         adjustConfig.setAppSecret(1, 261177507, 1432976755, 991598438, 1252037374);
 
+        adjustConfig.setUserKnown(true);
+
         // adjustConfig.setEventBufferingEnabled(true);
         // adjustConfig.setUserAgent("little_bunny_foo_foo");
 
@@ -301,6 +303,10 @@ export class example extends Component {
 
                 Adjust.getGoogleAdId((googleAdId) => {
                     console.log(">>> Google Ad Id = " + googleAdId);
+                });
+
+                Adjust.getAmazonAdId((amazonAdId) => {
+                    console.log(">>> Amazon Ad Id = " + amazonAdId);
                 });
 
                 Adjust.getAttribution((attribution) => {

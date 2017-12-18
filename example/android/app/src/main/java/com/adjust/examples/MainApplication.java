@@ -2,6 +2,7 @@ package com.adjust.examples;
 
 import android.app.Application;
 
+import com.adjust.examples.BuildConfig;
 import com.facebook.react.ReactApplication;
 import com.adjust.nativemodule.AdjustPackage;
 import com.facebook.react.ReactNativeHost;

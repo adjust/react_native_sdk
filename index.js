@@ -81,6 +81,10 @@ Adjust.getAttribution = function(callback) {
     module_adjust.getAttribution(callback);
 };
 
+Adjust.getAmazonAdId = function(callback) {
+    module_adjust.getAmazonAdId(callback);
+};
+
 var AdjustEvent = function (eventToken) {
     this.eventToken = eventToken;
     this.revenue = null;
@@ -132,6 +136,7 @@ var AdjustConfig = function(appToken, environment) {
 
     // Android only
     this.processName = null;
+    this.isUserKnown = null;
 };
 
 AdjustConfig.EnvironmentSandbox                   = "sandbox";
@@ -189,6 +194,10 @@ AdjustConfig.prototype.setReferrer = function(referrer) {
 
 AdjustConfig.prototype.setSendInBackground = function(sendInBackground) {
     this.sendInBackground = sendInBackground;
+};
+
+AdjustConfig.prototype.setUserKnown = function(isUserKnown) {
+    this.isUserKnown = isUserKnown;
 };
 
 AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) {

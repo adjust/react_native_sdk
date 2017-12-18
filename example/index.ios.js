@@ -29,9 +29,13 @@ export class example extends Component {
 
         var adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
         adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
-        adjustConfig.setDelayStart(6.0);
+        //adjustConfig.setDelayStart(6.0);
         adjustConfig.setShouldLaunchDeeplink(true);
         adjustConfig.setSendInBackground(true);
+
+        adjustConfig.setAppSecret(1, 261177507, 1432976755, 991598438, 1252037374);
+
+        adjustConfig.setUserKnown(true);
 
         // adjustConfig.setEventBufferingEnabled(true);
         // adjustConfig.setUserAgent("little_bunny_foo_foo");
@@ -107,11 +111,12 @@ export class example extends Component {
         // Adjust.resetSessionCallbackParameters();
         // Adjust.resetSessionPartnerParameters();
 
-        // Adjust.setPushToken("bunny_foo_foo");
+         Adjust.setPushToken("bunny_foo_foo");
 
+        //Adjust.setEnabled(false);
         Adjust.create(adjustConfig);
 
-        Adjust.sendFirstPackages();
+        //Adjust.sendFirstPackages();
     } 
 
     componentWillUnmount() {
@@ -299,6 +304,10 @@ export class example extends Component {
 
                 Adjust.getGoogleAdId((googleAdId) => {
                     console.log(">>> Google Ad Id = " + googleAdId);
+                });
+
+                Adjust.getAmazonAdId((amazonAdId) => {
+                    console.log(">>> Amazon Ad Id = " + amazonAdId);
                 });
 
                 Adjust.getAttribution((attribution) => {

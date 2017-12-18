@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		13BE3DEE1AC21097009241FE /* AdjustSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* AdjustSdk.m */; };
+		2037FA5D1FE7CB9C00C86593 /* ADJReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2037FA5A1FE7CB9B00C86593 /* ADJReachability.m */; };
+		2037FA5E1FE7CB9C00C86593 /* ADJUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 2037FA5C1FE7CB9C00C86593 /* ADJUserDefaults.m */; };
 		9D6A23761DE87EAF002D401C /* AdjustSdkDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D6A23751DE87EAF002D401C /* AdjustSdkDelegate.m */; };
 		9D9741B41E49E2DF0016F8D4 /* ADJActivityHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741751E49E2DF0016F8D4 /* ADJActivityHandler.m */; };
 		9D9741B51E49E2DF0016F8D4 /* ADJActivityKind.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741771E49E2DF0016F8D4 /* ADJActivityKind.m */; };
@@ -58,6 +60,10 @@
 		134814201AA4EA6300B7C361 /* libAdjustSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAdjustSdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BE3DEC1AC21097009241FE /* AdjustSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustSdk.h; sourceTree = "<group>"; };
 		13BE3DED1AC21097009241FE /* AdjustSdk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustSdk.m; sourceTree = "<group>"; };
+		2037FA591FE7CB9B00C86593 /* ADJReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJReachability.h; sourceTree = "<group>"; };
+		2037FA5A1FE7CB9B00C86593 /* ADJReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJReachability.m; sourceTree = "<group>"; };
+		2037FA5B1FE7CB9B00C86593 /* ADJUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJUserDefaults.h; sourceTree = "<group>"; };
+		2037FA5C1FE7CB9C00C86593 /* ADJUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJUserDefaults.m; sourceTree = "<group>"; };
 		9D6A23741DE87EAF002D401C /* AdjustSdkDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustSdkDelegate.h; sourceTree = "<group>"; };
 		9D6A23751DE87EAF002D401C /* AdjustSdkDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustSdkDelegate.m; sourceTree = "<group>"; };
 		9D9741741E49E2DF0016F8D4 /* ADJActivityHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJActivityHandler.h; sourceTree = "<group>"; };
@@ -167,6 +173,10 @@
 		9D9741731E49E2DF0016F8D4 /* Adjust */ = {
 			isa = PBXGroup;
 			children = (
+				2037FA591FE7CB9B00C86593 /* ADJReachability.h */,
+				2037FA5A1FE7CB9B00C86593 /* ADJReachability.m */,
+				2037FA5B1FE7CB9B00C86593 /* ADJUserDefaults.h */,
+				2037FA5C1FE7CB9C00C86593 /* ADJUserDefaults.m */,
 				9D9741741E49E2DF0016F8D4 /* ADJActivityHandler.h */,
 				9D9741751E49E2DF0016F8D4 /* ADJActivityHandler.m */,
 				9D9741761E49E2DF0016F8D4 /* ADJActivityKind.h */,
@@ -268,7 +278,7 @@
 		58B511D31A9E6C8500147676 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					58B511DA1A9E6C8500147676 = {
@@ -305,6 +315,7 @@
 				9D9741B41E49E2DF0016F8D4 /* ADJActivityHandler.m in Sources */,
 				9D6A23761DE87EAF002D401C /* AdjustSdkDelegate.m in Sources */,
 				9D9741C91E49E2DF0016F8D4 /* ADJResponseData.m in Sources */,
+				2037FA5E1FE7CB9C00C86593 /* ADJUserDefaults.m in Sources */,
 				9D9741BC1E49E2DF0016F8D4 /* ADJAttribution.m in Sources */,
 				9D9741C61E49E2DF0016F8D4 /* ADJPackageBuilder.m in Sources */,
 				9D9741BD1E49E2DF0016F8D4 /* ADJAttributionHandler.m in Sources */,
@@ -312,6 +323,7 @@
 				9D9741C11E49E2DF0016F8D4 /* ADJEvent.m in Sources */,
 				9D9741BA1E49E2DF0016F8D4 /* UIDevice+ADJAdditions.m in Sources */,
 				9D9741C31E49E2DF0016F8D4 /* ADJEventSuccess.m in Sources */,
+				2037FA5D1FE7CB9C00C86593 /* ADJReachability.m in Sources */,
 				9D9741D11E49E2DF0016F8D4 /* Adjust.m in Sources */,
 				9D9741C51E49E2DF0016F8D4 /* ADJLogger.m in Sources */,
 				9D9741B91E49E2DF0016F8D4 /* NSString+ADJAdditions.m in Sources */,
@@ -345,19 +357,29 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -370,6 +392,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../react-native/React/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -385,25 +408,35 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../react-native/React/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;

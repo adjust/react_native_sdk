@@ -136,7 +136,8 @@ var AdjustConfig = function(appToken, environment) {
 
     // Android only
     this.processName = null;
-    this.isUserKnown = null;
+    this.isDeviceKnown = null;
+    this.readMobileEquipmentIdentity = null;
 };
 
 AdjustConfig.EnvironmentSandbox                   = "sandbox";
@@ -196,8 +197,12 @@ AdjustConfig.prototype.setSendInBackground = function(sendInBackground) {
     this.sendInBackground = sendInBackground;
 };
 
-AdjustConfig.prototype.setUserKnown = function(isUserKnown) {
-    this.isUserKnown = isUserKnown;
+AdjustConfig.prototype.setDeviceKnown = function(isDeviceKnown) {
+    this.isDeviceKnown = isDeviceKnown;
+};
+
+AdjustConfig.prototype.setReadMobileEquipmentIdentity = function(readMobileEquipmentIdentity) {
+    this.readMobileEquipmentIdentity = readMobileEquipmentIdentity;
 };
 
 AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) {

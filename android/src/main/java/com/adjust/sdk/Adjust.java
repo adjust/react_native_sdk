@@ -114,7 +114,8 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         boolean shouldLaunchDeeplink  = false;
         double delayStart             = 0.0;
         boolean isLogLevelSuppress    = false;
-        boolean isUserKnown           = false;
+        boolean isDeviceKnown           = false;
+        boolean readMobileEquipmentIdentity           = false;
 
         // Check for isLogLevelSuppress.
         if (!mapConfig.isNull("logLevel")) {
@@ -201,7 +202,6 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 info2    = Long.parseLong(mapConfig.getString("info2"), 10);
                 info3    = Long.parseLong(mapConfig.getString("info3"), 10);
                 info4    = Long.parseLong(mapConfig.getString("info4"), 10);
-                //Log.d("AdjustBridge", ": " + info1 + ": " + info2 + ": " + info3 + ": " + info4);
                 adjustConfig.setAppSecret(secretId, info1, info2, info3, info4);
             } catch(NumberFormatException ignore) { }
         }
@@ -212,10 +212,16 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             adjustConfig.setSendInBackground(sendInBackground);
         }
 
-        // Set User Known
-        if (!mapConfig.isNull("isUserKnown")) {
-            isUserKnown = mapConfig.getBoolean("isUserKnown");
-            adjustConfig.setUserKnown(isUserKnown);
+        // Set device Known
+        if (!mapConfig.isNull("isDeviceKnown")) {
+            isDeviceKnown = mapConfig.getBoolean("isDeviceKnown");
+            adjustConfig.setDeviceKnown(isDeviceKnown);
+        }
+
+        // Set read mobile equipment id
+        if (!mapConfig.isNull("readMobileEquipmentIdentity")) {
+            readMobileEquipmentIdentity = mapConfig.getBoolean("readMobileEquipmentIdentity");
+            adjustConfig.SetReadMobileEquipmentIdentity(readMobileEquipmentIdentity);
         }
 
         // Launching deferred deep link

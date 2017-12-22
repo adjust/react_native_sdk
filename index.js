@@ -124,9 +124,10 @@ var AdjustConfig = function(appToken, environment) {
 
     this.delayStart = null;
 
-    this.defaultTracker = null;
     this.referrer = null;
     this.userAgent = null;
+    this.isDeviceKnown = null;
+    this.defaultTracker = null;
 
     this.secretId = null;
     this.info1 = null;
@@ -136,7 +137,6 @@ var AdjustConfig = function(appToken, environment) {
 
     // Android only
     this.processName = null;
-    this.isDeviceKnown = null;
     this.readMobileEquipmentIdentity = null;
 };
 

@@ -43,22 +43,23 @@ BOOL _isDeferredDeeplinkCallbackImplemented;
 }
 
 RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
-    NSString *appToken = dict[@"appToken"];
-    NSString *environment = dict[@"environment"];
-    NSString *logLevel = dict[@"logLevel"];
-    NSString *sdkPrefix = dict[@"sdkPrefix"];
-    NSString *defaultTracker = dict[@"defaultTracker"];
+    NSString *appToken              = dict[@"appToken"];
+    NSString *environment           = dict[@"environment"];
+    NSString *logLevel              = dict[@"logLevel"];
+    NSString *sdkPrefix             = dict[@"sdkPrefix"];
+    NSString *defaultTracker        = dict[@"defaultTracker"];
     NSNumber *eventBufferingEnabled = dict[@"eventBufferingEnabled"];
-    NSNumber *sendInBackground = dict[@"sendInBackground"];
-    NSNumber *shouldLaunchDeeplink = dict[@"shouldLaunchDeeplink"];
-    NSString *userAgent = dict[@"userAgent"];
-    NSNumber *delayStart = dict[@"delayStart"];
+    NSNumber *sendInBackground      = dict[@"sendInBackground"];
+    NSNumber *shouldLaunchDeeplink  = dict[@"shouldLaunchDeeplink"];
+    NSString *userAgent             = dict[@"userAgent"];
+    NSNumber *delayStart            = dict[@"delayStart"];
+    NSString *isDeviceKnown         = dict[@"isDeviceKnown"];
 
-    NSString *secretId_str = dict[@"secretId"];
-    NSString *info1_str = dict[@"info1"];
-    NSString *info2_str = dict[@"info2"];
-    NSString *info3_str = dict[@"info3"];
-    NSString *info4_str = dict[@"info4"];
+    NSString *secretId_str          = dict[@"secretId"];
+    NSString *info1_str             = dict[@"info1"];
+    NSString *info2_str             = dict[@"info2"];
+    NSString *info3_str             = dict[@"info3"];
+    NSString *info4_str             = dict[@"info4"];
 
     BOOL allowSuppressLogLevel = NO;
 

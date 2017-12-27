@@ -111,7 +111,12 @@ export class example extends Component {
         // Adjust.resetSessionCallbackParameters();
         // Adjust.resetSessionPartnerParameters();
 
-        // Adjust.setPushToken("bunny_foo_foo");
+        Adjust.setEnabled(false);
+        Adjust.setPushToken("bunny_foo_foo");
+        
+        adjustConfig.setAppSecret(1, 261177507, 1432976755, 991598438, 1252037374);
+        adjustConfig.setDeviceKnown(true);
+        adjustConfig.setReadMobileEquipmentIdentity(true);
 
         Adjust.create(adjustConfig);
 

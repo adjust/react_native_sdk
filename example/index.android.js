@@ -35,7 +35,7 @@ export class example extends Component {
 
         adjustConfig.setAppSecret(1, 261177507, 1432976755, 991598438, 1252037374);
 
-        adjustConfig.setUserKnown(true);
+        adjustConfig.setDeviceKnown(true);
 
         // adjustConfig.setEventBufferingEnabled(true);
         // adjustConfig.setUserAgent("little_bunny_foo_foo");

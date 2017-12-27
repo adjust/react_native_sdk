@@ -143,6 +143,11 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
                                  info4:info4.unsignedIntegerValue];
         }
 
+        // is device known
+        if ([self isFieldValid:isDeviceKnown]) {
+            [adjustConfig setIsDeviceKnown:[isDeviceKnown boolValue]];
+        }
+
         // Delay start
         if ([self isFieldValid:delayStart]) {
             [adjustConfig setDelayStart:[delayStart doubleValue]];

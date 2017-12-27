@@ -53,7 +53,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSNumber *shouldLaunchDeeplink  = dict[@"shouldLaunchDeeplink"];
     NSString *userAgent             = dict[@"userAgent"];
     NSNumber *delayStart            = dict[@"delayStart"];
-    NSString *isDeviceKnown         = dict[@"isDeviceKnown"];
+    NSNumber *isDeviceKnown         = dict[@"isDeviceKnown"];
 
     NSString *secretId_str          = dict[@"secretId"];
     NSString *info1_str             = dict[@"info1"];

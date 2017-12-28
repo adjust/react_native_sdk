@@ -1,3 +1,19 @@
+### Version 4.12.0 (xxx December 2017)
+#### Added
+-  **[iOS][AND]** Add `setDeviceKnown()`
+-  **[iOS][AND]** Add `setAppSecret()` for setting SDK signature
+-  **[AND]** Add `setReadMobileEquipmentIdentity` for reading IMEI/MEID
+
+#### Changed
+- **[iOS]** Updated Adjust pod version to `4.12.0` in `react-native-adjust.podspec`.
+
+#### Native SDKs
+- **[iOS]** [iOS@v4.12.1][ios_sdk_v4.12.1]
+- **[AND]** [Android@v4.12.0][android_sdk_v4.12.0]
+
+---
+
+
 ### Version 4.11.7 (5th October 2017)
 #### Added
 - **[iOS]** Added support for `use_frameworks!` option in `Podfile` (thanks to @jimmy-devine).
@@ -146,9 +162,11 @@
 [ios_sdk_v4.11.3]: https://github.com/adjust/ios_sdk/tree/v4.11.3
 [ios_sdk_v4.11.4]: https://github.com/adjust/ios_sdk/tree/v4.11.4
 [ios_sdk_v4.11.5]: https://github.com/adjust/ios_sdk/tree/v4.11.5
+[ios_sdk_v4.12.1]: https://github.com/adjust/ios_sdk/tree/v4.12.1
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
 [android_sdk_v4.11.1]: https://github.com/adjust/android_sdk/tree/v4.11.1
 [android_sdk_v4.11.3]: https://github.com/adjust/android_sdk/tree/v4.11.3
 [android_sdk_v4.11.4]: https://github.com/adjust/android_sdk/tree/v4.11.4
+[android_sdk_v4.12.0]: https://github.com/adjust/android_sdk/tree/v4.12.0

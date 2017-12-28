@@ -1,11 +1,21 @@
 ### Version 4.12.0 (xxx December 2017)
 #### Added
--  **[iOS][AND]** Add `setDeviceKnown()`
--  **[iOS][AND]** Add `setAppSecret()` for setting SDK signature
--  **[AND]** Add `setReadMobileEquipmentIdentity` for reading IMEI/MEID
+- **[iOS][AND]** Added usage of app secret in authorization header.
+- **[iOS][AND]** Added sending of `raw_referrer` parameter in `sdk_click` package.
+- **[iOS][AND]** Added reading of MCC.
+- **[iOS][AND]** Added reading of MNC.
+- **[iOS][AND]** Added reading of network type.
+- **[iOS][AND]** Added reading of connectivity type.
+- **[iOS][AND]** Added log messages for saved actions to be done when the SDK starts.
+- **[AND]** Added support for new Google referrer API (https://developer.android.com/google/play/installreferrer/library.html).
+- **[AND]** Added `Adjust.getAmazonAdId()` method to obtain value of Amazon Advertising Identifier.
+- **[AND]** Added possibility to read Mobile Equipment Identity for non Google Play store apps.
 
 #### Changed
 - **[iOS]** Updated Adjust pod version to `4.12.0` in `react-native-adjust.podspec`.
+
+#### Fixed
+- **[iOS]** Fixed compatibility of Adjust SDK with apps that are already using `Reachability` class (https://github.com/adjust/ios_sdk/issues/315) (thanks to @fedetrim).
 
 #### Native SDKs
 - **[iOS]** [iOS@v4.12.1][ios_sdk_v4.12.1]

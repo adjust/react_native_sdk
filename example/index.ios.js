@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View, Navigator, Linking, TouchableHighlight } from 'react-native';
+import { AppRegistry, StyleSheet, Text, View, Linking, TouchableHighlight } from 'react-native';
 import { Adjust, AdjustEvent, AdjustConfig } from 'react-native-adjust';
 
 export class example extends Component {
@@ -29,13 +29,9 @@ export class example extends Component {
 
         var adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
         adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
-        //adjustConfig.setDelayStart(6.0);
+        adjustConfig.setDelayStart(6.0);
         adjustConfig.setShouldLaunchDeeplink(true);
         adjustConfig.setSendInBackground(true);
-
-        adjustConfig.setAppSecret(1, 261177507, 1432976755, 991598438, 1252037374);
-
-        adjustConfig.setUserKnown(true);
 
         // adjustConfig.setEventBufferingEnabled(true);
         // adjustConfig.setUserAgent("little_bunny_foo_foo");
@@ -111,12 +107,16 @@ export class example extends Component {
         // Adjust.resetSessionCallbackParameters();
         // Adjust.resetSessionPartnerParameters();
 
-         Adjust.setPushToken("bunny_foo_foo");
+        Adjust.setEnabled(false);
+        Adjust.setPushToken("bunny_foo_foo");
+        
+        adjustConfig.setAppSecret(1, 552143313, 465657129, 437714723, 1932667013);
+        adjustConfig.setDeviceKnown(true);
+        adjustConfig.setReadMobileEquipmentIdentity(false);
 
-        //Adjust.setEnabled(false);
         Adjust.create(adjustConfig);
 
-        //Adjust.sendFirstPackages();
+        Adjust.sendFirstPackages();
     } 
 
     componentWillUnmount() {

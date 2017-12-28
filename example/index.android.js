@@ -33,10 +33,6 @@ export class example extends Component {
         adjustConfig.setShouldLaunchDeeplink(true);
         adjustConfig.setSendInBackground(true);
 
-        adjustConfig.setAppSecret(1, 261177507, 1432976755, 991598438, 1252037374);
-
-        adjustConfig.setDeviceKnown(true);
-
         // adjustConfig.setEventBufferingEnabled(true);
         // adjustConfig.setUserAgent("little_bunny_foo_foo");
 
@@ -114,9 +110,9 @@ export class example extends Component {
         Adjust.setEnabled(false);
         Adjust.setPushToken("bunny_foo_foo");
         
-        adjustConfig.setAppSecret(1, 261177507, 1432976755, 991598438, 1252037374);
+        adjustConfig.setAppSecret(1, 552143313, 465657129, 437714723, 1932667013);
         adjustConfig.setDeviceKnown(true);
-        adjustConfig.setReadMobileEquipmentIdentity(true);
+        adjustConfig.setReadMobileEquipmentIdentity(false);
 
         Adjust.create(adjustConfig);
 

@@ -3,6 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>com.apple.developer.associated-domains</key>
-	<array/>
+	<array>
+		<string>https://f6wc.adj.st</string>
+	</array>
 </dict>
 </plist>

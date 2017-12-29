@@ -10,6 +10,7 @@
 		13BE3DEE1AC21097009241FE /* AdjustSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* AdjustSdk.m */; };
 		2037FA5D1FE7CB9C00C86593 /* ADJReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2037FA5A1FE7CB9B00C86593 /* ADJReachability.m */; };
 		2037FA5E1FE7CB9C00C86593 /* ADJUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 2037FA5C1FE7CB9C00C86593 /* ADJUserDefaults.m */; };
+		20804D801FF5461F003FF483 /* AdjustEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 20804D7F1FF5461F003FF483 /* AdjustEventEmitter.m */; };
 		9D6A23761DE87EAF002D401C /* AdjustSdkDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D6A23751DE87EAF002D401C /* AdjustSdkDelegate.m */; };
 		9D9741B41E49E2DF0016F8D4 /* ADJActivityHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741751E49E2DF0016F8D4 /* ADJActivityHandler.m */; };
 		9D9741B51E49E2DF0016F8D4 /* ADJActivityKind.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741771E49E2DF0016F8D4 /* ADJActivityKind.m */; };
@@ -64,6 +65,8 @@
 		2037FA5A1FE7CB9B00C86593 /* ADJReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJReachability.m; sourceTree = "<group>"; };
 		2037FA5B1FE7CB9B00C86593 /* ADJUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJUserDefaults.h; sourceTree = "<group>"; };
 		2037FA5C1FE7CB9C00C86593 /* ADJUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJUserDefaults.m; sourceTree = "<group>"; };
+		20804D7E1FF5461F003FF483 /* AdjustEventEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustEventEmitter.h; sourceTree = "<group>"; };
+		20804D7F1FF5461F003FF483 /* AdjustEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustEventEmitter.m; sourceTree = "<group>"; };
 		9D6A23741DE87EAF002D401C /* AdjustSdkDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustSdkDelegate.h; sourceTree = "<group>"; };
 		9D6A23751DE87EAF002D401C /* AdjustSdkDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustSdkDelegate.m; sourceTree = "<group>"; };
 		9D9741741E49E2DF0016F8D4 /* ADJActivityHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJActivityHandler.h; sourceTree = "<group>"; };
@@ -160,6 +163,8 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				20804D7E1FF5461F003FF483 /* AdjustEventEmitter.h */,
+				20804D7F1FF5461F003FF483 /* AdjustEventEmitter.m */,
 				13BE3DEC1AC21097009241FE /* AdjustSdk.h */,
 				13BE3DED1AC21097009241FE /* AdjustSdk.m */,
 				9D6A23741DE87EAF002D401C /* AdjustSdkDelegate.h */,
@@ -326,6 +331,7 @@
 				2037FA5D1FE7CB9C00C86593 /* ADJReachability.m in Sources */,
 				9D9741D11E49E2DF0016F8D4 /* Adjust.m in Sources */,
 				9D9741C51E49E2DF0016F8D4 /* ADJLogger.m in Sources */,
+				20804D801FF5461F003FF483 /* AdjustEventEmitter.m in Sources */,
 				9D9741B91E49E2DF0016F8D4 /* NSString+ADJAdditions.m in Sources */,
 				9D9741C21E49E2DF0016F8D4 /* ADJEventFailure.m in Sources */,
 				9D9741BB1E49E2DF0016F8D4 /* ADJAdjustFactory.m in Sources */,

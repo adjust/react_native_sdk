@@ -14,6 +14,10 @@ export class example extends Component {
         })
     }
 
+    componentWillUnmount() {
+        Adjust.componentWillUnmount();
+    }
+
     componentWillMount() {
         this._onPress_trackSimpleEvent   = this._onPress_trackSimpleEvent.bind(this);
         this._onPress_trackRevenueEvent  = this._onPress_trackRevenueEvent.bind(this);

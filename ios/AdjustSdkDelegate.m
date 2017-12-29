@@ -94,7 +94,7 @@
     [self addValueOrEmpty:dictionary key:@"clickLabel" value:attribution.clickLabel];
     [self addValueOrEmpty:dictionary key:@"adid" value:attribution.adid];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_attribution" body:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_attribution" withDictionary:dictionary];
 }
 
 - (void)adjustEventTrackingSucceededWannabe:(ADJEventSuccess *)eventSuccessResponseData {
@@ -110,7 +110,7 @@
     [self addValueOrEmpty:dictionary key:@"eventToken" value:eventSuccessResponseData.eventToken];
     [self addValueOrEmpty:dictionary key:@"jsonResponse" value:eventSuccessResponseData.jsonResponse];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingSucceeded" body:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_eventTrackingSucceeded" withDictionary:dictionary];
 }
 
 - (void)adjustEventTrackingFailedWannabe:(ADJEventFailure *)eventFailureResponseData {
@@ -127,7 +127,7 @@
     [dictionary setObject:(eventFailureResponseData.willRetry ? @"true" : @"false") forKey:@"willRetry"];
     [self addValueOrEmpty:dictionary key:@"jsonResponse" value:eventFailureResponseData.jsonResponse];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingFailed" body:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_eventTrackingFailed" withDictionary:dictionary];
 }
 
 
@@ -143,7 +143,7 @@
     [self addValueOrEmpty:dictionary key:@"adid" value:sessionSuccessResponseData.adid];
     [self addValueOrEmpty:dictionary key:@"jsonResponse" value:sessionSuccessResponseData.jsonResponse];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingSucceeded" body:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_sessionTrackingSucceeded" withDictionary:dictionary];
 }
 
 - (void)adjustSessionTrackingFailedWananbe:(ADJSessionFailure *)sessionFailureResponseData {
@@ -159,13 +159,13 @@
     [dictionary setObject:(sessionFailureResponseData.willRetry ? @"true" : @"false") forKey:@"willRetry"];
     [self addValueOrEmpty:dictionary key:@"jsonResponse" value:sessionFailureResponseData.jsonResponse];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingFailed" body:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_sessionTrackingFailed" withDictionary:dictionary];
 }
 
 - (BOOL)adjustDeeplinkResponseWannabe:(NSURL *)deeplink {
     NSString *path = [deeplink absoluteString];
     
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_deferredDeeplink" body:@{@"uri": path}];
+    [AdjustEventEmitter dispatchEvent:@"adjust_deferredDeeplink" withDictionary:@{@"uri": path}];
 
     return _shouldLaunchDeferredDeeplink;
 }

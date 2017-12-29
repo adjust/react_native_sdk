@@ -11,8 +11,6 @@
 
 @implementation AdjustSdk
 
-@synthesize bridge = _bridge;
-
 RCT_EXPORT_MODULE(Adjust);
 
 BOOL _isAttributionCallbackImplemented;
@@ -109,8 +107,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
                                                    sessionSucceededCallback:_isSessionTrackingSucceededCallbackImplemented
                                                       sessionFailedCallback:_isSessionTrackingFailedCallbackImplemented
                                                    deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
-                                               shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink
-                                                                 withBridge:_bridge]];
+                                               shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
         }
 
         // Send in background

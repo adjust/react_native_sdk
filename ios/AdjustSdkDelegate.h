@@ -7,17 +7,11 @@
 //
 
 #import "AdjustSdk.h"
-
-#if __has_include(<React/RCTBridge.h>)
-#import <React/RCTBridge.h>
-#else
-#import "RCTBridge.h"
-#endif
+#import "AdjustEventEmitter.h"
 
 @interface AdjustSdkDelegate : NSObject<AdjustDelegate>
 
 @property (nonatomic) BOOL shouldLaunchDeferredDeeplink;
-@property (nonatomic) RCTBridge *bridge;
 
 + (id)getInstanceWithSwizzleOfAttributionCallback:(BOOL)swizzleAttributionCallback
 						   eventSucceededCallback:(BOOL)swizzleEventSucceededCallback
@@ -25,7 +19,6 @@
 						 sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
 						    sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
 					     deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
-                     shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink
-                                       withBridge:(RCTBridge *)bridge;
+                     shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink;
 
 @end

@@ -9,6 +9,7 @@
 #import <objc/runtime.h>
 
 #import "AdjustSdkDelegate.h"
+
 #if __has_include(<React/RCTAssert.h>)
 #import <React/RCTEventDispatcher.h>
 #else // back compatibility for RN version < 0.40
@@ -23,8 +24,7 @@
                          sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
-                     shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink
-                                       withBridge:(RCTBridge *)bridge {
+                     shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
     static dispatch_once_t onceToken;
     static AdjustSdkDelegate *defaultInstance = nil;
     
@@ -63,7 +63,6 @@
         }
         
         [defaultInstance setShouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink];
-        [defaultInstance setBridge:bridge];
     });
     
     return defaultInstance;

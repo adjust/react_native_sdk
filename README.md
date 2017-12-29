@@ -129,6 +129,10 @@ componentWillMount() {
     var adjustConfig = new AdjustConfig("{YourAppToken}", AdjustConfig.EnvironmentSandbox);
     Adjust.create(adjustConfig);
 }
+
+componentWillUnmount() {
+  Adjust.componentWillUnmount();
+}
 ```
 
 Replace `{YourAppToken}` with your app token. You can find this in your Adjust dashboard.

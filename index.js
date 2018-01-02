@@ -157,7 +157,6 @@ var AdjustConfig = function(appToken, environment) {
 
     this.delayStart = null;
 
-    this.referrer = null;
     this.userAgent = null;
     this.isDeviceKnown = null;
     this.defaultTracker = null;
@@ -220,10 +219,6 @@ AdjustConfig.prototype.setAppSecret = function(secretId, info1, info2, info3, in
 
 AdjustConfig.prototype.setDelayStart = function(delayStart) {
     this.delayStart = delayStart;
-};
-
-AdjustConfig.prototype.setReferrer = function(referrer) {
-    this.referrer = referrer;
 };
 
 AdjustConfig.prototype.setSendInBackground = function(sendInBackground) {

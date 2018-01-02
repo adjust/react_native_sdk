@@ -29,7 +29,7 @@ adb uninstall com.adjust.examples
 
 # Building the Android JAR file
 echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
-ext/android/build.sh release
+${ROOT_DIR}/ext/android/build.sh release
 
 # Remove node_modules from the example project
 echo -e "${GREEN}>>> Removing current module ${NC}"

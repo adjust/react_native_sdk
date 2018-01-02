@@ -1,9 +1,8 @@
 'use strict';
 
 import { NativeEventEmitter, NativeModules } from 'react-native';
-var ReactNative = require('react-native');
 
-var module_adjust = NativeModules.Adjust;
+const module_adjust = NativeModules.Adjust;
 const module_adjust_emitter = new NativeEventEmitter(NativeModules.AdjustEventEmitter);
 var Adjust = {};
 

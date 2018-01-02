@@ -301,6 +301,10 @@ RCT_EXPORT_METHOD(getAdid:(RCTResponseSenderBlock)callback) {
     }
 }
 
+RCT_EXPORT_METHOD(setReferrer:(NSString *)referrer) {
+
+}
+
 RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
     ADJAttribution *attribution = [Adjust attribution];
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];

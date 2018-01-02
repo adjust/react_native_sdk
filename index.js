@@ -82,6 +82,10 @@ Adjust.getAmazonAdId = function(callback) {
     module_adjust.getAmazonAdId(callback);
 };
 
+Adjust.setReferrer = function(referrer) {
+    module_adjust.setReferrer(referrer);
+};
+
 Adjust.componentWillUnmount = function() {
     if(AdjustConfig.AttributionSubscription != null) {
         AdjustConfig.AttributionSubscription.remove();

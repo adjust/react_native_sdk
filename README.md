@@ -4,7 +4,6 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
 
 ## Table of contents
 
-* [Supported versions](#supported-versions)
 * [Example app](#example-app)
 * [Basic integration](#basic-integration)
    * [Get the SDK](#sdk-get)
@@ -854,7 +853,7 @@ handleDeepLink(event) {
 [callbacks-guide]:      https://docs.adjust.com/en/callbacks
 [attribution-data]:     https://github.com/adjust/sdks/blob/master/doc/attribution-data.md
 [special-partners]:     https://docs.adjust.com/en/special-partners
-[broadcast-receiver]:   https://github.com/adjust/android_sdk#sdk-broadcast-receiver
+[broadcast-receiver]:   https://github.com/adjust/android_sdk#gps-intent
 
 [google-launch-modes]:        http://developer.android.com/guide/topics/manifest/activity-element.html#lmode
 [currency-conversion]:        https://docs.adjust.com/en/event-tracking/#tracking-purchases-in-different-currencies
@@ -871,8 +870,7 @@ handleDeepLink(event) {
 
 The Adjust SDK is licensed under the MIT License.
 
-Copyright (c) 2012-2017 Adjust GmbH,
-http://www.adjust.com
+Copyright (c) 2012-2018 Adjust GmbH, http://www.adjust.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

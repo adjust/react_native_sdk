@@ -1,9 +1,9 @@
 //
 //  AdjustSdkDelegate.m
-//  Adjust
+//  Adjust SDK
 //
-//  Created by Abdullah Obaied on 2016-11-18.
-//  Copyright (c) 2012-2016 adjust GmbH. All rights reserved.
+//  Created by Abdullah Obaied (@obaied) on 17th November 2016.
+//  Copyright © 2012-2018 Adjust GmbH. All rights reserved.
 //
 
 #import <objc/runtime.h>

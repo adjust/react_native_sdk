@@ -1,8 +1,8 @@
 //
 //  AdjustEventEmitter.m
-//  AdjustSdk
+//  Adjust SDK
 //
-//  Created by Abdullah Obaied on 28.12.17.
+//  Created by Abdullah Obaied (@obaied) on 28th December 2017.
 //  Copyright © 2017 Facebook. All rights reserved.
 //
 
@@ -15,6 +15,7 @@ RCT_EXPORT_MODULE();
 + (id)allocWithZone:(NSZone *)zone {
     static AdjustEventEmitter *sharedInstance = nil;
     static dispatch_once_t onceToken;
+
     dispatch_once(&onceToken, ^{
         sharedInstance = [super allocWithZone:zone];
     });

@@ -1,8 +1,8 @@
 //
 //  AdjustEventEmitter.h
-//  AdjustSdk
+//  Adjust SDK
 //
-//  Created by Abdullah Obaied on 28.12.17.
+//  Created by Abdullah Obaied (@obaied) on 28th December 2017.
 //  Copyright © 2017 Facebook. All rights reserved.
 //
 
@@ -20,7 +20,6 @@
 @interface AdjustEventEmitter : RCTEventEmitter <RCTBridgeModule>
 
 + (void)dispatchEvent:(NSString *)eventName withDictionary:(NSDictionary *)dictionary;
-
 
 @end
 

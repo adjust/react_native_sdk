@@ -1,9 +1,9 @@
 //
-//  AdjustSdk.m
-//  Adjust
+//  AdjustSdk.h
+//  Adjust SDK
 //
-//  Created by Abdullah Obaied on 2016-10-25.
-//  Copyright (c) 2012-2014 adjust GmbH. All rights reserved.
+//  Created by Abdullah Obaied (@obaied) on 25th October 2016.
+//  Copyright © 2012-2018 Adjust GmbH. All rights reserved.
 //
 
 #import "AdjustSdk.h"
@@ -20,25 +20,7 @@ BOOL _isSessionTrackingSucceededCallbackImplemented;
 BOOL _isSessionTrackingFailedCallbackImplemented;
 BOOL _isDeferredDeeplinkCallbackImplemented;
 
-- (BOOL)isFieldValid:(NSObject *)field {
-    if (![field isKindOfClass:[NSNull class]]) {
-        if (field != nil) {
-            return YES;
-        }
-    }
-
-    return NO;
-}
-
-- (void)addValueOrEmpty:(NSMutableDictionary *)dictionary
-                    key:(NSString *)key
-                  value:(NSObject *)value {
-    if (nil != value) {
-        [dictionary setObject:[NSString stringWithFormat:@"%@", value] forKey:key];
-    } else {
-        [dictionary setObject:@"" forKey:key];
-    }
-}
+#pragma mark - Public methods
 
 RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSString *appToken              = dict[@"appToken"];
@@ -94,12 +76,12 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
         // Attribution delegate & other delegates
         BOOL shouldLaunchDeferredDeeplink = [self isFieldValid:shouldLaunchDeeplink] ? [shouldLaunchDeeplink boolValue] : YES;
 
-        if (_isAttributionCallbackImplemented ||
-            _isEventTrackingSucceededCallbackImplemented ||
-            _isEventTrackingFailedCallbackImplemented ||
-            _isSessionTrackingSucceededCallbackImplemented ||
-            _isSessionTrackingFailedCallbackImplemented ||
-            _isDeferredDeeplinkCallbackImplemented) {
+        if (_isAttributionCallbackImplemented
+            || _isEventTrackingSucceededCallbackImplemented
+            || _isEventTrackingFailedCallbackImplemented
+            || _isSessionTrackingSucceededCallbackImplemented
+            || _isSessionTrackingFailedCallbackImplemented
+            || _isDeferredDeeplinkCallbackImplemented) {
             [adjustConfig setDelegate:
              [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
                                                      eventSucceededCallback:_isEventTrackingSucceededCallbackImplemented
@@ -125,8 +107,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
             && [self isFieldValid:info1]
             && [self isFieldValid:info2]
             && [self isFieldValid:info3]
-            && [self isFieldValid:info4]
-            ) {
+            && [self isFieldValid:info4]) {
             [adjustConfig setAppSecret:[[NSNumber numberWithLongLong:[secretId longLongValue]] unsignedIntegerValue]
                              info1:[[NSNumber numberWithLongLong:[info1 longLongValue]] unsignedIntegerValue]
                              info2:[[NSNumber numberWithLongLong:[info2 longLongValue]] unsignedIntegerValue]
@@ -134,7 +115,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
                              info4:[[NSNumber numberWithLongLong:[info4 longLongValue]] unsignedIntegerValue]];
         }
 
-        // is device known
+        // Device known
         if ([self isFieldValid:isDeviceKnown]) {
             [adjustConfig setIsDeviceKnown:[isDeviceKnown boolValue]];
         }
@@ -304,9 +285,7 @@ RCT_EXPORT_METHOD(getAdid:(RCTResponseSenderBlock)callback) {
     }
 }
 
-RCT_EXPORT_METHOD(setReferrer:(NSString *)referrer) {
-
-}
+RCT_EXPORT_METHOD(setReferrer:(NSString *)referrer) {}
 
 RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
     ADJAttribution *attribution = [Adjust attribution];
@@ -352,6 +331,28 @@ RCT_EXPORT_METHOD(setSessionTrackingFailedCallbackListener) {
 
 RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener) {
     _isDeferredDeeplinkCallbackImplemented = true;
+}
+
+#pragma mark - Private & helper methods
+
+- (BOOL)isFieldValid:(NSObject *)field {
+    if (![field isKindOfClass:[NSNull class]]) {
+        if (field != nil) {
+            return YES;
+        }
+    }
+
+    return NO;
+}
+
+- (void)addValueOrEmpty:(NSMutableDictionary *)dictionary
+                    key:(NSString *)key
+                  value:(NSObject *)value {
+    if (nil != value) {
+        [dictionary setObject:[NSString stringWithFormat:@"%@", value] forKey:key];
+    } else {
+        [dictionary setObject:@"" forKey:key];
+    }
 }
 
 @end

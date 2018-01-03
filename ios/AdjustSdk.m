@@ -53,11 +53,11 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSNumber *delayStart            = dict[@"delayStart"];
     NSNumber *isDeviceKnown         = dict[@"isDeviceKnown"];
 
-    NSString *secretId_str          = dict[@"secretId"];
-    NSString *info1_str             = dict[@"info1"];
-    NSString *info2_str             = dict[@"info2"];
-    NSString *info3_str             = dict[@"info3"];
-    NSString *info4_str             = dict[@"info4"];
+    NSString *secretId              = dict[@"secretId"];
+    NSString *info1                 = dict[@"info1"];
+    NSString *info2                 = dict[@"info2"];
+    NSString *info3                 = dict[@"info3"];
+    NSString *info4                 = dict[@"info4"];
 
     BOOL allowSuppressLogLevel = NO;
 
@@ -121,23 +121,17 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
         }
 
         // App Secret
-        if ([self isFieldValid:secretId_str]
-            && [self isFieldValid:info1_str]
-            && [self isFieldValid:info2_str]
-            && [self isFieldValid:info3_str]
-            && [self isFieldValid:info4_str]
+        if ([self isFieldValid:secretId]
+            && [self isFieldValid:info1]
+            && [self isFieldValid:info2]
+            && [self isFieldValid:info3]
+            && [self isFieldValid:info4]
             ) {
-            NSNumber *secretId = [NSNumber numberWithLongLong: [secretId_str longLongValue]];
-            NSNumber *info1 = [NSNumber numberWithLongLong: [info1_str longLongValue]];
-            NSNumber *info2 = [NSNumber numberWithLongLong: [info2_str longLongValue]];
-            NSNumber *info3 = [NSNumber numberWithLongLong: [info3_str longLongValue]];
-            NSNumber *info4 = [NSNumber numberWithLongLong: [info4_str longLongValue]];
-
-            [adjustConfig setAppSecret:secretId.unsignedIntegerValue
-                                info1:info1.unsignedIntegerValue
-                                 info2:info2.unsignedIntegerValue
-                                 info3:info3.unsignedIntegerValue
-                                 info4:info4.unsignedIntegerValue];
+            [adjustConfig setAppSecret:[[NSNumber numberWithLongLong:[secretId longLongValue]] unsignedIntegerValue]
+                             info1:[[NSNumber numberWithLongLong:[info1 longLongValue]] unsignedIntegerValue]
+                             info2:[[NSNumber numberWithLongLong:[info2 longLongValue]] unsignedIntegerValue]
+                             info3:[[NSNumber numberWithLongLong:[info3 longLongValue]] unsignedIntegerValue]
+                             info4:[[NSNumber numberWithLongLong:[info4 longLongValue]] unsignedIntegerValue]];
         }
 
         // is device known

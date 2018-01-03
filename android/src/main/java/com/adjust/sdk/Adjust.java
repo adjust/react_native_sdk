@@ -18,7 +18,6 @@ import javax.annotation.Nullable;
 
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
-import android.util.Log;
 
 import com.adjust.sdk.*;
 

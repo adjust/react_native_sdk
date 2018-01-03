@@ -8,14 +8,16 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
 * [Example app](#example-app)
 * [Basic integration](#basic-integration)
    * [Get the SDK](#sdk-get)
-   * [Add the AdSupport and iAd framework](#sdk-frameworks)
    * [Integrate the SDK into your app](#sdk-integrate)
-   * [Adjust logging](#adjust-logging)
+   * [Adjust logging](#sdk-logging)
    * [Adjust project settings](#adjust-project-settings)
       * [Android permissions](#android-permissions)
       * [Google Play Services](#android-gps)
       * [Proguard settings](#android-proguard)
-      * [Android install referrer](#android-broadcast-receiver)
+      * [Install referrer](#android-referrer)
+         * [Google Play Referrer API](#android-referrer-gpr-api)
+         * [Google Play Store intent](#android-referrer-gps-intent)
+      * [iOS frameworks](#ios-frameworks)
 * [Additional features](#additional-features)
    * [Event tracking](#event-tracking)
       * [Revenue tracking](#revenue-tracking)
@@ -32,12 +34,15 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
     * [Disable tracking](#disable-tracking)
     * [Offline mode](#offline-mode)
     * [Event buffering](#event-buffering)
+    * [SDK signature](#sdk-signature)
     * [Background tracking](#background-tracking)
     * [Device IDs](#device-ids)
       * [iOS advertising identifier](#di-idfa)
       * [Google Play Services advertising identifier](#di-gps-adid)
+      * [Amazon advertising identifier](#di-fire-adid)
       * [Adjust device identifier](#di-adid)
     * [Push token](#push-token)
+    * [Track additional device identifiers](#track-additional-ids)
     * [Pre-installed trackers](#pre-installed-trackers)
     * [Deep linking](#deeplinking)
       * [Standard deep linking](#deeplinking-standard)
@@ -81,6 +86,7 @@ For **Android**, you *may* need to check if Adjust package was added to the nati
 `./android/app/src/main/java/[your app]/MainApplication.java`
 
 - There is a method called `getPackages()` that looks like this by default:
+
 ```java
 @Override
 protected List<ReactPackage> getPackages() {
@@ -91,6 +97,7 @@ protected List<ReactPackage> getPackages() {
 ```
 
 - After adding Adjust SDK via `npm` and running `react-native link` command, Adjust package should be added automatically to this list and it should look something like this:
+
 ```java
 import com.adjust.nativemodule.AdjustPackage;
 
@@ -106,13 +113,10 @@ protected List<ReactPackage> getPackages() {
 ```
 
 - In case that the line `new AdjustPackage()` was not added automatically, you'll have to add it to the list of packages by yourself like described above. Also, don't forget to add the import statement on top of the `MainApplication.java` file:
-```
+
+```java
 import com.adjust.nativemodule.AdjustPackage;
 ```
-
-### <a id="sdk-frameworks"></a>Add the AdSupport and iAd framework
-
-Select your project in the Project Navigator. In the left hand side of the main view, select your target. In the tab `Build Phases`, expand the group `Link Binary with Libraries`. On the bottom of that section click on the `+` button. Select the `AdSupport.framework` and click the `Add` button. Unless you are using tvOS, repeat the same steps to add the `iAd.framework`. Change the `Status` of both frameworks to `Optional`.
 
 ### <a id="sdk-integrate"></a>Integrate the SDK into your app
 
@@ -162,17 +166,18 @@ adjustConfig.setLogLevel(AdjustConfig.LogLevelAssert);    // disable errors as w
 adjustConfig.setLogLevel(AdjustConfig.LogLevelSuppress);  // disable all logging
 ```
 
-### <a id="adjust-project-settings">Adjust project settings
+### <a id="adjust-project-settings"></a>Adjust project settings
 
 Once the Adjust SDK has been added to your app, certain tweaks are going to be performed so that the Adjust SDK can work properly. Below you can find a description of every additional thing that the Adjust SDK performs after you've added it to your app and what needs to be done by you in order for Adjust SDK to work properly.
 
-### <a id="sdk-permissions"></a>Android permissions
+### <a id="android-permissions"></a>Android permissions
 
 The Adjust SDK by default adds two permissions to your app's `AndroidManifest.xml` file:
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
 The `INTERNET` permission might be needed by our SDK at any point in time. The `ACCESS_WIFI_STATE` permission is needed by the Adjust SDK if your app is not targeting the Google Play Store and doesn't use Google Play Services. If you are targeting the Google Play Store and you are using Google Play Services, the Adjust SDK doesn't need this permission and, if you don't need it anywhere else in your app, you can remove it.
@@ -183,13 +188,15 @@ Since August 1, 2014, apps in the Google Play Store must use the [Google Adverti
 
 In order to do this, open your app's `build.gradle` file and find the `dependencies` block. Add the following line:
 
-    ```
-    compile 'com.google.android.gms:play-services-analytics:10.0.1'
-    ```
+```gradle
+compile 'com.google.android.gms:play-services-analytics:10.0.1'
+```
     
 **Note**: The version of the Google Play Services library that you're using is not relevant to the Adjust SDK, as long as the analytics part of the library is present in your app. In the example above, we just used the most recent version of the library at the time of writing.
 
-### <a id="android-proguard">Proguard settings
+To check whether the analytics part of the Google Play Services library has been successfully added to your app so that the Adjust SDK can read it properly, you should start your app by configuring the SDK to run in `sandbox` mode and set the log level to `verbose`. After that, track a session or some events in your app and observe the list of parameters in the verbose logs which are being read once the session or event has been tracked. If you see a parameter called `gps_adid` in there, you have successfully added the analytics part of the Google Play Services library to your app and our SDK is reading the necessary information from it.
+
+### <a id="android-proguard"></a>Proguard settings
 
 If you are using Proguard, add these lines to your Proguard file:
 
@@ -219,11 +226,47 @@ If you are using Proguard, add these lines to your Proguard file:
 -keep class android.os.LocaledList {
     java.util.Locale get(int);
 }
+-keep public class com.android.installreferrer.** { *; }
 ```
 
-### <a id="android-broadcast-receiver">Android install referrer
+### <a id="android-referrer"></a>Install referrer
 
-The Adjust install referrer broadcast receiver is added to your app by default. For more information, you can check our native [Android SDK README][broadcast-receiver]. You can see this in the `AndroidManifest.xml` file which is part of our React Native plugin:
+In order to correctly attribute an install of your Android app to its source, Adjust needs information about the **install referrer**. This can be obtained by using the **Google Play Referrer API** or by catching the **Google Play Store intent** with a broadcast receiver.
+
+**Important**: The Google Play Referrer API is newly introduced by Google with the express purpose of providing a more reliable and secure way of obtaining install referrer information and to aid attribution providers in the fight against click injection. It is **strongly advised** that you support this in your application. The Google Play Store intent is a less secure way of obtaining install referrer information. It will continue to exist in parallel with the new Google Play Referrer API temporarily, but it is set to be deprecated in future.
+
+#### <a id="android-referrer-gpr-api"></a>Google Play Referrer API
+
+In order to support this, add the following line to your app's `build.gradle` file:
+
+```gradle
+compile 'com.android.installreferrer:installreferrer:1.0'
+```
+
+`installreferrer` library is part of Google Maven repository, so in order to be able to build your app, you need to add Google Maven repository to your app's `build.gradle` file if you haven't added it already:
+
+```gradle
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+    }
+}
+```
+
+Also, make sure that you have paid attention to the [Proguard settings](#android-proguard) chapter and that you have added all the rules mentioned in it, especially the one needed for this feature:
+
+```
+-keep public class com.android.installreferrer.** { *; }
+```
+
+This feature is supported if you are using the **Adjust SDK v4.12.0 or above**.
+
+#### <a id="android-referrer-gps-intent"></a>Google Play Store intent
+
+The Google Play Store `INSTALL_REFERRER` intent should be captured with a broadcast receiver. The Adjust install referrer broadcast receiver is added to your app by default. For more information, you can check our native [Android SDK README][broadcast-receiver]. You can see this in the `AndroidManifest.xml` file which is part of our React Native plugin:
 
 ```xml
 <receiver android:name="com.adjust.sdk.AdjustReferrerReceiver" 
@@ -235,6 +278,16 @@ The Adjust install referrer broadcast receiver is added to your app by default. 
 ```
 
 Please bear in mind that, if you are using your own broadcast receiver which handles the `INSTALL_REFERRER` intent, you don't need to add the Adjust broadcast receiver to your manifest file. You can remove it, but inside your own receiver add the call to the Adjust broadcast receiver as described in our [Android guide][broadcast-receiver-custom].
+
+### <a id="ios-frameworks"></a>iOS frameworks
+
+Select your project in the Project Navigator. In the left hand side of the main view, select your target. In the tab `Build Phases`, expand the group `Link Binary with Libraries`. On the bottom of that section click on the `+` button. Select the `AdSupport.framework` and click the `Add` button. Unless you are using `tvOS`, repeat the same steps to add the `iAd.framework` and `CoreTelephony.framework`. Change the `Status` of both frameworks to `Optional`. Adjust SDK uses these frameworks with following purpose:
+
+* `iAd.framework` - in case you are running iAd campaigns
+* `AdSupport.framework` - for reading iOS Advertising Id (IDFA)
+* `CoreTelephony.framework` - for reading MCC and MNC information
+
+If you are not running any iAd campaigns, you can feel free to remove the `iAd.framework` dependency.
 
 ## <a id="additional-features"></a>Additional features
 
@@ -280,7 +333,7 @@ Adjust.trackEvent(adjustEvent);
 
 **Note**: Transaction ID is the iOS term, unique identifier for successfully finished Android In-App-Purchases is named **Order ID**.
 
-### <a id="iap-verification">In-app purchase verification
+### <a id="iap-verification"></a>In-app purchase verification
 
 In-app purchase verification can be conducted through the React Native Purchase SDK which is currently in development and will soon be made publicly available. For more information, please contact support@adjust.com.
 
@@ -562,6 +615,22 @@ adjustConfig.setEventBufferingEnabled(true);
 Adjust.create(adjustConfig);
 ```
 
+### <a id="sdk-signature"></a>SDK signature
+
+An account manager must activate the Adjust SDK signature. Contact Adjust support (support@adjust.com) if you are interested in using this feature.
+
+If the SDK signature has already been enabled on your account and you have access to App Secrets in your Adjust Dashboard, please use the method below to integrate the SDK signature into your app.
+
+An App Secret is set by passing all secret parameters (`secretId`, `info1`, `info2`, `info3`, `info4`) to `setAppSecret` method of `AdjustConfig` instance:
+
+```js
+var adjustConfig = new AdjustConfig(appToken, environment);
+
+adjustConfig.setAppSecret(secretId, info1, info2, info3, info4);
+
+Adjust.create(adjustConfig);
+```
+
 ### <a id="background-tracking"></a>Background tracking
 
 The default behaviour of the Adjust SDK is to **pause sending HTTP requests while the app is in the background**. You can change this in your `AdjustConfig` instance by calling `setSendInBackground` method:
@@ -576,11 +645,11 @@ Adjust.create(adjustConfig);
 
 If nothing is set, sending in background is **disabled by default**.
 
-### <a id="device-ids">Device IDs
+### <a id="device-ids"></a>Device IDs
 
 Certain services (such as Google Analytics) require you to coordinate device and client IDs in order to prevent duplicate reporting.
 
-### <a id="di-idfa">iOS advertising identifier
+### <a id="di-idfa"></a>iOS advertising identifier
 
 You can access the IDFA value of an iOS device by invoking the `getIdfa` method of the `Adjust` instance and passing it a callback that will get triggered once the IDFA value has been obtained by the native iOS SDK:
 
@@ -590,13 +659,24 @@ Adjust.getIdfa((idfa) => {
 });
 ```
 
-### <a id="di-gps-adid">Google Play Services advertising identifier
+### <a id="di-gps-adid"></a>Google Play Services advertising identifier
 
 The Adjust SDK allows you to read the Google advertising identifier of the Android device on which your app is running. In order to do this, call the `getGoogleAdId` method of the `Adjust` instance and pass your callback as a parameter. Once obtained by the native Android SDK, you will receive the Google advertising identifier value in your callback method:
 
 ```javascript
 Adjust.getGoogleAdId((googleAdId) => {
     console.log("Google Ad Id = " + googleAdId);
+});
+```
+
+
+### <a id="di-fire-adid"></a>Amazon advertising identifier
+
+If you need to obtain the Amazon advertising ID, you can call the `getAmazonAdId` method on `Adjust` instance:
+
+```js
+Adjust.getAmazonAdId(function(amazonAdId) {
+    // Use amazonAdId value.
 });
 ```
 
@@ -638,6 +718,28 @@ To send us the push notification token, add the following call to Adjust **whene
 ```js
 Adjust.setPushToken("YourPushNotificationToken");
 ```
+
+Push tokens are used for Audience Builder and client callbacks, and they are required for the upcoming uninstall tracking feature.
+
+### <a id="track-additional-ids"></a>Track additional device identifiers
+
+If you are distributing your Android app **outside of the Google Play Store** and would like to track additional device identifiers (IMEI and MEID), you need to explicitly instruct the Adjust SDK to do so. You can do that by calling the `setReadMobileEquipmentIdentity` method of the `AdjustConfig` instance. **The Adjust SDK does not collect these identifiers by default**.
+
+```js
+var adjustConfig = new AdjustConfig(appToken, environment);
+
+adjustConfig.setReadMobileEquipmentIdentity(true);
+
+Adjust.create(adjustConfig);
+```
+
+You will also need to add the `READ_PHONE_STATE` permission to your `AndroidManifest.xml` file:
+
+```xml
+<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+```
+
+In order to use this feature, additional steps are required within your Adjust Dashboard. For more information, please contact your dedicated account manager or write an email to support@adjust.com.
 
 ### <a id="pre-installed-trackers"></a>Pre-installed trackers
 

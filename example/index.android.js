@@ -29,10 +29,10 @@ export class example extends Component {
 
         var adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
         adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
-        adjustConfig.setDelayStart(6.0);
         adjustConfig.setShouldLaunchDeeplink(true);
         adjustConfig.setSendInBackground(true);
 
+        // adjustConfig.setDelayStart(6.0);
         // adjustConfig.setEventBufferingEnabled(true);
         // adjustConfig.setUserAgent("Custom Adjust User Agent");
 
@@ -106,13 +106,10 @@ export class example extends Component {
 
         // Adjust.resetSessionCallbackParameters();
         // Adjust.resetSessionPartnerParameters();
-        
-        adjustConfig.setDeviceKnown(true);
-        adjustConfig.setReadMobileEquipmentIdentity(false);
 
         Adjust.create(adjustConfig);
 
-        Adjust.sendFirstPackages();
+        // Adjust.sendFirstPackages();
     } 
 
     componentWillUnmount() {

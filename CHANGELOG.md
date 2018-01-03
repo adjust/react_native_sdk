@@ -1,17 +1,17 @@
-### Version 4.12.0 (28th December 2017)
+### Version 4.12.0 (4th January 2018)
 #### Native changes:
 - **[iOS]** https://github.com/adjust/ios_sdk/blob/master/CHANGELOG.md#version-4120-13th-december-2017
 - **[iOS]** https://github.com/adjust/ios_sdk/blob/master/CHANGELOG.md#version-4121-13th-december-2017
 - **[AND]** https://github.com/adjust/android_sdk/blob/master/CHANGELOG.md#version-4120-13th-december-2017
 
 #### Added
-- **[AND]** Added `getAmazonAdId` method to `Adjust` interface.
-- **[iOS][AND]** Added `setAppSecret` method to `AdjustConfig` interface.
-- **[iOS][AND]** Added `setReadMobileEquipmentIdentity` method to `AdjustConfig` interface.
-- Added `componentWillUnmount()` method to `Adjust` JS interface to unsubscribe from callbacks.
+- Added `getAmazonAdId` method to `Adjust` interface.
+- Added `setAppSecret` method to `AdjustConfig` interface.
+- Added `setReadMobileEquipmentIdentity` method to `AdjustConfig` interface.
+- Added `componentWillUnmount` method to `Adjust` interface to unsubscribe from callbacks.
 
 #### Changed
-- Switch to `RCTEventEmitter` instead of `RCTBridge` for emitting native events [reference](https://github.com/facebook/react-native/issues/8714)
+- Switched to `RCTEventEmitter` instead of `RCTBridge` for emitting native events ([reference](https://github.com/facebook/react-native/issues/8714)).
 
 #### Native SDKs
 - **[iOS]** [iOS@v4.12.1][ios_sdk_v4.12.1]

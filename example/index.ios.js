@@ -114,7 +114,6 @@ export class example extends Component {
         Adjust.setEnabled(false);
         Adjust.setPushToken("bunny_foo_foo");
         
-        adjustConfig.setAppSecret(1, 552143313, 465657129, 437714723, 1932667013);
         adjustConfig.setDeviceKnown(true);
         adjustConfig.setReadMobileEquipmentIdentity(false);
 

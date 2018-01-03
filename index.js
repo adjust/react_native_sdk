@@ -210,11 +210,25 @@ AdjustConfig.prototype.setUserAgent = function(userAgent) {
 };
 
 AdjustConfig.prototype.setAppSecret = function(secretId, info1, info2, info3, info4) {
-    this.secretId = secretId.toString();
-    this.info1 = info1.toString();
-    this.info2 = info2.toString();
-    this.info3 = info3.toString();
-    this.info4 = info4.toString();
+    if (secretId != null) {
+        this.secretId = secretId.toString();
+    }
+
+    if (info1 != null) {
+        this.info1 = info1.toString();
+    }
+
+    if (info2 != null) {
+        this.info2 = info2.toString();
+    }
+
+    if (info3 != null) {
+        this.info3 = info3.toString();
+    }
+
+    if (info4 != null) {
+        this.info4 = info4.toString();
+    }
 };
 
 AdjustConfig.prototype.setDelayStart = function(delayStart) {

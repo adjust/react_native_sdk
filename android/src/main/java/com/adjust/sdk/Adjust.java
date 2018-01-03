@@ -96,25 +96,25 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void create(ReadableMap mapConfig) {
-        String environment            = null;
-        String appToken               = null;
-        String defaultTracker         = null;
-        String processName            = null;
-        String sdkPrefix              = null;
-        String logLevel               = null;
-        boolean eventBufferingEnabled = false;
-        String userAgent              = null;
-        long secretId                 = 0L;
-        long info1                    = 0L;
-        long info2                    = 0L;
-        long info3                    = 0L;
-        long info4                    = 0L;
-        boolean sendInBackground      = false;
-        boolean shouldLaunchDeeplink  = false;
-        double delayStart             = 0.0;
-        boolean isLogLevelSuppress    = false;
-        boolean isDeviceKnown           = false;
-        boolean readMobileEquipmentIdentity           = false;
+        String environment                  = null;
+        String appToken                     = null;
+        String defaultTracker               = null;
+        String processName                  = null;
+        String sdkPrefix                    = null;
+        String logLevel                     = null;
+        boolean eventBufferingEnabled       = false;
+        String userAgent                    = null;
+        long secretId                       = 0L;
+        long info1                          = 0L;
+        long info2                          = 0L;
+        long info3                          = 0L;
+        long info4                          = 0L;
+        boolean sendInBackground            = false;
+        boolean shouldLaunchDeeplink        = false;
+        double delayStart                   = 0.0;
+        boolean isLogLevelSuppress          = false;
+        boolean isDeviceKnown               = false;
+        boolean readMobileEquipmentIdentity = false;
 
         // Check for isLogLevelSuppress.
         if (!mapConfig.isNull("logLevel")) {
@@ -193,8 +193,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 && !mapConfig.isNull("info1")
                 && !mapConfig.isNull("info2")
                 && !mapConfig.isNull("info3")
-                && !mapConfig.isNull("info4")
-                ) {
+                && !mapConfig.isNull("info4")) {
             try {
                 secretId = Long.parseLong(mapConfig.getString("secretId"), 10);
                 info1    = Long.parseLong(mapConfig.getString("info1"), 10);
@@ -318,8 +317,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     public void setReferrer(String referrer) {
         com.adjust.sdk.Adjust.setReferrer(
                 referrer,
-                getReactApplicationContext()
-                );
+                getReactApplicationContext());
     }
 
     @ReactMethod

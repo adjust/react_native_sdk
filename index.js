@@ -87,32 +87,32 @@ Adjust.setReferrer = function(referrer) {
 };
 
 Adjust.componentWillUnmount = function() {
-    if(AdjustConfig.AttributionSubscription != null) {
+    if (AdjustConfig.AttributionSubscription != null) {
         AdjustConfig.AttributionSubscription.remove();
         AdjustConfig.AttributionSubscription = null;
     }
 
-    if(AdjustConfig.EventTrackingSucceededSubscription != null) {
+    if (AdjustConfig.EventTrackingSucceededSubscription != null) {
         AdjustConfig.EventTrackingSucceededSubscription.remove();
         AdjustConfig.EventTrackingSucceededSubscription = null;
     }
 
-    if(AdjustConfig.EventTrackingFailedSubscription != null) {
+    if (AdjustConfig.EventTrackingFailedSubscription != null) {
         AdjustConfig.EventTrackingFailedSubscription.remove();
         AdjustConfig.EventTrackingFailedSubscription = null;
     }
 
-    if(AdjustConfig.SessionTrackingSucceededSubscription != null) {
+    if (AdjustConfig.SessionTrackingSucceededSubscription != null) {
         AdjustConfig.SessionTrackingSucceededSubscription.remove();
         AdjustConfig.SessionTrackingSucceededSubscription = null;
     }
 
-    if(AdjustConfig.SessionTrackingFailedSubscription != null) {
+    if (AdjustConfig.SessionTrackingFailedSubscription != null) {
         AdjustConfig.SessionTrackingFailedSubscription.remove();
         AdjustConfig.SessionTrackingFailedSubscription = null;
     }
 
-    if(AdjustConfig.DeferredDeeplinkSubscription != null) {
+    if (AdjustConfig.DeferredDeeplinkSubscription != null) {
         AdjustConfig.DeferredDeeplinkSubscription.remove();
         AdjustConfig.DeferredDeeplinkSubscription = null;
     }

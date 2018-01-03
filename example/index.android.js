@@ -27,8 +27,6 @@ export class example extends Component {
         this._onPress_sendPushToken      = this._onPress_sendPushToken.bind(this);
         this._onPress_getIds             = this._onPress_getIds.bind(this);
 
-        this.isOffline = false;
-
         var adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
         adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
         adjustConfig.setDelayStart(6.0);

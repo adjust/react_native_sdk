@@ -8,6 +8,13 @@
 # End script if one of the lines fails
 # set -e
 
+if [ $# -ne 1 ]; then
+    echo $0: "usage: ./build.sh [debug || release]"
+    exit 1
+fi
+
+BUILD_TYPE=$1
+
 # Get the current directory (ext/android/)
 SDK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -15,7 +22,6 @@ SDK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SDK_DIR="$(dirname "$SDK_DIR")"
 SDK_DIR="$(dirname "$SDK_DIR")"
 BUILD_DIR=sdk/Adjust
-JAR_IN_DIR=adjust/build/intermediates/bundles/default
 JAR_OUT_DIR=android/libs
 
 RED='\033[0;31m' # Red color
@@ -26,8 +32,17 @@ NC='\033[0m' # No Color
 cd $(dirname $0) 
 
 cd $BUILD_DIR
-echo -e "${GREEN}>>> Running Gradle tasks: clean clearJar makeJar ${NC}"
-./gradlew clean clearJar makeJar
+
+if [ "$BUILD_TYPE" == "debug" ]; then
+    JAR_IN_DIR=adjust/build/intermediates/bundles/debug
+    echo -e "${GREEN}>>> Running Gradle tasks: makeDebugJar${NC}"
+    ./gradlew makeDebugJar
+
+elif [ "$BUILD_TYPE" == "release" ]; then
+    JAR_IN_DIR=adjust/build/intermediates/bundles/release
+    echo -e "${GREEN}>>> Running Gradle tasks: makeReleaseJar${NC}"
+    ./gradlew makeReleaseJar
+fi
 
 echo -e "${GREEN}>>> Moving the jar from ${JAR_IN_DIR} to ${JAR_OUT_DIR} ${NC}"
 rm -rf ${SDK_DIR}/${JAR_OUT_DIR}

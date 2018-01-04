@@ -1,12 +1,9 @@
 'use strict';
 
-import { DeviceEventEmitter } from 'react-native';
-var ReactNative = require('react-native');
-var {
-    NativeModules
-} = ReactNative;
+import { NativeEventEmitter, NativeModules } from 'react-native';
 
-var module_adjust = NativeModules.Adjust;
+const module_adjust = NativeModules.Adjust;
+const module_adjust_emitter = new NativeEventEmitter(NativeModules.AdjustEventEmitter);
 var Adjust = {};
 
 Adjust.create = function(adjustConfig) {
@@ -81,6 +78,46 @@ Adjust.getAttribution = function(callback) {
     module_adjust.getAttribution(callback);
 };
 
+Adjust.getAmazonAdId = function(callback) {
+    module_adjust.getAmazonAdId(callback);
+};
+
+Adjust.setReferrer = function(referrer) {
+    module_adjust.setReferrer(referrer);
+};
+
+Adjust.componentWillUnmount = function() {
+    if (AdjustConfig.AttributionSubscription != null) {
+        AdjustConfig.AttributionSubscription.remove();
+        AdjustConfig.AttributionSubscription = null;
+    }
+
+    if (AdjustConfig.EventTrackingSucceededSubscription != null) {
+        AdjustConfig.EventTrackingSucceededSubscription.remove();
+        AdjustConfig.EventTrackingSucceededSubscription = null;
+    }
+
+    if (AdjustConfig.EventTrackingFailedSubscription != null) {
+        AdjustConfig.EventTrackingFailedSubscription.remove();
+        AdjustConfig.EventTrackingFailedSubscription = null;
+    }
+
+    if (AdjustConfig.SessionTrackingSucceededSubscription != null) {
+        AdjustConfig.SessionTrackingSucceededSubscription.remove();
+        AdjustConfig.SessionTrackingSucceededSubscription = null;
+    }
+
+    if (AdjustConfig.SessionTrackingFailedSubscription != null) {
+        AdjustConfig.SessionTrackingFailedSubscription.remove();
+        AdjustConfig.SessionTrackingFailedSubscription = null;
+    }
+
+    if (AdjustConfig.DeferredDeeplinkSubscription != null) {
+        AdjustConfig.DeferredDeeplinkSubscription.remove();
+        AdjustConfig.DeferredDeeplinkSubscription = null;
+    }
+};
+
 var AdjustEvent = function (eventToken) {
     this.eventToken = eventToken;
     this.revenue = null;
@@ -111,7 +148,7 @@ var AdjustConfig = function(appToken, environment) {
     this.appToken = appToken;
     this.environment = environment;
 
-    this.sdkPrefix = "react_native4.11.7";
+    this.sdkPrefix = "react_native4.12.0";
     this.logLevel = null;
 
     this.eventBufferingEnabled = null;
@@ -120,12 +157,19 @@ var AdjustConfig = function(appToken, environment) {
 
     this.delayStart = null;
 
-    this.defaultTracker = null;
-    this.referrer = null;
     this.userAgent = null;
+    this.isDeviceKnown = null;
+    this.defaultTracker = null;
+
+    this.secretId = null;
+    this.info1 = null;
+    this.info2 = null;
+    this.info3 = null;
+    this.info4 = null;
 
     // Android only
     this.processName = null;
+    this.readMobileEquipmentIdentity = null;
 };
 
 AdjustConfig.EnvironmentSandbox                   = "sandbox";
@@ -165,16 +209,42 @@ AdjustConfig.prototype.setUserAgent = function(userAgent) {
     this.userAgent = userAgent;
 };
 
+AdjustConfig.prototype.setAppSecret = function(secretId, info1, info2, info3, info4) {
+    if (secretId != null) {
+        this.secretId = secretId.toString();
+    }
+
+    if (info1 != null) {
+        this.info1 = info1.toString();
+    }
+
+    if (info2 != null) {
+        this.info2 = info2.toString();
+    }
+
+    if (info3 != null) {
+        this.info3 = info3.toString();
+    }
+
+    if (info4 != null) {
+        this.info4 = info4.toString();
+    }
+};
+
 AdjustConfig.prototype.setDelayStart = function(delayStart) {
     this.delayStart = delayStart;
 };
 
-AdjustConfig.prototype.setReferrer = function(referrer) {
-    this.referrer = referrer;
-};
-
 AdjustConfig.prototype.setSendInBackground = function(sendInBackground) {
     this.sendInBackground = sendInBackground;
+};
+
+AdjustConfig.prototype.setDeviceKnown = function(isDeviceKnown) {
+    this.isDeviceKnown = isDeviceKnown;
+};
+
+AdjustConfig.prototype.setReadMobileEquipmentIdentity = function(readMobileEquipmentIdentity) {
+    this.readMobileEquipmentIdentity = readMobileEquipmentIdentity;
 };
 
 AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) {
@@ -184,42 +254,54 @@ AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) 
 AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {
     if (null == AdjustConfig.AttributionSubscription) {
         module_adjust.setAttributionCallbackListener();
-        AdjustConfig.AttributionSubscription = DeviceEventEmitter.addListener('adjust_attribution', attributionCallbackListener);
+        AdjustConfig.AttributionSubscription = module_adjust_emitter.addListener(
+            'adjust_attribution', attributionCallbackListener
+        );
     }
 };
 
 AdjustConfig.prototype.setEventTrackingSucceededCallbackListener = function(eventTrackingSucceededCallbackListener) {
     if (null == AdjustConfig.EventTrackingSucceededSubscription) {
         module_adjust.setEventTrackingSucceededCallbackListener();
-        AdjustConfig.EventTrackingSucceededSubscription = DeviceEventEmitter.addListener('adjust_eventTrackingSucceeded', eventTrackingSucceededCallbackListener);
+        AdjustConfig.EventTrackingSucceededSubscription = module_adjust_emitter.addListener(
+            'adjust_eventTrackingSucceeded', eventTrackingSucceededCallbackListener
+        );
     }
 };
 
 AdjustConfig.prototype.setEventTrackingFailedCallbackListener = function(eventTrackingFailedCallbackListener) {
     if (null == AdjustConfig.EventTrackingFailedSubscription) {
         module_adjust.setEventTrackingFailedCallbackListener();
-        AdjustConfig.EventTrackingFailedSubscription = DeviceEventEmitter.addListener('adjust_eventTrackingFailed', eventTrackingFailedCallbackListener);
+        AdjustConfig.EventTrackingFailedSubscription = module_adjust_emitter.addListener(
+            'adjust_eventTrackingFailed', eventTrackingFailedCallbackListener
+        );
     }
 };
 
 AdjustConfig.prototype.setSessionTrackingSucceededCallbackListener = function(sessionTrackingSucceededCallbackListener) {
     if (null == AdjustConfig.SessionTrackingSucceededSubscription) {
         module_adjust.setSessionTrackingSucceededCallbackListener();
-        AdjustConfig.SessionTrackingSucceededSubscription = DeviceEventEmitter.addListener('adjust_sessionTrackingSucceeded', sessionTrackingSucceededCallbackListener);
+        AdjustConfig.SessionTrackingSucceededSubscription = module_adjust_emitter.addListener(
+            'adjust_sessionTrackingSucceeded', sessionTrackingSucceededCallbackListener
+        );
     }
 };
 
 AdjustConfig.prototype.setSessionTrackingFailedCallbackListener = function(sessionTrackingFailedCallbackListener) {
     if (null == AdjustConfig.SessionTrackingFailedSubscription) {
         module_adjust.setSessionTrackingFailedCallbackListener();
-        AdjustConfig.SessionTrackingFailedSubscription = DeviceEventEmitter.addListener('adjust_sessionTrackingFailed', sessionTrackingFailedCallbackListener);
+        AdjustConfig.SessionTrackingFailedSubscription = module_adjust_emitter.addListener(
+            'adjust_sessionTrackingFailed', sessionTrackingFailedCallbackListener
+        );
     }
 };
 
 AdjustConfig.prototype.setDeferredDeeplinkCallbackListener = function(deferredDeeplinkCallbackListener) {
     if (null == AdjustConfig.DeferredDeeplinkSubscription) {
         module_adjust.setDeferredDeeplinkCallbackListener();
-        AdjustConfig.DeferredDeeplinkSubscription = DeviceEventEmitter.addListener('adjust_deferredDeeplink', deferredDeeplinkCallbackListener);
+        AdjustConfig.DeferredDeeplinkSubscription = module_adjust_emitter.addListener(
+            'adjust_deferredDeeplink', deferredDeeplinkCallbackListener
+        );
     }
 };
 

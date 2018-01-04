@@ -96,18 +96,25 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void create(ReadableMap mapConfig) {
-        String environment            = null;
-        String appToken               = null;
-        String defaultTracker         = null;
-        String processName            = null;
-        String sdkPrefix              = null;
-        String logLevel               = null;
-        boolean eventBufferingEnabled = false;
-        String userAgent              = null;
-        boolean sendInBackground      = false;
-        boolean shouldLaunchDeeplink  = false;
-        double delayStart             = 0.0;
-        boolean isLogLevelSuppress    = false;
+        String environment                  = null;
+        String appToken                     = null;
+        String defaultTracker               = null;
+        String processName                  = null;
+        String sdkPrefix                    = null;
+        String logLevel                     = null;
+        boolean eventBufferingEnabled       = false;
+        String userAgent                    = null;
+        long secretId                       = 0L;
+        long info1                          = 0L;
+        long info2                          = 0L;
+        long info3                          = 0L;
+        long info4                          = 0L;
+        boolean sendInBackground            = false;
+        boolean shouldLaunchDeeplink        = false;
+        double delayStart                   = 0.0;
+        boolean isLogLevelSuppress          = false;
+        boolean isDeviceKnown               = false;
+        boolean readMobileEquipmentIdentity = false;
 
         // Check for isLogLevelSuppress.
         if (!mapConfig.isNull("logLevel")) {
@@ -181,10 +188,38 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             adjustConfig.setUserAgent(userAgent);
         }
 
+        // App secret
+        if (!mapConfig.isNull("secretId") 
+                && !mapConfig.isNull("info1")
+                && !mapConfig.isNull("info2")
+                && !mapConfig.isNull("info3")
+                && !mapConfig.isNull("info4")) {
+            try {
+                secretId = Long.parseLong(mapConfig.getString("secretId"), 10);
+                info1    = Long.parseLong(mapConfig.getString("info1"), 10);
+                info2    = Long.parseLong(mapConfig.getString("info2"), 10);
+                info3    = Long.parseLong(mapConfig.getString("info3"), 10);
+                info4    = Long.parseLong(mapConfig.getString("info4"), 10);
+                adjustConfig.setAppSecret(secretId, info1, info2, info3, info4);
+            } catch(NumberFormatException ignore) { }
+        }
+
         // Background tracking
         if (!mapConfig.isNull("sendInBackground")) {
             sendInBackground = mapConfig.getBoolean("sendInBackground");
             adjustConfig.setSendInBackground(sendInBackground);
+        }
+
+        // Set device Known
+        if (!mapConfig.isNull("isDeviceKnown")) {
+            isDeviceKnown = mapConfig.getBoolean("isDeviceKnown");
+            adjustConfig.setDeviceKnown(isDeviceKnown);
+        }
+
+        // Set read mobile equipment id
+        if (!mapConfig.isNull("readMobileEquipmentIdentity")) {
+            readMobileEquipmentIdentity = mapConfig.getBoolean("readMobileEquipmentIdentity");
+            adjustConfig.setReadMobileEquipmentIdentity(readMobileEquipmentIdentity);
         }
 
         // Launching deferred deep link
@@ -280,7 +315,9 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void setReferrer(String referrer) {
-        com.adjust.sdk.Adjust.setReferrer(referrer);
+        com.adjust.sdk.Adjust.setReferrer(
+                referrer,
+                getReactApplicationContext());
     }
 
     @ReactMethod
@@ -352,6 +389,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     @ReactMethod
     public void getAdid(Callback callback) {
         callback.invoke(com.adjust.sdk.Adjust.getAdid());
+    }
+
+    @ReactMethod
+    public void getAmazonAdId(Callback callback) {
+        callback.invoke(com.adjust.sdk.Adjust.getAmazonAdId(getReactApplicationContext()));
     }
 
     @ReactMethod

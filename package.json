@@ -1,7 +1,7 @@
 {
     "name": "react-native-adjust",
     "description": "Adjust React Native SDK",
-    "version": "4.11.7",
+    "version": "4.12.0",
     "main": "index.js",
     "author": "adjust GmbH",
     "license": "MIT",

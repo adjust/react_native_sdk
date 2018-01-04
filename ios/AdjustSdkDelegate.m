@@ -1,14 +1,15 @@
 //
 //  AdjustSdkDelegate.m
-//  Adjust
+//  Adjust SDK
 //
-//  Created by Abdullah Obaied on 2016-11-18.
-//  Copyright (c) 2012-2016 adjust GmbH. All rights reserved.
+//  Created by Abdullah Obaied (@obaied) on 17th November 2016.
+//  Copyright © 2012-2018 Adjust GmbH. All rights reserved.
 //
 
 #import <objc/runtime.h>
 
 #import "AdjustSdkDelegate.h"
+
 #if __has_include(<React/RCTAssert.h>)
 #import <React/RCTEventDispatcher.h>
 #else // back compatibility for RN version < 0.40
@@ -23,8 +24,7 @@
                          sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
-                     shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink
-                                       withBridge:(RCTBridge *)bridge {
+                     shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
     static dispatch_once_t onceToken;
     static AdjustSdkDelegate *defaultInstance = nil;
     
@@ -63,7 +63,6 @@
         }
         
         [defaultInstance setShouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink];
-        [defaultInstance setBridge:bridge];
     });
     
     return defaultInstance;
@@ -95,7 +94,7 @@
     [self addValueOrEmpty:dictionary key:@"clickLabel" value:attribution.clickLabel];
     [self addValueOrEmpty:dictionary key:@"adid" value:attribution.adid];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_attribution" body:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_attribution" withDictionary:dictionary];
 }
 
 - (void)adjustEventTrackingSucceededWannabe:(ADJEventSuccess *)eventSuccessResponseData {
@@ -111,7 +110,7 @@
     [self addValueOrEmpty:dictionary key:@"eventToken" value:eventSuccessResponseData.eventToken];
     [self addValueOrEmpty:dictionary key:@"jsonResponse" value:eventSuccessResponseData.jsonResponse];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingSucceeded" body:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_eventTrackingSucceeded" withDictionary:dictionary];
 }
 
 - (void)adjustEventTrackingFailedWannabe:(ADJEventFailure *)eventFailureResponseData {
@@ -128,7 +127,7 @@
     [dictionary setObject:(eventFailureResponseData.willRetry ? @"true" : @"false") forKey:@"willRetry"];
     [self addValueOrEmpty:dictionary key:@"jsonResponse" value:eventFailureResponseData.jsonResponse];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_eventTrackingFailed" body:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_eventTrackingFailed" withDictionary:dictionary];
 }
 
 
@@ -144,7 +143,7 @@
     [self addValueOrEmpty:dictionary key:@"adid" value:sessionSuccessResponseData.adid];
     [self addValueOrEmpty:dictionary key:@"jsonResponse" value:sessionSuccessResponseData.jsonResponse];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingSucceeded" body:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_sessionTrackingSucceeded" withDictionary:dictionary];
 }
 
 - (void)adjustSessionTrackingFailedWananbe:(ADJSessionFailure *)sessionFailureResponseData {
@@ -160,13 +159,13 @@
     [dictionary setObject:(sessionFailureResponseData.willRetry ? @"true" : @"false") forKey:@"willRetry"];
     [self addValueOrEmpty:dictionary key:@"jsonResponse" value:sessionFailureResponseData.jsonResponse];
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_sessionTrackingFailed" body:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_sessionTrackingFailed" withDictionary:dictionary];
 }
 
 - (BOOL)adjustDeeplinkResponseWannabe:(NSURL *)deeplink {
     NSString *path = [deeplink absoluteString];
     
-    [self.bridge.eventDispatcher sendAppEventWithName:@"adjust_deferredDeeplink" body:@{@"uri": path}];
+    [AdjustEventEmitter dispatchEvent:@"adjust_deferredDeeplink" withDictionary:@{@"uri": path}];
 
     return _shouldLaunchDeferredDeeplink;
 }

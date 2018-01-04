@@ -1,3 +1,25 @@
+### Version 4.12.0 (4th January 2018)
+#### Native changes:
+- **[iOS]** https://github.com/adjust/ios_sdk/blob/master/CHANGELOG.md#version-4120-13th-december-2017
+- **[iOS]** https://github.com/adjust/ios_sdk/blob/master/CHANGELOG.md#version-4121-13th-december-2017
+- **[AND]** https://github.com/adjust/android_sdk/blob/master/CHANGELOG.md#version-4120-13th-december-2017
+
+#### Added
+- Added `getAmazonAdId` method to `Adjust` interface.
+- Added `setAppSecret` method to `AdjustConfig` interface.
+- Added `setReadMobileEquipmentIdentity` method to `AdjustConfig` interface.
+- Added `componentWillUnmount` method to `Adjust` interface to unsubscribe from callbacks.
+
+#### Changed
+- Switched to `RCTEventEmitter` instead of `RCTBridge` for emitting native events ([reference](https://github.com/facebook/react-native/issues/8714)).
+
+#### Native SDKs
+- **[iOS]** [iOS@v4.12.1][ios_sdk_v4.12.1]
+- **[AND]** [Android@v4.12.0][android_sdk_v4.12.0]
+
+---
+
+
 ### Version 4.11.7 (5th October 2017)
 #### Added
 - **[iOS]** Added support for `use_frameworks!` option in `Podfile` (thanks to @jimmy-devine).
@@ -146,9 +168,11 @@
 [ios_sdk_v4.11.3]: https://github.com/adjust/ios_sdk/tree/v4.11.3
 [ios_sdk_v4.11.4]: https://github.com/adjust/ios_sdk/tree/v4.11.4
 [ios_sdk_v4.11.5]: https://github.com/adjust/ios_sdk/tree/v4.11.5
+[ios_sdk_v4.12.1]: https://github.com/adjust/ios_sdk/tree/v4.12.1
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
 [android_sdk_v4.11.1]: https://github.com/adjust/android_sdk/tree/v4.11.1
 [android_sdk_v4.11.3]: https://github.com/adjust/android_sdk/tree/v4.11.3
 [android_sdk_v4.11.4]: https://github.com/adjust/android_sdk/tree/v4.11.4
+[android_sdk_v4.12.0]: https://github.com/adjust/android_sdk/tree/v4.12.0

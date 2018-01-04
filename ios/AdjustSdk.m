@@ -1,17 +1,15 @@
 //
-//  AdjustSdk.m
-//  Adjust
+//  AdjustSdk.h
+//  Adjust SDK
 //
-//  Created by Abdullah Obaied on 2016-10-25.
-//  Copyright (c) 2012-2014 adjust GmbH. All rights reserved.
+//  Created by Abdullah Obaied (@obaied) on 25th October 2016.
+//  Copyright © 2012-2018 Adjust GmbH. All rights reserved.
 //
 
 #import "AdjustSdk.h"
 #import "AdjustSdkDelegate.h"
 
 @implementation AdjustSdk
-
-@synthesize bridge = _bridge;
 
 RCT_EXPORT_MODULE(Adjust);
 
@@ -22,37 +20,26 @@ BOOL _isSessionTrackingSucceededCallbackImplemented;
 BOOL _isSessionTrackingFailedCallbackImplemented;
 BOOL _isDeferredDeeplinkCallbackImplemented;
 
-- (BOOL)isFieldValid:(NSObject *)field {
-    if (![field isKindOfClass:[NSNull class]]) {
-        if (field != nil) {
-            return YES;
-        }
-    }
-
-    return NO;
-}
-
-- (void)addValueOrEmpty:(NSMutableDictionary *)dictionary
-                    key:(NSString *)key
-                  value:(NSObject *)value {
-    if (nil != value) {
-        [dictionary setObject:[NSString stringWithFormat:@"%@", value] forKey:key];
-    } else {
-        [dictionary setObject:@"" forKey:key];
-    }
-}
+#pragma mark - Public methods
 
 RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
-    NSString *appToken = dict[@"appToken"];
-    NSString *environment = dict[@"environment"];
-    NSString *logLevel = dict[@"logLevel"];
-    NSString *sdkPrefix = dict[@"sdkPrefix"];
-    NSString *defaultTracker = dict[@"defaultTracker"];
+    NSString *appToken              = dict[@"appToken"];
+    NSString *environment           = dict[@"environment"];
+    NSString *logLevel              = dict[@"logLevel"];
+    NSString *sdkPrefix             = dict[@"sdkPrefix"];
+    NSString *defaultTracker        = dict[@"defaultTracker"];
     NSNumber *eventBufferingEnabled = dict[@"eventBufferingEnabled"];
-    NSNumber *sendInBackground = dict[@"sendInBackground"];
-    NSNumber *shouldLaunchDeeplink = dict[@"shouldLaunchDeeplink"];
-    NSString *userAgent = dict[@"userAgent"];
-    NSNumber *delayStart = dict[@"delayStart"];
+    NSNumber *sendInBackground      = dict[@"sendInBackground"];
+    NSNumber *shouldLaunchDeeplink  = dict[@"shouldLaunchDeeplink"];
+    NSString *userAgent             = dict[@"userAgent"];
+    NSNumber *delayStart            = dict[@"delayStart"];
+    NSNumber *isDeviceKnown         = dict[@"isDeviceKnown"];
+
+    NSString *secretId              = dict[@"secretId"];
+    NSString *info1                 = dict[@"info1"];
+    NSString *info2                 = dict[@"info2"];
+    NSString *info3                 = dict[@"info3"];
+    NSString *info4                 = dict[@"info4"];
 
     BOOL allowSuppressLogLevel = NO;
 
@@ -68,11 +55,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     if ([adjustConfig isValid]) {
         // Log level
         if ([self isFieldValid:logLevel]) {
-            if (NO == allowSuppressLogLevel) {
-                [adjustConfig setLogLevel:[ADJLogger LogLevelFromString:[logLevel lowercaseString]]];
-            } else {
-                [adjustConfig setLogLevel:ADJLogLevelSuppress];
-            }
+            [adjustConfig setLogLevel:[ADJLogger logLevelFromString:[logLevel lowercaseString]]];
         }
 
         // Event buffering
@@ -93,12 +76,12 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
         // Attribution delegate & other delegates
         BOOL shouldLaunchDeferredDeeplink = [self isFieldValid:shouldLaunchDeeplink] ? [shouldLaunchDeeplink boolValue] : YES;
 
-        if (_isAttributionCallbackImplemented ||
-            _isEventTrackingSucceededCallbackImplemented ||
-            _isEventTrackingFailedCallbackImplemented ||
-            _isSessionTrackingSucceededCallbackImplemented ||
-            _isSessionTrackingFailedCallbackImplemented ||
-            _isDeferredDeeplinkCallbackImplemented) {
+        if (_isAttributionCallbackImplemented
+            || _isEventTrackingSucceededCallbackImplemented
+            || _isEventTrackingFailedCallbackImplemented
+            || _isSessionTrackingSucceededCallbackImplemented
+            || _isSessionTrackingFailedCallbackImplemented
+            || _isDeferredDeeplinkCallbackImplemented) {
             [adjustConfig setDelegate:
              [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
                                                      eventSucceededCallback:_isEventTrackingSucceededCallbackImplemented
@@ -106,8 +89,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
                                                    sessionSucceededCallback:_isSessionTrackingSucceededCallbackImplemented
                                                       sessionFailedCallback:_isSessionTrackingFailedCallbackImplemented
                                                    deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
-                                               shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink
-                                                                 withBridge:_bridge]];
+                                               shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
         }
 
         // Send in background
@@ -118,6 +100,24 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
         // User agent
         if ([self isFieldValid:userAgent]) {
             [adjustConfig setUserAgent:userAgent];
+        }
+
+        // App Secret
+        if ([self isFieldValid:secretId]
+            && [self isFieldValid:info1]
+            && [self isFieldValid:info2]
+            && [self isFieldValid:info3]
+            && [self isFieldValid:info4]) {
+            [adjustConfig setAppSecret:[[NSNumber numberWithLongLong:[secretId longLongValue]] unsignedIntegerValue]
+                             info1:[[NSNumber numberWithLongLong:[info1 longLongValue]] unsignedIntegerValue]
+                             info2:[[NSNumber numberWithLongLong:[info2 longLongValue]] unsignedIntegerValue]
+                             info3:[[NSNumber numberWithLongLong:[info3 longLongValue]] unsignedIntegerValue]
+                             info4:[[NSNumber numberWithLongLong:[info4 longLongValue]] unsignedIntegerValue]];
+        }
+
+        // Device known
+        if ([self isFieldValid:isDeviceKnown]) {
+            [adjustConfig setIsDeviceKnown:[isDeviceKnown boolValue]];
         }
 
         // Delay start
@@ -199,7 +199,16 @@ RCT_EXPORT_METHOD(appWillOpenUrl:(NSString *)urlStr) {
         return;
     }
 
-    NSURL *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSURL *url;
+
+    if ([NSString instancesRespondToSelector:@selector(stringByAddingPercentEncodingWithAllowedCharacters:)]) {
+        url = [NSURL URLWithString:[urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
+    } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    }
+#pragma clang diagnostic pop
 
     [Adjust appWillOpenUrl:url];
 }
@@ -262,6 +271,10 @@ RCT_EXPORT_METHOD(getGoogleAdId:(RCTResponseSenderBlock)callback) {
     callback(@[@""]);
 }
 
+RCT_EXPORT_METHOD(getAmazonAdId:(RCTResponseSenderBlock)callback) {
+    callback(@[@""]);
+}
+
 RCT_EXPORT_METHOD(getAdid:(RCTResponseSenderBlock)callback) {
     NSString *adid = [Adjust adid];
 
@@ -271,6 +284,8 @@ RCT_EXPORT_METHOD(getAdid:(RCTResponseSenderBlock)callback) {
         callback(@[adid]);
     }
 }
+
+RCT_EXPORT_METHOD(setReferrer:(NSString *)referrer) {}
 
 RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
     ADJAttribution *attribution = [Adjust attribution];
@@ -316,6 +331,28 @@ RCT_EXPORT_METHOD(setSessionTrackingFailedCallbackListener) {
 
 RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener) {
     _isDeferredDeeplinkCallbackImplemented = true;
+}
+
+#pragma mark - Private & helper methods
+
+- (BOOL)isFieldValid:(NSObject *)field {
+    if (![field isKindOfClass:[NSNull class]]) {
+        if (field != nil) {
+            return YES;
+        }
+    }
+
+    return NO;
+}
+
+- (void)addValueOrEmpty:(NSMutableDictionary *)dictionary
+                    key:(NSString *)key
+                  value:(NSObject *)value {
+    if (nil != value) {
+        [dictionary setObject:[NSString stringWithFormat:@"%@", value] forKey:key];
+    } else {
+        [dictionary setObject:@"" forKey:key];
+    }
 }
 
 @end

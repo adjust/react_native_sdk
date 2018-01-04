@@ -671,11 +671,11 @@ Adjust.getGoogleAdId((googleAdId) => {
 
 ### <a id="di-fire-adid"></a>Amazon advertising identifier
 
-If you need to obtain the Amazon advertising ID, you can call the `getAmazonAdId` method on `Adjust` instance:
+If you need to obtain the Amazon advertising ID, you can call the `getAmazonAdId` method of the `Adjust` instance and pass your callback as a parameter to which the Amazon advertising ID value will be sent once obtained:
 
-```js
-Adjust.getAmazonAdId(function(amazonAdId) {
-    // Use amazonAdId value.
+```javascript
+Adjust.getAmazonAdId((amazonAdId) => {
+    console.log("Amazon Ad Id = " + amazonAdId);
 });
 ```
 

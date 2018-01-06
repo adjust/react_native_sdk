@@ -22,8 +22,8 @@ import com.facebook.react.modules.core.*;
 
 import com.adjust.sdk.*;
 
-public class Adjust extends ReactContextBaseJavaModule implements LifecycleEventListener, 
-                OnAttributionChangedListener, 
+public class Adjust extends ReactContextBaseJavaModule implements LifecycleEventListener,
+                OnAttributionChangedListener,
                 OnEventTrackingSucceededListener,
                 OnEventTrackingFailedListener,
                 OnSessionTrackingSucceededListener,
@@ -96,6 +96,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         return this.shouldLaunchDeeplink;
     }
 
+    public static boolean checkKey(ReadableMap config, String key) {
+        return config.hasKey(key) && !config.isNull(key);
+    }
+
     @ReactMethod
     public void create(ReadableMap mapConfig) {
         String appToken = null;
@@ -119,7 +123,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         boolean readMobileEquipmentIdentity = false;
 
         // Suppress log level
-        if (!mapConfig.isNull("logLevel")) {
+        if (checkKey(mapConfig, "logLevel")) {
             logLevel = mapConfig.getString("logLevel");
             if (logLevel.equals("SUPPRESS")) {
                 isLogLevelSuppress = true;
@@ -137,7 +141,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         }
 
         // Log level
-        if (!mapConfig.isNull("logLevel")) {
+        if (checkKey(mapConfig, "logLevel")) {
             logLevel = mapConfig.getString("logLevel");
             if (logLevel.equals("VERBOSE")) {
                 adjustConfig.setLogLevel(LogLevel.VERBOSE);
@@ -159,41 +163,41 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         }
 
         // Event buffering
-        if (!mapConfig.isNull("eventBufferingEnabled")) {
+        if(checkKey(mapConfig, "eventBufferingEnabled")) {
             eventBufferingEnabled = mapConfig.getBoolean("eventBufferingEnabled");
             adjustConfig.setEventBufferingEnabled(eventBufferingEnabled);
         }
 
         // SDK prefix
-        if (!mapConfig.isNull("sdkPrefix")) {
+        if (checkKey(mapConfig, "sdkPrefix")) {
             sdkPrefix = mapConfig.getString("sdkPrefix");
             adjustConfig.setSdkPrefix(sdkPrefix);
         }
 
         // Main process name
-        if (!mapConfig.isNull("processName")) {
+        if (checkKey(mapConfig, "processName")) {
             processName = mapConfig.getString("processName");
             adjustConfig.setProcessName(processName);
         }
 
         // Default tracker
-        if (!mapConfig.isNull("defaultTracker")) {
+        if (checkKey(mapConfig, "defaultTracker")) {
             defaultTracker = mapConfig.getString("defaultTracker");
             adjustConfig.setDefaultTracker(defaultTracker);
         }
 
         // User agent
-        if (!mapConfig.isNull("userAgent") ) {
+        if (checkKey(mapConfig, "userAgent")) {
             userAgent = mapConfig.getString("userAgent");
             adjustConfig.setUserAgent(userAgent);
         }
 
         // App secret
-        if (!mapConfig.isNull("secretId") 
-                && !mapConfig.isNull("info1")
-                && !mapConfig.isNull("info2")
-                && !mapConfig.isNull("info3")
-                && !mapConfig.isNull("info4")) {
+        if (checkKey(mapConfig, "secretId")
+                && checkKey(mapConfig, "info1")
+                && checkKey(mapConfig, "info2")
+                && checkKey(mapConfig, "info3")
+                && checkKey(mapConfig, "info4")) {
             try {
                 secretId = Long.parseLong(mapConfig.getString("secretId"), 10);
                 info1    = Long.parseLong(mapConfig.getString("info1"), 10);
@@ -205,31 +209,31 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         }
 
         // Background tracking
-        if (!mapConfig.isNull("sendInBackground")) {
+        if (checkKey(mapConfig, "sendInBackground")) {
             sendInBackground = mapConfig.getBoolean("sendInBackground");
             adjustConfig.setSendInBackground(sendInBackground);
         }
 
         // Set device Known
-        if (!mapConfig.isNull("isDeviceKnown")) {
+        if (checkKey(mapConfig, "isDeviceKnown")) {
             isDeviceKnown = mapConfig.getBoolean("isDeviceKnown");
             adjustConfig.setDeviceKnown(isDeviceKnown);
         }
 
         // Set read mobile equipment id
-        if (!mapConfig.isNull("readMobileEquipmentIdentity")) {
+        if (checkKey(mapConfig, "readMobileEquipmentIdentity")) {
             readMobileEquipmentIdentity = mapConfig.getBoolean("readMobileEquipmentIdentity");
             adjustConfig.setReadMobileEquipmentIdentity(readMobileEquipmentIdentity);
         }
 
         // Launching deferred deep link
-        if (!mapConfig.isNull("shouldLaunchDeeplink")) {
+        if (checkKey(mapConfig, "shouldLaunchDeeplink")) {
             shouldLaunchDeeplink = mapConfig.getBoolean("shouldLaunchDeeplink");
             this.shouldLaunchDeeplink = shouldLaunchDeeplink;
         }
 
         // Delayed start
-        if (!mapConfig.isNull("delayStart")) {
+        if (checkKey(mapConfig, "delayStart")) {
             delayStart = mapConfig.getDouble("delayStart");
             adjustConfig.setDelayStart(delayStart);
         }

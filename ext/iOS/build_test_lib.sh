@@ -12,11 +12,11 @@ ROOT_DIR="$(dirname "$ROOT_DIR")"
 
 SRC_DIR=ext/iOS/sdk
 SCRIPT_DIR=scripts
-SRC_OUT_DIR=ios
+SRC_OUT_DIR=test_plugin/ios
 
 RED='\033[0;31m' # Red color
 GREEN='\033[0;32m' # Green color
 NC='\033[0m' # No Color
 
 cd ${ROOT_DIR}
-cp -Rv ${SRC_DIR}/Adjust ${SRC_OUT_DIR}
+cp -Rv ${SRC_DIR}/AdjustTests/AdjustTestLibrary/* ${SRC_OUT_DIR}

@@ -6,7 +6,7 @@
 # - Copy the JAR file to the root dir
 
 # End script if one of the lines fails
-# set -e
+set -e
 
 if [ $# -ne 1 ]; then
     echo $0: "usage: ./build.sh [debug || release]"

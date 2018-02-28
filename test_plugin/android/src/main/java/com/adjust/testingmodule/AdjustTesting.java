@@ -7,7 +7,7 @@
 //  See the file MIT-LICENSE for copying permission.
 //
 
-package com.adjust.nativetestingmodule;
+package com.adjust.testingmodule;
 
 import com.adjust.testlibrary.TestLibrary;
 
@@ -25,7 +25,7 @@ public class AdjustTesting extends ReactContextBaseJavaModule {
     private List<String> selectedTests = new ArrayList<String>();
     private List<String> selectedTestDirs = new ArrayList<String>();
 
-    public AdjustTest(ReactApplicationContext reactContext) {
+    public AdjustTesting(ReactApplicationContext reactContext) {
         super(reactContext);
     }
 
@@ -35,8 +35,8 @@ public class AdjustTesting extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void initTestSession(String baseUrl) {
-        Log.d(TAG, "initTestSession() with baseUrl[" + baseUrl + "]");
+    public void startTestSession(String baseUrl) {
+        Log.d(TAG, "startTestSession() with baseUrl[" + baseUrl + "]");
 
         testLibrary = new TestLibrary(baseUrl, new CommandListener(getReactApplicationContext()));
 
@@ -48,7 +48,7 @@ public class AdjustTesting extends ReactContextBaseJavaModule {
             testLibrary.addTestDirectory(selectedTestDirs.get(i));
         }
 
-        testLibrary.initTestSession("react_native4.12.1@android4.12.1");
+        testLibrary.startTestSession("react_native4.12.1@android4.12.1");
     }
 
     @ReactMethod

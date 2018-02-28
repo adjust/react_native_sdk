@@ -1,5 +1,5 @@
 //
-//  AdjustPackage.java
+//  AdjustTestingPackage.java
 //  Adjust
 //
 //  Created by Abdullah Obaied on 2018-02-23.
@@ -7,7 +7,7 @@
 //  See the file MIT-LICENSE for copying permission.
 //
 
-package com.adjust.nativetestingmodule;
+package com.adjust.testingmodule;
 
 import java.util.Arrays;
 import java.util.Collections;

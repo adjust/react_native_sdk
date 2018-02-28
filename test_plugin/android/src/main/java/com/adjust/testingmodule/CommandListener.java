@@ -1,4 +1,13 @@
-package com.adjust.nativetestingmodule;
+//
+//  CommandListener.java
+//  Adjust
+//
+//  Created by Abdullah Obaied on 2018-02-23.
+//  Copyright (c) 2018 Adjust GmbH. All rights reserved.
+//  See the file MIT-LICENSE for copying permission.
+//
+
+package com.adjust.testingmodule;
 
 import android.content.Context;
 import android.util.Log;
@@ -20,14 +29,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CommandListener implements ICommandRawJsonListener {
     private ReactContext mReactContext;
-    private AtomicInteger orderCounter = null;
+    private AtomicInteger orderCounter = new AtomicInteger(0);
 
     public CommandListener(ReactContext reactContext) {
         mReactContext = reactContext;
     }
 
     @Override
-    public void executeCommand(String json) {
+    public void executeCommand(String jsonStr) {
         try {
             JSONObject jsonObj = new JSONObject(jsonStr);
 
@@ -39,6 +48,7 @@ public class CommandListener implements ICommandRawJsonListener {
             mReactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit("command", jsonObj.toString());
+
         } catch(JSONException ex) {
             ex.printStackTrace();
         }

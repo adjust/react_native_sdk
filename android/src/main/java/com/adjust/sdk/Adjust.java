@@ -436,6 +436,103 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         this.deferredDeeplinkCallback = true;
     }
 
+    @ReactMethod
+    public void teardown() {
+        this.attributionCallback = false;
+        this.eventTrackingSucceededCallback = false;
+        this.eventTrackingFailedCallback = false;
+        this.sessionTrackingSucceededCallback = false;
+        this.sessionTrackingFailedCallback = false;
+        this.deferredDeeplinkCallback = false;
+    }
+
+    @ReactMethod
+    public void setTestOptions(ReadableMap map) {
+        Log.d(TAG, "calling setTestOptions() from Java");
+
+        final AdjustTestOptions testOptions = new AdjustTestOptions();
+
+        if (!map.isNull("hasContext")) {
+            boolean value = map.getBoolean("hasContext");
+            if (value) {
+                testOptions.context = getReactApplicationContext();
+            }
+        }
+
+        if (!map.isNull("baseUrl")) {
+            String value = map.getString("baseUrl");
+            testOptions.baseUrl = value;
+        }
+
+        if (!map.isNull("basePath")) {
+            String value = map.getString("basePath");
+            testOptions.basePath = value;
+        }
+
+        if (!map.isNull("useTestConnectionOptions")) {
+            boolean value = map.getBoolean("useTestConnectionOptions");
+            testOptions.useTestConnectionOptions = value;
+        }
+
+        if (!map.isNull("timerIntervalInMilliseconds")) {
+            try {
+                Long value = Long.parseLong(map.getString("timerIntervalInMilliseconds"));
+                testOptions.timerIntervalInMilliseconds = value;
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+                Log.d(TAG, "Can't format number");
+            }
+        }
+
+        if (!map.isNull("timerStartInMilliseconds")) {
+            try {
+                Long value = Long.parseLong(map.getString("timerStartInMilliseconds"));
+                testOptions.timerStartInMilliseconds = value;
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+                Log.d(TAG, "Can't format number");
+            }
+        }
+
+        if (!map.isNull("sessionIntervalInMilliseconds")) {
+            try {
+                Long value = Long.parseLong(map.getString("sessionIntervalInMilliseconds"));
+                testOptions.sessionIntervalInMilliseconds = value;
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+                Log.d(TAG, "Can't format number");
+            }
+        }
+
+        if (!map.isNull("subsessionIntervalInMilliseconds")) {
+            try {
+                Long value = Long.parseLong(map.getString("subsessionIntervalInMilliseconds"));
+                testOptions.subsessionIntervalInMilliseconds = value;
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+                Log.d(TAG, "Can't format number");
+            }
+        }
+
+        if (!map.isNull("teardown")) {
+            boolean value = map.getBoolean("teardown");
+            testOptions.teardown = value;
+        }
+
+        Log.d(TAG, "testOptions: " + testOptions.toString());
+        com.adjust.sdk.Adjust.setTestOptions(testOptions);
+    }
+
+    @ReactMethod
+    public void onResume() {
+        com.adjust.sdk.Adjust.onResume();
+    }
+
+    @ReactMethod
+    public void onPause() {
+        com.adjust.sdk.Adjust.onPause();
+    }
+
     private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
         reactContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)

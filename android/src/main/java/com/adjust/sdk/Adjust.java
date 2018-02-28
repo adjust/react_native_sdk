@@ -9,6 +9,7 @@
 
 package com.adjust.nativemodule;
 
+import android.util.Log;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -35,6 +36,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     private boolean sessionTrackingFailedCallback;
     private boolean deferredDeeplinkCallback;
     private boolean shouldLaunchDeeplink = true;
+    private static String TAG = "AdjustBridge";
 
     public Adjust(ReactApplicationContext reactContext) {
         super(reactContext);

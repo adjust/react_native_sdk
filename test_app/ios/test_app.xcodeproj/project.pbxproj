@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -37,6 +36,8 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		FC7432461BBB44EAB5D87D8E /* libAdjustSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B2CD93619C943C4934A7C22 /* libAdjustSdk.a */; };
+		23DC5BE00D2045C5BBFD83B0 /* libAdjustTestLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DDBF2A7CA684A0A9815DCB1 /* libAdjustTestLibrary.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -286,6 +287,87 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		536A3A01822F4967AC386675 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		5B2CD93619C943C4934A7C22 /* libAdjustSdk.a */ = {isa = PBXFileReference; name = "libAdjustSdk.a"; path = "libAdjustSdk.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		7F91CDBE0AEC4CD98FC8D03F /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		DB4CF37F742643A6A6A8471D /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		5857EB23BF8748C89845619C /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		02134DE980804DD5A6E3C539 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		044D14BBBA8A4B7690DD3CDE /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		6ABAFB5D31624907B041D8DB /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		CFC99967D85D49688617903B /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		3DDBF2A7CA684A0A9815DCB1 /* libAdjustTestLibrary.a */ = {isa = PBXFileReference; name = "libAdjustTestLibrary.a"; path = "libAdjustTestLibrary.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		E04FC27D50E1495BB6076EC7 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		ACB58B9068924E46A9D5A686 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		24E2452A0A7B47E2B9B3242D /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		991EE80BFAA848F0B5BA993B /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		6BEC87126D014C8798E3BAA3 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7C82115D2B214F56B9D5143F /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		C649EFCBE2074E3BAC58C029 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		620AAB918B08462FBCFEE20F /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		D10B52F3A728479F81C1B738 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		01E41FA3848C4B20832390F8 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		3EE3F0FC9D8A4FFFA8DDD46C /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		F4C17637D95E4073AF4C0FEA /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		10CC059C46784D29A4EB88F4 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7D67B71A32984A54BC3BF0F4 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		D4FFF6BA4E9949839AF2BE14 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7FC08191096B469699BF2283 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		AF652182490E41D4959F5CE9 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		A24CBC008FB44146813110F0 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		2363BA50B54542F0B9266F4B /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		B945536E1DBC4729AB306870 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		1020C9287DCE4756BDB41805 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		5207F37D735A4426AFDC5F41 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		371901A68704434F9D6B4B94 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		AC930604F4D04306AF6DDC9E /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		F6B0E0A1DFBE410A8FF8316C /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		E97DCE9A072A48A681D2BE2D /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		5AD9DFC64406498E9404D4EA /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		C403ACDC18024FD0B4C708D5 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		CBF607D13A4C4177944629A3 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		3375E65212F24F8C8E623209 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		50DBA55CE9AF4886B1E0B2CA /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		9A25AED441A8492880B920D8 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		58099AD1FD594EF689163C5D /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		A2F762BD2BE84D8D98F1E5D3 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		5B32A6114A0941A1A190B632 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		FEE37B86C62B48B49ACAAC7A /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7E72B40053304126A6FA8C8A /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		B18DD2BBEB4648029FE0420F /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		5DCEEC5AE27845B0BA5B8FC9 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7A99A267DB364C55B2028662 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		4F54AA9F332A4F8CAE13084A /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		9E202687F1FC40319588D670 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		808BA7DCD78C49639D628D79 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		35AC1B87DD614860A9D482FC /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		0074E7EC0EC94B8DB9AE8BB3 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7D6D1F2A2BC54BCDA0A7D08A /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		F12E483F08FC42D6A602BA43 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		83C0FFAE6FA5426E89195574 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		905832CADE6444F0A42EA3DE /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		E7A09BCE2CC34B3E8383CE01 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		491F0CB206204D289FF4F9EC /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		AD244AC4D7BB4E49B31BA2D7 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		A3CF49C53A4647069AD2B839 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		953C1CA574AA49E1A6B5157A /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		6CF7B42AF02A4A1F87A4B267 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		B6E5C81B2EC940429D8BF669 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		CA32CB1491BF43A6BE787BBC /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7824E27570844852900B7885 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		1BB19F58F1A54A0DA163A9AA /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		B1676616001D4BFBBCA2275F /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		40A1CFC82B2C4178B98D23F5 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		448F1CD8D70A4F7683F73172 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		05F9204C93974AED9979743E /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		CB016491AA5247E7A13CF01B /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		16F4B3C96F3A46349ED48EFD /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		8C304C77CE024BA28206AA43 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		E6E122344D2A4E72BBA65014 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7A2AC63F9F704F07BAFED9FF /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		D2653F5450784BBDA6232E4D /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		E753943242114338A5D3CF65 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		40C6F640A1534C45A4DE800E /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,6 +396,8 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				FC7432461BBB44EAB5D87D8E /* libAdjustSdk.a in Frameworks */,
+				23DC5BE00D2045C5BBFD83B0 /* libAdjustTestLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +575,85 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				536A3A01822F4967AC386675 /* AdjustSdk.xcodeproj */,
+				7F91CDBE0AEC4CD98FC8D03F /* AdjustSdk.xcodeproj */,
+				DB4CF37F742643A6A6A8471D /* AdjustSdk.xcodeproj */,
+				5857EB23BF8748C89845619C /* AdjustSdk.xcodeproj */,
+				02134DE980804DD5A6E3C539 /* AdjustSdk.xcodeproj */,
+				044D14BBBA8A4B7690DD3CDE /* AdjustSdk.xcodeproj */,
+				6ABAFB5D31624907B041D8DB /* AdjustSdk.xcodeproj */,
+				CFC99967D85D49688617903B /* AdjustTestLibrary.xcodeproj */,
+				E04FC27D50E1495BB6076EC7 /* AdjustSdk.xcodeproj */,
+				ACB58B9068924E46A9D5A686 /* AdjustTestLibrary.xcodeproj */,
+				24E2452A0A7B47E2B9B3242D /* AdjustTestLibrary.xcodeproj */,
+				991EE80BFAA848F0B5BA993B /* AdjustTestLibrary.xcodeproj */,
+				6BEC87126D014C8798E3BAA3 /* AdjustSdk.xcodeproj */,
+				7C82115D2B214F56B9D5143F /* AdjustTestLibrary.xcodeproj */,
+				C649EFCBE2074E3BAC58C029 /* AdjustSdk.xcodeproj */,
+				620AAB918B08462FBCFEE20F /* AdjustTestLibrary.xcodeproj */,
+				D10B52F3A728479F81C1B738 /* AdjustSdk.xcodeproj */,
+				01E41FA3848C4B20832390F8 /* AdjustTestLibrary.xcodeproj */,
+				3EE3F0FC9D8A4FFFA8DDD46C /* AdjustSdk.xcodeproj */,
+				F4C17637D95E4073AF4C0FEA /* AdjustTestLibrary.xcodeproj */,
+				10CC059C46784D29A4EB88F4 /* AdjustSdk.xcodeproj */,
+				7D67B71A32984A54BC3BF0F4 /* AdjustTestLibrary.xcodeproj */,
+				D4FFF6BA4E9949839AF2BE14 /* AdjustSdk.xcodeproj */,
+				7FC08191096B469699BF2283 /* AdjustTestLibrary.xcodeproj */,
+				AF652182490E41D4959F5CE9 /* AdjustSdk.xcodeproj */,
+				A24CBC008FB44146813110F0 /* AdjustTestLibrary.xcodeproj */,
+				2363BA50B54542F0B9266F4B /* AdjustSdk.xcodeproj */,
+				B945536E1DBC4729AB306870 /* AdjustTestLibrary.xcodeproj */,
+				1020C9287DCE4756BDB41805 /* AdjustSdk.xcodeproj */,
+				5207F37D735A4426AFDC5F41 /* AdjustTestLibrary.xcodeproj */,
+				371901A68704434F9D6B4B94 /* AdjustSdk.xcodeproj */,
+				AC930604F4D04306AF6DDC9E /* AdjustTestLibrary.xcodeproj */,
+				F6B0E0A1DFBE410A8FF8316C /* AdjustSdk.xcodeproj */,
+				E97DCE9A072A48A681D2BE2D /* AdjustTestLibrary.xcodeproj */,
+				5AD9DFC64406498E9404D4EA /* AdjustSdk.xcodeproj */,
+				C403ACDC18024FD0B4C708D5 /* AdjustTestLibrary.xcodeproj */,
+				CBF607D13A4C4177944629A3 /* AdjustSdk.xcodeproj */,
+				3375E65212F24F8C8E623209 /* AdjustTestLibrary.xcodeproj */,
+				50DBA55CE9AF4886B1E0B2CA /* AdjustSdk.xcodeproj */,
+				9A25AED441A8492880B920D8 /* AdjustTestLibrary.xcodeproj */,
+				58099AD1FD594EF689163C5D /* AdjustSdk.xcodeproj */,
+				A2F762BD2BE84D8D98F1E5D3 /* AdjustTestLibrary.xcodeproj */,
+				5B32A6114A0941A1A190B632 /* AdjustSdk.xcodeproj */,
+				FEE37B86C62B48B49ACAAC7A /* AdjustTestLibrary.xcodeproj */,
+				7E72B40053304126A6FA8C8A /* AdjustSdk.xcodeproj */,
+				B18DD2BBEB4648029FE0420F /* AdjustTestLibrary.xcodeproj */,
+				5DCEEC5AE27845B0BA5B8FC9 /* AdjustSdk.xcodeproj */,
+				7A99A267DB364C55B2028662 /* AdjustTestLibrary.xcodeproj */,
+				4F54AA9F332A4F8CAE13084A /* AdjustSdk.xcodeproj */,
+				9E202687F1FC40319588D670 /* AdjustTestLibrary.xcodeproj */,
+				808BA7DCD78C49639D628D79 /* AdjustSdk.xcodeproj */,
+				35AC1B87DD614860A9D482FC /* AdjustTestLibrary.xcodeproj */,
+				0074E7EC0EC94B8DB9AE8BB3 /* AdjustSdk.xcodeproj */,
+				7D6D1F2A2BC54BCDA0A7D08A /* AdjustTestLibrary.xcodeproj */,
+				F12E483F08FC42D6A602BA43 /* AdjustSdk.xcodeproj */,
+				83C0FFAE6FA5426E89195574 /* AdjustTestLibrary.xcodeproj */,
+				905832CADE6444F0A42EA3DE /* AdjustSdk.xcodeproj */,
+				E7A09BCE2CC34B3E8383CE01 /* AdjustTestLibrary.xcodeproj */,
+				491F0CB206204D289FF4F9EC /* AdjustSdk.xcodeproj */,
+				AD244AC4D7BB4E49B31BA2D7 /* AdjustTestLibrary.xcodeproj */,
+				A3CF49C53A4647069AD2B839 /* AdjustTestLibrary.xcodeproj */,
+				953C1CA574AA49E1A6B5157A /* AdjustTestLibrary.xcodeproj */,
+				6CF7B42AF02A4A1F87A4B267 /* AdjustSdk.xcodeproj */,
+				B6E5C81B2EC940429D8BF669 /* AdjustTestLibrary.xcodeproj */,
+				CA32CB1491BF43A6BE787BBC /* AdjustSdk.xcodeproj */,
+				7824E27570844852900B7885 /* AdjustTestLibrary.xcodeproj */,
+				1BB19F58F1A54A0DA163A9AA /* AdjustTestLibrary.xcodeproj */,
+				B1676616001D4BFBBCA2275F /* AdjustTestLibrary.xcodeproj */,
+				40A1CFC82B2C4178B98D23F5 /* AdjustTestLibrary.xcodeproj */,
+				448F1CD8D70A4F7683F73172 /* AdjustTestLibrary.xcodeproj */,
+				05F9204C93974AED9979743E /* AdjustTestLibrary.xcodeproj */,
+				CB016491AA5247E7A13CF01B /* AdjustTestLibrary.xcodeproj */,
+				16F4B3C96F3A46349ED48EFD /* AdjustTestLibrary.xcodeproj */,
+				8C304C77CE024BA28206AA43 /* AdjustTestLibrary.xcodeproj */,
+				E6E122344D2A4E72BBA65014 /* AdjustTestLibrary.xcodeproj */,
+				7A2AC63F9F704F07BAFED9FF /* AdjustTestLibrary.xcodeproj */,
+				D2653F5450784BBDA6232E4D /* AdjustTestLibrary.xcodeproj */,
+				E753943242114338A5D3CF65 /* AdjustTestLibrary.xcodeproj */,
+				40C6F640A1534C45A4DE800E /* AdjustTestLibrary.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -619,7 +782,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -1059,6 +1222,93 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/test_app.app/test_app";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+				);
 			};
 			name = Debug;
 		};
@@ -1076,6 +1326,93 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/test_app.app/test_app";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+				);
 			};
 			name = Release;
 		};
@@ -1094,6 +1431,88 @@
 				);
 				PRODUCT_NAME = test_app;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+				);
 			};
 			name = Debug;
 		};
@@ -1111,6 +1530,88 @@
 				);
 				PRODUCT_NAME = test_app;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+				);
 			};
 			name = Release;
 		};
@@ -1137,6 +1638,93 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+				);
 			};
 			name = Debug;
 		};
@@ -1163,6 +1751,93 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
+				);
 			};
 			name = Release;
 		};
@@ -1184,6 +1859,11 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/test_app-tvOS.app/test_app-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 			};
 			name = Debug;
 		};
@@ -1205,6 +1885,11 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/test_app-tvOS.app/test_app-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 			};
 			name = Release;
 		};

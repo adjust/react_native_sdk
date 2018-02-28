@@ -1,4 +1,4 @@
-package com.test_app;
+package com.adjust.testapp;
 
 import com.facebook.react.ReactActivity;
 

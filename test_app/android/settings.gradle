@@ -1,3 +1,7 @@
 rootProject.name = 'test_app'
+include ':react-native-adjust-testing'
+project(':react-native-adjust-testing').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-adjust-testing/android')
+include ':react-native-adjust'
+project(':react-native-adjust').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-adjust/android')
 
 include ':app'

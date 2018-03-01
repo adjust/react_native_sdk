@@ -41,15 +41,13 @@ static CTCarrier *carrier = nil;
 
 static NSString *userAgent = nil;
 
-static NSString * const kClientSdk                  = @"ios4.12.1";
+static NSString * const kClientSdk                  = @"ios4.12.3";
 static NSString * const kDeeplinkParam              = @"deep_link=";
 static NSString * const kSchemeDelimiter            = @"://";
 static NSString * const kDefaultScheme              = @"AdjustUniversalScheme";
 static NSString * const kUniversalLinkPattern       = @"https://[^.]*\\.ulink\\.adjust\\.com/ulink/?(.*)";
 static NSString * const kOptionalRedirectPattern    = @"adjust_redirect=[^&#]*";
 static NSString * const kShortUniversalLinkPattern  = @"http[s]?://[a-z0-9]{4}\\.adj\\.st/?(.*)";
-
-static NSString * const kBaseUrl                    = @"https://app.adjust.com";
 static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'Z";
 
 @implementation ADJUtil
@@ -160,10 +158,6 @@ static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SS
 
 + (void)updateUrlSessionConfiguration:(ADJConfig *)config {
     userAgent = config.userAgent;
-}
-
-+ (NSString *)baseUrl {
-    return kBaseUrl;
 }
 
 + (NSString *)clientSdk {
@@ -377,7 +371,7 @@ static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SS
          objectName:(NSString *)objectName {
     NSString *filePath = [ADJUtil getFilePathInAppSupportDir:fileName];
 
-    BOOL result = [NSKeyedArchiver archiveRootObject:object toFile:filePath];
+    BOOL result = (filePath != nil) && [NSKeyedArchiver archiveRootObject:object toFile:filePath];
 
     if (result == YES) {
         [ADJUtil excludeFromBackup:filePath];
@@ -522,6 +516,7 @@ static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SS
 }
 
 + (void)sendGetRequest:(NSURL *)baseUrl
+              basePath:(NSString *)basePath
     prefixErrorMessage:(NSString *)prefixErrorMessage
        activityPackage:(ADJActivityPackage *)activityPackage
    responseDataHandler:(void (^)(ADJResponseData *responseData))responseDataHandler {
@@ -529,7 +524,7 @@ static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SS
     NSString *appSecret = [ADJUtil extractAppSecret:activityPackage];
     NSString *secretId = [ADJUtil extractSecretId:activityPackage];
 
-    NSMutableURLRequest *request = [ADJUtil requestForGetPackage:activityPackage baseUrl:baseUrl];
+    NSMutableURLRequest *request = [ADJUtil requestForGetPackage:activityPackage baseUrl:baseUrl basePath:basePath];
 
     [ADJUtil sendRequest:request
       prefixErrorMessage:prefixErrorMessage
@@ -636,9 +631,16 @@ responseDataHandler:(void (^)(ADJResponseData *responseData))responseDataHandler
 }
 
 + (NSMutableURLRequest *)requestForGetPackage:(ADJActivityPackage *)activityPackage
-                                       baseUrl:(NSURL *)baseUrl{
+                                      baseUrl:(NSURL *)baseUrl
+                                     basePath:(NSString *)basePath
+{
     NSString *parameters = [ADJUtil queryString:activityPackage.parameters];
-    NSString *relativePath = [NSString stringWithFormat:@"%@?%@", activityPackage.path, parameters];
+    NSString *relativePath;
+    if (basePath != nil) {
+        relativePath = [NSString stringWithFormat:@"%@%@?%@", basePath, activityPackage.path, parameters];
+    } else {
+        relativePath = [NSString stringWithFormat:@"%@?%@", activityPackage.path, parameters];
+    }
     NSURL *url = [NSURL URLWithString:relativePath relativeToURL:baseUrl];
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -653,11 +655,10 @@ responseDataHandler:(void (^)(ADJResponseData *responseData))responseDataHandler
 + (NSMutableURLRequest *)requestForPostPackage:(ADJActivityPackage *)activityPackage
                                        baseUrl:(NSURL *)baseUrl
                                      queueSize:(NSUInteger)queueSize {
-    NSURL *url = [NSURL URLWithString:activityPackage.path relativeToURL:baseUrl];
+    NSURL *url = [baseUrl URLByAppendingPathComponent:activityPackage.path];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.timeoutInterval = kRequestTimeout;
     request.HTTPMethod = @"POST";
-
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setValue:activityPackage.clientSdk forHTTPHeaderField:@"Client-Sdk"];
 
@@ -1162,6 +1163,34 @@ responseDataHandler:(void (^)(ADJResponseData *responseData))responseDataHandler
     }
 }
 
++ (BOOL)isMainThread {
+    return [[NSThread currentThread] isMainThread];
+}
+
++ (BOOL)isInactive {
+    return [[UIApplication sharedApplication] applicationState] != UIApplicationStateActive;
+}
+
++ (void)launchInMainThreadWithInactive:(isInactiveInjected)isInactiveblock {
+    dispatch_block_t block = ^void(void) {
+        __block BOOL isInactive = [ADJUtil isInactive];
+        isInactiveblock(isInactive);
+    };
+
+    if ([ADJUtil isMainThread]) {
+        block();
+        return;
+    }
+
+    if (ADJAdjustFactory.testing) {
+        [ADJAdjustFactory.logger debug:@"Launching in the background for testing"];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), block);
+    } else {
+        dispatch_async(dispatch_get_main_queue(), block);
+    }
+}
+
+
 + (BOOL)isValidParameter:(NSString *)attribute
            attributeType:(NSString *)attributeType
            parameterName:(NSString *)parameterName {
@@ -1208,6 +1237,9 @@ responseDataHandler:(void (^)(ADJResponseData *responseData))responseDataHandler
 + (void)launchInQueue:(dispatch_queue_t)queue
            selfInject:(id)selfInject
                 block:(selfInjectedBlock)block {
+    if (queue == nil) {
+        return;
+    }
     __weak __typeof__(selfInject) weakSelf = selfInject;
 
     dispatch_async(queue, ^{

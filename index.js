@@ -1,11 +1,20 @@
 'use strict';
 
 import { 
-    DeviceEventEmitter,
-    NativeModules 
+    NativeEventEmitter,
+    NativeModules,
+    Platform,
 } from 'react-native';
 
 const module_adjust = NativeModules.Adjust;
+
+let module_adjust_emitter = null;
+if (Platform.OS === "android") {
+    module_adjust_emitter = new NativeEventEmitter(NativeModules.Adjust);
+} else if (Platform.OS === "ios") {
+    module_adjust_emitter = new NativeEventEmitter(NativeModules.AdjustEventEmitter);
+}
+
 var Adjust = {};
 
 Adjust.create = function(adjustConfig) {
@@ -277,7 +286,7 @@ AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) 
 AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {
     if (null == AdjustConfig.AttributionSubscription) {
         module_adjust.setAttributionCallbackListener();
-        AdjustConfig.AttributionSubscription = DeviceEventEmitter.addListener(
+        AdjustConfig.AttributionSubscription = module_adjust_emitter.addListener(
             'adjust_attribution', attributionCallbackListener
         );
     }
@@ -286,16 +295,16 @@ AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCall
 AdjustConfig.prototype.setEventTrackingSucceededCallbackListener = function(eventTrackingSucceededCallbackListener) {
     if (null == AdjustConfig.EventTrackingSucceededSubscription) {
         module_adjust.setEventTrackingSucceededCallbackListener();
-        AdjustConfig.EventTrackingSucceededSubscription = DeviceEventEmitter.addListener(
+        AdjustConfig.EventTrackingSucceededSubscription = module_adjust_emitter.addListener(
             'adjust_eventTrackingSucceeded', eventTrackingSucceededCallbackListener
         );
-    }
+    } 
 };
 
 AdjustConfig.prototype.setEventTrackingFailedCallbackListener = function(eventTrackingFailedCallbackListener) {
     if (null == AdjustConfig.EventTrackingFailedSubscription) {
         module_adjust.setEventTrackingFailedCallbackListener();
-        AdjustConfig.EventTrackingFailedSubscription = DeviceEventEmitter.addListener(
+        AdjustConfig.EventTrackingFailedSubscription = module_adjust_emitter.addListener(
             'adjust_eventTrackingFailed', eventTrackingFailedCallbackListener
         );
     }
@@ -304,16 +313,16 @@ AdjustConfig.prototype.setEventTrackingFailedCallbackListener = function(eventTr
 AdjustConfig.prototype.setSessionTrackingSucceededCallbackListener = function(sessionTrackingSucceededCallbackListener) {
     if (null == AdjustConfig.SessionTrackingSucceededSubscription) {
         module_adjust.setSessionTrackingSucceededCallbackListener();
-        AdjustConfig.SessionTrackingSucceededSubscription = DeviceEventEmitter.addListener(
+        AdjustConfig.SessionTrackingSucceededSubscription = module_adjust_emitter.addListener(
             'adjust_sessionTrackingSucceeded', sessionTrackingSucceededCallbackListener
         );
-    }
+    } 
 };
 
 AdjustConfig.prototype.setSessionTrackingFailedCallbackListener = function(sessionTrackingFailedCallbackListener) {
     if (null == AdjustConfig.SessionTrackingFailedSubscription) {
         module_adjust.setSessionTrackingFailedCallbackListener();
-        AdjustConfig.SessionTrackingFailedSubscription = DeviceEventEmitter.addListener(
+        AdjustConfig.SessionTrackingFailedSubscription = module_adjust_emitter.addListener(
             'adjust_sessionTrackingFailed', sessionTrackingFailedCallbackListener
         );
     }
@@ -322,7 +331,7 @@ AdjustConfig.prototype.setSessionTrackingFailedCallbackListener = function(sessi
 AdjustConfig.prototype.setDeferredDeeplinkCallbackListener = function(deferredDeeplinkCallbackListener) {
     if (null == AdjustConfig.DeferredDeeplinkSubscription) {
         module_adjust.setDeferredDeeplinkCallbackListener();
-        AdjustConfig.DeferredDeeplinkSubscription = DeviceEventEmitter.addListener(
+        AdjustConfig.DeferredDeeplinkSubscription = module_adjust_emitter.addListener(
             'adjust_deferredDeeplink', deferredDeeplinkCallbackListener
         );
     }

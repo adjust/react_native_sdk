@@ -27,6 +27,12 @@
 		20AC3042203C206300CD9DA8 /* ATLConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F0842592007782600568A31 /* ATLConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		20AC3043203C206600CD9DA8 /* ATLUtilNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F0842552007782500568A31 /* ATLUtilNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		20AC3044203C206800CD9DA8 /* ATLBlockingQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FFCFE732007AE0000467F01 /* ATLBlockingQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		20AED8232046C3EA00F348B5 /* AdjustTestingEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 20AED81F2046C3EA00F348B5 /* AdjustTestingEventEmitter.m */; };
+		20AED8242046C3EA00F348B5 /* AdjustTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 20AED8202046C3EA00F348B5 /* AdjustTesting.m */; };
+		20AED8252046C3EA00F348B5 /* AdjustTesting.h in Headers */ = {isa = PBXBuildFile; fileRef = 20AED8212046C3EA00F348B5 /* AdjustTesting.h */; };
+		20AED8262046C3EA00F348B5 /* AdjustTestingEventEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 20AED8222046C3EA00F348B5 /* AdjustTestingEventEmitter.h */; };
+		20AED8392046E53B00F348B5 /* AdjustTestingCommandListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 20AED8372046E53B00F348B5 /* AdjustTestingCommandListener.h */; };
+		20AED83A2046E53B00F348B5 /* AdjustTestingCommandListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 20AED8382046E53B00F348B5 /* AdjustTestingCommandListener.m */; };
 		6F08425A2007782600568A31 /* ATLControlChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F08424D2007782500568A31 /* ATLControlChannel.m */; };
 		6F08425C2007782600568A31 /* ATLTestLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F08424F2007782500568A31 /* ATLTestLibrary.m */; };
 		6F08425D2007782600568A31 /* ATLTestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0842532007782500568A31 /* ATLTestInfo.m */; };
@@ -48,6 +54,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		20AED81F2046C3EA00F348B5 /* AdjustTestingEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustTestingEventEmitter.m; sourceTree = "<group>"; };
+		20AED8202046C3EA00F348B5 /* AdjustTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustTesting.m; sourceTree = "<group>"; };
+		20AED8212046C3EA00F348B5 /* AdjustTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustTesting.h; sourceTree = "<group>"; };
+		20AED8222046C3EA00F348B5 /* AdjustTestingEventEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustTestingEventEmitter.h; sourceTree = "<group>"; };
+		20AED8372046E53B00F348B5 /* AdjustTestingCommandListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustTestingCommandListener.h; sourceTree = "<group>"; };
+		20AED8382046E53B00F348B5 /* AdjustTestingCommandListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustTestingCommandListener.m; sourceTree = "<group>"; };
 		6F08420C2007766700568A31 /* libAdjustTestLibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAdjustTestLibrary.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F08424D2007782500568A31 /* ATLControlChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLControlChannel.m; sourceTree = "<group>"; };
 		6F08424F2007782500568A31 /* ATLTestLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLTestLibrary.m; sourceTree = "<group>"; };
@@ -78,6 +90,12 @@
 		6F0842032007766700568A31 = {
 			isa = PBXGroup;
 			children = (
+				20AED8372046E53B00F348B5 /* AdjustTestingCommandListener.h */,
+				20AED8382046E53B00F348B5 /* AdjustTestingCommandListener.m */,
+				20AED8212046C3EA00F348B5 /* AdjustTesting.h */,
+				20AED8202046C3EA00F348B5 /* AdjustTesting.m */,
+				20AED8222046C3EA00F348B5 /* AdjustTestingEventEmitter.h */,
+				20AED81F2046C3EA00F348B5 /* AdjustTestingEventEmitter.m */,
 				6F08420E2007766700568A31 /* AdjustTestLibrary */,
 				6F08420D2007766700568A31 /* Products */,
 			);
@@ -118,11 +136,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20AED8392046E53B00F348B5 /* AdjustTestingCommandListener.h in Headers */,
 				20AC3040203C205D00CD9DA8 /* ATLTestInfo.h in Headers */,
 				20AC303F203C205B00CD9DA8 /* ATLTestLibrary.h in Headers */,
 				20AC3042203C206300CD9DA8 /* ATLConstants.h in Headers */,
+				20AED8252046C3EA00F348B5 /* AdjustTesting.h in Headers */,
 				20AC3043203C206600CD9DA8 /* ATLUtilNetworking.h in Headers */,
 				20AC3044203C206800CD9DA8 /* ATLBlockingQueue.h in Headers */,
+				20AED8262046C3EA00F348B5 /* AdjustTestingEventEmitter.h in Headers */,
 				20AC3041203C206100CD9DA8 /* ATLControlChannel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,10 +229,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F08425C2007782600568A31 /* ATLTestLibrary.m in Sources */,
+				20AED83A2046E53B00F348B5 /* AdjustTestingCommandListener.m in Sources */,
 				6F08425F2007782600568A31 /* ATLUtilNetworking.m in Sources */,
 				6F08425D2007782600568A31 /* ATLTestInfo.m in Sources */,
+				20AED8242046C3EA00F348B5 /* AdjustTesting.m in Sources */,
 				6F08425A2007782600568A31 /* ATLControlChannel.m in Sources */,
 				6FFCFE752007AE0000467F01 /* ATLBlockingQueue.m in Sources */,
+				20AED8232046C3EA00F348B5 /* AdjustTestingEventEmitter.m in Sources */,
 				6F08425E2007782600568A31 /* ATLUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -12,6 +13,7 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* test_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* test_appTests.m */; };
+		0DBA243BD45A4EA4A3059976 /* libAdjustTestLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD4F7C4BB884DDE9289C67B /* libAdjustTestLibrary.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -36,8 +38,7 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		FC7432461BBB44EAB5D87D8E /* libAdjustSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B2CD93619C943C4934A7C22 /* libAdjustSdk.a */; };
-		23DC5BE00D2045C5BBFD83B0 /* libAdjustTestLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DDBF2A7CA684A0A9815DCB1 /* libAdjustTestLibrary.a */; };
+		FDA08C4864D04947A1903348 /* libAdjustSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D115AEDB9F740DDA3583D7C /* libAdjustSdk.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,503 @@
 			proxyType = 2;
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
+		};
+		20779F32204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3A4F3D9F4554F558F448488 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F35204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBF607D13A4C4177944629A3 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F38204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D10B52F3A728479F81C1B738 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F3B204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F12E483F08FC42D6A602BA43 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F3E204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F23BF706A3344BBBB3E13177 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F41204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB4CF37F742643A6A6A8471D /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F44204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB06AA62198743D0A6D32F33 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F47204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0AC4813AF1941E8B8102B22 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F4A204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4FFF6BA4E9949839AF2BE14 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F4D204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F6B0E0A1DFBE410A8FF8316C /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F50204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E04FC27D50E1495BB6076EC7 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F53204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA32CB1491BF43A6BE787BBC /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F56204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E316F28515B04316AD491163 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F59204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C19C6B4422864D779E17C8ED /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F5C204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B629B0265DD24A99B27EF3CD /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F5F204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C649EFCBE2074E3BAC58C029 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F62204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CCD6D851F9EF460380F49518 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F65204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D8A5150FAE554DA1B4CE3852 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F68204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E92BFD9DA523438DBBF03A50 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F6B204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9CDBD62FD6A4486BE923E30 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F6E204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FCBD9C171188409BA6E374FE /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F71204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB7DA9C62E184B45A0755113 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F74204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1F280F466BE41F299424FAF /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F77204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C2AB0B2560EE46099BFD690E /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		20779F7B204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B49AD61D430840299DBA764E /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779F7F204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FEE37B86C62B48B49ACAAC7A /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779F83204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCA3E00EC36649168D4F24C2 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779F87204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD244AC4D7BB4E49B31BA2D7 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779F8B204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B6E5C81B2EC940429D8BF669 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779F8F204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1676616001D4BFBBCA2275F /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779F93204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E753943242114338A5D3CF65 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779F97204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E48C0FE0A23645EBACA33C1B /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779F9B204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB3283F138E84040A9B61405 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779F9F204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F4C17637D95E4073AF4C0FEA /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FA3204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAE72B77002747979DDDF711 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FA7204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E80EED0A68554052BA7A1505 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FAB204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FE3CD4D1EA6C427F85CE135B /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FAF204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B418D458A547426BB1DD1667 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FB3204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ACB58B9068924E46A9D5A686 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FB7204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CDB963B136BD4B8F99FA262F /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FBB204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CFC99967D85D49688617903B /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FBF204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DF4C7606396E4A0FBD584796 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FC3204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6E122344D2A4E72BBA65014 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FC7204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E0ADDB6D9B4E4033A3F2DCB2 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FCB204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C403ACDC18024FD0B4C708D5 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FCF204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F4F2F27CF78B4D5283102C82 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FD3204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D60A0752E9054BF3B36D420E /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FD7204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E97DCE9A072A48A681D2BE2D /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FDB204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D6F9F9A9969243729FB895D5 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FDF204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E7A09BCE2CC34B3E8383CE01 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FE3204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B18DD2BBEB4648029FE0420F /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FE7204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA0D5124702A4FEEB2FD8C5B /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FEB204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D3E673ED9C6F4BD3B774E682 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FEF204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF17BC20C16345698B875A89 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FF3204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2653F5450784BBDA6232E4D /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FF7204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD692A99114742419FDF3534 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FFB204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7A2D512EE8F4056AE54E1FE /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20779FFF204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B945536E1DBC4729AB306870 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		2077A003204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB016491AA5247E7A13CF01B /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		2077A007204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D830C58BE773479495052AFD /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		2077A00B204DAB3E00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC930604F4D04306AF6DDC9E /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		2077A035204DAB3F00D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 80D5B1A3C6164001B668A46E /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		2077A10D204DAB4600D0CC0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42759D258E704274BD9568E4 /* AdjustTestLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6F08420C2007766700568A31;
+			remoteInfo = AdjustTestLibrary;
+		};
+		20AED86D2046E98600F348B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EBF21BDC1FC498900052F4D5;
+			remoteInfo = jsinspector;
+		};
+		20AED86F2046E98600F348B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EBF21BFA1FC4989A0052F4D5;
+			remoteInfo = "jsinspector-tvOS";
+		};
+		20AED8712046E98600F348B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7ECE1E25DB7D00323FB7;
+			remoteInfo = "third-party";
+		};
+		20AED8732046E98600F348B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D383D3C1EBD27B6005632C8;
+			remoteInfo = "third-party-tvOS";
+		};
+		20AED8752046E98600F348B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7E881E25C6D100323FB7;
+			remoteInfo = "double-conversion";
+		};
+		20AED8772046E98600F348B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
+			remoteInfo = "double-conversion-tvOS";
+		};
+		20AED8792046E98600F348B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9936F3131F5F2E4B0010BF04;
+			remoteInfo = privatedata;
+		};
+		20AED87B2046E98600F348B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
+			remoteInfo = "privatedata-tvOS";
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -283,91 +781,75 @@
 		2D02E47B1E0B4A5D006451C7 /* test_app-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "test_app-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* test_app-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "test_app-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		42759D258E704274BD9568E4 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		4D115AEDB9F740DDA3583D7C /* libAdjustSdk.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAdjustSdk.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		80D5B1A3C6164001B668A46E /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		AC930604F4D04306AF6DDC9E /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		ACB58B9068924E46A9D5A686 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		AD244AC4D7BB4E49B31BA2D7 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
-		536A3A01822F4967AC386675 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		5B2CD93619C943C4934A7C22 /* libAdjustSdk.a */ = {isa = PBXFileReference; name = "libAdjustSdk.a"; path = "libAdjustSdk.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		7F91CDBE0AEC4CD98FC8D03F /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		DB4CF37F742643A6A6A8471D /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		5857EB23BF8748C89845619C /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		02134DE980804DD5A6E3C539 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		044D14BBBA8A4B7690DD3CDE /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		6ABAFB5D31624907B041D8DB /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		CFC99967D85D49688617903B /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		3DDBF2A7CA684A0A9815DCB1 /* libAdjustTestLibrary.a */ = {isa = PBXFileReference; name = "libAdjustTestLibrary.a"; path = "libAdjustTestLibrary.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		E04FC27D50E1495BB6076EC7 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		ACB58B9068924E46A9D5A686 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		24E2452A0A7B47E2B9B3242D /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		991EE80BFAA848F0B5BA993B /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		6BEC87126D014C8798E3BAA3 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		7C82115D2B214F56B9D5143F /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		C649EFCBE2074E3BAC58C029 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		620AAB918B08462FBCFEE20F /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		D10B52F3A728479F81C1B738 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		01E41FA3848C4B20832390F8 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		3EE3F0FC9D8A4FFFA8DDD46C /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		F4C17637D95E4073AF4C0FEA /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		10CC059C46784D29A4EB88F4 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		7D67B71A32984A54BC3BF0F4 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		D4FFF6BA4E9949839AF2BE14 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		7FC08191096B469699BF2283 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		AF652182490E41D4959F5CE9 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		A24CBC008FB44146813110F0 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		2363BA50B54542F0B9266F4B /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		B945536E1DBC4729AB306870 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		1020C9287DCE4756BDB41805 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		5207F37D735A4426AFDC5F41 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		371901A68704434F9D6B4B94 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		AC930604F4D04306AF6DDC9E /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		F6B0E0A1DFBE410A8FF8316C /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		E97DCE9A072A48A681D2BE2D /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		5AD9DFC64406498E9404D4EA /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		C403ACDC18024FD0B4C708D5 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		CBF607D13A4C4177944629A3 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		3375E65212F24F8C8E623209 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		50DBA55CE9AF4886B1E0B2CA /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		9A25AED441A8492880B920D8 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		58099AD1FD594EF689163C5D /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		A2F762BD2BE84D8D98F1E5D3 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		5B32A6114A0941A1A190B632 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		FEE37B86C62B48B49ACAAC7A /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		7E72B40053304126A6FA8C8A /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		B18DD2BBEB4648029FE0420F /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		5DCEEC5AE27845B0BA5B8FC9 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		7A99A267DB364C55B2028662 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		4F54AA9F332A4F8CAE13084A /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		9E202687F1FC40319588D670 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		808BA7DCD78C49639D628D79 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		35AC1B87DD614860A9D482FC /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		0074E7EC0EC94B8DB9AE8BB3 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		7D6D1F2A2BC54BCDA0A7D08A /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		F12E483F08FC42D6A602BA43 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		83C0FFAE6FA5426E89195574 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		905832CADE6444F0A42EA3DE /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		E7A09BCE2CC34B3E8383CE01 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		491F0CB206204D289FF4F9EC /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		AD244AC4D7BB4E49B31BA2D7 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		A3CF49C53A4647069AD2B839 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		953C1CA574AA49E1A6B5157A /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		6CF7B42AF02A4A1F87A4B267 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		B6E5C81B2EC940429D8BF669 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		CA32CB1491BF43A6BE787BBC /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		7824E27570844852900B7885 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		1BB19F58F1A54A0DA163A9AA /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		B1676616001D4BFBBCA2275F /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		40A1CFC82B2C4178B98D23F5 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		448F1CD8D70A4F7683F73172 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		05F9204C93974AED9979743E /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		CB016491AA5247E7A13CF01B /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		16F4B3C96F3A46349ED48EFD /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		8C304C77CE024BA28206AA43 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		E6E122344D2A4E72BBA65014 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		7A2AC63F9F704F07BAFED9FF /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		D2653F5450784BBDA6232E4D /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		E753943242114338A5D3CF65 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		40C6F640A1534C45A4DE800E /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; name = "AdjustTestLibrary.xcodeproj"; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		B1676616001D4BFBBCA2275F /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		B18DD2BBEB4648029FE0420F /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		B1F280F466BE41F299424FAF /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		B418D458A547426BB1DD1667 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		B49AD61D430840299DBA764E /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		B629B0265DD24A99B27EF3CD /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		B6E5C81B2EC940429D8BF669 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		B945536E1DBC4729AB306870 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		BD692A99114742419FDF3534 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		C19C6B4422864D779E17C8ED /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		C2AB0B2560EE46099BFD690E /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		C403ACDC18024FD0B4C708D5 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		C649EFCBE2074E3BAC58C029 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		C9CDBD62FD6A4486BE923E30 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		CA32CB1491BF43A6BE787BBC /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		CB016491AA5247E7A13CF01B /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		CBF607D13A4C4177944629A3 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		CCD4F7C4BB884DDE9289C67B /* libAdjustTestLibrary.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAdjustTestLibrary.a; sourceTree = "<group>"; };
+		CCD6D851F9EF460380F49518 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		CDB963B136BD4B8F99FA262F /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		CFC99967D85D49688617903B /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		D0AC4813AF1941E8B8102B22 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		D10B52F3A728479F81C1B738 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		D2653F5450784BBDA6232E4D /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		D3E673ED9C6F4BD3B774E682 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		D4FFF6BA4E9949839AF2BE14 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		D60A0752E9054BF3B36D420E /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		D6F9F9A9969243729FB895D5 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		D7A2D512EE8F4056AE54E1FE /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		D830C58BE773479495052AFD /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		D8A5150FAE554DA1B4CE3852 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		DA0D5124702A4FEEB2FD8C5B /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		DB06AA62198743D0A6D32F33 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		DB3283F138E84040A9B61405 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		DB4CF37F742643A6A6A8471D /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		DB7DA9C62E184B45A0755113 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		DCA3E00EC36649168D4F24C2 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		DF4C7606396E4A0FBD584796 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		E04FC27D50E1495BB6076EC7 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		E0ADDB6D9B4E4033A3F2DCB2 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		E316F28515B04316AD491163 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		E3A4F3D9F4554F558F448488 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		E48C0FE0A23645EBACA33C1B /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		E6E122344D2A4E72BBA65014 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		E753943242114338A5D3CF65 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		E7A09BCE2CC34B3E8383CE01 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		E80EED0A68554052BA7A1505 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		E92BFD9DA523438DBBF03A50 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		E97DCE9A072A48A681D2BE2D /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		F12E483F08FC42D6A602BA43 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		F23BF706A3344BBBB3E13177 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		F4C17637D95E4073AF4C0FEA /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		F4F2F27CF78B4D5283102C82 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		F6B0E0A1DFBE410A8FF8316C /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		FAE72B77002747979DDDF711 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		FCBD9C171188409BA6E374FE /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
+		FE3CD4D1EA6C427F85CE135B /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		FEE37B86C62B48B49ACAAC7A /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
+		FF17BC20C16345698B875A89 /* AdjustTestLibrary.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustTestLibrary.xcodeproj; path = "../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -396,8 +878,8 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				FC7432461BBB44EAB5D87D8E /* libAdjustSdk.a in Frameworks */,
-				23DC5BE00D2045C5BBFD83B0 /* libAdjustTestLibrary.a in Frameworks */,
+				FDA08C4864D04947A1903348 /* libAdjustSdk.a in Frameworks */,
+				0DBA243BD45A4EA4A3059976 /* libAdjustTestLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,13 +1005,534 @@
 			isa = PBXGroup;
 			children = (
 				146834041AC3E56700842450 /* libReact.a */,
+				3DAD3EA31DF850E9000B6D8A /* libReact.a */,
 				3DAD3EA51DF850E9000B6D8A /* libyoga.a */,
 				3DAD3EA71DF850E9000B6D8A /* libyoga.a */,
 				3DAD3EA91DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
 				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
-				3DAD3EA31DF850E9000B6D8A /* libReact-tvOS.a */,
+				20AED86E2046E98600F348B5 /* libjsinspector.a */,
+				20AED8702046E98600F348B5 /* libjsinspector-tvOS.a */,
+				20AED8722046E98600F348B5 /* libthird-party.a */,
+				20AED8742046E98600F348B5 /* libthird-party.a */,
+				20AED8762046E98600F348B5 /* libdouble-conversion.a */,
+				20AED8782046E98600F348B5 /* libdouble-conversion.a */,
+				20AED87A2046E98600F348B5 /* libprivatedata.a */,
+				20AED87C2046E98600F348B5 /* libprivatedata-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		205803FC2047FCB90078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F57204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2058078420480DEE0078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FDC204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20580FA420480FB60078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F3F204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		205810EB20480FB90078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FAC204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		205815392048108E0078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FFC204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20581840204811F20078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F33204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20581DD5204812C60078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FA8204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20582223204813430078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FEC204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2058252A204818A90078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F78204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		205830B1204840760078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FD0204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		205834FF2048424E0078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FE8204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20583C5420484D0C0078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F69204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20583D9B20484D110078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FC0204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		205841E920484E340078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F9C204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		205844F020484F750078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F48204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2058493E204850D40078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F66204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20585098204856A30078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F45204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2058FC4D2047F5BB0078383E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F72204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20776E38204D3C7700D0CC0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F5D204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		207773CD204D3E2800D0CC0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FB8204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20778553204D56AE00D0CC0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FD4204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20778854204D574700D0CC0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F6F204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20778999204D574D00D0CC0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FF8204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20778DDF204D57BB00D0CC0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F98204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		207790E0204D5E3100D0CC0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F75204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20779225204D5E3600D0CC0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FA4204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2077966B204D631C00D0CC0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FF0204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20779B95204DA99D00D0CC0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FB0204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2077A032204DAB3E00D0CC0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2077A036204DAB3F00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2077A109204DAB4600D0CC0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2077A10E204DAB4600D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8472046E98600F348B5 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				4D115AEDB9F740DDA3583D7C /* libAdjustSdk.a */,
+				CCD4F7C4BB884DDE9289C67B /* libAdjustTestLibrary.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		20AED87F2046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F94204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8812046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FF4204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8852046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FC4204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED88B2046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2077A004204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8932046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F90204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8992046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F8C204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED89F2046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F88204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8A12046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FE0204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8AD2046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FE4204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8AF2046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F80204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8B72046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FCC204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8B92046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FD8204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8BB2046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2077A00C204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8BF2046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2077A000204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8C72046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FA0204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8D32046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FB4204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8D52046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FBC204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8D72046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F54204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8DF2046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F3C204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8F12046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F36204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8F52046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F4E204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED8FF2046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F4B204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED9052046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F39204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED9072046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F60204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED90B2046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F51204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AED9152046E98800F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F42204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AEE58D2046ED8B00F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F63204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AEE7CB2046EDE900F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F6C204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AEEA112046EE4B00F348B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F5A204DAB3E00D0CC0B /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20F0505720470AAA00CEEB7B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F84204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20F052B320470ABA00CEEB7B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779F7C204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20F0551920470B7300CEEB7B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2077A008204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20F05C7D20470F6100CEEB7B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20779FC8204DAB3E00D0CC0B /* libAdjustTestLibrary.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -575,85 +1578,8 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				536A3A01822F4967AC386675 /* AdjustSdk.xcodeproj */,
-				7F91CDBE0AEC4CD98FC8D03F /* AdjustSdk.xcodeproj */,
-				DB4CF37F742643A6A6A8471D /* AdjustSdk.xcodeproj */,
-				5857EB23BF8748C89845619C /* AdjustSdk.xcodeproj */,
-				02134DE980804DD5A6E3C539 /* AdjustSdk.xcodeproj */,
-				044D14BBBA8A4B7690DD3CDE /* AdjustSdk.xcodeproj */,
-				6ABAFB5D31624907B041D8DB /* AdjustSdk.xcodeproj */,
-				CFC99967D85D49688617903B /* AdjustTestLibrary.xcodeproj */,
-				E04FC27D50E1495BB6076EC7 /* AdjustSdk.xcodeproj */,
-				ACB58B9068924E46A9D5A686 /* AdjustTestLibrary.xcodeproj */,
-				24E2452A0A7B47E2B9B3242D /* AdjustTestLibrary.xcodeproj */,
-				991EE80BFAA848F0B5BA993B /* AdjustTestLibrary.xcodeproj */,
-				6BEC87126D014C8798E3BAA3 /* AdjustSdk.xcodeproj */,
-				7C82115D2B214F56B9D5143F /* AdjustTestLibrary.xcodeproj */,
-				C649EFCBE2074E3BAC58C029 /* AdjustSdk.xcodeproj */,
-				620AAB918B08462FBCFEE20F /* AdjustTestLibrary.xcodeproj */,
-				D10B52F3A728479F81C1B738 /* AdjustSdk.xcodeproj */,
-				01E41FA3848C4B20832390F8 /* AdjustTestLibrary.xcodeproj */,
-				3EE3F0FC9D8A4FFFA8DDD46C /* AdjustSdk.xcodeproj */,
-				F4C17637D95E4073AF4C0FEA /* AdjustTestLibrary.xcodeproj */,
-				10CC059C46784D29A4EB88F4 /* AdjustSdk.xcodeproj */,
-				7D67B71A32984A54BC3BF0F4 /* AdjustTestLibrary.xcodeproj */,
-				D4FFF6BA4E9949839AF2BE14 /* AdjustSdk.xcodeproj */,
-				7FC08191096B469699BF2283 /* AdjustTestLibrary.xcodeproj */,
-				AF652182490E41D4959F5CE9 /* AdjustSdk.xcodeproj */,
-				A24CBC008FB44146813110F0 /* AdjustTestLibrary.xcodeproj */,
-				2363BA50B54542F0B9266F4B /* AdjustSdk.xcodeproj */,
-				B945536E1DBC4729AB306870 /* AdjustTestLibrary.xcodeproj */,
-				1020C9287DCE4756BDB41805 /* AdjustSdk.xcodeproj */,
-				5207F37D735A4426AFDC5F41 /* AdjustTestLibrary.xcodeproj */,
-				371901A68704434F9D6B4B94 /* AdjustSdk.xcodeproj */,
-				AC930604F4D04306AF6DDC9E /* AdjustTestLibrary.xcodeproj */,
-				F6B0E0A1DFBE410A8FF8316C /* AdjustSdk.xcodeproj */,
-				E97DCE9A072A48A681D2BE2D /* AdjustTestLibrary.xcodeproj */,
-				5AD9DFC64406498E9404D4EA /* AdjustSdk.xcodeproj */,
-				C403ACDC18024FD0B4C708D5 /* AdjustTestLibrary.xcodeproj */,
-				CBF607D13A4C4177944629A3 /* AdjustSdk.xcodeproj */,
-				3375E65212F24F8C8E623209 /* AdjustTestLibrary.xcodeproj */,
-				50DBA55CE9AF4886B1E0B2CA /* AdjustSdk.xcodeproj */,
-				9A25AED441A8492880B920D8 /* AdjustTestLibrary.xcodeproj */,
-				58099AD1FD594EF689163C5D /* AdjustSdk.xcodeproj */,
-				A2F762BD2BE84D8D98F1E5D3 /* AdjustTestLibrary.xcodeproj */,
-				5B32A6114A0941A1A190B632 /* AdjustSdk.xcodeproj */,
-				FEE37B86C62B48B49ACAAC7A /* AdjustTestLibrary.xcodeproj */,
-				7E72B40053304126A6FA8C8A /* AdjustSdk.xcodeproj */,
-				B18DD2BBEB4648029FE0420F /* AdjustTestLibrary.xcodeproj */,
-				5DCEEC5AE27845B0BA5B8FC9 /* AdjustSdk.xcodeproj */,
-				7A99A267DB364C55B2028662 /* AdjustTestLibrary.xcodeproj */,
-				4F54AA9F332A4F8CAE13084A /* AdjustSdk.xcodeproj */,
-				9E202687F1FC40319588D670 /* AdjustTestLibrary.xcodeproj */,
-				808BA7DCD78C49639D628D79 /* AdjustSdk.xcodeproj */,
-				35AC1B87DD614860A9D482FC /* AdjustTestLibrary.xcodeproj */,
-				0074E7EC0EC94B8DB9AE8BB3 /* AdjustSdk.xcodeproj */,
-				7D6D1F2A2BC54BCDA0A7D08A /* AdjustTestLibrary.xcodeproj */,
-				F12E483F08FC42D6A602BA43 /* AdjustSdk.xcodeproj */,
-				83C0FFAE6FA5426E89195574 /* AdjustTestLibrary.xcodeproj */,
-				905832CADE6444F0A42EA3DE /* AdjustSdk.xcodeproj */,
-				E7A09BCE2CC34B3E8383CE01 /* AdjustTestLibrary.xcodeproj */,
-				491F0CB206204D289FF4F9EC /* AdjustSdk.xcodeproj */,
-				AD244AC4D7BB4E49B31BA2D7 /* AdjustTestLibrary.xcodeproj */,
-				A3CF49C53A4647069AD2B839 /* AdjustTestLibrary.xcodeproj */,
-				953C1CA574AA49E1A6B5157A /* AdjustTestLibrary.xcodeproj */,
-				6CF7B42AF02A4A1F87A4B267 /* AdjustSdk.xcodeproj */,
-				B6E5C81B2EC940429D8BF669 /* AdjustTestLibrary.xcodeproj */,
-				CA32CB1491BF43A6BE787BBC /* AdjustSdk.xcodeproj */,
-				7824E27570844852900B7885 /* AdjustTestLibrary.xcodeproj */,
-				1BB19F58F1A54A0DA163A9AA /* AdjustTestLibrary.xcodeproj */,
-				B1676616001D4BFBBCA2275F /* AdjustTestLibrary.xcodeproj */,
-				40A1CFC82B2C4178B98D23F5 /* AdjustTestLibrary.xcodeproj */,
-				448F1CD8D70A4F7683F73172 /* AdjustTestLibrary.xcodeproj */,
-				05F9204C93974AED9979743E /* AdjustTestLibrary.xcodeproj */,
-				CB016491AA5247E7A13CF01B /* AdjustTestLibrary.xcodeproj */,
-				16F4B3C96F3A46349ED48EFD /* AdjustTestLibrary.xcodeproj */,
-				8C304C77CE024BA28206AA43 /* AdjustTestLibrary.xcodeproj */,
-				E6E122344D2A4E72BBA65014 /* AdjustTestLibrary.xcodeproj */,
-				7A2AC63F9F704F07BAFED9FF /* AdjustTestLibrary.xcodeproj */,
-				D2653F5450784BBDA6232E4D /* AdjustTestLibrary.xcodeproj */,
-				E753943242114338A5D3CF65 /* AdjustTestLibrary.xcodeproj */,
-				40C6F640A1534C45A4DE800E /* AdjustTestLibrary.xcodeproj */,
+				80D5B1A3C6164001B668A46E /* AdjustSdk.xcodeproj */,
+				42759D258E704274BD9568E4 /* AdjustTestLibrary.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -675,6 +1601,7 @@
 				00E356EF1AD99517003FC87E /* test_appTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				20AED8472046E98600F348B5 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -813,6 +1740,258 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 20581840204811F20078383E /* Products */;
+					ProjectRef = E3A4F3D9F4554F558F448488 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8F12046E98800F348B5 /* Products */;
+					ProjectRef = CBF607D13A4C4177944629A3 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED9052046E98800F348B5 /* Products */;
+					ProjectRef = D10B52F3A728479F81C1B738 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8DF2046E98800F348B5 /* Products */;
+					ProjectRef = F12E483F08FC42D6A602BA43 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20580FA420480FB60078383E /* Products */;
+					ProjectRef = F23BF706A3344BBBB3E13177 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED9152046E98800F348B5 /* Products */;
+					ProjectRef = DB4CF37F742643A6A6A8471D /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20585098204856A30078383E /* Products */;
+					ProjectRef = DB06AA62198743D0A6D32F33 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 2077A032204DAB3E00D0CC0B /* Products */;
+					ProjectRef = 80D5B1A3C6164001B668A46E /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 205844F020484F750078383E /* Products */;
+					ProjectRef = D0AC4813AF1941E8B8102B22 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8FF2046E98800F348B5 /* Products */;
+					ProjectRef = D4FFF6BA4E9949839AF2BE14 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8F52046E98800F348B5 /* Products */;
+					ProjectRef = F6B0E0A1DFBE410A8FF8316C /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED90B2046E98800F348B5 /* Products */;
+					ProjectRef = E04FC27D50E1495BB6076EC7 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8D72046E98800F348B5 /* Products */;
+					ProjectRef = CA32CB1491BF43A6BE787BBC /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 205803FC2047FCB90078383E /* Products */;
+					ProjectRef = E316F28515B04316AD491163 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AEEA112046EE4B00F348B5 /* Products */;
+					ProjectRef = C19C6B4422864D779E17C8ED /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20776E38204D3C7700D0CC0B /* Products */;
+					ProjectRef = B629B0265DD24A99B27EF3CD /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED9072046E98800F348B5 /* Products */;
+					ProjectRef = C649EFCBE2074E3BAC58C029 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AEE58D2046ED8B00F348B5 /* Products */;
+					ProjectRef = CCD6D851F9EF460380F49518 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 2058493E204850D40078383E /* Products */;
+					ProjectRef = D8A5150FAE554DA1B4CE3852 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20583C5420484D0C0078383E /* Products */;
+					ProjectRef = E92BFD9DA523438DBBF03A50 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AEE7CB2046EDE900F348B5 /* Products */;
+					ProjectRef = C9CDBD62FD6A4486BE923E30 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20778854204D574700D0CC0B /* Products */;
+					ProjectRef = FCBD9C171188409BA6E374FE /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 2058FC4D2047F5BB0078383E /* Products */;
+					ProjectRef = DB7DA9C62E184B45A0755113 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 207790E0204D5E3100D0CC0B /* Products */;
+					ProjectRef = B1F280F466BE41F299424FAF /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 2058252A204818A90078383E /* Products */;
+					ProjectRef = C2AB0B2560EE46099BFD690E /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 20F052B320470ABA00CEEB7B /* Products */;
+					ProjectRef = B49AD61D430840299DBA764E /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8AF2046E98800F348B5 /* Products */;
+					ProjectRef = FEE37B86C62B48B49ACAAC7A /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20F0505720470AAA00CEEB7B /* Products */;
+					ProjectRef = DCA3E00EC36649168D4F24C2 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED89F2046E98800F348B5 /* Products */;
+					ProjectRef = AD244AC4D7BB4E49B31BA2D7 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8992046E98800F348B5 /* Products */;
+					ProjectRef = B6E5C81B2EC940429D8BF669 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8932046E98800F348B5 /* Products */;
+					ProjectRef = B1676616001D4BFBBCA2275F /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED87F2046E98800F348B5 /* Products */;
+					ProjectRef = E753943242114338A5D3CF65 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20778DDF204D57BB00D0CC0B /* Products */;
+					ProjectRef = E48C0FE0A23645EBACA33C1B /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 205841E920484E340078383E /* Products */;
+					ProjectRef = DB3283F138E84040A9B61405 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8C72046E98800F348B5 /* Products */;
+					ProjectRef = F4C17637D95E4073AF4C0FEA /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20779225204D5E3600D0CC0B /* Products */;
+					ProjectRef = FAE72B77002747979DDDF711 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20581DD5204812C60078383E /* Products */;
+					ProjectRef = E80EED0A68554052BA7A1505 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 205810EB20480FB90078383E /* Products */;
+					ProjectRef = FE3CD4D1EA6C427F85CE135B /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20779B95204DA99D00D0CC0B /* Products */;
+					ProjectRef = B418D458A547426BB1DD1667 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8D32046E98800F348B5 /* Products */;
+					ProjectRef = ACB58B9068924E46A9D5A686 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 207773CD204D3E2800D0CC0B /* Products */;
+					ProjectRef = CDB963B136BD4B8F99FA262F /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8D52046E98800F348B5 /* Products */;
+					ProjectRef = CFC99967D85D49688617903B /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20583D9B20484D110078383E /* Products */;
+					ProjectRef = DF4C7606396E4A0FBD584796 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8852046E98800F348B5 /* Products */;
+					ProjectRef = E6E122344D2A4E72BBA65014 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20F05C7D20470F6100CEEB7B /* Products */;
+					ProjectRef = E0ADDB6D9B4E4033A3F2DCB2 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8B72046E98800F348B5 /* Products */;
+					ProjectRef = C403ACDC18024FD0B4C708D5 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 205830B1204840760078383E /* Products */;
+					ProjectRef = F4F2F27CF78B4D5283102C82 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20778553204D56AE00D0CC0B /* Products */;
+					ProjectRef = D60A0752E9054BF3B36D420E /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8B92046E98800F348B5 /* Products */;
+					ProjectRef = E97DCE9A072A48A681D2BE2D /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 2058078420480DEE0078383E /* Products */;
+					ProjectRef = D6F9F9A9969243729FB895D5 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8A12046E98800F348B5 /* Products */;
+					ProjectRef = E7A09BCE2CC34B3E8383CE01 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8AD2046E98800F348B5 /* Products */;
+					ProjectRef = B18DD2BBEB4648029FE0420F /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 205834FF2048424E0078383E /* Products */;
+					ProjectRef = DA0D5124702A4FEEB2FD8C5B /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20582223204813430078383E /* Products */;
+					ProjectRef = D3E673ED9C6F4BD3B774E682 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 2077966B204D631C00D0CC0B /* Products */;
+					ProjectRef = FF17BC20C16345698B875A89 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8812046E98800F348B5 /* Products */;
+					ProjectRef = D2653F5450784BBDA6232E4D /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20778999204D574D00D0CC0B /* Products */;
+					ProjectRef = BD692A99114742419FDF3534 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 205815392048108E0078383E /* Products */;
+					ProjectRef = D7A2D512EE8F4056AE54E1FE /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8BF2046E98800F348B5 /* Products */;
+					ProjectRef = B945536E1DBC4729AB306870 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED88B2046E98800F348B5 /* Products */;
+					ProjectRef = CB016491AA5247E7A13CF01B /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20F0551920470B7300CEEB7B /* Products */;
+					ProjectRef = D830C58BE773479495052AFD /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 2077A109204DAB4600D0CC0B /* Products */;
+					ProjectRef = 42759D258E704274BD9568E4 /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
+					ProductGroup = 20AED8BB2046E98800F348B5 /* Products */;
+					ProjectRef = AC930604F4D04306AF6DDC9E /* AdjustTestLibrary.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
@@ -928,6 +2107,503 @@
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		20779F33204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F32204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F36204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F35204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F39204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F38204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F3C204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F3B204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F3F204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F3E204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F42204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F41204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F45204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F44204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F48204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F47204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F4B204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F4A204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F4E204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F4D204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F51204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F50204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F54204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F53204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F57204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F56204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F5A204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F59204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F5D204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F5C204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F60204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F5F204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F63204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F62204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F66204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F65204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F69204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F68204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F6C204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F6B204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F6F204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F6E204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F72204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F71204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F75204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F74204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F78204DAB3E00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 20779F77204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F7C204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779F7B204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F80204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779F7F204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F84204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779F83204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F88204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779F87204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F8C204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779F8B204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F90204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779F8F204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F94204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779F93204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F98204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779F97204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779F9C204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779F9B204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FA0204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779F9F204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FA4204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FA3204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FA8204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FA7204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FAC204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FAB204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FB0204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FAF204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FB4204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FB3204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FB8204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FB7204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FBC204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FBB204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FC0204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FBF204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FC4204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FC3204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FC8204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FC7204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FCC204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FCB204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FD0204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FCF204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FD4204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FD3204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FD8204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FD7204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FDC204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FDB204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FE0204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FDF204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FE4204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FE3204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FE8204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FE7204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FEC204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FEB204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FF0204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FEF204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FF4204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FF3204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FF8204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FF7204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20779FFC204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FFB204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2077A000204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 20779FFF204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2077A004204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 2077A003204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2077A008204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 2077A007204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2077A00C204DAB3E00D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 2077A00B204DAB3E00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2077A036204DAB3F00D0CC0B /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 2077A035204DAB3F00D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2077A10E204DAB4600D0CC0B /* libAdjustTestLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustTestLibrary.a;
+			remoteRef = 2077A10D204DAB4600D0CC0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20AED86E2046E98600F348B5 /* libjsinspector.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjsinspector.a;
+			remoteRef = 20AED86D2046E98600F348B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20AED8702046E98600F348B5 /* libjsinspector-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libjsinspector-tvOS.a";
+			remoteRef = 20AED86F2046E98600F348B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20AED8722046E98600F348B5 /* libthird-party.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libthird-party.a";
+			remoteRef = 20AED8712046E98600F348B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20AED8742046E98600F348B5 /* libthird-party.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libthird-party.a";
+			remoteRef = 20AED8732046E98600F348B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20AED8762046E98600F348B5 /* libdouble-conversion.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdouble-conversion.a";
+			remoteRef = 20AED8752046E98600F348B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20AED8782046E98600F348B5 /* libdouble-conversion.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdouble-conversion.a";
+			remoteRef = 20AED8772046E98600F348B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20AED87A2046E98600F348B5 /* libprivatedata.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libprivatedata.a;
+			remoteRef = 20AED8792046E98600F348B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20AED87C2046E98600F348B5 /* libprivatedata-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libprivatedata-tvOS.a";
+			remoteRef = 20AED87B2046E98600F348B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		2D16E6721FA4F8DC00B85C8A /* libRCTBlob-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -991,10 +2667,10 @@
 			remoteRef = 3DAD3E981DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3DAD3EA31DF850E9000B6D8A /* libReact-tvOS.a */ = {
+		3DAD3EA31DF850E9000B6D8A /* libReact.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libReact-tvOS.a";
+			path = libReact.a;
 			remoteRef = 3DAD3EA21DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1213,102 +2889,25 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/**",
+				);
 				INFOPLIST_FILE = test_appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/test_app.app/test_app";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-				);
 			};
 			name = Debug;
 		};
@@ -1317,102 +2916,25 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/**",
+				);
 				INFOPLIST_FILE = test_appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/test_app.app/test_app";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-				);
 			};
 			name = Release;
 		};
@@ -1422,6 +2944,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/**",
+				);
 				INFOPLIST_FILE = test_app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1431,88 +2958,6 @@
 				);
 				PRODUCT_NAME = test_app;
 				VERSIONING_SYSTEM = "apple-generic";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-				);
 			};
 			name = Debug;
 		};
@@ -1521,6 +2966,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/**",
+				);
 				INFOPLIST_FILE = test_app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1530,88 +2980,6 @@
 				);
 				PRODUCT_NAME = test_app;
 				VERSIONING_SYSTEM = "apple-generic";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-				);
 			};
 			name = Release;
 		};
@@ -1627,8 +2995,18 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/**",
+				);
 				INFOPLIST_FILE = "test_app-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1638,93 +3016,6 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-				);
 			};
 			name = Debug;
 		};
@@ -1740,8 +3031,18 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/**",
+				);
 				INFOPLIST_FILE = "test_app-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1751,93 +3052,6 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-					"$(SRCROOT)/../node_modules/react-native-adjust-testing/ios/AdjustTestLibrary",
-				);
 			};
 			name = Release;
 		};
@@ -1854,16 +3068,16 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "test_app-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.test_app-tvOSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/test_app-tvOS.app/test_app-tvOS";
-				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.test_app-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/test_app-tvOS.app/test_app-tvOS";
+				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
@@ -1880,16 +3094,16 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "test_app-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.test_app-tvOSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/test_app-tvOS.app/test_app-tvOS";
-				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.test_app-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/test_app-tvOS.app/test_app-tvOS";
+				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
 		};

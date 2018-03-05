@@ -90,7 +90,7 @@ AdjustCommandExecutor.prototype.checkList = function() {
 // (AdjustCommand {command}) : The command to be executed
 // (Number {idx})            : index of the command in the schedule list. -1 if it was sent directly
 AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
-    console.log(`[*] executeCommand(): ${JSON.stringify(command)}`);
+    console.log("[*] executeCommand(): " + JSON.stringify(command));
     switch (command.functionName) {
         case "testOptions"                    : this.testOptions(command.params); break;
         case "config"                         : this.config(command.params); break;

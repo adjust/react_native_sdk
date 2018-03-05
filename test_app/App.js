@@ -10,7 +10,7 @@ import {
     StyleSheet,
     Text,
     View,
-    DeviceEventEmitter,
+    NativeEventEmitter,
 } from 'react-native';
 import { CommandExecutor } from './command_executor.js';
 import { Adjust, AdjustEvent, AdjustConfig } from 'react-native-adjust';
@@ -20,6 +20,15 @@ const {
 } = require('react-native');
 
 const AdjustTesting = NativeModules.AdjustTesting;
+
+let AdjustTestingEmitter = null;
+if (Platform.OS === "android") {
+    AdjustTestingEmitter = new NativeEventEmitter(NativeModules.AdjustTesting);
+} else if (Platform.OS === "ios") {
+    AdjustTestingEmitter = new NativeEventEmitter(NativeModules.AdjustTestingEventEmitter);
+}
+
+let emitterSubscription = null;
 
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' +
@@ -38,20 +47,32 @@ export default class App extends Component<Props> {
             baseUrl = "http://127.0.0.1:8080";
         }
 
-        //AdjustTesting.addTest("current/attributionCallback/Test_AttributionCallback_ask_in_once");
-        AdjustTesting.addTestDirectory("current/offlineMode/");
+        //AdjustTesting.addTestDirectory("current/attributionCallback/");
+        //AdjustTesting.addTestDirectory("current/appSecret/");
+        AdjustTesting.addTest("current/event/Test_Event_EventToken_Malformed");
+        AdjustTesting.addTestDirectory("current/sdkInfo/");
+        //AdjustTesting.addTestDirectory("current/sendInBackground/");
+        //AdjustTesting.addTestDirectory("current/sessionCount/");
+        //AdjustTesting.addTestDirectory("current/sessionEventCallbacks/");
+        //AdjustTesting.addTestDirectory("current/sessionParams/");
+        //AdjustTesting.addTestDirectory("current/subsessionCount/");
+        //AdjustTesting.addTestDirectory("current/userAgent/");
+        //AdjustTesting.addTestDirectory("current/sessionEventCallbacks/");
         AdjustTesting.startTestSession(baseUrl);
 
         const commandExecutor = new CommandExecutor(baseUrl);
-        DeviceEventEmitter.addListener('command', (json) => {
-            const commandDict  = JSON.parse(json);
-            const className    = commandDict['className'];
-            const functionName = commandDict['functionName'];
-            const params       = commandDict['params'];
-            const order        = commandDict['order'];
+        emitterSubscription = AdjustTestingEmitter.addListener('command', (json) => {
+            const className    = json["className"];
+            const functionName = json["functionName"];
+            const params       = json["params"];
+            const order        = json["order"];
 
             commandExecutor.scheduleCommand(className, functionName, params, order);
         });
+    }
+
+    componentWillUnmount() {
+        emitterSubscription.remove();
     }
 
     render() {

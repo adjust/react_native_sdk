@@ -16,6 +16,9 @@
 #import "RCTEventDispatcher.h"
 #endif
 
+static dispatch_once_t onceToken;
+static AdjustSdkDelegate *defaultInstance = nil;
+
 @implementation AdjustSdkDelegate
 
 + (id)getInstanceWithSwizzleOfAttributionCallback:(BOOL)swizzleAttributionCallback
@@ -25,8 +28,6 @@
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
-    static dispatch_once_t onceToken;
-    static AdjustSdkDelegate *defaultInstance = nil;
     
     dispatch_once(&onceToken, ^{
         defaultInstance = [[AdjustSdkDelegate alloc] init];
@@ -200,6 +201,11 @@
     } else {
         [dictionary setObject:@"" forKey:key];
     }
+}
+
++ (void)teardown {
+    defaultInstance = nil;
+    onceToken = 0;
 }
 
 @end

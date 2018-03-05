@@ -21,4 +21,6 @@
 					     deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink;
 
++ (void)teardown;
+
 @end

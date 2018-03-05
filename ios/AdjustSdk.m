@@ -334,16 +334,111 @@ RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener) {
     _isDeferredDeeplinkCallbackImplemented = true;
 }
 
+RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
+    AdjustTestOptions * testOptions = [[AdjustTestOptions alloc] init];
+
+    if ([dict objectForKey:@"hasContext"]) {
+        NSString *value = dict[@"hasContext"];
+        if ([self isFieldValid:value]){
+            testOptions.deleteState = [value boolValue];
+        }
+    } 
+
+    if ([dict objectForKey:@"baseUrl"]) {
+        NSString *value = dict[@"baseUrl"];
+        if ([self isFieldValid:value]){
+            testOptions.baseUrl = value;
+        }
+    } 
+
+    if ([dict objectForKey:@"basePath"]) {
+        NSString *value = dict[@"basePath"];
+        if ([self isFieldValid:value]){
+            testOptions.basePath = value;
+        }
+    } 
+
+    if ([dict objectForKey:@"timerIntervalInMilliseconds"]) {
+        NSString *value = dict[@"timerIntervalInMilliseconds"];
+        if ([self isFieldValid:value]){
+            testOptions.timerIntervalInMilliseconds = [self convertMilliStringToNumber:value];
+        }
+    } 
+
+    if ([dict objectForKey:@"timerStartInMilliseconds"]) {
+        NSString *value = dict[@"timerStartInMilliseconds"];
+        if ([self isFieldValid:value]){
+            testOptions.timerStartInMilliseconds = [self convertMilliStringToNumber:value];
+        }
+    } 
+
+    if ([dict objectForKey:@"sessionIntervalInMilliseconds"]) {
+        NSString *value = dict[@"sessionIntervalInMilliseconds"];
+        if ([self isFieldValid:value]){
+            testOptions.sessionIntervalInMilliseconds = [self convertMilliStringToNumber:value];
+        }
+    } 
+
+    if ([dict objectForKey:@"subsessionIntervalInMilliseconds"]) {
+        NSString *value = dict[@"subsessionIntervalInMilliseconds"];
+        if ([self isFieldValid:value]){
+            testOptions.subsessionIntervalInMilliseconds = [self convertMilliStringToNumber:value];
+        }
+    } 
+
+    if ([dict objectForKey:@"teardown"]) {
+        NSString *value = dict[@"teardown"];
+        if ([self isFieldValid:value]){
+            testOptions.teardown = [value boolValue];
+        }
+    } 
+
+    [Adjust setTestOptions:testOptions];
+}
+
+RCT_EXPORT_METHOD(teardown) {
+    _isAttributionCallbackImplemented              = false;
+    _isEventTrackingSucceededCallbackImplemented   = false;
+    _isEventTrackingFailedCallbackImplemented      = false;
+    _isSessionTrackingSucceededCallbackImplemented = false;
+    _isSessionTrackingFailedCallbackImplemented    = false;
+    _isDeferredDeeplinkCallbackImplemented         = false;
+    [AdjustSdkDelegate teardown];
+}
+
+RCT_EXPORT_METHOD(onResume) {
+    [Adjust trackSubsessionStart];
+}
+
+RCT_EXPORT_METHOD(onPause) {
+    [Adjust trackSubsessionEnd];
+}
+
 #pragma mark - Private & helper methods
 
 - (BOOL)isFieldValid:(NSObject *)field {
-    if (![field isKindOfClass:[NSNull class]]) {
-        if (field != nil) {
-            return YES;
+    if (field == nil) {
+        return false;
+    }
+    
+    // Check if its an instance of the singleton NSNull
+    if ([field isKindOfClass:[NSNull class]]) {
+        return false;
+    }
+    
+    // If `field` can be converted to a string, check if it has any content.
+    NSString *str = [NSString stringWithFormat:@"%@", field];
+    if (str != nil) {
+        if ([str length] == 0) {
+            return false;
+        }
+        
+        if ([str isEqualToString:@"null"]) {
+            return false;
         }
     }
-
-    return NO;
+    
+    return true;
 }
 
 - (void)addValueOrEmpty:(NSMutableDictionary *)dictionary
@@ -354,6 +449,11 @@ RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener) {
     } else {
         [dictionary setObject:@"" forKey:key];
     }
+}
+
+- (NSNumber *)convertMilliStringToNumber:(NSString *)milliS {
+    NSNumber * number = [NSNumber numberWithInt:[milliS intValue]];
+    return number;
 }
 
 @end

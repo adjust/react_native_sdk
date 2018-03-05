@@ -438,18 +438,16 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void teardown() {
-        this.attributionCallback = false;
-        this.eventTrackingSucceededCallback = false;
-        this.eventTrackingFailedCallback = false;
+        this.attributionCallback              = false;
+        this.eventTrackingSucceededCallback   = false;
+        this.eventTrackingFailedCallback      = false;
         this.sessionTrackingSucceededCallback = false;
-        this.sessionTrackingFailedCallback = false;
-        this.deferredDeeplinkCallback = false;
+        this.sessionTrackingFailedCallback    = false;
+        this.deferredDeeplinkCallback         = false;
     }
 
     @ReactMethod
     public void setTestOptions(ReadableMap map) {
-        Log.d(TAG, "calling setTestOptions() from Java");
-
         final AdjustTestOptions testOptions = new AdjustTestOptions();
 
         if (!map.isNull("hasContext")) {
@@ -519,7 +517,6 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             testOptions.teardown = value;
         }
 
-        Log.d(TAG, "testOptions: " + testOptions.toString());
         com.adjust.sdk.Adjust.setTestOptions(testOptions);
     }
 

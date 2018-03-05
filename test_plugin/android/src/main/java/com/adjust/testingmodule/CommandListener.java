@@ -11,6 +11,7 @@ package com.adjust.testingmodule;
 
 import android.content.Context;
 import android.util.Log;
+import android.os.Bundle;
 
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -18,7 +19,7 @@ import org.json.JSONException;
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
 
-import com.adjust.testlibrary.ICommandRawJsonListener;
+import com.adjust.testlibrary.ICommandJsonListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +28,8 @@ import java.util.Map;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class CommandListener implements ICommandRawJsonListener {
+public class CommandListener implements ICommandJsonListener {
+    private static String TAG = "CommandListener";
     private ReactContext mReactContext;
     private AtomicInteger orderCounter = new AtomicInteger(0);
 
@@ -36,20 +38,25 @@ public class CommandListener implements ICommandRawJsonListener {
     }
 
     @Override
-    public void executeCommand(String jsonStr) {
+    public void executeCommand(String className, String functionName, String paramsJsonStr) {
         try {
-            JSONObject jsonObj = new JSONObject(jsonStr);
+        JSONObject paramsJsonObj = new JSONObject(paramsJsonStr);
+        BundleJSONConverter bjc = new BundleJSONConverter();
+        Bundle bundle = bjc.convertToBundle(paramsJsonObj);
+        WritableMap params = Arguments.fromBundle(bundle);
 
-            // Order of packages sent through PluginResult is not reliable, this is solved
-            //  through a scheduling mechanism in command_executor.js#scheduleCommand() side.
-            // The 'order' entry is used to schedule commands
-            jsonObj.put("order", orderCounter.getAndIncrement());
+        WritableMap map = Arguments.createMap();
 
-            mReactContext
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit("command", jsonObj.toString());
+        map.putString("className", className);
+        map.putString("functionName", functionName);
+        map.putMap("params", params);
+        map.putInt("order", orderCounter.getAndIncrement());
 
-        } catch(JSONException ex) {
+        mReactContext
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            .emit("command", map);
+        } catch (Exception ex) {
+            Log.e(TAG, "error occurred", ex);
             ex.printStackTrace();
         }
     }

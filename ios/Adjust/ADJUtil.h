@@ -16,6 +16,7 @@
 #import "ADJBackoffStrategy.h"
 
 typedef void (^selfInjectedBlock)(id);
+typedef void (^isInactiveInjected)(BOOL);
 
 @interface ADJUtil : NSObject
 
@@ -30,6 +31,12 @@ typedef void (^selfInjectedBlock)(id);
 + (void)launchDeepLinkMain:(NSURL *)deepLinkUrl;
 
 + (void)launchInMainThread:(dispatch_block_t)block;
+
++ (BOOL)isMainThread;
+
++ (BOOL)isInactive;
+
++ (void)launchInMainThreadWithInactive:(isInactiveInjected)isInactiveblock;
 
 + (void)updateUrlSessionConfiguration:(ADJConfig *)config;
 
@@ -46,6 +53,7 @@ typedef void (^selfInjectedBlock)(id);
                 block:(selfInjectedBlock)block;
 
 + (void)sendGetRequest:(NSURL *)baseUrl
+              basePath:(NSString *)basePath
     prefixErrorMessage:(NSString *)prefixErrorMessage
        activityPackage:(ADJActivityPackage *)activityPackage
    responseDataHandler:(void (^)(ADJResponseData *responseData))responseDataHandler;
@@ -58,8 +66,6 @@ typedef void (^selfInjectedBlock)(id);
     responseDataHandler:(void (^)(ADJResponseData *responseData))responseDataHandler;
 
 + (NSString *)idfa;
-
-+ (NSString *)baseUrl;
 
 + (NSString *)clientSdk;
 

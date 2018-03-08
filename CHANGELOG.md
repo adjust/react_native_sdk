@@ -1,12 +1,13 @@
-### Version 4.12.2 (xth March 2018)
+### Version 4.12.2 (8th March 2018)
 #### Native changes
 - https://github.com/adjust/ios_sdk/blob/master/CHANGELOG.md#version-4122-13th-february-2018
 - https://github.com/adjust/ios_sdk/blob/master/CHANGELOG.md#version-4123-23rd-february-2018
 - https://github.com/adjust/android_sdk/blob/master/CHANGELOG.md#version-4122-28th-february-2018
+- https://github.com/adjust/android_sdk/blob/master/CHANGELOG.md#version-4123-7th-march-2018
 
 #### Native SDKs
 - [iOS@v4.12.3][ios_sdk_v4.12.3]
-- [Android@v4.12.2][android_sdk_v4.12.2]
+- [Android@v4.12.3][android_sdk_v4.12.3]
 
 ---
 
@@ -201,3 +202,4 @@
 [android_sdk_v4.12.0]: https://github.com/adjust/android_sdk/tree/v4.12.0
 [android_sdk_v4.12.1]: https://github.com/adjust/android_sdk/tree/v4.12.1
 [android_sdk_v4.12.2]: https://github.com/adjust/android_sdk/tree/v4.12.2
+[android_sdk_v4.12.3]: https://github.com/adjust/android_sdk/tree/v4.12.3

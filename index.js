@@ -101,23 +101,6 @@ Adjust.setReferrer = function(referrer) {
     module_adjust.setReferrer(referrer);
 };
 
-Adjust.teardown = function() {
-    Adjust.componentWillUnmount();
-    module_adjust.teardown();
-};
-
-Adjust.setTestOptions = function(testOptions) {
-    module_adjust.setTestOptions(testOptions);
-};
-
-Adjust.onResume = function() {
-    module_adjust.onResume();
-};
-
-Adjust.onPause = function() {
-    module_adjust.onPause();
-};
-
 Adjust.componentWillUnmount = function() {
     if (AdjustConfig.AttributionSubscription != null) {
         AdjustConfig.AttributionSubscription.remove();
@@ -149,6 +132,28 @@ Adjust.componentWillUnmount = function() {
         AdjustConfig.DeferredDeeplinkSubscription = null;
     }
 };
+
+// =========================================== //
+// Adjust methods used for SDK testing only.   //
+// Do NOT use any of those in production code. //
+// =========================================== //
+Adjust.teardown = function() {
+    Adjust.componentWillUnmount();
+    module_adjust.teardown();
+};
+
+Adjust.setTestOptions = function(testOptions) {
+    module_adjust.setTestOptions(testOptions);
+};
+
+Adjust.onResume = function() {
+    module_adjust.onResume();
+};
+
+Adjust.onPause = function() {
+    module_adjust.onPause();
+};
+// =========================================== //
 
 var AdjustEvent = function (eventToken) {
     this.eventToken = eventToken;
@@ -245,19 +250,15 @@ AdjustConfig.prototype.setAppSecret = function(secretId, info1, info2, info3, in
     if (secretId != null) {
         this.secretId = secretId.toString();
     }
-
     if (info1 != null) {
         this.info1 = info1.toString();
     }
-
     if (info2 != null) {
         this.info2 = info2.toString();
     }
-
     if (info3 != null) {
         this.info3 = info3.toString();
     }
-
     if (info4 != null) {
         this.info4 = info4.toString();
     }
@@ -298,7 +299,7 @@ AdjustConfig.prototype.setEventTrackingSucceededCallbackListener = function(even
         AdjustConfig.EventTrackingSucceededSubscription = module_adjust_emitter.addListener(
             'adjust_eventTrackingSucceeded', eventTrackingSucceededCallbackListener
         );
-    } 
+    }
 };
 
 AdjustConfig.prototype.setEventTrackingFailedCallbackListener = function(eventTrackingFailedCallbackListener) {
@@ -316,7 +317,7 @@ AdjustConfig.prototype.setSessionTrackingSucceededCallbackListener = function(se
         AdjustConfig.SessionTrackingSucceededSubscription = module_adjust_emitter.addListener(
             'adjust_sessionTrackingSucceeded', sessionTrackingSucceededCallbackListener
         );
-    } 
+    }
 };
 
 AdjustConfig.prototype.setSessionTrackingFailedCallbackListener = function(sessionTrackingFailedCallbackListener) {

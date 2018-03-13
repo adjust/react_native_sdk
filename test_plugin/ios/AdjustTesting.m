@@ -40,7 +40,7 @@ RCT_EXPORT_METHOD(startTestSession:(NSString *)baseUrl) {
         [testLibrary addTestDirectory:object];
     }
     
-    [testLibrary startTestSession:@"react_native4.12.1@ios4.12.2"];
+    [testLibrary startTestSession:@"react_native4.12.3@ios4.12.3"];
 }
 
 RCT_EXPORT_METHOD(addInfoToSend:(NSString *)key value:(NSString *)value) {

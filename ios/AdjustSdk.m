@@ -197,7 +197,6 @@ RCT_EXPORT_METHOD(appWillOpenUrl:(NSString *)urlStr) {
     }
 
     NSURL *url;
-
     if ([NSString instancesRespondToSelector:@selector(stringByAddingPercentEncodingWithAllowedCharacters:)]) {
         url = [NSURL URLWithString:[urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     } else {
@@ -294,7 +293,6 @@ RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
 
     if (attribution == nil) {
         callback(@[dictionary]);
-
         return;
     }
 
@@ -311,84 +309,84 @@ RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
 }
 
 RCT_EXPORT_METHOD(setAttributionCallbackListener) {
-    _isAttributionCallbackImplemented = true;
+    _isAttributionCallbackImplemented = YES;
 }
 
 RCT_EXPORT_METHOD(setEventTrackingSucceededCallbackListener) {
-    _isEventTrackingSucceededCallbackImplemented = true;
+    _isEventTrackingSucceededCallbackImplemented = YES;
 }
 
 RCT_EXPORT_METHOD(setEventTrackingFailedCallbackListener) {
-    _isEventTrackingFailedCallbackImplemented = true;
+    _isEventTrackingFailedCallbackImplemented = YES;
 }
 
 RCT_EXPORT_METHOD(setSessionTrackingSucceededCallbackListener) {
-    _isSessionTrackingSucceededCallbackImplemented = true;
+    _isSessionTrackingSucceededCallbackImplemented = YES;
 }
 
 RCT_EXPORT_METHOD(setSessionTrackingFailedCallbackListener) {
-    _isSessionTrackingFailedCallbackImplemented = true;
+    _isSessionTrackingFailedCallbackImplemented = YES;
 }
 
 RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener) {
-    _isDeferredDeeplinkCallbackImplemented = true;
+    _isDeferredDeeplinkCallbackImplemented = YES;
 }
 
 RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
-    AdjustTestOptions * testOptions = [[AdjustTestOptions alloc] init];
+    AdjustTestOptions *testOptions = [[AdjustTestOptions alloc] init];
 
     if ([dict objectForKey:@"hasContext"]) {
         NSString *value = dict[@"hasContext"];
-        if ([self isFieldValid:value]){
+        if ([self isFieldValid:value]) {
             testOptions.deleteState = [value boolValue];
         }
     } 
 
     if ([dict objectForKey:@"baseUrl"]) {
         NSString *value = dict[@"baseUrl"];
-        if ([self isFieldValid:value]){
+        if ([self isFieldValid:value]) {
             testOptions.baseUrl = value;
         }
     } 
 
     if ([dict objectForKey:@"basePath"]) {
         NSString *value = dict[@"basePath"];
-        if ([self isFieldValid:value]){
+        if ([self isFieldValid:value]) {
             testOptions.basePath = value;
         }
     } 
 
     if ([dict objectForKey:@"timerIntervalInMilliseconds"]) {
         NSString *value = dict[@"timerIntervalInMilliseconds"];
-        if ([self isFieldValid:value]){
+        if ([self isFieldValid:value]) {
             testOptions.timerIntervalInMilliseconds = [self convertMilliStringToNumber:value];
         }
     } 
 
     if ([dict objectForKey:@"timerStartInMilliseconds"]) {
         NSString *value = dict[@"timerStartInMilliseconds"];
-        if ([self isFieldValid:value]){
+        if ([self isFieldValid:value]) {
             testOptions.timerStartInMilliseconds = [self convertMilliStringToNumber:value];
         }
     } 
 
     if ([dict objectForKey:@"sessionIntervalInMilliseconds"]) {
         NSString *value = dict[@"sessionIntervalInMilliseconds"];
-        if ([self isFieldValid:value]){
+        if ([self isFieldValid:value]) {
             testOptions.sessionIntervalInMilliseconds = [self convertMilliStringToNumber:value];
         }
     } 
 
     if ([dict objectForKey:@"subsessionIntervalInMilliseconds"]) {
         NSString *value = dict[@"subsessionIntervalInMilliseconds"];
-        if ([self isFieldValid:value]){
+        if ([self isFieldValid:value]) {
             testOptions.subsessionIntervalInMilliseconds = [self convertMilliStringToNumber:value];
         }
     } 
 
     if ([dict objectForKey:@"teardown"]) {
         NSString *value = dict[@"teardown"];
-        if ([self isFieldValid:value]){
+        if ([self isFieldValid:value]) {
             testOptions.teardown = [value boolValue];
         }
     } 
@@ -397,12 +395,12 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
 }
 
 RCT_EXPORT_METHOD(teardown) {
-    _isAttributionCallbackImplemented              = false;
-    _isEventTrackingSucceededCallbackImplemented   = false;
-    _isEventTrackingFailedCallbackImplemented      = false;
-    _isSessionTrackingSucceededCallbackImplemented = false;
-    _isSessionTrackingFailedCallbackImplemented    = false;
-    _isDeferredDeeplinkCallbackImplemented         = false;
+    _isAttributionCallbackImplemented              = NO;
+    _isEventTrackingSucceededCallbackImplemented   = NO;
+    _isEventTrackingFailedCallbackImplemented      = NO;
+    _isSessionTrackingSucceededCallbackImplemented = NO;
+    _isSessionTrackingFailedCallbackImplemented    = NO;
+    _isDeferredDeeplinkCallbackImplemented         = NO;
     [AdjustSdkDelegate teardown];
 }
 
@@ -418,27 +416,26 @@ RCT_EXPORT_METHOD(onPause) {
 
 - (BOOL)isFieldValid:(NSObject *)field {
     if (field == nil) {
-        return false;
+        return NO;
     }
-    
+
     // Check if its an instance of the singleton NSNull
     if ([field isKindOfClass:[NSNull class]]) {
-        return false;
+        return NO;
     }
-    
+
     // If `field` can be converted to a string, check if it has any content.
     NSString *str = [NSString stringWithFormat:@"%@", field];
     if (str != nil) {
         if ([str length] == 0) {
-            return false;
+            return NO;
         }
-        
         if ([str isEqualToString:@"null"]) {
-            return false;
+            return NO;
         }
     }
-    
-    return true;
+
+    return YES;
 }
 
 - (void)addValueOrEmpty:(NSMutableDictionary *)dictionary

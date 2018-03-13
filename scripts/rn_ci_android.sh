@@ -47,7 +47,7 @@ if [ "${DISPLAY_HELP}" == YES ]; then
     echo
     echo "# Arguments"
     echo "    --skip-native: Skips building the native libraries in ext/"
-    echo "    --skip-native: Skips building native plugins"
+    echo "    --skip-plugin: Skips building plugin"
     echo "    --help: Displays help"
     exit 1
 fi

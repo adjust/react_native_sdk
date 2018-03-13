@@ -544,7 +544,7 @@ function getFirstParameterValue(params, key) {
     if (key in params) {
         var param = params[key];
 
-        if(param != null || param.length >= 1) {
+        if(param != null && param.length >= 1) {
             return param[0];
         }
     }

@@ -23,4 +23,5 @@ cd ${ROOT_DIR}/${BUILD_DIR}
 
 echo -e "${GREEN}>>> Moving generated jar from ${JAR_IN_DIR} to ${JAR_OUT_DIR} ${NC}"
 cd ${ROOT_DIR}
-mv -v ${JAR_IN_DIR}/*.jar ${ROOT_DIR}/${JAR_OUT_DIR}/adjust-testing.jar
+mkdir -p ${JAR_OUT_DIR}
+mv -v ${ROOT_DIR}/${JAR_IN_DIR}/*.jar ${ROOT_DIR}/${JAR_OUT_DIR}/adjust-testing.jar

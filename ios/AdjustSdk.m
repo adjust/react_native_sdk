@@ -43,7 +43,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
 
     BOOL allowSuppressLogLevel = NO;
 
-    // Log level
+    // Suppress log level
     if ([self isFieldValid:logLevel]) {
         if ([logLevel isEqualToString:@"SUPPRESS"]) {
             allowSuppressLogLevel = YES;
@@ -52,82 +52,85 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
 
     ADJConfig *adjustConfig = [ADJConfig configWithAppToken:appToken environment:environment allowSuppressLogLevel:allowSuppressLogLevel];
 
-    if ([adjustConfig isValid]) {
-        // Log level
-        if ([self isFieldValid:logLevel]) {
-            [adjustConfig setLogLevel:[ADJLogger logLevelFromString:[logLevel lowercaseString]]];
-        }
-
-        // Event buffering
-        if ([self isFieldValid:eventBufferingEnabled]) {
-            [adjustConfig setEventBufferingEnabled:[eventBufferingEnabled boolValue]];
-        }
-
-        // SDK prefix
-        if ([self isFieldValid:sdkPrefix]) {
-            [adjustConfig setSdkPrefix:sdkPrefix];
-        }
-
-        // Default tracker
-        if ([self isFieldValid:defaultTracker]) {
-            [adjustConfig setDefaultTracker:defaultTracker];
-        }
-
-        // Attribution delegate & other delegates
-        BOOL shouldLaunchDeferredDeeplink = [self isFieldValid:shouldLaunchDeeplink] ? [shouldLaunchDeeplink boolValue] : YES;
-
-        if (_isAttributionCallbackImplemented
-            || _isEventTrackingSucceededCallbackImplemented
-            || _isEventTrackingFailedCallbackImplemented
-            || _isSessionTrackingSucceededCallbackImplemented
-            || _isSessionTrackingFailedCallbackImplemented
-            || _isDeferredDeeplinkCallbackImplemented) {
-            [adjustConfig setDelegate:
-             [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
-                                                     eventSucceededCallback:_isEventTrackingSucceededCallbackImplemented
-                                                        eventFailedCallback:_isEventTrackingFailedCallbackImplemented
-                                                   sessionSucceededCallback:_isSessionTrackingSucceededCallbackImplemented
-                                                      sessionFailedCallback:_isSessionTrackingFailedCallbackImplemented
-                                                   deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
-                                               shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
-        }
-
-        // Send in background
-        if ([self isFieldValid:sendInBackground]) {
-            [adjustConfig setSendInBackground:[sendInBackground boolValue]];
-        }
-
-        // User agent
-        if ([self isFieldValid:userAgent]) {
-            [adjustConfig setUserAgent:userAgent];
-        }
-
-        // App Secret
-        if ([self isFieldValid:secretId]
-            && [self isFieldValid:info1]
-            && [self isFieldValid:info2]
-            && [self isFieldValid:info3]
-            && [self isFieldValid:info4]) {
-            [adjustConfig setAppSecret:[[NSNumber numberWithLongLong:[secretId longLongValue]] unsignedIntegerValue]
-                             info1:[[NSNumber numberWithLongLong:[info1 longLongValue]] unsignedIntegerValue]
-                             info2:[[NSNumber numberWithLongLong:[info2 longLongValue]] unsignedIntegerValue]
-                             info3:[[NSNumber numberWithLongLong:[info3 longLongValue]] unsignedIntegerValue]
-                             info4:[[NSNumber numberWithLongLong:[info4 longLongValue]] unsignedIntegerValue]];
-        }
-
-        // Device known
-        if ([self isFieldValid:isDeviceKnown]) {
-            [adjustConfig setIsDeviceKnown:[isDeviceKnown boolValue]];
-        }
-
-        // Delay start
-        if ([self isFieldValid:delayStart]) {
-            [adjustConfig setDelayStart:[delayStart doubleValue]];
-        }
-
-        [Adjust appDidLaunch:adjustConfig];
-        [Adjust trackSubsessionStart];
+    if (![adjustConfig isValid]) {
+        return;
     }
+
+    // Log level
+    if ([self isFieldValid:logLevel]) {
+        [adjustConfig setLogLevel:[ADJLogger logLevelFromString:[logLevel lowercaseString]]];
+    }
+
+    // Event buffering
+    if ([self isFieldValid:eventBufferingEnabled]) {
+        [adjustConfig setEventBufferingEnabled:[eventBufferingEnabled boolValue]];
+    }
+
+    // SDK prefix
+    if ([self isFieldValid:sdkPrefix]) {
+        [adjustConfig setSdkPrefix:sdkPrefix];
+    }
+
+    // Default tracker
+    if ([self isFieldValid:defaultTracker]) {
+        [adjustConfig setDefaultTracker:defaultTracker];
+    }
+
+    // Attribution delegate & other delegates
+    BOOL shouldLaunchDeferredDeeplink = [self isFieldValid:shouldLaunchDeeplink] ? [shouldLaunchDeeplink boolValue] : YES;
+
+    if (_isAttributionCallbackImplemented
+        || _isEventTrackingSucceededCallbackImplemented
+        || _isEventTrackingFailedCallbackImplemented
+        || _isSessionTrackingSucceededCallbackImplemented
+        || _isSessionTrackingFailedCallbackImplemented
+        || _isDeferredDeeplinkCallbackImplemented) {
+        [adjustConfig setDelegate:
+         [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
+                                                 eventSucceededCallback:_isEventTrackingSucceededCallbackImplemented
+                                                    eventFailedCallback:_isEventTrackingFailedCallbackImplemented
+                                               sessionSucceededCallback:_isSessionTrackingSucceededCallbackImplemented
+                                                  sessionFailedCallback:_isSessionTrackingFailedCallbackImplemented
+                                               deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
+                                           shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
+    }
+
+    // Send in background
+    if ([self isFieldValid:sendInBackground]) {
+        [adjustConfig setSendInBackground:[sendInBackground boolValue]];
+    }
+
+    // User agent
+    if ([self isFieldValid:userAgent]) {
+        [adjustConfig setUserAgent:userAgent];
+    }
+
+    // App secret
+    if ([self isFieldValid:secretId]
+        && [self isFieldValid:info1]
+        && [self isFieldValid:info2]
+        && [self isFieldValid:info3]
+        && [self isFieldValid:info4]) {
+        [adjustConfig setAppSecret:[[NSNumber numberWithLongLong:[secretId longLongValue]] unsignedIntegerValue]
+                         info1:[[NSNumber numberWithLongLong:[info1 longLongValue]] unsignedIntegerValue]
+                         info2:[[NSNumber numberWithLongLong:[info2 longLongValue]] unsignedIntegerValue]
+                         info3:[[NSNumber numberWithLongLong:[info3 longLongValue]] unsignedIntegerValue]
+                         info4:[[NSNumber numberWithLongLong:[info4 longLongValue]] unsignedIntegerValue]];
+    }
+
+    // Device known
+    if ([self isFieldValid:isDeviceKnown]) {
+        [adjustConfig setIsDeviceKnown:[isDeviceKnown boolValue]];
+    }
+
+    // Delay start
+    if ([self isFieldValid:delayStart]) {
+        [adjustConfig setDelayStart:[delayStart doubleValue]];
+    }
+
+    // Start SDK
+    [Adjust appDidLaunch:adjustConfig];
+    [Adjust trackSubsessionStart];
 }
 
 RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
@@ -140,32 +143,39 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
 
     ADJEvent *adjustEvent = [ADJEvent eventWithEventToken:eventToken];
 
-    if ([adjustEvent isValid]) {
-        if ([self isFieldValid:revenue]) {
-            double revenueValue = [revenue doubleValue];
-            [adjustEvent setRevenue:revenueValue currency:currency];
-        }
-
-        if ([self isFieldValid:callbackParameters]) {
-            for (NSString *key in callbackParameters) {
-                NSString *value = [callbackParameters objectForKey:key];
-                [adjustEvent addCallbackParameter:key value:value];
-            }
-        }
-
-        if ([self isFieldValid:partnerParameters]) {
-            for (NSString *key in partnerParameters) {
-                NSString *value = [partnerParameters objectForKey:key];
-                [adjustEvent addPartnerParameter:key value:value];
-            }
-        }
-
-        if ([self isFieldValid:transactionId]) {
-            [adjustEvent setTransactionId:transactionId];
-        }
-
-        [Adjust trackEvent:adjustEvent];
+    if (![adjustEvent isValid]) {
+        return;
     }
+
+    // Revenue
+    if ([self isFieldValid:revenue]) {
+        double revenueValue = [revenue doubleValue];
+        [adjustEvent setRevenue:revenueValue currency:currency];
+    }
+
+    // Callback parameters
+    if ([self isFieldValid:callbackParameters]) {
+        for (NSString *key in callbackParameters) {
+            NSString *value = [callbackParameters objectForKey:key];
+            [adjustEvent addCallbackParameter:key value:value];
+        }
+    }
+
+    // Partner parameters
+    if ([self isFieldValid:partnerParameters]) {
+        for (NSString *key in partnerParameters) {
+            NSString *value = [partnerParameters objectForKey:key];
+            [adjustEvent addPartnerParameter:key value:value];
+        }
+    }
+
+    // Transaction ID
+    if ([self isFieldValid:transactionId]) {
+        [adjustEvent setTransactionId:transactionId];
+    }
+
+    // Track event
+    [Adjust trackEvent:adjustEvent];
 }
 
 RCT_EXPORT_METHOD(setOfflineMode:(NSNumber * _Nonnull)isEnabled) {

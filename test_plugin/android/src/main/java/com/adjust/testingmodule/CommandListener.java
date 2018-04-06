@@ -40,21 +40,20 @@ public class CommandListener implements ICommandJsonListener {
     @Override
     public void executeCommand(String className, String functionName, String paramsJsonStr) {
         try {
-        JSONObject paramsJsonObj = new JSONObject(paramsJsonStr);
-        BundleJSONConverter bjc = new BundleJSONConverter();
-        Bundle bundle = bjc.convertToBundle(paramsJsonObj);
-        WritableMap params = Arguments.fromBundle(bundle);
+            JSONObject paramsJsonObj = new JSONObject(paramsJsonStr);
+            BundleJSONConverter bjc = new BundleJSONConverter();
+            Bundle bundle = bjc.convertToBundle(paramsJsonObj);
+            WritableMap params = Arguments.fromBundle(bundle);
+            WritableMap map = Arguments.createMap();
 
-        WritableMap map = Arguments.createMap();
+            map.putString("className", className);
+            map.putString("functionName", functionName);
+            map.putMap("params", params);
+            map.putInt("order", orderCounter.getAndIncrement());
 
-        map.putString("className", className);
-        map.putString("functionName", functionName);
-        map.putMap("params", params);
-        map.putInt("order", orderCounter.getAndIncrement());
-
-        mReactContext
-            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-            .emit("command", map);
+            mReactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("command", map);
         } catch (Exception ex) {
             Log.e(TAG, "error occurred", ex);
             ex.printStackTrace();

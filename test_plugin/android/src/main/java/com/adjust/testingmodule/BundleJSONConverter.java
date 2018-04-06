@@ -114,10 +114,13 @@ public class BundleJSONConverter {
                 // Only strings are supported for now
                 for (int i = 0; i < jsonArray.length(); i++) {
                     Object current = jsonArray.get(i);
+
+                    // Needed to handle array with null value.
                     if (current instanceof String) {
                         stringArrayList.add((String)current);
                     } else {
-                        throw new IllegalArgumentException("Unexpected type in an array: " + current.getClass());
+                        stringArrayList.add(current.toString());
+                        // throw new IllegalArgumentException("Unexpected type in an array: " + current.getClass());
                     }
                 }
                 bundle.putStringArrayList(key, stringArrayList);

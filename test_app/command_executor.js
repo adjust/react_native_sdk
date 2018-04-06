@@ -242,8 +242,15 @@ AdjustCommandExecutor.prototype.config = function(params) {
         adjustConfig.setSdkPrefix(sdkPrefix);
     }
 
+    console.log("[*] params = " + params);
     if ('defaultTracker' in params) {
         var defaultTracker = getFirstParameterValue(params, 'defaultTracker');
+        
+        // Special handling for null value case.
+        if (defaultTracker == 'null') {
+            defaultTracker = null;
+        }
+
         adjustConfig.setDefaultTracker(defaultTracker);
     }
 

@@ -327,7 +327,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void setPushToken(String token) {
-        com.adjust.sdk.Adjust.setPushToken(token);
+        com.adjust.sdk.Adjust.setPushToken(token, getReactApplicationContext());
     }
 
     @ReactMethod

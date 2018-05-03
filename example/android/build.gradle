@@ -21,7 +21,7 @@ allprojects {
             url "$rootDir/../node_modules/react-native/android"
         }
         maven {
-            url "https://maven.google.com" // Google's Maven repository
+            url "https://maven.google.com"
         }
     }
 }

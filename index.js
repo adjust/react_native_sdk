@@ -62,6 +62,10 @@ Adjust.resetSessionPartnerParameters = function() {
     module_adjust.resetSessionPartnerParameters();
 };
 
+Adjust.gdprForgetMe = function() {
+    module_adjust.gdprForgetMe();
+}
+
 Adjust.getIdfa = function(callback) {
     module_adjust.getIdfa(callback);
 };

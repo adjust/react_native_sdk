@@ -257,6 +257,10 @@ RCT_EXPORT_METHOD(resetSessionPartnerParameters) {
     [Adjust resetSessionPartnerParameters];
 }
 
+RCT_EXPORT_METHOD(gdprForgetMe) {
+    [Adjust gdprForgetMe];
+}
+
 RCT_EXPORT_METHOD(getIdfa:(RCTResponseSenderBlock)callback) {
     NSString *idfa = [Adjust idfa];
 

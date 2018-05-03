@@ -372,6 +372,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
+    public void gdprForgetMe() {
+        com.adjust.sdk.Adjust.gdprForgetMe(getReactApplicationContext());
+    }
+
+    @ReactMethod
     public void getIdfa(Callback callback) {
         callback.invoke("");
     }

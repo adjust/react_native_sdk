@@ -29,8 +29,7 @@ RCT_EXPORT_MODULE();
              @"adjust_eventTrackingFailed",
              @"adjust_sessionTrackingSucceeded",
              @"adjust_sessionTrackingFailed",
-             @"adjust_deferredDeeplink"
-             ];
+             @"adjust_deferredDeeplink"];
 }
 
 - (void)startObserving {

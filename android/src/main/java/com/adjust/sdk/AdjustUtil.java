@@ -1,10 +1,9 @@
 //
 //  AdjustUtil.java
-//  Adjust
+//  Adjust SDK
 //
-//  Created by Abdullah Obaied on 2016-10-19.
-//  Copyright (c) 2016 adjust GmbH. All rights reserved.
-//  See the file MIT-LICENSE for copying permission.
+//  Created by Abdullah Obaied (@obaied) on 19th Octover 2016.
+//  Copyright (c) 2016-2018 Adjust GmbH. All rights reserved.
 //
 
 package com.adjust.nativemodule;

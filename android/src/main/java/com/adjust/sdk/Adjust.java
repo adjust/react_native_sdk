@@ -1,10 +1,9 @@
 //
 //  Adjust.java
-//  Adjust
+//  Adjust SDK
 //
-//  Created by Abdullah Obaied on 2016-10-19.
-//  Copyright (c) 2016 adjust GmbH. All rights reserved.
-//  See the file MIT-LICENSE for copying permission.
+//  Created by Abdullah Obaied (@obaied) on 19th Octover 2016.
+//  Copyright (c) 2016-2018 Adjust GmbH. All rights reserved.
 //
 
 package com.adjust.nativemodule;
@@ -116,7 +115,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         boolean isDeviceKnown               = false;
         boolean readMobileEquipmentIdentity = false;
 
-        // Check for isLogLevelSuppress.
+        // Suppress log level
         if (!mapConfig.isNull("logLevel")) {
             logLevel = mapConfig.getString("logLevel");
 
@@ -125,7 +124,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Check for appToken and environment.
+        // App token and environment.
         appToken    = mapConfig.getString("appToken");
         environment = mapConfig.getString("environment");
 
@@ -277,7 +276,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         final Map<String, Object> partnerParameters  = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
 
         AdjustEvent event = new AdjustEvent(eventToken);
-        
+
         if (event.isValid()) {
             if (!mapEvent.isNull("revenue")) {
                 event.setRevenue(mapEvent.getDouble("revenue"), currency);
@@ -315,9 +314,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void setReferrer(String referrer) {
-        com.adjust.sdk.Adjust.setReferrer(
-                referrer,
-                getReactApplicationContext());
+        com.adjust.sdk.Adjust.setReferrer(referrer, getReactApplicationContext());
     }
 
     @ReactMethod

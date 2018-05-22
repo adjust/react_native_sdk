@@ -2,7 +2,6 @@ package com.adjust.examples;
 
 import android.app.Application;
 
-import com.adjust.examples.BuildConfig;
 import com.facebook.react.ReactApplication;
 import com.adjust.nativemodule.AdjustPackage;
 import com.facebook.react.ReactNativeHost;
@@ -27,6 +26,11 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new AdjustPackage()
       );
+    }
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
     }
   };
 

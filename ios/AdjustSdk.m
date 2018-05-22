@@ -143,14 +143,12 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
     if ([adjustEvent isValid]) {
         if ([self isFieldValid:revenue]) {
             double revenueValue = [revenue doubleValue];
-
             [adjustEvent setRevenue:revenueValue currency:currency];
         }
 
         if ([self isFieldValid:callbackParameters]) {
             for (NSString *key in callbackParameters) {
                 NSString *value = [callbackParameters objectForKey:key];
-
                 [adjustEvent addCallbackParameter:key value:value];
             }
         }
@@ -158,7 +156,6 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
         if ([self isFieldValid:partnerParameters]) {
             for (NSString *key in partnerParameters) {
                 NSString *value = [partnerParameters objectForKey:key];
-
                 [adjustEvent addPartnerParameter:key value:value];
             }
         }
@@ -255,6 +252,10 @@ RCT_EXPORT_METHOD(removeSessionPartnerParameter:(NSString *)key) {
 
 RCT_EXPORT_METHOD(resetSessionPartnerParameters) {
     [Adjust resetSessionPartnerParameters];
+}
+
+RCT_EXPORT_METHOD(gdprForgetMe) {
+    [Adjust gdprForgetMe];
 }
 
 RCT_EXPORT_METHOD(getIdfa:(RCTResponseSenderBlock)callback) {

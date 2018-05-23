@@ -49,8 +49,8 @@ export default class App extends Component<Props> {
 
         //AdjustTesting.addTestDirectory("current/attributionCallback/");
         //AdjustTesting.addTestDirectory("current/appSecret/");
-        AdjustTesting.addTest("current/event/Test_Event_EventToken_Malformed");
-        AdjustTesting.addTestDirectory("current/sdkInfo/");
+        //AdjustTesting.addTest("current/event/Test_Event_EventToken_Malformed");
+        //AdjustTesting.addTestDirectory("current/event/");
         //AdjustTesting.addTestDirectory("current/sendInBackground/");
         //AdjustTesting.addTestDirectory("current/sessionCount/");
         //AdjustTesting.addTestDirectory("current/sessionEventCallbacks/");

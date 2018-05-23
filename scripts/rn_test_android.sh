@@ -31,9 +31,13 @@ adb uninstall com.adjust.examples
 echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
 ${ROOT_DIR}/ext/android/build.sh release
 
+# install node dependencies
+echo -e "${GREEN}>>> Installing node dependencies [npm install] ${NC}"
+cd ${ROOT_DIR}/${EXAMPLE_DIR}
+npm install
+
 # Remove node_modules from the example project
 echo -e "${GREEN}>>> Removing current module ${NC}"
-cd ${ROOT_DIR}/${EXAMPLE_DIR}
 react-native uninstall ${SDK_NAME}
 rm -rfv node_modules/${SDK_NAME}
 

@@ -25,8 +25,12 @@ echo -e "${GREEN}>>> Copying iOS files ${NC}"
 cd ${ROOT_DIR}
 ext/ios/build.sh
 
-echo -e "${GREEN}>>> Removing current module ${NC}"
+# install node dependencies
+echo -e "${GREEN}>>> Installing node dependencies [npm install] ${NC}"
 cd ${ROOT_DIR}/${EXAMPLE_DIR}
+npm install
+
+echo -e "${GREEN}>>> Removing current module ${NC}"
 react-native uninstall ${SDK_NAME}
 rm -rfv node_modules/${SDK_NAME}
 

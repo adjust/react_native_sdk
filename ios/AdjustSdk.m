@@ -359,10 +359,24 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
         }
     } 
 
+    if ([dict objectForKey:@"gdprUrl"]) {
+        NSString *value = dict[@"gdprUrl"];
+        if ([self isFieldValid:value]) {
+            testOptions.gdprUrl = value;
+        }
+    } 
+
     if ([dict objectForKey:@"basePath"]) {
         NSString *value = dict[@"basePath"];
         if ([self isFieldValid:value]) {
             testOptions.basePath = value;
+        }
+    } 
+
+    if ([dict objectForKey:@"gdprPath"]) {
+        NSString *value = dict[@"gdprPath"];
+        if ([self isFieldValid:value]) {
+            testOptions.gdprPath = value;
         }
     } 
 

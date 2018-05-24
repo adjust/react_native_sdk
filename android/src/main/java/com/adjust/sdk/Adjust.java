@@ -462,9 +462,19 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             testOptions.baseUrl = value;
         }
 
+        if (!map.isNull("gdprUrl")) {
+            String value = map.getString("gdprUrl");
+            testOptions.gdprUrl = value;
+        }
+
         if (!map.isNull("basePath")) {
             String value = map.getString("basePath");
             testOptions.basePath = value;
+        }
+
+        if (!map.isNull("gdprPath")) {
+            String value = map.getString("gdprPath");
+            testOptions.gdprPath = value;
         }
 
         if (!map.isNull("useTestConnectionOptions")) {

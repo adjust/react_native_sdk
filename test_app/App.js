@@ -41,10 +41,13 @@ type Props = {};
 export default class App extends Component<Props> {
     componentWillMount() {
         var baseUrl = "";
+        var gdprUrl = "";
         if (Platform.OS === "android") {
             baseUrl = "https://10.0.2.2:8443";
+            gdprUrl = "https://10.0.2.2:8443";
         } else if (Platform.OS === "ios") {
             baseUrl = "http://127.0.0.1:8080";
+            gdprUrl = "http://127.0.0.1:8080";
         }
 
         //AdjustTesting.addTestDirectory("current/attributionCallback/");
@@ -60,7 +63,7 @@ export default class App extends Component<Props> {
         //AdjustTesting.addTestDirectory("current/sessionEventCallbacks/");
         AdjustTesting.startTestSession(baseUrl);
 
-        const commandExecutor = new CommandExecutor(baseUrl);
+        const commandExecutor = new CommandExecutor(baseUrl, gdprUrl);
         emitterSubscription = AdjustTestingEmitter.addListener('command', (json) => {
             const className    = json["className"];
             const functionName = json["functionName"];

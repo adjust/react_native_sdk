@@ -412,6 +412,13 @@ AdjustCommandExecutor.prototype.event = function(params) {
     if ('revenue' in params) {
         var revenueParams = getValueFromKey(params, 'revenue');
         var currency = revenueParams[0];
+
+        // test server might set currency to be undefined/null, which gets
+        // serialized/deserialized as string 'null', leading to failed test
+        if (currency === 'null') {
+            currency = null;
+        }
+
         var revenue = parseFloat(revenueParams[1]);
         adjustEvent.setRevenue(revenue, currency);
     }
@@ -436,6 +443,13 @@ AdjustCommandExecutor.prototype.event = function(params) {
 
     if ('orderId' in params) {
         var orderId = getFirstParameterValue(params, 'orderId');
+
+        // test server might set orderId to be undefined/null, which gets
+        // serialized/deserialized as string 'null', leading to failed test
+        if (orderId === 'null') {
+            orderId = null;
+        }
+
         adjustEvent.setTransactionId(orderId);
     }
 };

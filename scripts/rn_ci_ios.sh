@@ -7,9 +7,9 @@ set -e
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Traverse up to get to the root directory
 ROOT_DIR="$(dirname "$SCRIPTS_DIR")"
-PROJECT_DIR=test_app
+PROJECT_DIR=test/app
 SDK_PLUGIN_NAME=react-native-adjust
-TEST_PLUGIN_DIR=test_plugin
+TEST_PLUGIN_DIR=test/lib
 SDK_PLUGIN_NAME=react-native-adjust
 TEST_PLUGIN_NAME=react-native-adjust-testing
 
@@ -37,7 +37,7 @@ mkdir -p node_modules/${TEST_PLUGIN_NAME}
 
 echo -e "${GREEN}>>> Copy modules to ${PROJECT_DIR}/node_modules/${SDK_PLUGIN_NAME} ${NC}"
 cd ${ROOT_DIR}
-rsync -a . ${PROJECT_DIR}/node_modules/${SDK_PLUGIN_NAME} --exclude=example --exclude=ext --exclude=scripts --exclude=test_plugin --exclude=test_app --exclude=.git
+rsync -a . ${PROJECT_DIR}/node_modules/${SDK_PLUGIN_NAME} --exclude=example --exclude=ext --exclude=scripts --exclude=test/lib --exclude=test/app --exclude=.git
 
 echo -e "${GREEN}>>> Copy modules to ${PROJECT_DIR}/node_modules/${TEST_PLUGIN_NAME} ${NC}"
 cd ${ROOT_DIR}/${TEST_PLUGIN_DIR}

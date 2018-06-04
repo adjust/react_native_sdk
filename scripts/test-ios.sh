@@ -17,6 +17,11 @@ RED='\033[0;31m' # Red color
 GREEN='\033[0;32m' # Green color
 NC='\033[0m' # No Color
 
+# Kill any previously running packager instances
+# TODO: does not kill the process; it is being ran inside bash process, not node, 
+# hence the process/node hosting react app is left alive
+# killall -9 node || true
+
 echo -e "${GREEN}>>> Copying iOS files ${NC}"
 cd ${ROOT_DIR}
 ext/ios/build.sh
@@ -48,6 +53,8 @@ cd ${ROOT_DIR}/${PROJECT_DIR}
 react-native link ${SDK_PLUGIN_NAME} || true
 react-native link ${TEST_PLUGIN_NAME} || true
 
-echo -e "${GREEN}>>> Building & Running on Android ${NC}"
-cd ${ROOT_DIR}/${PROJECT_DIR}
+# TODO: change this hack to revert rubbish changes made automatically by react link/unlink
+# echo -e "${GREEN}>>> Revert generated link/unlink changes... ${NC}"
+# git checkout .
+
 echo success. Run it from Xcode

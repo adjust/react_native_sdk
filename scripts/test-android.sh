@@ -67,7 +67,9 @@ GREEN='\033[0;32m' # Green color
 NC='\033[0m' # No Color
 
 # Kill any previously running packager instances
-#killall -9 node || true
+# TODO: does not kill the process; it is being ran inside bash process, not node, 
+# hence the process/node hosting react app is left alive
+# killall -9 node || true
 
 echo -e "${GREEN}>>> Removing app from device ${NC}"
 adb uninstall com.adjust.testapp || true
@@ -111,6 +113,10 @@ if [ "$BUILD_PLUGIN" = YES ]; then
     cd ${ROOT_DIR}/${PROJECT_DIR}
     react-native link ${SDK_PLUGIN_NAME}
     react-native link ${TEST_PLUGIN_NAME}
+
+    # TODO: change this hack to revert rubbish changes made automatically by react link/unlink
+    # echo -e "${GREEN}>>> Revert generated link/unlink changes... ${NC}"
+    # git checkout .
 fi
 
 echo -e "${GREEN}>>> Building & Running on Android ${NC}"

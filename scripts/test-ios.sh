@@ -57,4 +57,4 @@ react-native link ${TEST_PLUGIN_NAME} || true
 # echo -e "${GREEN}>>> Revert generated link/unlink changes... ${NC}"
 # git checkout .
 
-echo success. Run it from Xcode
+echo success. Run it from Xcode, or cd into rootdir/test/app and run: react-native run-ios

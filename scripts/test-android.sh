@@ -39,7 +39,7 @@ if [[ -n $1 ]]; then
 fi
 
 if [ "${DISPLAY_HELP}" == YES ]; then
-    echo "./rn_ci_android; runs ci build script"
+    echo "./test-android; runs ci build script"
     echo
     echo "# Make sure"
     echo "- Emulator is running"
@@ -76,7 +76,7 @@ if [ "$BUILD_NATIVE" = YES ]; then
     echo -e "${GREEN}>>> Removing Android JARs ${NC}"
     cd ${ROOT_DIR}
     rm -rfv android/libs/*
-    rm -rfv test_plugin/android/libs/adjust-testing.jar
+    rm -rfv ${TEST_PLUGIN_DIR}/android/libs/adjust-testing.jar
 
     echo -e "${GREEN}>>> Building the Android JARs ${NC}"
     cd ${ROOT_DIR}

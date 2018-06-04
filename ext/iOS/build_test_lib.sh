@@ -12,7 +12,7 @@ ROOT_DIR="$(dirname "$ROOT_DIR")"
 
 SRC_DIR=ext/iOS/sdk
 SCRIPT_DIR=scripts
-SRC_OUT_DIR=test_plugin/ios
+SRC_OUT_DIR=test/lib/ios
 
 RED='\033[0;31m' # Red color
 GREEN='\033[0;32m' # Green color

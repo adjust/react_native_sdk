@@ -87,7 +87,6 @@ fi
 if [ "$BUILD_PLUGIN" = YES ]; then
     echo -e "${GREEN}>>> Removing current module ${NC}"
     cd ${ROOT_DIR}/${PROJECT_DIR}
-    npm install
     react-native unlink ${SDK_PLUGIN_NAME} || true
     react-native unlink ${TEST_PLUGIN_NAME} || true
     react-native uninstall ${SDK_PLUGIN_NAME} || true

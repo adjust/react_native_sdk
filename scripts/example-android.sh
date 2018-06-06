@@ -48,7 +48,7 @@ mkdir node_modules/${SDK_NAME}
 # Copy things to it
 echo -e "${GREEN}>>> Copy modules to ${EXAMPLE_DIR}/node_modules/${SDK_NAME} ${NC}"
 cd ${ROOT_DIR}
-rsync -a . ${EXAMPLE_DIR}/node_modules/${SDK_NAME} --exclude=example --exclude=ext --exclude=scripts
+rsync -a . ${EXAMPLE_DIR}/node_modules/${SDK_NAME} --exclude=example --exclude=ext --exclude=test --exclude=scripts
 
 # Establish link
 echo -e "${GREEN}>>> Establish linkage to ${SDK_NAME} ${NC}"

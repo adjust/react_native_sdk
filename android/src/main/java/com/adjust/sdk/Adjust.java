@@ -333,7 +333,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     @ReactMethod
     public void appWillOpenUrl(String strUri) {
         final Uri uri = Uri.parse(strUri);
-        com.adjust.sdk.Adjust.appWillOpenUrl(uri);
+        com.adjust.sdk.Adjust.appWillOpenUrl(uri, getReactApplicationContext());
     }
 
     @ReactMethod

@@ -99,3 +99,6 @@ package-lock.json
 
 ios/Build/
 ios/Index/
+
+# Just in case
+temp/

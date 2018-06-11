@@ -1,124 +1,105 @@
 #!/usr/bin/env bash
 
-# Exit if any errors occur
 set -e
 
-POSITIONAL=()
-BUILD_NATIVE=YES
-BUILD_PLUGIN=YES
+# ======================================== #
 
-while [[ $# -gt 0 ]]
-do
-    key="$1"
+# Colors for output
+NC='\033[0m'
+RED='\033[0;31m'
+CYAN='\033[1;36m'
+GREEN='\033[0;32m'
 
-    case $key in
-        --skip-native)
-            BUILD_NATIVE=NO
-            shift # past argument
-            ;;
-        --skip-plugin)
-            BUILD_PLUGIN=NO
-            shift # past argument
-            ;;
-        --help)
-            DISPLAY_HELP=YES
-            shift # past argument
-            ;;
-        *)
-            POSITIONAL+=("$1") # save it in an array for later
-            shift # past argument
-            ;;
-    esac
-done
-set -- "${POSITIONAL[@]}" # restore positional parameters
+# ======================================== #
 
-# check for invalid arguments
-if [[ -n $1 ]]; then
-    echo "Argument invalid"
-    exit 0
-fi
-
-if [ "${DISPLAY_HELP}" == YES ]; then
-    echo "./test-android; runs ci build script"
-    echo
-    echo "# Make sure"
-    echo "- Emulator is running"
-    echo "- Test server is running"
-    echo
-    echo "# Arguments"
-    echo "    --skip-native: Skips building the native libraries in ext/"
-    echo "    --skip-plugin: Skips building plugin"
-    echo "    --help: Displays help"
-    exit 1
-fi
-
-# Get the current directory (/scripts/ directory)
+# Directories and paths of interest for the script.
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-# Traverse up to get to the root directory
 ROOT_DIR="$(dirname "$SCRIPTS_DIR")"
-PROJECT_DIR=test/app
+TEST_APP_DIR=test/app
 TEST_PLUGIN_DIR=test/lib
 SDK_PLUGIN_NAME=react-native-adjust
-TEST_PLUGIN_NAME=react-native-adjust-testing
+TEST_PLUGIN_NAME=react-native-adjust-test
 
-RED='\033[0;31m' # Red color
-GREEN='\033[0;32m' # Green color
-NC='\033[0m' # No Color
+# ======================================== #
 
-# Kill any previously running packager instances
-# TODO: does not kill the process; it is being ran inside bash process, not node, 
-# hence the process/node hosting react app is left alive
-# killall -9 node || true
-
-echo -e "${GREEN}>>> Removing app from device ${NC}"
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Uninstalling test app from device/emulator ... ${NC}"
 adb uninstall com.adjust.testapp || true
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Done! ${NC}"
 
-if [ "$BUILD_NATIVE" = YES ]; then
-    echo -e "${GREEN}>>> Removing Android JARs ${NC}"
-    cd ${ROOT_DIR}
-    rm -rfv android/libs/*
-    rm -rfv ${TEST_PLUGIN_DIR}/android/libs/adjust-testing.jar
+# ======================================== #
 
-    echo -e "${GREEN}>>> Building the Android JARs ${NC}"
-    cd ${ROOT_DIR}
-    ext/android/build.sh release
-    ext/android/build_test_lib.sh 
-fi
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Cleaning up previous SDK and test library binaries ... ${NC}"
+cd ${ROOT_DIR}
+rm -rfv android/libs/*
+rm -rfv ${TEST_PLUGIN_DIR}/android/libs/adjust-testing.jar
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Done! ${NC}"
 
-if [ "$BUILD_PLUGIN" = YES ]; then
-    echo -e "${GREEN}>>> Removing current module ${NC}"
-    cd ${ROOT_DIR}/${PROJECT_DIR}
-    react-native unlink ${SDK_PLUGIN_NAME} || true
-    react-native unlink ${TEST_PLUGIN_NAME} || true
-    react-native uninstall ${SDK_PLUGIN_NAME} || true
-    react-native uninstall ${TEST_PLUGIN_NAME} || true
-    rm -rfv node_modules/${SDK_PLUGIN_NAME}
-    rm -rfv node_modules/${TEST_PLUGIN_NAME}
+# ======================================== #
 
-    echo -e "${GREEN}>>> Create new directory in node_modules ${NC}"
-    cd ${ROOT_DIR}/${PROJECT_DIR}
-    mkdir -p node_modules/${SDK_PLUGIN_NAME}
-    mkdir -p node_modules/${TEST_PLUGIN_NAME}
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Invoking SDK and test library build scripts ... ${NC}"
+cd ${ROOT_DIR}
+ext/android/build-sdk.sh release
+ext/android/build-test.sh
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Done! ${NC}"
 
-    echo -e "${GREEN}>>> Copy modules to ${PROJECT_DIR}/node_modules/${SDK_PLUGIN_NAME} ${NC}"
-    cd ${ROOT_DIR}
-    rsync -a . ${PROJECT_DIR}/node_modules/${SDK_PLUGIN_NAME} --exclude=example --exclude=ext --exclude=scripts --exclude=test/lib --exclude=test/app --exclude=.git
+# ======================================== #
 
-    echo -e "${GREEN}>>> Copy modules to ${PROJECT_DIR}/node_modules/${TEST_PLUGIN_NAME} ${NC}"
-    cd ${ROOT_DIR}/${TEST_PLUGIN_DIR}
-    rsync -a . ${ROOT_DIR}/${PROJECT_DIR}/node_modules/${TEST_PLUGIN_NAME}
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Removing react-native-adjust and react-native-adjust-test modules from test app ... ${NC}"
+cd ${ROOT_DIR}/${TEST_APP_DIR}
+react-native unlink ${SDK_PLUGIN_NAME} || true
+react-native unlink ${TEST_PLUGIN_NAME} || true
+yarn remove ${SDK_PLUGIN_NAME} || true
+yarn remove ${TEST_PLUGIN_NAME} || true
+rm -rfv node_modules/${SDK_PLUGIN_NAME}
+rm -rfv node_modules/${TEST_PLUGIN_NAME}
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Done! ${NC}"
 
-    echo -e "${GREEN}>>> Establish linkages ${NC}"
-    cd ${ROOT_DIR}/${PROJECT_DIR}
-    react-native link ${SDK_PLUGIN_NAME}
-    react-native link ${TEST_PLUGIN_NAME}
+# ======================================== #
 
-    # TODO: change this hack to revert rubbish changes made automatically by react link/unlink
-    # echo -e "${GREEN}>>> Revert generated link/unlink changes... ${NC}"
-    # git checkout .
-fi
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Modifying react-native-adjust content and putting it to temp folder ... ${NC}"
+cd ${ROOT_DIR}; rm -rfv temp; mkdir -v temp; cp -Rv android temp; cp -Rv ios temp; cp -v package.json temp; cp -v react-native-adjust.podspec temp; cp -v index.js temp; cd temp
+rm -rfv example ext scripts test .git
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Done! ${NC}"
 
-echo -e "${GREEN}>>> Building & Running on Android ${NC}"
-cd ${ROOT_DIR}/${PROJECT_DIR}
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Adding react-native-adjust to test app ... ${NC}"
+cd ${ROOT_DIR}/${TEST_APP_DIR}
+yarn add ../../temp
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Done! ${NC}"
+
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Adding react-native-adjust-test to test app ... ${NC}"
+cd ${ROOT_DIR}/${TEST_APP_DIR}
+yarn add ../lib
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Done! ${NC}"
+
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Linking react-native-adjust ... ${NC}"
+react-native link ${SDK_PLUGIN_NAME} || true
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Done! ${NC}"
+
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Linking react-native-adjust-test ... ${NC}"
+react-native link ${TEST_PLUGIN_NAME} || true
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Done! ${NC}"
+
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Cleanup ... ${NC}"
+rm -rfv ${ROOT_DIR}/temp
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Done! ${NC}"
+
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Building and running test app on device/emulator ... ${NC}"
+cd ${ROOT_DIR}/${TEST_APP_DIR}
 react-native run-android
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Done! ${NC}"
+
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][TEST-ANDROID]:${GREEN} Script completed! ${NC}"

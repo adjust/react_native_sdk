@@ -19,13 +19,13 @@ const {
     NativeModules,
 } = require('react-native');
 
-const AdjustTesting = NativeModules.AdjustTesting;
+const AdjustSdkTest = NativeModules.AdjustSdkTest;
 
-let AdjustTestingEmitter = null;
+let AdjustSdkTestEmitter = null;
 if (Platform.OS === "android") {
-    AdjustTestingEmitter = new NativeEventEmitter(NativeModules.AdjustTesting);
+    AdjustSdkTestEmitter = new NativeEventEmitter(NativeModules.AdjustSdkTest);
 } else if (Platform.OS === "ios") {
-    AdjustTestingEmitter = new NativeEventEmitter(NativeModules.AdjustTestingEventEmitter);
+    AdjustSdkTestEmitter = new NativeEventEmitter(NativeModules.ASTEventEmitter);
 }
 
 let emitterSubscription = null;
@@ -50,21 +50,21 @@ export default class App extends Component<Props> {
             gdprUrl = "http://127.0.0.1:8080";
         }
 
-        //AdjustTesting.addTestDirectory("current/attributionCallback/");
-        //AdjustTesting.addTestDirectory("current/appSecret/");
-        //AdjustTesting.addTest("current/event/Test_Event_EventToken_Malformed");
-        //AdjustTesting.addTestDirectory("current/event/");
-        //AdjustTesting.addTestDirectory("current/sendInBackground/");
-        //AdjustTesting.addTestDirectory("current/sessionCount/");
-        //AdjustTesting.addTestDirectory("current/sessionEventCallbacks/");
-        //AdjustTesting.addTestDirectory("current/sessionParams/");
-        //AdjustTesting.addTestDirectory("current/subsessionCount/");
-        //AdjustTesting.addTestDirectory("current/userAgent/");
-        //AdjustTesting.addTestDirectory("current/sessionEventCallbacks/");
-        AdjustTesting.startTestSession(baseUrl);
+        //AdjustSdkTest.addTestDirectory("current/attributionCallback/");
+        //AdjustSdkTest.addTestDirectory("current/appSecret/");
+        //AdjustSdkTest.addTest("current/event/Test_Event_EventToken_Malformed");
+        //AdjustSdkTest.addTestDirectory("current/event/");
+        //AdjustSdkTest.addTestDirectory("current/sendInBackground/");
+        //AdjustSdkTest.addTestDirectory("current/sessionCount/");
+        //AdjustSdkTest.addTestDirectory("current/sessionEventCallbacks/");
+        //AdjustSdkTest.addTestDirectory("current/sessionParams/");
+        //AdjustSdkTest.addTestDirectory("current/subsessionCount/");
+        //AdjustSdkTest.addTestDirectory("current/userAgent/");
+        //AdjustSdkTest.addTestDirectory("current/sessionEventCallbacks/");
+        AdjustSdkTest.startTestSession(baseUrl);
 
         const commandExecutor = new CommandExecutor(baseUrl, gdprUrl);
-        emitterSubscription = AdjustTestingEmitter.addListener('command', (json) => {
+        emitterSubscription = AdjustSdkTestEmitter.addListener('command', (json) => {
             const className    = json["className"];
             const functionName = json["functionName"];
             const params       = json["params"];

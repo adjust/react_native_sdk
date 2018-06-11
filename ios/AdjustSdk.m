@@ -23,23 +23,22 @@ BOOL _isDeferredDeeplinkCallbackImplemented;
 #pragma mark - Public methods
 
 RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
-    NSString *appToken              = dict[@"appToken"];
-    NSString *environment           = dict[@"environment"];
-    NSString *logLevel              = dict[@"logLevel"];
-    NSString *sdkPrefix             = dict[@"sdkPrefix"];
-    NSString *defaultTracker        = dict[@"defaultTracker"];
+    NSString *appToken = dict[@"appToken"];
+    NSString *environment = dict[@"environment"];
+    NSString *secretId = dict[@"secretId"];
+    NSString *info1 = dict[@"info1"];
+    NSString *info2 = dict[@"info2"];
+    NSString *info3 = dict[@"info3"];
+    NSString *info4 = dict[@"info4"];
+    NSString *logLevel = dict[@"logLevel"];
+    NSString *sdkPrefix = dict[@"sdkPrefix"];
+    NSString *userAgent = dict[@"userAgent"];
+    NSString *defaultTracker = dict[@"defaultTracker"];
     NSNumber *eventBufferingEnabled = dict[@"eventBufferingEnabled"];
-    NSNumber *sendInBackground      = dict[@"sendInBackground"];
-    NSNumber *shouldLaunchDeeplink  = dict[@"shouldLaunchDeeplink"];
-    NSString *userAgent             = dict[@"userAgent"];
-    NSNumber *delayStart            = dict[@"delayStart"];
-    NSNumber *isDeviceKnown         = dict[@"isDeviceKnown"];
-
-    NSString *secretId              = dict[@"secretId"];
-    NSString *info1                 = dict[@"info1"];
-    NSString *info2                 = dict[@"info2"];
-    NSString *info3                 = dict[@"info3"];
-    NSString *info4                 = dict[@"info4"];
+    NSNumber *sendInBackground = dict[@"sendInBackground"];
+    NSNumber *shouldLaunchDeeplink = dict[@"shouldLaunchDeeplink"];
+    NSNumber *delayStart = dict[@"delayStart"];
+    NSNumber *isDeviceKnown = dict[@"isDeviceKnown"];
 
     BOOL allowSuppressLogLevel = NO;
 
@@ -227,7 +226,6 @@ RCT_EXPORT_METHOD(addSessionCallbackParameter:(NSString *)key value:(NSString *)
     if (!([self isFieldValid:key]) || !([self isFieldValid:value])) {
         return;
     }
-
     [Adjust addSessionCallbackParameter:key value:value];
 }
 
@@ -235,7 +233,6 @@ RCT_EXPORT_METHOD(removeSessionCallbackParameter:(NSString *)key) {
     if (!([self isFieldValid:key])) {
         return;
     }
-
     [Adjust removeSessionCallbackParameter:key];
 }
 
@@ -247,7 +244,6 @@ RCT_EXPORT_METHOD(addSessionPartnerParameter:(NSString *)key value:(NSString *)v
     if (!([self isFieldValid:key]) || !([self isFieldValid:value])) {
         return;
     }
-
     [Adjust addSessionPartnerParameter:key value:value];
 }
 
@@ -255,7 +251,6 @@ RCT_EXPORT_METHOD(removeSessionPartnerParameter:(NSString *)key) {
     if (!([self isFieldValid:key])) {
         return;
     }
-
     [Adjust removeSessionPartnerParameter:key];
 }
 
@@ -269,7 +264,6 @@ RCT_EXPORT_METHOD(gdprForgetMe) {
 
 RCT_EXPORT_METHOD(getIdfa:(RCTResponseSenderBlock)callback) {
     NSString *idfa = [Adjust idfa];
-
     if (nil == idfa) {
         callback(@[@""]);
     } else {
@@ -287,7 +281,6 @@ RCT_EXPORT_METHOD(getAmazonAdId:(RCTResponseSenderBlock)callback) {
 
 RCT_EXPORT_METHOD(getAdid:(RCTResponseSenderBlock)callback) {
     NSString *adid = [Adjust adid];
-
     if (nil == adid) {
         callback(@[@""]);
     } else {
@@ -300,7 +293,6 @@ RCT_EXPORT_METHOD(setReferrer:(NSString *)referrer) {}
 RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
     ADJAttribution *attribution = [Adjust attribution];
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-
     if (attribution == nil) {
         callback(@[dictionary]);
         return;
@@ -314,7 +306,6 @@ RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
     [self addValueOrEmpty:dictionary key:@"adgroup" value:attribution.adgroup];
     [self addValueOrEmpty:dictionary key:@"clickLabel" value:attribution.clickLabel];
     [self addValueOrEmpty:dictionary key:@"adid" value:attribution.adid];
-
     callback(@[dictionary]);
 }
 
@@ -344,76 +335,72 @@ RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener) {
 
 RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
     AdjustTestOptions *testOptions = [[AdjustTestOptions alloc] init];
-
     if ([dict objectForKey:@"hasContext"]) {
         NSString *value = dict[@"hasContext"];
         if ([self isFieldValid:value]) {
             testOptions.deleteState = [value boolValue];
         }
-    } 
-
+    }
     if ([dict objectForKey:@"baseUrl"]) {
         NSString *value = dict[@"baseUrl"];
         if ([self isFieldValid:value]) {
             testOptions.baseUrl = value;
         }
-    } 
-
+    }
     if ([dict objectForKey:@"gdprUrl"]) {
         NSString *value = dict[@"gdprUrl"];
         if ([self isFieldValid:value]) {
             testOptions.gdprUrl = value;
         }
-    } 
-
+    }
     if ([dict objectForKey:@"basePath"]) {
         NSString *value = dict[@"basePath"];
         if ([self isFieldValid:value]) {
             testOptions.basePath = value;
         }
-    } 
-
+    }
     if ([dict objectForKey:@"gdprPath"]) {
         NSString *value = dict[@"gdprPath"];
         if ([self isFieldValid:value]) {
             testOptions.gdprPath = value;
         }
-    } 
-
+    }
     if ([dict objectForKey:@"timerIntervalInMilliseconds"]) {
         NSString *value = dict[@"timerIntervalInMilliseconds"];
         if ([self isFieldValid:value]) {
             testOptions.timerIntervalInMilliseconds = [self convertMilliStringToNumber:value];
         }
-    } 
-
+    }
     if ([dict objectForKey:@"timerStartInMilliseconds"]) {
         NSString *value = dict[@"timerStartInMilliseconds"];
         if ([self isFieldValid:value]) {
             testOptions.timerStartInMilliseconds = [self convertMilliStringToNumber:value];
         }
-    } 
-
+    }
     if ([dict objectForKey:@"sessionIntervalInMilliseconds"]) {
         NSString *value = dict[@"sessionIntervalInMilliseconds"];
         if ([self isFieldValid:value]) {
             testOptions.sessionIntervalInMilliseconds = [self convertMilliStringToNumber:value];
         }
-    } 
-
+    }
     if ([dict objectForKey:@"subsessionIntervalInMilliseconds"]) {
         NSString *value = dict[@"subsessionIntervalInMilliseconds"];
         if ([self isFieldValid:value]) {
             testOptions.subsessionIntervalInMilliseconds = [self convertMilliStringToNumber:value];
         }
-    } 
-
+    }
     if ([dict objectForKey:@"teardown"]) {
         NSString *value = dict[@"teardown"];
         if ([self isFieldValid:value]) {
             testOptions.teardown = [value boolValue];
         }
-    } 
+    }
+    if ([dict objectForKey:@"noBackoffWait"]) {
+        NSString *value = dict[@"noBackoffWait"];
+        if ([self isFieldValid:value]) {
+            testOptions.noBackoffWait = [value boolValue];
+        }
+    }
 
     [Adjust setTestOptions:testOptions];
 }

@@ -1,59 +1,97 @@
 #!/usr/bin/env bash
 
-# Exit if any errors occur
-#set -e
+set -e
 
-# Get the current directory (/scripts/ directory)
+# ======================================== #
+
+# Colors for output
+NC='\033[0m'
+RED='\033[0;31m'
+CYAN='\033[1;36m'
+GREEN='\033[0;32m'
+
+# ======================================== #
+
+# Directories and paths of interest for the script.
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-# Traverse up to get to the root directory
 ROOT_DIR="$(dirname "$SCRIPTS_DIR")"
-EXAMPLE_DIR=example
-SDK_NAME=react-native-adjust
+EXAMPLE_APP_DIR=example
+SDK_PLUGIN_NAME=react-native-adjust
 
-RED='\033[0;31m' # Red color
-GREEN='\033[0;32m' # Green color
-NC='\033[0m' # No Color
+# ======================================== #
 
-# Kill any previously running packager instance
-killall -9 node
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Uninstalling example app from device/emulator ... ${NC}"
+adb uninstall com.adjust.examples || true
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Done! ${NC}"
 
-#echo -e "${GREEN}>>> Updating Git submodules ${NC}"
-#cd ${ROOT_DIR}
-#git submodule update --init --recursive
+# ======================================== #
 
-echo -e "${GREEN}>>> Removing the Android JAR file ${NC}"
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Cleaning up previous SDK binary ... ${NC}"
 rm -rfv android/libs/*
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Done! ${NC}"
 
-echo -e "${GREEN}>>> Removing app from test device ${NC}"
-adb uninstall com.adjust.examples
+# ======================================== #
 
-# Building the Android JAR file
-echo -e "${GREEN}>>> Building the Android JAR file ${NC}"
-${ROOT_DIR}/ext/android/build.sh release
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Invoking SDK build script ... ${NC}"
+${ROOT_DIR}/ext/android/build-sdk.sh release
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Done! ${NC}"
 
-# install node dependencies
-echo -e "${GREEN}>>> Installing node dependencies [npm install] ${NC}"
-cd ${ROOT_DIR}/${EXAMPLE_DIR}
+# ======================================== #
+
+# This step is needed, since existence of "../temp" path for react-native-adjust is hostile towards "npm install".
+# Removing plugin with yarn in here makes it disappear from package.json of the example app.
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Removing react-native-adjust from example app ... ${NC}"
+cd ${ROOT_DIR}/${EXAMPLE_APP_DIR}
+yarn remove ${SDK_PLUGIN_NAME} || true
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Done! ${NC}"
+
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Installing node dependencies [npm install] ... ${NC}"
 npm install
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Done! ${NC}"
 
-# Remove node_modules from the example project
-echo -e "${GREEN}>>> Removing current module ${NC}"
-react-native uninstall ${SDK_NAME}
-rm -rfv node_modules/${SDK_NAME}
+# ======================================== #
 
-# Create a new directory with SDK_NAME
-echo -e "${GREEN}>>> Create new directory in node_modules ${NC}"
-mkdir node_modules/${SDK_NAME}
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Removing and unlinking react-native-adjust from example app ... ${NC}"
+react-native unlink ${SDK_PLUGIN_NAME} || true
+yarn remove ${SDK_PLUGIN_NAME} || true
+rm -rfv node_modules/${SDK_PLUGIN_NAME}
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Done! ${NC}"
 
-# Copy things to it
-echo -e "${GREEN}>>> Copy modules to ${EXAMPLE_DIR}/node_modules/${SDK_NAME} ${NC}"
-cd ${ROOT_DIR}
-rsync -a . ${EXAMPLE_DIR}/node_modules/${SDK_NAME} --exclude=example --exclude=ext --exclude=test --exclude=scripts
+# ======================================== #
 
-# Establish link
-echo -e "${GREEN}>>> Establish linkage to ${SDK_NAME} ${NC}"
-cd ${EXAMPLE_DIR}
-react-native link ${SDK_NAME}
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Modifying react-native-adjust content and putting it to temp folder ... ${NC}"
+cd ${ROOT_DIR}; rm -rfv temp; mkdir -v temp; cp -Rv android temp; cp -Rv ios temp; cp -v package.json temp; cp -v react-native-adjust.podspec temp; cp -v index.js temp; cd temp
+rm -rfv example ext scripts test .git
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Done! ${NC}"
 
-echo -e "${GREEN}>>> Building & Running on Android ${NC}"
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Adding react-native-adjust to test app ... ${NC}"
+cd ${ROOT_DIR}/${EXAMPLE_APP_DIR}
+yarn add ../temp
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Done! ${NC}"
+
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Linking react-native-adjust ... ${NC}"
+react-native link ${SDK_PLUGIN_NAME} || true
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Done! ${NC}"
+
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Cleanup ... ${NC}"
+rm -rfv ${ROOT_DIR}/temp
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Done! ${NC}"
+
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Building and running test app on device/emulator ... ${NC}"
+cd ${ROOT_DIR}/${EXAMPLE_APP_DIR}
 react-native run-android
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Done! ${NC}"
+
+# ======================================== #
+
+echo -e "${CYAN}[ADJUST][EXAMPLE-ANDROID]:${GREEN} Script completed! ${NC}"

@@ -4,7 +4,7 @@ let {
 } = require('react-native');
 import { Adjust, AdjustEvent, AdjustConfig } from 'react-native-adjust';
 import { AdjustTestOptions } from './test_options.js';
-const AdjustTesting = NativeModules.AdjustTesting;
+const AdjustSdkTest = NativeModules.AdjustSdkTest;
 
 /* 
  * A note on scheduling:
@@ -148,6 +148,9 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
     }
     if ('subsessionInterval' in params) {
         testOptions.subsessionIntervalInMilliseconds = getFirstParameterValue(params, 'subsessionInterval').toString();
+    }
+    if ('noBackoffWait' in params) {
+        testOptions.noBackoffWait = getFirstParameterValue(params, 'noBackoffWait').toString() === 'true';
     }
     if ('teardown' in params) {
         var teardownOptions = getValueFromKey(params, 'teardown');
@@ -305,76 +308,76 @@ AdjustCommandExecutor.prototype.config = function(params) {
     if ('attributionCallbackSendAll' in params) {
         var _this = this;
         adjustConfig.setAttributionCallbackListener(function(attribution) {
-            AdjustTesting.addInfoToSend("trackerToken", attribution.trackerToken);
-            AdjustTesting.addInfoToSend("trackerName", attribution.trackerName);
-            AdjustTesting.addInfoToSend("network", attribution.network);
-            AdjustTesting.addInfoToSend("campaign", attribution.campaign);
-            AdjustTesting.addInfoToSend("adgroup", attribution.adgroup);
-            AdjustTesting.addInfoToSend("creative", attribution.creative);
-            AdjustTesting.addInfoToSend("clickLabel", attribution.clickLabel);
-            AdjustTesting.addInfoToSend("adid", attribution.adid);
+            AdjustSdkTest.addInfoToSend("trackerToken", attribution.trackerToken);
+            AdjustSdkTest.addInfoToSend("trackerName", attribution.trackerName);
+            AdjustSdkTest.addInfoToSend("network", attribution.network);
+            AdjustSdkTest.addInfoToSend("campaign", attribution.campaign);
+            AdjustSdkTest.addInfoToSend("adgroup", attribution.adgroup);
+            AdjustSdkTest.addInfoToSend("creative", attribution.creative);
+            AdjustSdkTest.addInfoToSend("clickLabel", attribution.clickLabel);
+            AdjustSdkTest.addInfoToSend("adid", attribution.adid);
 
-            AdjustTesting.sendInfoToServer(_this.basePath);
+            AdjustSdkTest.sendInfoToServer(_this.basePath);
         });
     }
 
     if ('sessionCallbackSendSuccess' in params) {
         var _this = this;
         adjustConfig.setSessionTrackingSucceededCallbackListener(function(sessionSuccess) {
-            AdjustTesting.addInfoToSend("message", sessionSuccess.message);
-            AdjustTesting.addInfoToSend("timestamp", sessionSuccess.timestamp);
-            AdjustTesting.addInfoToSend("adid", sessionSuccess.adid);
+            AdjustSdkTest.addInfoToSend("message", sessionSuccess.message);
+            AdjustSdkTest.addInfoToSend("timestamp", sessionSuccess.timestamp);
+            AdjustSdkTest.addInfoToSend("adid", sessionSuccess.adid);
             if (sessionSuccess.jsonResponse != null) {
-                AdjustTesting.addInfoToSend("jsonResponse", sessionSuccess.jsonResponse.toString());
+                AdjustSdkTest.addInfoToSend("jsonResponse", sessionSuccess.jsonResponse.toString());
             }
 
-            AdjustTesting.sendInfoToServer(_this.basePath);
+            AdjustSdkTest.sendInfoToServer(_this.basePath);
         });
     }
 
     if ('sessionCallbackSendFailure' in params) {
         var _this = this;
         adjustConfig.setSessionTrackingFailedCallbackListener(function(sessionFailed) {
-            AdjustTesting.addInfoToSend("message", sessionFailed.message);
-            AdjustTesting.addInfoToSend("timestamp", sessionFailed.timestamp);
-            AdjustTesting.addInfoToSend("adid", sessionFailed.adid);
-            AdjustTesting.addInfoToSend("willRetry", sessionFailed.willRetry);
+            AdjustSdkTest.addInfoToSend("message", sessionFailed.message);
+            AdjustSdkTest.addInfoToSend("timestamp", sessionFailed.timestamp);
+            AdjustSdkTest.addInfoToSend("adid", sessionFailed.adid);
+            AdjustSdkTest.addInfoToSend("willRetry", sessionFailed.willRetry);
             if (sessionFailed.jsonResponse != null) {
-                AdjustTesting.addInfoToSend("jsonResponse", sessionFailed.jsonResponse.toString());
+                AdjustSdkTest.addInfoToSend("jsonResponse", sessionFailed.jsonResponse.toString());
             }
 
-            AdjustTesting.sendInfoToServer(_this.basePath);
+            AdjustSdkTest.sendInfoToServer(_this.basePath);
         });
     }
 
     if ('eventCallbackSendSuccess' in params) {
         var _this = this;
         adjustConfig.setEventTrackingSucceededCallbackListener(function(eventSuccess) {
-            AdjustTesting.addInfoToSend("message", eventSuccess.message);
-            AdjustTesting.addInfoToSend("timestamp", eventSuccess.timestamp);
-            AdjustTesting.addInfoToSend("adid", eventSuccess.adid);
-            AdjustTesting.addInfoToSend("eventToken", eventSuccess.eventToken);
+            AdjustSdkTest.addInfoToSend("message", eventSuccess.message);
+            AdjustSdkTest.addInfoToSend("timestamp", eventSuccess.timestamp);
+            AdjustSdkTest.addInfoToSend("adid", eventSuccess.adid);
+            AdjustSdkTest.addInfoToSend("eventToken", eventSuccess.eventToken);
             if (eventSuccess.jsonResponse != null) {
-                AdjustTesting.addInfoToSend("jsonResponse", eventSuccess.jsonResponse.toString());
+                AdjustSdkTest.addInfoToSend("jsonResponse", eventSuccess.jsonResponse.toString());
             }
 
-            AdjustTesting.sendInfoToServer(_this.basePath);
+            AdjustSdkTest.sendInfoToServer(_this.basePath);
         });
     }
 
     if ('eventCallbackSendFailure' in params) {
         var _this = this;
         adjustConfig.setEventTrackingFailedCallbackListener(function(eventFailed) {
-            AdjustTesting.addInfoToSend("message", eventFailed.message);
-            AdjustTesting.addInfoToSend("timestamp", eventFailed.timestamp);
-            AdjustTesting.addInfoToSend("adid", eventFailed.adid);
-            AdjustTesting.addInfoToSend("eventToken", eventFailed.eventToken);
-            AdjustTesting.addInfoToSend("willRetry", eventFailed.willRetry);
+            AdjustSdkTest.addInfoToSend("message", eventFailed.message);
+            AdjustSdkTest.addInfoToSend("timestamp", eventFailed.timestamp);
+            AdjustSdkTest.addInfoToSend("adid", eventFailed.adid);
+            AdjustSdkTest.addInfoToSend("eventToken", eventFailed.eventToken);
+            AdjustSdkTest.addInfoToSend("willRetry", eventFailed.willRetry);
             if (eventFailed.jsonResponse != null) {
-                AdjustTesting.addInfoToSend("jsonResponse", eventFailed.jsonResponse.toString());
+                AdjustSdkTest.addInfoToSend("jsonResponse", eventFailed.jsonResponse.toString());
             }
 
-            AdjustTesting.sendInfoToServer(_this.basePath);
+            AdjustSdkTest.sendInfoToServer(_this.basePath);
         });
     }
 };

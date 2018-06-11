@@ -512,6 +512,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 Log.d(TAG, "Can't format number");
             }
         }
+        if (!map.isNull("noBackoffWait")) {
+            boolean value = map.getBoolean("noBackoffWait");
+            testOptions.noBackoffWait = value;
+        }
         if (!map.isNull("teardown")) {
             boolean value = map.getBoolean("teardown");
             testOptions.teardown = value;

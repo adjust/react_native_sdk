@@ -1,5 +1,5 @@
 {
-    "name": "react-native-adjust-testing",
+    "name": "react-native-adjust-test",
     "description": "Adjust Testing React Native SDK",
     "version": "1.0.0",
     "author": "adjust GmbH",
@@ -9,7 +9,7 @@
         "ios",
         "android",
         "adjust",
-        "testing"
+        "test"
     ],
     "repository": {
         "type": "git",

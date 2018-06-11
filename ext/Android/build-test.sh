@@ -16,7 +16,7 @@ GREEN='\033[0;32m'
 ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ROOT_DIR="$(dirname "$ROOT_DIR")"
 ROOT_DIR="$(dirname "$ROOT_DIR")"
-BUILD_DIR=ext/Android/sdk/Adjust
+BUILD_DIR=ext/android/sdk/Adjust
 JAR_OUT_DIR=test/lib/android/libs
 JAR_IN_DIR=ext/android/sdk/Adjust/testlibrary/build/outputs
 

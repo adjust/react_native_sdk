@@ -24,8 +24,8 @@ TEST_PLUGIN_NAME=react-native-adjust-test
 
 echo -e "${CYAN}[ADJUST][TEST-IOS]:${GREEN} Invoking SDK and test library build scripts ... ${NC}"
 cd ${ROOT_DIR}
-ext/iOS/build-sdk.sh
-ext/iOS/build-test.sh
+ext/ios/build-sdk.sh
+ext/ios/build-test.sh
 echo -e "${CYAN}[ADJUST][TEST-IOS]:${GREEN} Done! ${NC}"
 
 # ======================================== #

@@ -98,37 +98,36 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void create(ReadableMap mapConfig) {
-        String environment                  = null;
-        String appToken                     = null;
-        String defaultTracker               = null;
-        String processName                  = null;
-        String sdkPrefix                    = null;
-        String logLevel                     = null;
-        boolean eventBufferingEnabled       = false;
-        String userAgent                    = null;
-        long secretId                       = 0L;
-        long info1                          = 0L;
-        long info2                          = 0L;
-        long info3                          = 0L;
-        long info4                          = 0L;
-        boolean sendInBackground            = false;
-        boolean shouldLaunchDeeplink        = false;
-        double delayStart                   = 0.0;
-        boolean isLogLevelSuppress          = false;
-        boolean isDeviceKnown               = false;
+        String appToken = null;
+        String environment = null;
+        String logLevel = null;
+        String sdkPrefix = null;
+        String userAgent = null;
+        String processName = null;
+        String defaultTracker = null;
+        long secretId  = 0L;
+        long info1 = 0L;
+        long info2 = 0L;
+        long info3 = 0L;
+        long info4 = 0L;
+        double delayStart = 0.0;
+        boolean isDeviceKnown = false;
+        boolean sendInBackground = false;
+        boolean isLogLevelSuppress = false;
+        boolean shouldLaunchDeeplink = false;
+        boolean eventBufferingEnabled = false;
         boolean readMobileEquipmentIdentity = false;
 
         // Suppress log level
         if (!mapConfig.isNull("logLevel")) {
             logLevel = mapConfig.getString("logLevel");
-
             if (logLevel.equals("SUPPRESS")) {
                 isLogLevelSuppress = true;
             }
         }
 
         // App token and environment.
-        appToken    = mapConfig.getString("appToken");
+        appToken = mapConfig.getString("appToken");
         environment = mapConfig.getString("environment");
 
         final AdjustConfig adjustConfig = new AdjustConfig(getReactApplicationContext(), appToken, environment, isLogLevelSuppress);
@@ -140,7 +139,6 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         // Log level
         if (!mapConfig.isNull("logLevel")) {
             logLevel = mapConfig.getString("logLevel");
-
             if (logLevel.equals("VERBOSE")) {
                 adjustConfig.setLogLevel(LogLevel.VERBOSE);
             } else if (logLevel.equals("DEBUG")) {
@@ -161,7 +159,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         }
 
         // Event buffering
-        if(!mapConfig.isNull("eventBufferingEnabled")) {
+        if (!mapConfig.isNull("eventBufferingEnabled")) {
             eventBufferingEnabled = mapConfig.getBoolean("eventBufferingEnabled");
             adjustConfig.setEventBufferingEnabled(eventBufferingEnabled);
         }
@@ -275,28 +273,31 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         final String eventToken = mapEvent.getString("eventToken");
         final String currency = mapEvent.getString("currency");
         final String transactionId = mapEvent.getString("transactionId");
-        final Map<String, Object> callbackParameters  = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
-        final Map<String, Object> partnerParameters  = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
+        final Map<String, Object> callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
+        final Map<String, Object> partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
 
         AdjustEvent event = new AdjustEvent(eventToken);
-
         if (event.isValid()) {
+            // Revenue
             if (!mapEvent.isNull("revenue")) {
                 event.setRevenue(mapEvent.getDouble("revenue"), currency);
             }
 
+            // Callback parameters
             if (null != callbackParameters) {
                 for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
                     event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
                 }
             }
 
+            // Partner parameters
             if (null != partnerParameters) {
                 for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
                     event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
                 }
             }
 
+            // Revenue deduplication
             if (null != transactionId) {
                 event.setOrderId(transactionId);
             }
@@ -438,50 +439,43 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void teardown() {
-        this.attributionCallback              = false;
-        this.eventTrackingSucceededCallback   = false;
-        this.eventTrackingFailedCallback      = false;
+        this.attributionCallback = false;
+        this.eventTrackingSucceededCallback = false;
+        this.eventTrackingFailedCallback = false;
         this.sessionTrackingSucceededCallback = false;
-        this.sessionTrackingFailedCallback    = false;
-        this.deferredDeeplinkCallback         = false;
+        this.sessionTrackingFailedCallback = false;
+        this.deferredDeeplinkCallback = false;
     }
 
     @ReactMethod
     public void setTestOptions(ReadableMap map) {
         final AdjustTestOptions testOptions = new AdjustTestOptions();
-
         if (!map.isNull("hasContext")) {
             boolean value = map.getBoolean("hasContext");
             if (value) {
                 testOptions.context = getReactApplicationContext();
             }
         }
-
         if (!map.isNull("baseUrl")) {
             String value = map.getString("baseUrl");
             testOptions.baseUrl = value;
         }
-
         if (!map.isNull("gdprUrl")) {
             String value = map.getString("gdprUrl");
             testOptions.gdprUrl = value;
         }
-
         if (!map.isNull("basePath")) {
             String value = map.getString("basePath");
             testOptions.basePath = value;
         }
-
         if (!map.isNull("gdprPath")) {
             String value = map.getString("gdprPath");
             testOptions.gdprPath = value;
         }
-
         if (!map.isNull("useTestConnectionOptions")) {
             boolean value = map.getBoolean("useTestConnectionOptions");
             testOptions.useTestConnectionOptions = value;
         }
-
         if (!map.isNull("timerIntervalInMilliseconds")) {
             try {
                 Long value = Long.parseLong(map.getString("timerIntervalInMilliseconds"));
@@ -491,7 +485,6 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 Log.d(TAG, "Can't format number");
             }
         }
-
         if (!map.isNull("timerStartInMilliseconds")) {
             try {
                 Long value = Long.parseLong(map.getString("timerStartInMilliseconds"));
@@ -501,7 +494,6 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 Log.d(TAG, "Can't format number");
             }
         }
-
         if (!map.isNull("sessionIntervalInMilliseconds")) {
             try {
                 Long value = Long.parseLong(map.getString("sessionIntervalInMilliseconds"));
@@ -511,7 +503,6 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 Log.d(TAG, "Can't format number");
             }
         }
-
         if (!map.isNull("subsessionIntervalInMilliseconds")) {
             try {
                 Long value = Long.parseLong(map.getString("subsessionIntervalInMilliseconds"));
@@ -521,7 +512,6 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 Log.d(TAG, "Can't format number");
             }
         }
-
         if (!map.isNull("teardown")) {
             boolean value = map.getBoolean("teardown");
             testOptions.teardown = value;

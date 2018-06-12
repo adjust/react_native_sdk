@@ -50,10 +50,16 @@ Adjust.sendFirstPackages = function() {
 };
 
 Adjust.addSessionCallbackParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
     module_adjust.addSessionCallbackParameter(key, value);
 };
 
 Adjust.addSessionPartnerParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
     module_adjust.addSessionPartnerParameter(key, value);
 };
 
@@ -169,10 +175,16 @@ var AdjustEvent = function (eventToken) {
     };
 
     this.addCallbackParameter = function(key, value) {
+        if (typeof key !== 'string' || typeof value !== 'string') {
+            return;
+        }
         this.callbackParameters[key] = value;
     };
 
     this.addPartnerParameter = function(key, value) {
+        if (typeof key !== 'string' || typeof value !== 'string') {
+            return;
+        }
         this.partnerParameters[key] = value;
     };
 

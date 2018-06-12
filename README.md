@@ -363,6 +363,8 @@ It should be mentioned that we support a variety of placeholders like `{idfa}` f
 You can read more about using URL callbacks, including a full list of available values, in our
 [callbacks guide][callbacks-guide].
 
+**Note**: **Both** parameters in this method must be **strings**. If either of the passed parameters is not a string, the key-value pair will not be added to the parameters list.
+
 ### <a id="partner-parameters"></a>Partner parameters
 
 Similarly to the callback parameters mentioned above, you can also add parameters that Adjust will transmit to the network partners of your choice. You can activate these networks in your Adjust dashboard.
@@ -379,6 +381,8 @@ Adjust.trackEvent(adjustEvent);
 ```
 
 You can read more about special partners and networks in our [guide to special partners][special-partners].
+
+**Note**: **Both** parameters in this method must be **strings**. If either of the passed parameters is not a string, the key-value pair will not be added to the parameters list.
 
 ### <a id="session-parameters"></a>Session parameters
 
@@ -397,6 +401,8 @@ Adjust.addSessionCallbackParameter("foo", "bar");
 ```
 
 The session callback parameters will be merged with the callback parameters and added to an event. The callback parameters added to an event have precedence over the session callback parameters. Meaning that, when adding a callback parameter to an event with the same key to one added from the session, the value that prevails is the callback parameter added to the event.
+
+**Note**: **Both** parameters in this method must be **strings**. If either of the passed parameters is not a string, the key-value pair will not be added to the parameters list.
 
 It's possible to remove a specific session callback parameter by passing the desiring key to the method `removeSessionCallbackParameter` of the `Adjust` instance:
 
@@ -423,6 +429,8 @@ Adjust.addSessionPartnerParameter("foo", "bar");
 ```
 
 The session partner parameters will be merged with the partner parameters and added to an event. The partner parameters added to an event have precedence over the session partner parameters. Meaning that, when adding a partner parameter to an event with the same key to one added from the session, the value that prevails is the partner parameter added to the event.
+
+**Note**: **Both** parameters in this method must be **strings**. If either of the passed parameters is not a string, the key-value pair will not be added to the parameters list.
 
 It's possible to remove a specific session partner parameter by passing the desiring key to the method `removeSessionPartnerParameter` of the `Adjust` instance:
 

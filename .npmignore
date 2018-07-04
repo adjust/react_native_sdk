@@ -14,5 +14,4 @@ node_modules
 ext/
 scripts/
 example/
-testapp/
-testplugin/
+test/

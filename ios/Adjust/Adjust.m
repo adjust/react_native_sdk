@@ -98,6 +98,10 @@ static dispatch_once_t onceToken = 0;
     [[Adjust getInstance] setDeviceToken:deviceToken];
 }
 
++ (void)setPushToken:(NSString *)pushToken {
+    [[Adjust getInstance] setPushToken:pushToken];
+}
+
 + (void)setOfflineMode:(BOOL)enabled {
     [[Adjust getInstance] setOfflineMode:enabled];
 }
@@ -223,19 +227,31 @@ static dispatch_once_t onceToken = 0;
 }
 
 - (void)appWillOpenUrl:(NSURL *)url {
+    NSDate *clickTime = [NSDate date];
     if (![self checkActivityHandler]) {
+        [ADJUserDefaults saveDeeplinkUrl:url andClickTime:clickTime];
         return;
     }
 
-    [self.activityHandler appWillOpenUrl:url];
+    [self.activityHandler appWillOpenUrl:url withClickTime:clickTime];
 }
 
 - (void)setDeviceToken:(NSData *)deviceToken {
-    [ADJUserDefaults savePushToken:deviceToken];
+    [ADJUserDefaults savePushTokenData:deviceToken];
 
     if ([self checkActivityHandler:@"device token"]) {
         if (self.activityHandler.isEnabled) {
             [self.activityHandler setDeviceToken:deviceToken];
+        }
+    }
+}
+
+- (void)setPushToken:(NSString *)pushToken {
+    [ADJUserDefaults savePushTokenString:pushToken];
+
+    if ([self checkActivityHandler:@"device token"]) {
+        if (self.activityHandler.isEnabled) {
+            [self.activityHandler setPushToken:pushToken];
         }
     }
 }
@@ -420,6 +436,10 @@ static dispatch_once_t onceToken = 0;
     if (testOptions.subsessionIntervalInMilliseconds != nil) {
         NSTimeInterval subsessionIntervalInSeconds = [testOptions.subsessionIntervalInMilliseconds intValue] / 1000.0;
         [ADJAdjustFactory setSubsessionInterval:subsessionIntervalInSeconds];
+    }
+    if (testOptions.noBackoffWait) {
+        [ADJAdjustFactory setSdkClickHandlerBackoffStrategy:[ADJBackoffStrategy backoffStrategyWithType:ADJNoWait]];
+        [ADJAdjustFactory setPackageHandlerBackoffStrategy:[ADJBackoffStrategy backoffStrategyWithType:ADJNoWait]];
     }
 }
 

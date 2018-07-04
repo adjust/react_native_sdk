@@ -6,9 +6,6 @@
 //  Copyright © 2017 Facebook. All rights reserved.
 //
 
-#ifndef AdjustEventEmitter_h
-#define AdjustEventEmitter_h
-
 #if __has_include(<React/RCTBridgeModule.h>)
 #import <React/RCTBridgeModule.h>
 #import <React/RCTEventEmitter.h>
@@ -22,5 +19,3 @@
 + (void)dispatchEvent:(NSString *)eventName withDictionary:(NSDictionary *)dictionary;
 
 @end
-
-#endif /* AdjustEventEmitter_h */

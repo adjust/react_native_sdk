@@ -10,11 +10,13 @@
 
 @interface ADJUserDefaults : NSObject
 
-+ (void)savePushToken:(NSData *)pushToken;
++ (void)savePushTokenData:(NSData *)pushToken;
 
-+ (NSData *)getPushToken;
++ (void)savePushTokenString:(NSString *)pushToken;
 
-+ (void)clearAdjustStuff;
++ (NSData *)getPushTokenData;
+
++ (NSString *)getPushTokenString;
 
 + (void)removePushToken;
 
@@ -27,5 +29,16 @@
 + (BOOL)getGdprForgetMe;
 
 + (void)removeGdprForgetMe;
+
++ (void)saveDeeplinkUrl:(NSURL *)deeplink
+           andClickTime:(NSDate *)clickTime;
+
++ (NSURL *)getDeeplinkUrl;
+
++ (NSDate *)getDeeplinkClickTime;
+
++ (void)removeDeeplink;
+
++ (void)clearAdjustStuff;
 
 @end

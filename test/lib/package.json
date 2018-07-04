@@ -1,0 +1,18 @@
+{
+    "name": "react-native-adjust-test",
+    "description": "Adjust Testing React Native SDK",
+    "version": "1.0.0",
+    "author": "adjust GmbH",
+    "license": "MIT",
+    "keywords": [
+        "react-native",
+        "ios",
+        "android",
+        "adjust",
+        "test"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/adjust/react_native_sdk.git"
+    }
+}

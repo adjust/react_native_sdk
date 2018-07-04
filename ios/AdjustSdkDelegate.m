@@ -7,7 +7,6 @@
 //
 
 #import <objc/runtime.h>
-
 #import "AdjustSdkDelegate.h"
 
 #if __has_include(<React/RCTAssert.h>)
@@ -16,7 +15,24 @@
 #import "RCTEventDispatcher.h"
 #endif
 
+static dispatch_once_t onceToken;
+static AdjustSdkDelegate *defaultInstance = nil;
+
 @implementation AdjustSdkDelegate
+
+#pragma mark - Object lifecycle methods
+
+- (id)init {
+    self = [super init];
+
+    if (nil == self) {
+        return nil;
+    }
+
+    return self;
+}
+
+#pragma mark - Public methods
 
 + (id)getInstanceWithSwizzleOfAttributionCallback:(BOOL)swizzleAttributionCallback
                            eventSucceededCallback:(BOOL)swizzleEventSucceededCallback
@@ -25,66 +41,60 @@
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
-    static dispatch_once_t onceToken;
-    static AdjustSdkDelegate *defaultInstance = nil;
-    
+
     dispatch_once(&onceToken, ^{
         defaultInstance = [[AdjustSdkDelegate alloc] init];
-        
+
         // Do the swizzling where and if needed.
         if (swizzleAttributionCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustAttributionChanged:)
                                   swizzledSelector:@selector(adjustAttributionChangedWannabe:)];
         }
-        
+
         if (swizzleEventSucceededCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustEventTrackingSucceeded:)
                                   swizzledSelector:@selector(adjustEventTrackingSucceededWannabe:)];
         }
-        
+
         if (swizzleEventFailedCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustEventTrackingFailed:)
                                   swizzledSelector:@selector(adjustEventTrackingFailedWannabe:)];
         }
-        
+
         if (swizzleSessionSucceededCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustSessionTrackingSucceeded:)
                                   swizzledSelector:@selector(adjustSessionTrackingSucceededWannabe:)];
         }
-        
+
         if (swizzleSessionFailedCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustSessionTrackingFailed:)
                                   swizzledSelector:@selector(adjustSessionTrackingFailedWananbe:)];
         }
-        
+
         if (swizzleDeferredDeeplinkCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustDeeplinkResponse:)
                                   swizzledSelector:@selector(adjustDeeplinkResponseWannabe:)];
         }
-        
+
         [defaultInstance setShouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink];
     });
-    
+
     return defaultInstance;
 }
 
-- (id)init {
-    self = [super init];
-    
-    if (nil == self) {
-        return nil;
-    }
-    
-    return self;
++ (void)teardown {
+    defaultInstance = nil;
+    onceToken = 0;
 }
+
+#pragma mark - Private & helper methods
 
 - (void)adjustAttributionChangedWannabe:(ADJAttribution *)attribution {
     if (attribution == nil) {
         return;
     }
-    
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
 
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [self addValueOrEmpty:dictionary key:@"trackerToken" value:attribution.trackerToken];
     [self addValueOrEmpty:dictionary key:@"trackerName" value:attribution.trackerName];
     [self addValueOrEmpty:dictionary key:@"network" value:attribution.network];
@@ -103,7 +113,6 @@
     }
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-
     [self addValueOrEmpty:dictionary key:@"message" value:eventSuccessResponseData.message];
     [self addValueOrEmpty:dictionary key:@"timestamp" value:eventSuccessResponseData.timeStamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:eventSuccessResponseData.adid];
@@ -119,7 +128,6 @@
     }
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-
     [self addValueOrEmpty:dictionary key:@"message" value:eventFailureResponseData.message];
     [self addValueOrEmpty:dictionary key:@"timestamp" value:eventFailureResponseData.timeStamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:eventFailureResponseData.adid];
@@ -137,7 +145,6 @@
     }
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-
     [self addValueOrEmpty:dictionary key:@"message" value:sessionSuccessResponseData.message];
     [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionSuccessResponseData.timeStamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:sessionSuccessResponseData.adid];
@@ -152,7 +159,6 @@
     }
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-
     [self addValueOrEmpty:dictionary key:@"message" value:sessionFailureResponseData.message];
     [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionFailureResponseData.timeStamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:sessionFailureResponseData.adid];
@@ -173,15 +179,14 @@
 - (void)swizzleCallbackMethod:(SEL)originalSelector
              swizzledSelector:(SEL)swizzledSelector {
     Class class = [self class];
-    
     Method originalMethod = class_getInstanceMethod(class, originalSelector);
     Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-    
+
     BOOL didAddMethod = class_addMethod(class,
                                         originalSelector,
                                         method_getImplementation(swizzledMethod),
                                         method_getTypeEncoding(swizzledMethod));
-    
+
     if (didAddMethod) {
         class_replaceMethod(class,
                             swizzledSelector,

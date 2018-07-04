@@ -1,9 +1,20 @@
 'use strict';
 
-import { NativeEventEmitter, NativeModules } from 'react-native';
+import { 
+    NativeEventEmitter,
+    NativeModules,
+    Platform,
+} from 'react-native';
 
 const module_adjust = NativeModules.Adjust;
-const module_adjust_emitter = new NativeEventEmitter(NativeModules.AdjustEventEmitter);
+
+let module_adjust_emitter = null;
+if (Platform.OS === "android") {
+    module_adjust_emitter = new NativeEventEmitter(NativeModules.Adjust);
+} else if (Platform.OS === "ios") {
+    module_adjust_emitter = new NativeEventEmitter(NativeModules.AdjustEventEmitter);
+}
+
 var Adjust = {};
 
 Adjust.create = function(adjustConfig) {
@@ -39,10 +50,16 @@ Adjust.sendFirstPackages = function() {
 };
 
 Adjust.addSessionCallbackParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
     module_adjust.addSessionCallbackParameter(key, value);
 };
 
 Adjust.addSessionPartnerParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
     module_adjust.addSessionPartnerParameter(key, value);
 };
 
@@ -122,6 +139,28 @@ Adjust.componentWillUnmount = function() {
     }
 };
 
+// =========================================== //
+// Adjust methods used for SDK testing only.   //
+// Do NOT use any of those in production code. //
+// =========================================== //
+Adjust.teardown = function() {
+    Adjust.componentWillUnmount();
+    module_adjust.teardown();
+};
+
+Adjust.setTestOptions = function(testOptions) {
+    module_adjust.setTestOptions(testOptions);
+};
+
+Adjust.onResume = function() {
+    module_adjust.onResume();
+};
+
+Adjust.onPause = function() {
+    module_adjust.onPause();
+};
+// =========================================== //
+
 var AdjustEvent = function (eventToken) {
     this.eventToken = eventToken;
     this.revenue = null;
@@ -136,10 +175,16 @@ var AdjustEvent = function (eventToken) {
     };
 
     this.addCallbackParameter = function(key, value) {
+        if (typeof key !== 'string' || typeof value !== 'string') {
+            return;
+        }
         this.callbackParameters[key] = value;
     };
 
     this.addPartnerParameter = function(key, value) {
+        if (typeof key !== 'string' || typeof value !== 'string') {
+            return;
+        }
         this.partnerParameters[key] = value;
     };
 
@@ -152,7 +197,7 @@ var AdjustConfig = function(appToken, environment) {
     this.appToken = appToken;
     this.environment = environment;
 
-    this.sdkPrefix = "react_native4.13.0";
+    this.sdkPrefix = "react_native4.14.0";
     this.logLevel = null;
 
     this.eventBufferingEnabled = null;
@@ -217,19 +262,15 @@ AdjustConfig.prototype.setAppSecret = function(secretId, info1, info2, info3, in
     if (secretId != null) {
         this.secretId = secretId.toString();
     }
-
     if (info1 != null) {
         this.info1 = info1.toString();
     }
-
     if (info2 != null) {
         this.info2 = info2.toString();
     }
-
     if (info3 != null) {
         this.info3 = info3.toString();
     }
-
     if (info4 != null) {
         this.info4 = info4.toString();
     }

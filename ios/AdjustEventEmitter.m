@@ -19,11 +19,11 @@ RCT_EXPORT_MODULE();
     dispatch_once(&onceToken, ^{
         sharedInstance = [super allocWithZone:zone];
     });
+
     return sharedInstance;
 }
 
-- (NSArray<NSString *> *)supportedEvents
-{
+- (NSArray<NSString *> *)supportedEvents {
     return @[@"adjust_attribution",
              @"adjust_eventTrackingSucceeded",
              @"adjust_eventTrackingFailed",

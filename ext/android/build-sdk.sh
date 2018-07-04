@@ -14,7 +14,7 @@ GREEN='\033[0;32m'
 
 # Usage hint in case of wrong invocation.
 if [ $# -ne 1 ]; then
-    echo $0: "${CYAN}[ADJUST][BUILD-SDK-ANDROID]:${GREEN} Usage: ./build.sh [debug || release] ${NC}"
+    echo -e "${CYAN}[ADJUST][BUILD-SDK-ANDROID]:${GREEN} Usage: ./build.sh [debug || release] ${NC}"
     exit 1
 fi
 

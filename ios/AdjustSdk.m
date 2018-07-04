@@ -196,8 +196,7 @@ RCT_EXPORT_METHOD(setPushToken:(NSString *)token) {
     if (!([self isFieldValid:token])) {
         return;
     }
-
-    [Adjust setDeviceToken:[token dataUsingEncoding:NSUTF8StringEncoding]];
+    [Adjust setPushToken:token];
 }
 
 RCT_EXPORT_METHOD(appWillOpenUrl:(NSString *)urlStr) {

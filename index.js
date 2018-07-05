@@ -170,8 +170,10 @@ var AdjustEvent = function (eventToken) {
     this.partnerParameters = {};
 
     this.setRevenue = function(revenue, currency) {
-        this.revenue = revenue;
-        this.currency = currency;
+        if (revenue != null) {
+            this.revenue = revenue.toString();
+            this.currency = currency;
+        }
     };
 
     this.addCallbackParameter = function(key, value) {

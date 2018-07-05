@@ -96,10 +96,6 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         return this.shouldLaunchDeeplink;
     }
 
-    public static boolean checkKey(ReadableMap config, String key) {
-        return config.hasKey(key) && !config.isNull(key);
-    }
-
     @ReactMethod
     public void create(ReadableMap mapConfig) {
         String appToken = null;
@@ -130,12 +126,17 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // App token and environment.
-        appToken = mapConfig.getString("appToken");
-        environment = mapConfig.getString("environment");
+        // App token
+        if (checkKey(mapConfig, "appToken")) {
+            appToken = mapConfig.getString("appToken");
+        }
+
+        // Environment
+        if (checkKey(mapConfig, "environment")) {
+            environment = mapConfig.getString("environment");
+        }
 
         final AdjustConfig adjustConfig = new AdjustConfig(getReactApplicationContext(), appToken, environment, isLogLevelSuppress);
-
         if (!adjustConfig.isValid()) {
             return;
         }
@@ -163,7 +164,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         }
 
         // Event buffering
-        if(checkKey(mapConfig, "eventBufferingEnabled")) {
+        if (checkKey(mapConfig, "eventBufferingEnabled")) {
             eventBufferingEnabled = mapConfig.getBoolean("eventBufferingEnabled");
             adjustConfig.setEventBufferingEnabled(eventBufferingEnabled);
         }
@@ -200,10 +201,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 && checkKey(mapConfig, "info4")) {
             try {
                 secretId = Long.parseLong(mapConfig.getString("secretId"), 10);
-                info1    = Long.parseLong(mapConfig.getString("info1"), 10);
-                info2    = Long.parseLong(mapConfig.getString("info2"), 10);
-                info3    = Long.parseLong(mapConfig.getString("info3"), 10);
-                info4    = Long.parseLong(mapConfig.getString("info4"), 10);
+                info1 = Long.parseLong(mapConfig.getString("info1"), 10);
+                info2 = Long.parseLong(mapConfig.getString("info2"), 10);
+                info3 = Long.parseLong(mapConfig.getString("info3"), 10);
+                info4 = Long.parseLong(mapConfig.getString("info4"), 10);
                 adjustConfig.setAppSecret(secretId, info1, info2, info3, info4);
             } catch(NumberFormatException ignore) { }
         }
@@ -274,40 +275,63 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void trackEvent(ReadableMap mapEvent) {
-        final String eventToken = mapEvent.getString("eventToken");
-        final String currency = mapEvent.getString("currency");
-        final String transactionId = mapEvent.getString("transactionId");
-        final Map<String, Object> callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
-        final Map<String, Object> partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
+        double revenue = -1.0;
+        String eventToken = null;
+        String currency = null;
+        String transactionId = null;
+        Map<String, Object> callbackParameters = null;
+        Map<String, Object> partnerParameters = null;
 
-        AdjustEvent event = new AdjustEvent(eventToken);
-        if (event.isValid()) {
-            // Revenue
-            if (!mapEvent.isNull("revenue")) {
-                event.setRevenue(mapEvent.getDouble("revenue"), currency);
-            }
+        // Event token
+        if (checkKey(mapEvent, "eventToken")) {
+            eventToken = mapEvent.getString("eventToken");
+        }
 
-            // Callback parameters
+        final AdjustEvent event = new AdjustEvent(eventToken);
+        if (!event.isValid()) {
+            return;
+        }
+
+        // Revenue
+        if (checkKey(mapEvent, "revenue")) {
+            try {
+                revenue = Double.parseDouble(mapEvent.getString("revenue"));
+                if (checkKey(mapEvent, "currency")) {
+                    currency = mapEvent.getString("currency");
+                    event.setRevenue(revenue, currency);
+                }
+            } catch(NumberFormatException ignore) { }
+        }
+
+        // Callback parameters
+        if (checkKey(mapEvent, "callbackParameters")) {
+            callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
             if (null != callbackParameters) {
                 for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
                     event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
                 }
             }
+        }
 
-            // Partner parameters
+        // Partner parameters
+        if (checkKey(mapEvent, "partnerParameters")) {
+            partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
             if (null != partnerParameters) {
                 for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
                     event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
                 }
             }
+        }
 
-            // Revenue deduplication
+        // Revenue deduplication
+        if (checkKey(mapEvent, "transactionId")) {
+            transactionId = mapEvent.getString("transactionId");
             if (null != transactionId) {
                 event.setOrderId(transactionId);
             }
-
-            com.adjust.sdk.Adjust.trackEvent(event);
         }
+
+        com.adjust.sdk.Adjust.trackEvent(event);
     }
 
     @ReactMethod
@@ -454,33 +478,33 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     @ReactMethod
     public void setTestOptions(ReadableMap map) {
         final AdjustTestOptions testOptions = new AdjustTestOptions();
-        if (!map.isNull("hasContext")) {
+        if (checkKey(map, "hasContext")) {
             boolean value = map.getBoolean("hasContext");
             if (value) {
                 testOptions.context = getReactApplicationContext();
             }
         }
-        if (!map.isNull("baseUrl")) {
+        if (checkKey(map, "baseUrl")) {
             String value = map.getString("baseUrl");
             testOptions.baseUrl = value;
         }
-        if (!map.isNull("gdprUrl")) {
+        if (checkKey(map, "gdprUrl")) {
             String value = map.getString("gdprUrl");
             testOptions.gdprUrl = value;
         }
-        if (!map.isNull("basePath")) {
+        if (checkKey(map, "basePath")) {
             String value = map.getString("basePath");
             testOptions.basePath = value;
         }
-        if (!map.isNull("gdprPath")) {
+        if (checkKey(map, "gdprPath")) {
             String value = map.getString("gdprPath");
             testOptions.gdprPath = value;
         }
-        if (!map.isNull("useTestConnectionOptions")) {
+        if (checkKey(map, "useTestConnectionOptions")) {
             boolean value = map.getBoolean("useTestConnectionOptions");
             testOptions.useTestConnectionOptions = value;
         }
-        if (!map.isNull("timerIntervalInMilliseconds")) {
+        if (checkKey(map, "timerIntervalInMilliseconds")) {
             try {
                 Long value = Long.parseLong(map.getString("timerIntervalInMilliseconds"));
                 testOptions.timerIntervalInMilliseconds = value;
@@ -489,7 +513,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 Log.d(TAG, "Can't format number");
             }
         }
-        if (!map.isNull("timerStartInMilliseconds")) {
+        if (checkKey(map, "timerStartInMilliseconds")) {
             try {
                 Long value = Long.parseLong(map.getString("timerStartInMilliseconds"));
                 testOptions.timerStartInMilliseconds = value;
@@ -498,7 +522,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 Log.d(TAG, "Can't format number");
             }
         }
-        if (!map.isNull("sessionIntervalInMilliseconds")) {
+        if (checkKey(map, "sessionIntervalInMilliseconds")) {
             try {
                 Long value = Long.parseLong(map.getString("sessionIntervalInMilliseconds"));
                 testOptions.sessionIntervalInMilliseconds = value;
@@ -507,7 +531,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 Log.d(TAG, "Can't format number");
             }
         }
-        if (!map.isNull("subsessionIntervalInMilliseconds")) {
+        if (checkKey(map, "subsessionIntervalInMilliseconds")) {
             try {
                 Long value = Long.parseLong(map.getString("subsessionIntervalInMilliseconds"));
                 testOptions.subsessionIntervalInMilliseconds = value;
@@ -516,11 +540,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 Log.d(TAG, "Can't format number");
             }
         }
-        if (!map.isNull("noBackoffWait")) {
+        if (checkKey(map, "noBackoffWait")) {
             boolean value = map.getBoolean("noBackoffWait");
             testOptions.noBackoffWait = value;
         }
-        if (!map.isNull("teardown")) {
+        if (checkKey(map, "teardown")) {
             boolean value = map.getBoolean("teardown");
             testOptions.teardown = value;
         }
@@ -542,5 +566,13 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         reactContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(eventName, params);
+    }
+
+    private boolean checkKey(ReadableMap config, String key) {
+        if (config == null) {
+            return false;
+        }
+
+        return config.hasKey(key) && !config.isNull(key);
     }
 }

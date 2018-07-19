@@ -293,14 +293,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         }
 
         // Revenue
-        if (checkKey(mapEvent, "revenue")) {
+        if (checkKey(mapEvent, "revenue") || checkKey(mapEvent, "currency")) {
             try {
                 revenue = Double.parseDouble(mapEvent.getString("revenue"));
-                if (checkKey(mapEvent, "currency")) {
-                    currency = mapEvent.getString("currency");
-                    event.setRevenue(revenue, currency);
-                }
             } catch(NumberFormatException ignore) { }
+            currency = mapEvent.getString("currency");
+            event.setRevenue(revenue, currency);
         }
 
         // Callback parameters

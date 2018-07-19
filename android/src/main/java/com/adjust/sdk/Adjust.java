@@ -98,6 +98,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void create(ReadableMap mapConfig) {
+        if (mapConfig == null) {
+            return;
+        }
+
         String appToken = null;
         String environment = null;
         String logLevel = null;
@@ -206,7 +210,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 info3 = Long.parseLong(mapConfig.getString("info3"), 10);
                 info4 = Long.parseLong(mapConfig.getString("info4"), 10);
                 adjustConfig.setAppSecret(secretId, info1, info2, info3, info4);
-            } catch(NumberFormatException ignore) { }
+            } catch (NumberFormatException ignore) {}
         }
 
         // Background tracking
@@ -275,6 +279,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void trackEvent(ReadableMap mapEvent) {
+        if (mapEvent == null) {
+            return;
+        }
+
         double revenue = -1.0;
         String eventToken = null;
         String currency = null;
@@ -296,7 +304,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (checkKey(mapEvent, "revenue") || checkKey(mapEvent, "currency")) {
             try {
                 revenue = Double.parseDouble(mapEvent.getString("revenue"));
-            } catch(NumberFormatException ignore) { }
+            } catch (NumberFormatException ignore) {}
             currency = mapEvent.getString("currency");
             event.setRevenue(revenue, currency);
         }
@@ -474,76 +482,80 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void setTestOptions(ReadableMap map) {
+    public void setTestOptions(ReadableMap mapTest) {
+        if (mapTest == null) {
+            return;
+        }
+
         final AdjustTestOptions testOptions = new AdjustTestOptions();
-        if (checkKey(map, "hasContext")) {
-            boolean value = map.getBoolean("hasContext");
+        if (checkKey(mapTest, "hasContext")) {
+            boolean value = mapTest.getBoolean("hasContext");
             if (value) {
                 testOptions.context = getReactApplicationContext();
             }
         }
-        if (checkKey(map, "baseUrl")) {
-            String value = map.getString("baseUrl");
+        if (checkKey(mapTest, "baseUrl")) {
+            String value = mapTest.getString("baseUrl");
             testOptions.baseUrl = value;
         }
-        if (checkKey(map, "gdprUrl")) {
-            String value = map.getString("gdprUrl");
+        if (checkKey(mapTest, "gdprUrl")) {
+            String value = mapTest.getString("gdprUrl");
             testOptions.gdprUrl = value;
         }
-        if (checkKey(map, "basePath")) {
-            String value = map.getString("basePath");
+        if (checkKey(mapTest, "basePath")) {
+            String value = mapTest.getString("basePath");
             testOptions.basePath = value;
         }
-        if (checkKey(map, "gdprPath")) {
-            String value = map.getString("gdprPath");
+        if (checkKey(mapTest, "gdprPath")) {
+            String value = mapTest.getString("gdprPath");
             testOptions.gdprPath = value;
         }
-        if (checkKey(map, "useTestConnectionOptions")) {
-            boolean value = map.getBoolean("useTestConnectionOptions");
+        if (checkKey(mapTest, "useTestConnectionOptions")) {
+            boolean value = mapTest.getBoolean("useTestConnectionOptions");
             testOptions.useTestConnectionOptions = value;
         }
-        if (checkKey(map, "timerIntervalInMilliseconds")) {
+        if (checkKey(mapTest, "timerIntervalInMilliseconds")) {
             try {
-                Long value = Long.parseLong(map.getString("timerIntervalInMilliseconds"));
+                Long value = Long.parseLong(mapTest.getString("timerIntervalInMilliseconds"));
                 testOptions.timerIntervalInMilliseconds = value;
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
                 Log.d(TAG, "Can't format number");
             }
         }
-        if (checkKey(map, "timerStartInMilliseconds")) {
+        if (checkKey(mapTest, "timerStartInMilliseconds")) {
             try {
-                Long value = Long.parseLong(map.getString("timerStartInMilliseconds"));
+                Long value = Long.parseLong(mapTest.getString("timerStartInMilliseconds"));
                 testOptions.timerStartInMilliseconds = value;
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
                 Log.d(TAG, "Can't format number");
             }
         }
-        if (checkKey(map, "sessionIntervalInMilliseconds")) {
+        if (checkKey(mapTest, "sessionIntervalInMilliseconds")) {
             try {
-                Long value = Long.parseLong(map.getString("sessionIntervalInMilliseconds"));
+                Long value = Long.parseLong(mapTest.getString("sessionIntervalInMilliseconds"));
                 testOptions.sessionIntervalInMilliseconds = value;
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
                 Log.d(TAG, "Can't format number");
             }
         }
-        if (checkKey(map, "subsessionIntervalInMilliseconds")) {
+        if (checkKey(mapTest, "subsessionIntervalInMilliseconds")) {
             try {
-                Long value = Long.parseLong(map.getString("subsessionIntervalInMilliseconds"));
+                Long value = Long.parseLong(mapTest.getString("subsessionIntervalInMilliseconds"));
                 testOptions.subsessionIntervalInMilliseconds = value;
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
                 Log.d(TAG, "Can't format number");
             }
         }
-        if (checkKey(map, "noBackoffWait")) {
-            boolean value = map.getBoolean("noBackoffWait");
+        if (checkKey(mapTest, "noBackoffWait")) {
+            boolean value = mapTest.getBoolean("noBackoffWait");
             testOptions.noBackoffWait = value;
         }
-        if (checkKey(map, "teardown")) {
-            boolean value = map.getBoolean("teardown");
+        if (checkKey(mapTest, "teardown")) {
+            boolean value = mapTest.getBoolean("teardown");
             testOptions.teardown = value;
         }
 
@@ -566,11 +578,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             .emit(eventName, params);
     }
 
-    private boolean checkKey(ReadableMap config, String key) {
-        if (config == null) {
-            return false;
-        }
-
-        return config.hasKey(key) && !config.isNull(key);
+    private boolean checkKey(ReadableMap map, String key) {
+        return map.hasKey(key) && !map.isNull(key);
     }
 }

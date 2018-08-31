@@ -11,6 +11,7 @@
         Text,
         View,
         NativeEventEmitter,
+        Linking,
     } from 'react-native';
     import { CommandExecutor } from './command_executor.js';
     import { Adjust, AdjustEvent, AdjustConfig } from 'react-native-adjust';
@@ -65,6 +66,19 @@
             });
         }
 
+        componentDidMount() {
+            Linking.addEventListener('url', this.handleDeepLink);
+            Linking.getInitialURL().then((url) => {
+                if (url) {
+                    this.handleDeepLink({ url });
+                }
+            })
+        }
+
+        handleDeepLink(e) {
+            Adjust.appWillOpenUrl(e.url);
+        }
+
         componentWillUnmount() {
             emitterSubscription.remove();
         }
@@ -72,15 +86,15 @@
         render() {
             return (
                 <View style={styles.container}>
-                <Text style={styles.welcome}>
-                Welcome to React Native!
-                </Text>
-                <Text style={styles.instructions}>
-                To get started, edit App.js
-                </Text>
-                <Text style={styles.instructions}>
-                {instructions}
-                </Text>
+                    <Text style={styles.welcome}>
+                        Welcome to React Native - Adjust SDK Test App!
+                    </Text>
+                    <Text style={styles.instructions}>
+                        To get started, edit App.js
+                    </Text>
+                    <Text style={styles.instructions}>
+                        {instructions}
+                    </Text>
                 </View>
                 );
         }

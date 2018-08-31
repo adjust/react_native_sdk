@@ -380,6 +380,17 @@ AdjustCommandExecutor.prototype.config = function(params) {
             AdjustSdkTest.sendInfoToServer(_this.basePath);
         });
     }
+
+    if ('deferredDeeplinkCallback' in params) {
+        var _this = this;
+        var launchDeferredDeeplinkS = getFirstParameterValue(params, 'deferredDeeplinkCallback');
+        var launchDeferredDeeplink = launchDeferredDeeplinkS == 'true';
+        adjustConfig.setShouldLaunchDeeplink(launchDeferredDeeplink);
+        adjustConfig.setDeferredDeeplinkCallbackListener(function(deeplink) {
+            AdjustSdkTest.addInfoToSend("deeplink", deeplink.uri);
+            AdjustSdkTest.sendInfoToServer(_this.basePath);
+        });
+    }
 };
 
 AdjustCommandExecutor.prototype.start = function(params) {

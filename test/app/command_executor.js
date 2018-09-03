@@ -162,7 +162,7 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
                 testOptions.basePath                 = this.basePath;
                 testOptions.gdprPath                 = this.gdprPath;
                 testOptions.useTestConnectionOptions = true;
-                Adjust.teardown();
+                Adjust.teardown('test');
             }
 
             if ('deleteState' === option) {
@@ -182,7 +182,7 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
                 testOptions.basePath                 = null;
                 testOptions.gdprPath                 = null;
                 testOptions.useTestConnectionOptions = false;
-                Adjust.teardown();
+                Adjust.teardown('test');
             }
             if ('test' === option) {
                 this.savedEvents                             = null;
@@ -488,11 +488,11 @@ AdjustCommandExecutor.prototype.setReferrer = function(params) {
 };
 
 AdjustCommandExecutor.prototype.pause = function(params) {
-    Adjust.onPause();
+    Adjust.onPause('test');
 };
 
 AdjustCommandExecutor.prototype.resume = function(params) {
-    Adjust.onResume();
+    Adjust.onResume('test');
 };
 
 AdjustCommandExecutor.prototype.setEnabled = function(params) {

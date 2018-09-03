@@ -143,7 +143,10 @@ Adjust.componentWillUnmount = function() {
 // Adjust methods used for SDK testing only.   //
 // Do NOT use any of those in production code. //
 // =========================================== //
-Adjust.teardown = function() {
+Adjust.teardown = function(testParam) {
+    if(testParam === null || testParam === undefined || testParam !== 'test') {
+        return;
+    }
     Adjust.componentWillUnmount();
     module_adjust.teardown();
 };
@@ -152,11 +155,17 @@ Adjust.setTestOptions = function(testOptions) {
     module_adjust.setTestOptions(testOptions);
 };
 
-Adjust.onResume = function() {
+Adjust.onResume = function(testParam) {
+    if(testParam === null || testParam === undefined || testParam !== 'test') {
+        return;
+    }
     module_adjust.onResume();
 };
 
-Adjust.onPause = function() {
+Adjust.onPause = function(testParam) {
+    if(testParam === null || testParam === undefined || testParam !== 'test') {
+        return;
+    }
     module_adjust.onPause();
 };
 // =========================================== //

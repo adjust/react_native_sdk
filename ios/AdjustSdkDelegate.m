@@ -107,7 +107,13 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"timestamp" value:eventSuccessResponseData.timeStamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:eventSuccessResponseData.adid];
     [self addValueOrEmpty:dictionary key:@"eventToken" value:eventSuccessResponseData.eventToken];
-    [self addValueOrEmpty:dictionary key:@"jsonResponse" value:eventSuccessResponseData.jsonResponse];
+    if (eventSuccessResponseData.jsonResponse != nil) {
+        NSData *dataJsonResponse = [NSJSONSerialization dataWithJSONObject:eventSuccessResponseData.jsonResponse options:0 error:nil];
+        NSString *stringJsonResponse = [[NSString alloc] initWithBytes:[dataJsonResponse bytes]
+                                                                length:[dataJsonResponse length]
+                                                              encoding:NSUTF8StringEncoding];
+        [self addValueOrEmpty:dictionary key:@"jsonResponse" value:stringJsonResponse];
+    }
     [AdjustEventEmitter dispatchEvent:@"adjust_eventTrackingSucceeded" withDictionary:dictionary];
 }
 
@@ -122,7 +128,13 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"adid" value:eventFailureResponseData.adid];
     [self addValueOrEmpty:dictionary key:@"eventToken" value:eventFailureResponseData.eventToken];
     [dictionary setObject:(eventFailureResponseData.willRetry ? @"true" : @"false") forKey:@"willRetry"];
-    [self addValueOrEmpty:dictionary key:@"jsonResponse" value:eventFailureResponseData.jsonResponse];
+    if (eventFailureResponseData.jsonResponse != nil) {
+        NSData *dataJsonResponse = [NSJSONSerialization dataWithJSONObject:eventFailureResponseData.jsonResponse options:0 error:nil];
+        NSString *stringJsonResponse = [[NSString alloc] initWithBytes:[dataJsonResponse bytes]
+                                                                length:[dataJsonResponse length]
+                                                              encoding:NSUTF8StringEncoding];
+        [self addValueOrEmpty:dictionary key:@"jsonResponse" value:stringJsonResponse];
+    }
     [AdjustEventEmitter dispatchEvent:@"adjust_eventTrackingFailed" withDictionary:dictionary];
 }
 
@@ -136,7 +148,13 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"message" value:sessionSuccessResponseData.message];
     [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionSuccessResponseData.timeStamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:sessionSuccessResponseData.adid];
-    [self addValueOrEmpty:dictionary key:@"jsonResponse" value:sessionSuccessResponseData.jsonResponse];
+    if (sessionSuccessResponseData.jsonResponse != nil) {
+        NSData *dataJsonResponse = [NSJSONSerialization dataWithJSONObject:sessionSuccessResponseData.jsonResponse options:0 error:nil];
+        NSString *stringJsonResponse = [[NSString alloc] initWithBytes:[dataJsonResponse bytes]
+                                                                length:[dataJsonResponse length]
+                                                              encoding:NSUTF8StringEncoding];
+        [self addValueOrEmpty:dictionary key:@"jsonResponse" value:stringJsonResponse];
+    }
     [AdjustEventEmitter dispatchEvent:@"adjust_sessionTrackingSucceeded" withDictionary:dictionary];
 }
 
@@ -150,7 +168,13 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionFailureResponseData.timeStamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:sessionFailureResponseData.adid];
     [dictionary setObject:(sessionFailureResponseData.willRetry ? @"true" : @"false") forKey:@"willRetry"];
-    [self addValueOrEmpty:dictionary key:@"jsonResponse" value:sessionFailureResponseData.jsonResponse];
+    if (sessionFailureResponseData.jsonResponse != nil) {
+        NSData *dataJsonResponse = [NSJSONSerialization dataWithJSONObject:sessionFailureResponseData.jsonResponse options:0 error:nil];
+        NSString *stringJsonResponse = [[NSString alloc] initWithBytes:[dataJsonResponse bytes]
+                                                                length:[dataJsonResponse length]
+                                                              encoding:NSUTF8StringEncoding];
+        [self addValueOrEmpty:dictionary key:@"jsonResponse" value:stringJsonResponse];
+    }
     [AdjustEventEmitter dispatchEvent:@"adjust_sessionTrackingFailed" withDictionary:dictionary];
 }
 

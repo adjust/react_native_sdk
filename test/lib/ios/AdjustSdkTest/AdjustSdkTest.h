@@ -1,6 +1,6 @@
 //
 //  AdjustSdkTest.h
-//  AdjustSdkTest
+//  Adjust SDK Test
 //
 //  Created by Uglješa Erceg (@uerceg) on 11th June 2018.
 //  Copyright © 2018 Adjust GmbH. All rights reserved.

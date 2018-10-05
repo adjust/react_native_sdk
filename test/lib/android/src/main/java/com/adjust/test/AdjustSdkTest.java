@@ -17,7 +17,6 @@ import com.adjust.testlibrary.TestLibrary;
 
 public class AdjustSdkTest extends ReactContextBaseJavaModule {
     private static final String TAG = "AdjustSdkTest";
-
     private TestLibrary testLibrary;
     private List<String> selectedTests = new ArrayList<String>();
     private List<String> selectedTestDirs = new ArrayList<String>();
@@ -33,8 +32,6 @@ public class AdjustSdkTest extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void startTestSession(String baseUrl) {
-        Log.d(TAG, "startTestSession() with baseUrl[" + baseUrl + "]");
-
         testLibrary = new TestLibrary(baseUrl, new CommandListener(getReactApplicationContext()));
         for (int i = 0; i < selectedTests.size(); i++) {
             testLibrary.addTest(selectedTests.get(i));
@@ -48,14 +45,12 @@ public class AdjustSdkTest extends ReactContextBaseJavaModule {
     @ReactMethod
     public void addInfoToSend(String key, String value) {
         if (testLibrary != null) {
-            Log.d(TAG, "addInfoToSend() with key[" + key + "] and value[" + value + "]");
             testLibrary.addInfoToSend(key, value);
         }
     }
 
     @ReactMethod
     public void sendInfoToServer(String basePath) {
-        Log.d(TAG, "sendInfoToServer(): " + basePath);
         if (testLibrary != null) {
             testLibrary.sendInfoToServer(basePath);
         }

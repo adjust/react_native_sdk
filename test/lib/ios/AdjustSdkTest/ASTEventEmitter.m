@@ -1,9 +1,9 @@
 //
-//  ASTEventEmitter.n
-//  AdjustSdkTest
+//  ASTEventEmitter.m
+//  Adjust SDK Test
 //
 //  Created by Abdullah Obaied (@obaied) on 28th December 2017.
-//  Copyright © 2017 Facebook. All rights reserved.
+//  Copyright © 2017-2018 Adjust GmbH. All rights reserved.
 //
 
 #import "ASTEventEmitter.h"
@@ -19,11 +19,11 @@ RCT_EXPORT_MODULE();
     dispatch_once(&onceToken, ^{
         sharedInstance = [super allocWithZone:zone];
     });
+
     return sharedInstance;
 }
 
-- (NSArray<NSString *> *)supportedEvents
-{
+- (NSArray<NSString *> *)supportedEvents {
     return @[@"command"];
 }
 

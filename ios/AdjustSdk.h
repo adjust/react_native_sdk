@@ -3,7 +3,7 @@
 //  Adjust SDK
 //
 //  Created by Abdullah Obaied (@obaied) on 25th October 2016.
-//  Copyright © 2012-2018 Adjust GmbH. All rights reserved.
+//  Copyright © 2016-2018 Adjust GmbH. All rights reserved.
 //
 
 #import "Adjust.h"

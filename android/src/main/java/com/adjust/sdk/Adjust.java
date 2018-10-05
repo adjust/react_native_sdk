@@ -2,24 +2,20 @@
 //  Adjust.java
 //  Adjust SDK
 //
-//  Created by Abdullah Obaied on 2016-10-19.
-//  Copyright (c) 2018 adjust GmbH. All rights reserved.
-//  See the file MIT-LICENSE for copying permission.
+//  Created by Abdullah Obaied (@Obaied) on 19th October 2016.
+//  Copyright (c) 2016-2018 Adjust GmbH. All rights reserved.
 //
 
 package com.adjust.nativemodule;
 
+import android.net.Uri;
 import android.util.Log;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Map.Entry;
-
-import android.net.Uri;
 import javax.annotation.Nullable;
-
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
-
 import com.adjust.sdk.*;
 
 public class Adjust extends ReactContextBaseJavaModule implements LifecycleEventListener,
@@ -29,6 +25,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 OnSessionTrackingSucceededListener,
                 OnSessionTrackingFailedListener,
                 OnDeeplinkResponseListener {
+    private static String TAG = "AdjustBridge";
     private boolean attributionCallback;
     private boolean eventTrackingSucceededCallback;
     private boolean eventTrackingFailedCallback;
@@ -36,7 +33,6 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     private boolean sessionTrackingFailedCallback;
     private boolean deferredDeeplinkCallback;
     private boolean shouldLaunchDeeplink = true;
-    private static String TAG = "AdjustBridge";
 
     public Adjust(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -122,7 +118,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         boolean eventBufferingEnabled = false;
         boolean readMobileEquipmentIdentity = false;
 
-        // Suppress log level
+        // Suppress log level.
         if (checkKey(mapConfig, "logLevel")) {
             logLevel = mapConfig.getString("logLevel");
             if (logLevel.equals("SUPPRESS")) {
@@ -130,12 +126,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // App token
+        // App token.
         if (checkKey(mapConfig, "appToken")) {
             appToken = mapConfig.getString("appToken");
         }
 
-        // Environment
+        // Environment.
         if (checkKey(mapConfig, "environment")) {
             environment = mapConfig.getString("environment");
         }
@@ -145,7 +141,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             return;
         }
 
-        // Log level
+        // Log level.
         if (checkKey(mapConfig, "logLevel")) {
             logLevel = mapConfig.getString("logLevel");
             if (logLevel.equals("VERBOSE")) {
@@ -167,37 +163,37 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Event buffering
+        // Event buffering.
         if (checkKey(mapConfig, "eventBufferingEnabled")) {
             eventBufferingEnabled = mapConfig.getBoolean("eventBufferingEnabled");
             adjustConfig.setEventBufferingEnabled(eventBufferingEnabled);
         }
 
-        // SDK prefix
+        // SDK prefix.
         if (checkKey(mapConfig, "sdkPrefix")) {
             sdkPrefix = mapConfig.getString("sdkPrefix");
             adjustConfig.setSdkPrefix(sdkPrefix);
         }
 
-        // Main process name
+        // Main process name.
         if (checkKey(mapConfig, "processName")) {
             processName = mapConfig.getString("processName");
             adjustConfig.setProcessName(processName);
         }
 
-        // Default tracker
+        // Default tracker.
         if (checkKey(mapConfig, "defaultTracker")) {
             defaultTracker = mapConfig.getString("defaultTracker");
             adjustConfig.setDefaultTracker(defaultTracker);
         }
 
-        // User agent
+        // User agent.
         if (checkKey(mapConfig, "userAgent")) {
             userAgent = mapConfig.getString("userAgent");
             adjustConfig.setUserAgent(userAgent);
         }
 
-        // App secret
+        // App secret.
         if (checkKey(mapConfig, "secretId")
                 && checkKey(mapConfig, "info1")
                 && checkKey(mapConfig, "info2")
@@ -213,62 +209,62 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             } catch (NumberFormatException ignore) {}
         }
 
-        // Background tracking
+        // Background tracking.
         if (checkKey(mapConfig, "sendInBackground")) {
             sendInBackground = mapConfig.getBoolean("sendInBackground");
             adjustConfig.setSendInBackground(sendInBackground);
         }
 
-        // Set device Known
+        // Set device known.
         if (checkKey(mapConfig, "isDeviceKnown")) {
             isDeviceKnown = mapConfig.getBoolean("isDeviceKnown");
             adjustConfig.setDeviceKnown(isDeviceKnown);
         }
 
-        // Set read mobile equipment id
+        // Set read mobile equipment ID.
         if (checkKey(mapConfig, "readMobileEquipmentIdentity")) {
             readMobileEquipmentIdentity = mapConfig.getBoolean("readMobileEquipmentIdentity");
             adjustConfig.setReadMobileEquipmentIdentity(readMobileEquipmentIdentity);
         }
 
-        // Launching deferred deep link
+        // Launching deferred deep link.
         if (checkKey(mapConfig, "shouldLaunchDeeplink")) {
             shouldLaunchDeeplink = mapConfig.getBoolean("shouldLaunchDeeplink");
             this.shouldLaunchDeeplink = shouldLaunchDeeplink;
         }
 
-        // Delayed start
+        // Delayed start.
         if (checkKey(mapConfig, "delayStart")) {
             delayStart = mapConfig.getDouble("delayStart");
             adjustConfig.setDelayStart(delayStart);
         }
 
-        // Attribution callback
+        // Attribution callback.
         if (attributionCallback) {
             adjustConfig.setOnAttributionChangedListener(this);
         }
 
-        // Event tracking succeeded callback
+        // Event tracking succeeded callback.
         if (eventTrackingSucceededCallback) {
             adjustConfig.setOnEventTrackingSucceededListener(this);
         }
 
-        // Event tracking failed callback
+        // Event tracking failed callback.
         if (eventTrackingFailedCallback) {
             adjustConfig.setOnEventTrackingFailedListener(this);
         }
 
-        // Session tracking succeeded callback
+        // Session tracking succeeded callback.
         if (sessionTrackingSucceededCallback) {
             adjustConfig.setOnSessionTrackingSucceededListener(this);
         }
 
-        // Session tracking failed callback
+        // Session tracking failed callback.
         if (sessionTrackingFailedCallback) {
             adjustConfig.setOnSessionTrackingFailedListener(this);
         }
 
-        // Deferred deeplink callback listener
+        // Deferred deeplink callback.
         if (deferredDeeplinkCallback) {
             adjustConfig.setOnDeeplinkResponseListener(this);
         }
@@ -290,7 +286,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         Map<String, Object> callbackParameters = null;
         Map<String, Object> partnerParameters = null;
 
-        // Event token
+        // Event token.
         if (checkKey(mapEvent, "eventToken")) {
             eventToken = mapEvent.getString("eventToken");
         }
@@ -300,7 +296,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             return;
         }
 
-        // Revenue
+        // Revenue.
         if (checkKey(mapEvent, "revenue") || checkKey(mapEvent, "currency")) {
             try {
                 revenue = Double.parseDouble(mapEvent.getString("revenue"));
@@ -309,7 +305,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             event.setRevenue(revenue, currency);
         }
 
-        // Callback parameters
+        // Callback parameters.
         if (checkKey(mapEvent, "callbackParameters")) {
             callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
             if (null != callbackParameters) {
@@ -319,7 +315,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Partner parameters
+        // Partner parameters.
         if (checkKey(mapEvent, "partnerParameters")) {
             partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
             if (null != partnerParameters) {
@@ -329,7 +325,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Revenue deduplication
+        // Revenue deduplication.
         if (checkKey(mapEvent, "transactionId")) {
             transactionId = mapEvent.getString("transactionId");
             if (null != transactionId) {

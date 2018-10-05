@@ -2,9 +2,8 @@
 //  AdjustPackage.java
 //  Adjust SDK
 //
-//  Created by Abdullah Obaied on 2016-10-19.
-//  Copyright (c) 2018 adjust GmbH. All rights reserved.
-//  See the file MIT-LICENSE for copying permission.
+//  Created by Abdullah Obaied (@Obaied) on 19th October 2016.
+//  Copyright (c) 2016-2018 Adjust GmbH. All rights reserved.
 //
 
 package com.adjust.nativemodule;
@@ -13,7 +12,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
-
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;

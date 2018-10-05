@@ -15,6 +15,8 @@ if (Platform.OS === "android") {
     module_adjust_emitter = new NativeEventEmitter(NativeModules.AdjustEventEmitter);
 }
 
+// Adjust //
+
 var Adjust = {};
 
 Adjust.create = function(adjustConfig) {
@@ -141,10 +143,11 @@ Adjust.componentWillUnmount = function() {
 
 // =========================================== //
 // Adjust methods used for SDK testing only.   //
-// Do NOT use any of those in production code. //
+// Do NOT use any of these in production code. //
 // =========================================== //
+
 Adjust.teardown = function(testParam) {
-    if(testParam === null || testParam === undefined || testParam !== 'test') {
+    if (testParam === null || testParam === undefined || testParam !== 'test') {
         return;
     }
     Adjust.componentWillUnmount();
@@ -156,98 +159,58 @@ Adjust.setTestOptions = function(testOptions) {
 };
 
 Adjust.onResume = function(testParam) {
-    if(testParam === null || testParam === undefined || testParam !== 'test') {
+    if (testParam === null || testParam === undefined || testParam !== 'test') {
         return;
     }
     module_adjust.onResume();
 };
 
 Adjust.onPause = function(testParam) {
-    if(testParam === null || testParam === undefined || testParam !== 'test') {
+    if (testParam === null || testParam === undefined || testParam !== 'test') {
         return;
     }
     module_adjust.onPause();
 };
-// =========================================== //
 
-var AdjustEvent = function (eventToken) {
-    this.eventToken = eventToken;
-    this.revenue = null;
-    this.currency = null;
-    this.transactionId = null;
-    this.callbackParameters = {};
-    this.partnerParameters = {};
-
-    this.setRevenue = function(revenue, currency) {
-        if (revenue != null) {
-            this.revenue = revenue.toString();
-            this.currency = currency;
-        }
-    };
-
-    this.addCallbackParameter = function(key, value) {
-        if (typeof key !== 'string' || typeof value !== 'string') {
-            return;
-        }
-        this.callbackParameters[key] = value;
-    };
-
-    this.addPartnerParameter = function(key, value) {
-        if (typeof key !== 'string' || typeof value !== 'string') {
-            return;
-        }
-        this.partnerParameters[key] = value;
-    };
-
-    this.setTransactionId = function(transactionId) {
-        this.transactionId = transactionId;
-    };
-};
+// AdjustConfig //
 
 var AdjustConfig = function(appToken, environment) {
+    this.sdkPrefix = "react_native4.14.0";
     this.appToken = appToken;
     this.environment = environment;
-
-    this.sdkPrefix = "react_native4.14.0";
     this.logLevel = null;
-
     this.eventBufferingEnabled = null;
     this.shouldLaunchDeeplink = null;
     this.sendInBackground = null;
-
     this.delayStart = null;
-
     this.userAgent = null;
     this.isDeviceKnown = null;
     this.defaultTracker = null;
-
     this.secretId = null;
     this.info1 = null;
     this.info2 = null;
     this.info3 = null;
     this.info4 = null;
-
     // Android only
     this.processName = null;
     this.readMobileEquipmentIdentity = null;
 };
 
-AdjustConfig.EnvironmentSandbox                   = "sandbox";
-AdjustConfig.EnvironmentProduction                = "production";
-
-AdjustConfig.LogLevelVerbose                      = "VERBOSE";
-AdjustConfig.LogLevelDebug                        = "DEBUG";
-AdjustConfig.LogLevelInfo                         = "INFO";
-AdjustConfig.LogLevelWarn                         = "WARN";
-AdjustConfig.LogLevelError                        = "ERROR";
-AdjustConfig.LogLevelAssert                       = "ASSERT";
-AdjustConfig.LogLevelSuppress                     = "SUPPRESS";
-AdjustConfig.AttributionSubscription              = null;
-AdjustConfig.EventTrackingSucceededSubscription   = null;
-AdjustConfig.EventTrackingFailedSubscription      = null;
+AdjustConfig.EnvironmentSandbox = "sandbox";
+AdjustConfig.EnvironmentProduction = "production";
+AdjustConfig.LogLevelVerbose = "VERBOSE";
+AdjustConfig.LogLevelDebug = "DEBUG";
+AdjustConfig.LogLevelInfo = "INFO";
+AdjustConfig.LogLevelWarn = "WARN";
+AdjustConfig.LogLevelError = "ERROR";
+AdjustConfig.LogLevelAssert = "ASSERT";
+AdjustConfig.LogLevelSuppress = "SUPPRESS";
+AdjustConfig.AttributionSubscription = null;
+AdjustConfig.EventTrackingSucceededSubscription = null;
+AdjustConfig.EventTrackingFailedSubscription = null;
 AdjustConfig.SessionTrackingSucceededSubscription = null;
-AdjustConfig.SessionTrackingFailedSubscription    = null;
-AdjustConfig.DeferredDeeplinkSubscription         = null;
+AdjustConfig.SessionTrackingFailedSubscription = null;
+AdjustConfig.DeferredDeeplinkSubscription = null;
 
 AdjustConfig.prototype.setEventBufferingEnabled = function(isEnabled) {
     this.eventBufferingEnabled = isEnabled;
@@ -359,6 +322,42 @@ AdjustConfig.prototype.setDeferredDeeplinkCallbackListener = function(deferredDe
             'adjust_deferredDeeplink', deferredDeeplinkCallbackListener
         );
     }
+};
+
+// AdjustEvent //
+
+var AdjustEvent = function (eventToken) {
+    this.eventToken = eventToken;
+    this.revenue = null;
+    this.currency = null;
+    this.transactionId = null;
+    this.callbackParameters = {};
+    this.partnerParameters = {};
+
+    this.setRevenue = function(revenue, currency) {
+        if (revenue != null) {
+            this.revenue = revenue.toString();
+            this.currency = currency;
+        }
+    };
+
+    this.addCallbackParameter = function(key, value) {
+        if (typeof key !== 'string' || typeof value !== 'string') {
+            return;
+        }
+        this.callbackParameters[key] = value;
+    };
+
+    this.addPartnerParameter = function(key, value) {
+        if (typeof key !== 'string' || typeof value !== 'string') {
+            return;
+        }
+        this.partnerParameters[key] = value;
+    };
+
+    this.setTransactionId = function(transactionId) {
+        this.transactionId = transactionId;
+    };
 };
 
 module.exports = { Adjust, AdjustEvent, AdjustConfig }

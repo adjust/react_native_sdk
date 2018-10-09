@@ -15,19 +15,19 @@ def build(root_dir, android_submodule_dir, with_test_lib, is_release = True):
     # Running make*Jar Gradle task ...
     if is_release:
         debug_green('Running makeReleaseJar Gradle task ...')
-        jar_in_dir = '{0}/adjust/build/intermediates/bundles/release'.format(build_dir)
+        jar_in_dir = '{0}/adjust/build/intermediates/intermediate-jars/release'.format(build_dir)
         subprocess.call(['./gradlew', 'makeReleaseJar'])
     else:
         debug_green('Running makeDebugJar Gradle task ...')
-        jar_in_dir = '{0}/adjust/build/intermediates/bundles/debug'.format(build_dir)
+        jar_in_dir = '{0}/adjust/build/intermediates/intermediate-jars/debug'.format(build_dir)
         subprocess.call(['./gradlew', 'makeDebugJar'])
 
     # ------------------------------------------------------------------
     # Moving Android SDK JAR from jarIn to jarOut dir
     debug_green('Moving Android SDK JAR from {0} to {1} dir ...'.format(jar_in_dir, jar_out_dir))
     clear_dir(jar_out_dir)
-    copy_files('*.jar', jar_in_dir, jar_out_dir)
-    rename_file('*.jar', 'adjust-android.jar', jar_out_dir)
+    copy_files('classes.jar', jar_in_dir, jar_out_dir)
+    rename_file('classes.jar', 'adjust-android.jar', jar_out_dir)
 
     if with_test_lib:
         # ------------------------------------------------------------------

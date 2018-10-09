@@ -357,6 +357,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
             AdjustSdkTest.addInfoToSend("timestamp", eventSuccess.timestamp);
             AdjustSdkTest.addInfoToSend("adid", eventSuccess.adid);
             AdjustSdkTest.addInfoToSend("eventToken", eventSuccess.eventToken);
+            AdjustSdkTest.addInfoToSend("callbackId", eventSuccess.callbackId);
             if (eventSuccess.jsonResponse != null) {
                 AdjustSdkTest.addInfoToSend("jsonResponse", eventSuccess.jsonResponse.toString());
             }
@@ -372,6 +373,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
             AdjustSdkTest.addInfoToSend("timestamp", eventFailed.timestamp);
             AdjustSdkTest.addInfoToSend("adid", eventFailed.adid);
             AdjustSdkTest.addInfoToSend("eventToken", eventFailed.eventToken);
+            AdjustSdkTest.addInfoToSend("callbackId", eventFailed.callbackId);
             AdjustSdkTest.addInfoToSend("willRetry", eventFailed.willRetry);
             if (eventFailed.jsonResponse != null) {
                 AdjustSdkTest.addInfoToSend("jsonResponse", eventFailed.jsonResponse.toString());
@@ -465,6 +467,18 @@ AdjustCommandExecutor.prototype.event = function(params) {
         }
 
         adjustEvent.setTransactionId(orderId);
+    }
+
+    if ('callbackId' in params) {
+        var callbackId = getFirstParameterValue(params, 'callbackId');
+
+        // test server might set callbackId to be undefined/null, which gets
+        // serialized/deserialized as string 'null', leading to failed test
+        if (callbackId === 'null') {
+            callbackId = null;
+        }
+
+        adjustEvent.setCallbackId(callbackId);
     }
 };
 

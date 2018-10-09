@@ -331,6 +331,7 @@ var AdjustEvent = function (eventToken) {
     this.revenue = null;
     this.currency = null;
     this.transactionId = null;
+    this.callbackId = null;
     this.callbackParameters = {};
     this.partnerParameters = {};
 
@@ -357,6 +358,10 @@ var AdjustEvent = function (eventToken) {
 
     this.setTransactionId = function(transactionId) {
         this.transactionId = transactionId;
+    };
+
+    this.setCallbackId = function(callbackId) {
+        this.callbackId = callbackId;
     };
 };
 

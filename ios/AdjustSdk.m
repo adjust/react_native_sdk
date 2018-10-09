@@ -134,6 +134,7 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
     NSString *revenue = dict[@"revenue"];
     NSString *currency = dict[@"currency"];
     NSString *transactionId = dict[@"transactionId"];
+    NSString *callbackId = dict[@"callbackId"];
     NSDictionary *callbackParameters = dict[@"callbackParameters"];
     NSDictionary *partnerParameters = dict[@"partnerParameters"];
 
@@ -167,6 +168,11 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
     // Transaction ID.
     if ([self isFieldValid:transactionId]) {
         [adjustEvent setTransactionId:transactionId];
+    }
+
+    // Callback ID.
+    if ([self isFieldValid:callbackId]) {
+        [adjustEvent setCallbackId:callbackId];
     }
 
     // Track event.

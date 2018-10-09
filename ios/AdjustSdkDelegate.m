@@ -107,6 +107,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"timestamp" value:eventSuccessResponseData.timeStamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:eventSuccessResponseData.adid];
     [self addValueOrEmpty:dictionary key:@"eventToken" value:eventSuccessResponseData.eventToken];
+    [self addValueOrEmpty:dictionary key:@"callbackId" value:eventSuccessResponseData.callbackId];
     if (eventSuccessResponseData.jsonResponse != nil) {
         NSData *dataJsonResponse = [NSJSONSerialization dataWithJSONObject:eventSuccessResponseData.jsonResponse options:0 error:nil];
         NSString *stringJsonResponse = [[NSString alloc] initWithBytes:[dataJsonResponse bytes]
@@ -127,6 +128,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"timestamp" value:eventFailureResponseData.timeStamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:eventFailureResponseData.adid];
     [self addValueOrEmpty:dictionary key:@"eventToken" value:eventFailureResponseData.eventToken];
+    [self addValueOrEmpty:dictionary key:@"callbackId" value:eventFailureResponseData.callbackId];
     [dictionary setObject:(eventFailureResponseData.willRetry ? @"true" : @"false") forKey:@"willRetry"];
     if (eventFailureResponseData.jsonResponse != nil) {
         NSData *dataJsonResponse = [NSJSONSerialization dataWithJSONObject:eventFailureResponseData.jsonResponse options:0 error:nil];

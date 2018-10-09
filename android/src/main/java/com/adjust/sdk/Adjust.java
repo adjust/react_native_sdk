@@ -283,6 +283,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         String eventToken = null;
         String currency = null;
         String transactionId = null;
+        String callbackId = null;
         Map<String, Object> callbackParameters = null;
         Map<String, Object> partnerParameters = null;
 
@@ -330,6 +331,14 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             transactionId = mapEvent.getString("transactionId");
             if (null != transactionId) {
                 event.setOrderId(transactionId);
+            }
+        }
+
+        // Callback ID.
+        if (checkKey(mapEvent, "callbackId")) {
+            callbackId = mapEvent.getString("callbackId");
+            if (null != callbackId) {
+                event.setCallbackId(callbackId);
             }
         }
 

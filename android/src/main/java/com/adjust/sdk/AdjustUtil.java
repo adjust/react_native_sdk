@@ -32,12 +32,14 @@ final class AdjustUtil {
     private static final String EVENT_SUCCESS_TIMESTAMP = "timestamp";
     private static final String EVENT_SUCCESS_ADID = "adid";
     private static final String EVENT_SUCCESS_EVENT_TOKEN = "eventToken";
+    private static final String EVENT_SUCCESS_CALLBACK_ID = "callbackId";
     private static final String EVENT_SUCCESS_JSON_RESPONSE = "jsonResponse";
 
     private static final String EVENT_FAILED_MESSAGE = "message";
     private static final String EVENT_FAILED_TIMESTAMP = "timestamp";
     private static final String EVENT_FAILED_ADID = "adid";
     private static final String EVENT_FAILED_EVENT_TOKEN = "eventToken";
+    private static final String EVENT_FAILED_CALLBACK_ID = "callbackId";
     private static final String EVENT_FAILED_WILL_RETRY = "willRetry";
     private static final String EVENT_FAILED_JSON_RESPONSE = "jsonResponse";
 
@@ -79,6 +81,7 @@ final class AdjustUtil {
         map.putString(EVENT_SUCCESS_TIMESTAMP, null != eventSuccess.timestamp ? eventSuccess.timestamp : "");
         map.putString(EVENT_SUCCESS_ADID, null != eventSuccess.adid ? eventSuccess.adid : "");
         map.putString(EVENT_SUCCESS_EVENT_TOKEN, null != eventSuccess.eventToken ? eventSuccess.eventToken : "");
+        map.putString(EVENT_SUCCESS_CALLBACK_ID, null != eventSuccess.callbackId ? eventSuccess.callbackId : "");
         map.putString(EVENT_SUCCESS_JSON_RESPONSE, null != eventSuccess.jsonResponse ? eventSuccess.jsonResponse.toString() : "");
         return map;
     }
@@ -93,6 +96,7 @@ final class AdjustUtil {
         map.putString(EVENT_FAILED_TIMESTAMP, null != eventFailure.timestamp ? eventFailure.timestamp : "");
         map.putString(EVENT_FAILED_ADID, null != eventFailure.adid ? eventFailure.adid : "");
         map.putString(EVENT_FAILED_EVENT_TOKEN, null != eventFailure.eventToken ? eventFailure.eventToken : "");
+        map.putString(EVENT_FAILED_CALLBACK_ID, null != eventFailure.callbackId ? eventFailure.callbackId : "");
         map.putString(EVENT_FAILED_WILL_RETRY, eventFailure.willRetry ? "true" : "false");
         map.putString(EVENT_FAILED_JSON_RESPONSE, null != eventFailure.jsonResponse ? eventFailure.jsonResponse.toString() : "");
         return map;

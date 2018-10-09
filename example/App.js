@@ -54,6 +54,7 @@
         console.log("Timestamp: " + eventSuccess.timestamp);
         console.log("Adid: " + eventSuccess.adid);
         console.log("Event token: " + eventSuccess.eventToken);
+        console.log("Callback Id: " + eventSuccess.callbackId);
         console.log("JSON response: " + eventSuccess.jsonResponse );
       });
 
@@ -64,6 +65,7 @@
         console.log("Timestamp: " + eventFailed.timestamp);
         console.log("Adid: " + eventFailed.adid);
         console.log("Event token: " + eventFailed.eventToken);
+        console.log("Callback Id: " + eventFailed.callbackId);
         console.log("Will retry: " + eventFailed.willRetry);
         console.log("JSON response: " + eventFailed.jsonResponse);
       });

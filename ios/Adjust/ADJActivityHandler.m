@@ -452,6 +452,11 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
      if (![selfI isEnabledI:selfI]) {
          return;
      }
+     
+     if (ADJAdjustFactory.iAdFrameworkEnabled == NO) {
+         [self.logger verbose:@"Sending iAd details to server suppressed."];
+         return;
+     }
 
      double now = [NSDate.date timeIntervalSince1970];
      if (selfI.activityState != nil) {
@@ -1007,6 +1012,11 @@ preLaunchActionsArray:(NSArray*)preLaunchActionsArray
         [ADJUtil launchInMainThread:selfI.adjustDelegate
                            selector:@selector(adjustAttributionChanged:)
                          withObject:sessionResponseData.attribution];
+    }
+
+    // if attribution didn't update and it's still null -> ask for attribution
+    if (selfI.attribution == nil && selfI.activityState.askingAttribution == NO) {
+        [selfI.attributionHandler getAttribution];
     }
 
     selfI.internalState.sessionResponseProcessed = YES;

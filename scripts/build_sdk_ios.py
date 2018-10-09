@@ -4,13 +4,13 @@ from scripting_utils import *
 def build(root_dir, ios_submodule_dir, with_test_lib):
     # ------------------------------------------------------------------
     # paths
-    srcdir                  = '{0}/sdk/Adjust'.format(ios_submodule_dir)
-    src_out_dir             = '{0}/ios'.format(root_dir)
+    src_dir                  = '{0}/sdk/Adjust'.format(ios_submodule_dir)
+    src_out_dir             = '{0}/ios/Adjust'.format(root_dir)
 
     # ------------------------------------------------------------------
     # Copying iOS SDK source files from src in dir to src out dir ...
-    debug_green('Copying iOS SDK source files from {0} to {1} ...'.format(srcdir, src_out_dir))
-    copy_dir_contents(srcdir, src_out_dir)
+    debug_green('Copying iOS SDK source files from {0} to {1} ...'.format(src_dir, src_out_dir))
+    copy_dir_contents(src_dir, src_out_dir)
 
     if with_test_lib:
         # ------------------------------------------------------------------

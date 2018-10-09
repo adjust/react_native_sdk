@@ -175,7 +175,7 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig //
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react_native4.14.0";
+    this.sdkPrefix = "react_native4.15.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;

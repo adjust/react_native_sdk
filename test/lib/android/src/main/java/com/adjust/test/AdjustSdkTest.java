@@ -39,7 +39,7 @@ public class AdjustSdkTest extends ReactContextBaseJavaModule {
         for (int i = 0; i < selectedTestDirs.size(); i++) {
             testLibrary.addTestDirectory(selectedTestDirs.get(i));
         }
-        testLibrary.startTestSession("react_native4.14.0@android4.14.0");
+        testLibrary.startTestSession("react_native4.15.0@android4.15.0");
     }
 
     @ReactMethod

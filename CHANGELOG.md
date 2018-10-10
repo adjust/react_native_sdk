@@ -1,4 +1,4 @@
-### Version 4.15.0 (xxth October 2018)
+### Version 4.15.0 (10th October 2018)
 #### Added
 - Added `setCallbackId` method on `AdjustEvent` object for users to set custom ID on event object which will later be reported in event success/failure callbacks.
 - Added `callbackId` field to event tracking success callback object.

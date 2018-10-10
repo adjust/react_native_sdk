@@ -24,6 +24,7 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
       * [In-app purchase verification](#iap-verification)
       * [Callback parameters](#callback-parameters)
       * [Partner parameters](#partner-parameters)
+      * [Callback identifier](#callback-id)
    * [Session parameters](#session-parameters)
       * [Session callback parameters](#session-callback-parameters)
       * [Session partner parameters](#session-partner-parameters)
@@ -384,6 +385,18 @@ You can read more about special partners and networks in our [guide to special p
 
 **Note**: **Both** parameters in this method must be **strings**. If either of the passed parameters is not a string, the key-value pair will not be added to the parameters list.
 
+### <a id="callback-id"></a>Callback identifier
+
+You can also add custom string identifier to each event you want to track. This identifier will later be reported in event success and/or event failure callbacks to enable you to keep track on which event was successfully tracked or not. You can set this identifier by calling the `setCallbackId` method on your `AdjustEvent` instance:
+
+```js
+var adjustEvent = new AdjustEvent("abc123");
+
+adjustEvent.setCallbackId("Your-Custom-Id");
+
+Adjust.trackEvent(adjustEvent);
+```
+
 ### <a id="session-parameters"></a>Session parameters
 
 Some parameters are saved to be sent in every event and session of the Adjust SDK. Once you have added any of these parameters, you don't need to add them every time, since they will be saved locally. If you add the same parameter twice, there will be no effect.
@@ -511,6 +524,7 @@ adjustConfig.setEventTrackingSucceededCallbackListener(function(eventSuccess) {
     console.log(eventSuccess.message);
     console.log(eventSuccess.timestamp);
     console.log(eventSuccess.eventToken);
+    console.log(eventSuccess.callbackId);
     console.log(eventSuccess.adid);
     console.log(eventSuccess.jsonResponse);
 });
@@ -529,6 +543,7 @@ adjustConfig.setEventTrackingFailedCallbackListener(function(eventFailure) {
     console.log(eventSuccess.message);
     console.log(eventSuccess.timestamp);
     console.log(eventSuccess.eventToken);
+    console.log(eventSuccess.callbackId);
     console.log(eventSuccess.adid);
     console.log(eventSuccess.willRetry);
     console.log(eventSuccess.jsonResponse);
@@ -582,6 +597,7 @@ The callback functions will be called after the SDK tries to send a package to t
 Both event response data objects contain:
 
 - `var eventToken` the event token, if the package tracked was an event.
+- `var callbackId` the custom defined callback ID set on event object.
 
 And both event and session failed objects also contain:
 

@@ -263,7 +263,7 @@ AdjustConfig.prototype.setDeviceKnown = function(isDeviceKnown) {
 };
 
 AdjustConfig.prototype.setReadMobileEquipmentIdentity = function(readMobileEquipmentIdentity) {
-    this.readMobileEquipmentIdentity = readMobileEquipmentIdentity;
+    // this.readMobileEquipmentIdentity = readMobileEquipmentIdentity;
 };
 
 AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) {

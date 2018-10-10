@@ -221,11 +221,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             adjustConfig.setDeviceKnown(isDeviceKnown);
         }
 
+        // Deprecated.
         // Set read mobile equipment ID.
-        if (checkKey(mapConfig, "readMobileEquipmentIdentity")) {
-            readMobileEquipmentIdentity = mapConfig.getBoolean("readMobileEquipmentIdentity");
-            adjustConfig.setReadMobileEquipmentIdentity(readMobileEquipmentIdentity);
-        }
+        // if (checkKey(mapConfig, "readMobileEquipmentIdentity")) {
+        //     readMobileEquipmentIdentity = mapConfig.getBoolean("readMobileEquipmentIdentity");
+        //     adjustConfig.setReadMobileEquipmentIdentity(readMobileEquipmentIdentity);
+        // }
 
         // Launching deferred deep link.
         if (checkKey(mapConfig, "shouldLaunchDeeplink")) {

@@ -5,6 +5,7 @@
 - Added `callbackId` field to event tracking failure callback object.
 
 #### Changed
+- Updated Android SDK and build tools to 26 (thanks to @hamidhadi).
 - Marked `setReadMobileEquipmentIdentity` method of `AdjustConfig` object as deprecated.
 - SDK will now fire attribution request each time upon session tracking finished in case it lacks attribution info.
 

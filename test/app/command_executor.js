@@ -162,7 +162,7 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
                 testOptions.basePath                 = this.basePath;
                 testOptions.gdprPath                 = this.gdprPath;
                 testOptions.useTestConnectionOptions = true;
-                Adjust.teardown();
+                Adjust.teardown('test');
             }
 
             if ('deleteState' === option) {
@@ -182,7 +182,7 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
                 testOptions.basePath                 = null;
                 testOptions.gdprPath                 = null;
                 testOptions.useTestConnectionOptions = false;
-                Adjust.teardown();
+                Adjust.teardown('test');
             }
             if ('test' === option) {
                 this.savedEvents                             = null;
@@ -357,6 +357,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
             AdjustSdkTest.addInfoToSend("timestamp", eventSuccess.timestamp);
             AdjustSdkTest.addInfoToSend("adid", eventSuccess.adid);
             AdjustSdkTest.addInfoToSend("eventToken", eventSuccess.eventToken);
+            AdjustSdkTest.addInfoToSend("callbackId", eventSuccess.callbackId);
             if (eventSuccess.jsonResponse != null) {
                 AdjustSdkTest.addInfoToSend("jsonResponse", eventSuccess.jsonResponse.toString());
             }
@@ -372,11 +373,23 @@ AdjustCommandExecutor.prototype.config = function(params) {
             AdjustSdkTest.addInfoToSend("timestamp", eventFailed.timestamp);
             AdjustSdkTest.addInfoToSend("adid", eventFailed.adid);
             AdjustSdkTest.addInfoToSend("eventToken", eventFailed.eventToken);
+            AdjustSdkTest.addInfoToSend("callbackId", eventFailed.callbackId);
             AdjustSdkTest.addInfoToSend("willRetry", eventFailed.willRetry);
             if (eventFailed.jsonResponse != null) {
                 AdjustSdkTest.addInfoToSend("jsonResponse", eventFailed.jsonResponse.toString());
             }
 
+            AdjustSdkTest.sendInfoToServer(_this.basePath);
+        });
+    }
+
+    if ('deferredDeeplinkCallback' in params) {
+        var _this = this;
+        var launchDeferredDeeplinkS = getFirstParameterValue(params, 'deferredDeeplinkCallback');
+        var launchDeferredDeeplink = launchDeferredDeeplinkS == 'true';
+        adjustConfig.setShouldLaunchDeeplink(launchDeferredDeeplink);
+        adjustConfig.setDeferredDeeplinkCallbackListener(function(deeplink) {
+            AdjustSdkTest.addInfoToSend("deeplink", deeplink.uri);
             AdjustSdkTest.sendInfoToServer(_this.basePath);
         });
     }
@@ -455,6 +468,18 @@ AdjustCommandExecutor.prototype.event = function(params) {
 
         adjustEvent.setTransactionId(orderId);
     }
+
+    if ('callbackId' in params) {
+        var callbackId = getFirstParameterValue(params, 'callbackId');
+
+        // test server might set callbackId to be undefined/null, which gets
+        // serialized/deserialized as string 'null', leading to failed test
+        if (callbackId === 'null') {
+            callbackId = null;
+        }
+
+        adjustEvent.setCallbackId(callbackId);
+    }
 };
 
 AdjustCommandExecutor.prototype.trackEvent = function(params) {
@@ -477,11 +502,11 @@ AdjustCommandExecutor.prototype.setReferrer = function(params) {
 };
 
 AdjustCommandExecutor.prototype.pause = function(params) {
-    Adjust.onPause();
+    Adjust.onPause('test');
 };
 
 AdjustCommandExecutor.prototype.resume = function(params) {
-    Adjust.onResume();
+    Adjust.onResume('test');
 };
 
 AdjustCommandExecutor.prototype.setEnabled = function(params) {

@@ -49,7 +49,7 @@ public class CommandListener implements ICommandJsonListener {
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit("command", map);
         } catch (Exception ex) {
-            Log.e(TAG, "error occurred", ex);
+            Log.e(TAG, "Error occurred:", ex);
             ex.printStackTrace();
         }
     }

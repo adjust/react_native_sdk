@@ -1,9 +1,9 @@
 //
 //  ASTEventEmitter.h
-//  AdjustSdkTest
+//  Adjust SDK Test
 //
 //  Created by Abdullah Obaied (@obaied) on 28th December 2017.
-//  Copyright © 2017 Facebook. All rights reserved.
+//  Copyright © 2017-2018 Adjust GmbH. All rights reserved.
 //
 
 #ifndef ASTEventEmitter_h

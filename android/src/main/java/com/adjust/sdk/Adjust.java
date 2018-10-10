@@ -2,33 +2,30 @@
 //  Adjust.java
 //  Adjust SDK
 //
-//  Created by Abdullah Obaied on 2016-10-19.
-//  Copyright (c) 2018 adjust GmbH. All rights reserved.
-//  See the file MIT-LICENSE for copying permission.
+//  Created by Abdullah Obaied (@Obaied) on 19th October 2016.
+//  Copyright (c) 2016-2018 Adjust GmbH. All rights reserved.
 //
 
 package com.adjust.nativemodule;
 
+import android.net.Uri;
 import android.util.Log;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Map.Entry;
-
-import android.net.Uri;
 import javax.annotation.Nullable;
-
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
-
 import com.adjust.sdk.*;
 
-public class Adjust extends ReactContextBaseJavaModule implements LifecycleEventListener, 
-                OnAttributionChangedListener, 
+public class Adjust extends ReactContextBaseJavaModule implements LifecycleEventListener,
+                OnAttributionChangedListener,
                 OnEventTrackingSucceededListener,
                 OnEventTrackingFailedListener,
                 OnSessionTrackingSucceededListener,
                 OnSessionTrackingFailedListener,
                 OnDeeplinkResponseListener {
+    private static String TAG = "AdjustBridge";
     private boolean attributionCallback;
     private boolean eventTrackingSucceededCallback;
     private boolean eventTrackingFailedCallback;
@@ -36,7 +33,6 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     private boolean sessionTrackingFailedCallback;
     private boolean deferredDeeplinkCallback;
     private boolean shouldLaunchDeeplink = true;
-    private static String TAG = "AdjustBridge";
 
     public Adjust(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -98,6 +94,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void create(ReadableMap mapConfig) {
+        if (mapConfig == null) {
+            return;
+        }
+
         String appToken = null;
         String environment = null;
         String logLevel = null;
@@ -118,26 +118,31 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         boolean eventBufferingEnabled = false;
         boolean readMobileEquipmentIdentity = false;
 
-        // Suppress log level
-        if (!mapConfig.isNull("logLevel")) {
+        // Suppress log level.
+        if (checkKey(mapConfig, "logLevel")) {
             logLevel = mapConfig.getString("logLevel");
             if (logLevel.equals("SUPPRESS")) {
                 isLogLevelSuppress = true;
             }
         }
 
-        // App token and environment.
-        appToken = mapConfig.getString("appToken");
-        environment = mapConfig.getString("environment");
+        // App token.
+        if (checkKey(mapConfig, "appToken")) {
+            appToken = mapConfig.getString("appToken");
+        }
+
+        // Environment.
+        if (checkKey(mapConfig, "environment")) {
+            environment = mapConfig.getString("environment");
+        }
 
         final AdjustConfig adjustConfig = new AdjustConfig(getReactApplicationContext(), appToken, environment, isLogLevelSuppress);
-
         if (!adjustConfig.isValid()) {
             return;
         }
 
-        // Log level
-        if (!mapConfig.isNull("logLevel")) {
+        // Log level.
+        if (checkKey(mapConfig, "logLevel")) {
             logLevel = mapConfig.getString("logLevel");
             if (logLevel.equals("VERBOSE")) {
                 adjustConfig.setLogLevel(LogLevel.VERBOSE);
@@ -158,108 +163,109 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Event buffering
-        if (!mapConfig.isNull("eventBufferingEnabled")) {
+        // Event buffering.
+        if (checkKey(mapConfig, "eventBufferingEnabled")) {
             eventBufferingEnabled = mapConfig.getBoolean("eventBufferingEnabled");
             adjustConfig.setEventBufferingEnabled(eventBufferingEnabled);
         }
 
-        // SDK prefix
-        if (!mapConfig.isNull("sdkPrefix")) {
+        // SDK prefix.
+        if (checkKey(mapConfig, "sdkPrefix")) {
             sdkPrefix = mapConfig.getString("sdkPrefix");
             adjustConfig.setSdkPrefix(sdkPrefix);
         }
 
-        // Main process name
-        if (!mapConfig.isNull("processName")) {
+        // Main process name.
+        if (checkKey(mapConfig, "processName")) {
             processName = mapConfig.getString("processName");
             adjustConfig.setProcessName(processName);
         }
 
-        // Default tracker
-        if (!mapConfig.isNull("defaultTracker")) {
+        // Default tracker.
+        if (checkKey(mapConfig, "defaultTracker")) {
             defaultTracker = mapConfig.getString("defaultTracker");
             adjustConfig.setDefaultTracker(defaultTracker);
         }
 
-        // User agent
-        if (!mapConfig.isNull("userAgent") ) {
+        // User agent.
+        if (checkKey(mapConfig, "userAgent")) {
             userAgent = mapConfig.getString("userAgent");
             adjustConfig.setUserAgent(userAgent);
         }
 
-        // App secret
-        if (!mapConfig.isNull("secretId") 
-                && !mapConfig.isNull("info1")
-                && !mapConfig.isNull("info2")
-                && !mapConfig.isNull("info3")
-                && !mapConfig.isNull("info4")) {
+        // App secret.
+        if (checkKey(mapConfig, "secretId")
+                && checkKey(mapConfig, "info1")
+                && checkKey(mapConfig, "info2")
+                && checkKey(mapConfig, "info3")
+                && checkKey(mapConfig, "info4")) {
             try {
                 secretId = Long.parseLong(mapConfig.getString("secretId"), 10);
-                info1    = Long.parseLong(mapConfig.getString("info1"), 10);
-                info2    = Long.parseLong(mapConfig.getString("info2"), 10);
-                info3    = Long.parseLong(mapConfig.getString("info3"), 10);
-                info4    = Long.parseLong(mapConfig.getString("info4"), 10);
+                info1 = Long.parseLong(mapConfig.getString("info1"), 10);
+                info2 = Long.parseLong(mapConfig.getString("info2"), 10);
+                info3 = Long.parseLong(mapConfig.getString("info3"), 10);
+                info4 = Long.parseLong(mapConfig.getString("info4"), 10);
                 adjustConfig.setAppSecret(secretId, info1, info2, info3, info4);
-            } catch(NumberFormatException ignore) { }
+            } catch (NumberFormatException ignore) {}
         }
 
-        // Background tracking
-        if (!mapConfig.isNull("sendInBackground")) {
+        // Background tracking.
+        if (checkKey(mapConfig, "sendInBackground")) {
             sendInBackground = mapConfig.getBoolean("sendInBackground");
             adjustConfig.setSendInBackground(sendInBackground);
         }
 
-        // Set device Known
-        if (!mapConfig.isNull("isDeviceKnown")) {
+        // Set device known.
+        if (checkKey(mapConfig, "isDeviceKnown")) {
             isDeviceKnown = mapConfig.getBoolean("isDeviceKnown");
             adjustConfig.setDeviceKnown(isDeviceKnown);
         }
 
-        // Set read mobile equipment id
-        if (!mapConfig.isNull("readMobileEquipmentIdentity")) {
-            readMobileEquipmentIdentity = mapConfig.getBoolean("readMobileEquipmentIdentity");
-            adjustConfig.setReadMobileEquipmentIdentity(readMobileEquipmentIdentity);
-        }
+        // Deprecated.
+        // Set read mobile equipment ID.
+        // if (checkKey(mapConfig, "readMobileEquipmentIdentity")) {
+        //     readMobileEquipmentIdentity = mapConfig.getBoolean("readMobileEquipmentIdentity");
+        //     adjustConfig.setReadMobileEquipmentIdentity(readMobileEquipmentIdentity);
+        // }
 
-        // Launching deferred deep link
-        if (!mapConfig.isNull("shouldLaunchDeeplink")) {
+        // Launching deferred deep link.
+        if (checkKey(mapConfig, "shouldLaunchDeeplink")) {
             shouldLaunchDeeplink = mapConfig.getBoolean("shouldLaunchDeeplink");
             this.shouldLaunchDeeplink = shouldLaunchDeeplink;
         }
 
-        // Delayed start
-        if (!mapConfig.isNull("delayStart")) {
+        // Delayed start.
+        if (checkKey(mapConfig, "delayStart")) {
             delayStart = mapConfig.getDouble("delayStart");
             adjustConfig.setDelayStart(delayStart);
         }
 
-        // Attribution callback
+        // Attribution callback.
         if (attributionCallback) {
             adjustConfig.setOnAttributionChangedListener(this);
         }
 
-        // Event tracking succeeded callback
+        // Event tracking succeeded callback.
         if (eventTrackingSucceededCallback) {
             adjustConfig.setOnEventTrackingSucceededListener(this);
         }
 
-        // Event tracking failed callback
+        // Event tracking failed callback.
         if (eventTrackingFailedCallback) {
             adjustConfig.setOnEventTrackingFailedListener(this);
         }
 
-        // Session tracking succeeded callback
+        // Session tracking succeeded callback.
         if (sessionTrackingSucceededCallback) {
             adjustConfig.setOnSessionTrackingSucceededListener(this);
         }
 
-        // Session tracking failed callback
+        // Session tracking failed callback.
         if (sessionTrackingFailedCallback) {
             adjustConfig.setOnSessionTrackingFailedListener(this);
         }
 
-        // Deferred deeplink callback listener
+        // Deferred deeplink callback.
         if (deferredDeeplinkCallback) {
             adjustConfig.setOnDeeplinkResponseListener(this);
         }
@@ -270,40 +276,74 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void trackEvent(ReadableMap mapEvent) {
-        final String eventToken = mapEvent.getString("eventToken");
-        final String currency = mapEvent.getString("currency");
-        final String transactionId = mapEvent.getString("transactionId");
-        final Map<String, Object> callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
-        final Map<String, Object> partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
+        if (mapEvent == null) {
+            return;
+        }
 
-        AdjustEvent event = new AdjustEvent(eventToken);
-        if (event.isValid()) {
-            // Revenue
-            if (!mapEvent.isNull("revenue")) {
-                event.setRevenue(mapEvent.getDouble("revenue"), currency);
-            }
+        double revenue = -1.0;
+        String eventToken = null;
+        String currency = null;
+        String transactionId = null;
+        String callbackId = null;
+        Map<String, Object> callbackParameters = null;
+        Map<String, Object> partnerParameters = null;
 
-            // Callback parameters
+        // Event token.
+        if (checkKey(mapEvent, "eventToken")) {
+            eventToken = mapEvent.getString("eventToken");
+        }
+
+        final AdjustEvent event = new AdjustEvent(eventToken);
+        if (!event.isValid()) {
+            return;
+        }
+
+        // Revenue.
+        if (checkKey(mapEvent, "revenue") || checkKey(mapEvent, "currency")) {
+            try {
+                revenue = Double.parseDouble(mapEvent.getString("revenue"));
+            } catch (NumberFormatException ignore) {}
+            currency = mapEvent.getString("currency");
+            event.setRevenue(revenue, currency);
+        }
+
+        // Callback parameters.
+        if (checkKey(mapEvent, "callbackParameters")) {
+            callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
             if (null != callbackParameters) {
                 for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
                     event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
                 }
             }
+        }
 
-            // Partner parameters
+        // Partner parameters.
+        if (checkKey(mapEvent, "partnerParameters")) {
+            partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
             if (null != partnerParameters) {
                 for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
                     event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
                 }
             }
+        }
 
-            // Revenue deduplication
+        // Revenue deduplication.
+        if (checkKey(mapEvent, "transactionId")) {
+            transactionId = mapEvent.getString("transactionId");
             if (null != transactionId) {
                 event.setOrderId(transactionId);
             }
-
-            com.adjust.sdk.Adjust.trackEvent(event);
         }
+
+        // Callback ID.
+        if (checkKey(mapEvent, "callbackId")) {
+            callbackId = mapEvent.getString("callbackId");
+            if (null != callbackId) {
+                event.setCallbackId(callbackId);
+            }
+        }
+
+        com.adjust.sdk.Adjust.trackEvent(event);
     }
 
     @ReactMethod
@@ -448,76 +488,80 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void setTestOptions(ReadableMap map) {
+    public void setTestOptions(ReadableMap mapTest) {
+        if (mapTest == null) {
+            return;
+        }
+
         final AdjustTestOptions testOptions = new AdjustTestOptions();
-        if (!map.isNull("hasContext")) {
-            boolean value = map.getBoolean("hasContext");
+        if (checkKey(mapTest, "hasContext")) {
+            boolean value = mapTest.getBoolean("hasContext");
             if (value) {
                 testOptions.context = getReactApplicationContext();
             }
         }
-        if (!map.isNull("baseUrl")) {
-            String value = map.getString("baseUrl");
+        if (checkKey(mapTest, "baseUrl")) {
+            String value = mapTest.getString("baseUrl");
             testOptions.baseUrl = value;
         }
-        if (!map.isNull("gdprUrl")) {
-            String value = map.getString("gdprUrl");
+        if (checkKey(mapTest, "gdprUrl")) {
+            String value = mapTest.getString("gdprUrl");
             testOptions.gdprUrl = value;
         }
-        if (!map.isNull("basePath")) {
-            String value = map.getString("basePath");
+        if (checkKey(mapTest, "basePath")) {
+            String value = mapTest.getString("basePath");
             testOptions.basePath = value;
         }
-        if (!map.isNull("gdprPath")) {
-            String value = map.getString("gdprPath");
+        if (checkKey(mapTest, "gdprPath")) {
+            String value = mapTest.getString("gdprPath");
             testOptions.gdprPath = value;
         }
-        if (!map.isNull("useTestConnectionOptions")) {
-            boolean value = map.getBoolean("useTestConnectionOptions");
+        if (checkKey(mapTest, "useTestConnectionOptions")) {
+            boolean value = mapTest.getBoolean("useTestConnectionOptions");
             testOptions.useTestConnectionOptions = value;
         }
-        if (!map.isNull("timerIntervalInMilliseconds")) {
+        if (checkKey(mapTest, "timerIntervalInMilliseconds")) {
             try {
-                Long value = Long.parseLong(map.getString("timerIntervalInMilliseconds"));
+                Long value = Long.parseLong(mapTest.getString("timerIntervalInMilliseconds"));
                 testOptions.timerIntervalInMilliseconds = value;
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
                 Log.d(TAG, "Can't format number");
             }
         }
-        if (!map.isNull("timerStartInMilliseconds")) {
+        if (checkKey(mapTest, "timerStartInMilliseconds")) {
             try {
-                Long value = Long.parseLong(map.getString("timerStartInMilliseconds"));
+                Long value = Long.parseLong(mapTest.getString("timerStartInMilliseconds"));
                 testOptions.timerStartInMilliseconds = value;
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
                 Log.d(TAG, "Can't format number");
             }
         }
-        if (!map.isNull("sessionIntervalInMilliseconds")) {
+        if (checkKey(mapTest, "sessionIntervalInMilliseconds")) {
             try {
-                Long value = Long.parseLong(map.getString("sessionIntervalInMilliseconds"));
+                Long value = Long.parseLong(mapTest.getString("sessionIntervalInMilliseconds"));
                 testOptions.sessionIntervalInMilliseconds = value;
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
                 Log.d(TAG, "Can't format number");
             }
         }
-        if (!map.isNull("subsessionIntervalInMilliseconds")) {
+        if (checkKey(mapTest, "subsessionIntervalInMilliseconds")) {
             try {
-                Long value = Long.parseLong(map.getString("subsessionIntervalInMilliseconds"));
+                Long value = Long.parseLong(mapTest.getString("subsessionIntervalInMilliseconds"));
                 testOptions.subsessionIntervalInMilliseconds = value;
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
                 Log.d(TAG, "Can't format number");
             }
         }
-        if (!map.isNull("noBackoffWait")) {
-            boolean value = map.getBoolean("noBackoffWait");
+        if (checkKey(mapTest, "noBackoffWait")) {
+            boolean value = mapTest.getBoolean("noBackoffWait");
             testOptions.noBackoffWait = value;
         }
-        if (!map.isNull("teardown")) {
-            boolean value = map.getBoolean("teardown");
+        if (checkKey(mapTest, "teardown")) {
+            boolean value = mapTest.getBoolean("teardown");
             testOptions.teardown = value;
         }
 
@@ -538,5 +582,9 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         reactContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(eventName, params);
+    }
+
+    private boolean checkKey(ReadableMap map, String key) {
+        return map.hasKey(key) && !map.isNull(key);
     }
 }

@@ -1,64 +1,61 @@
 //
 //  AdjustUtil.java
-//  Adjust
+//  Adjust SDK
 //
-//  Created by Abdullah Obaied on 2016-10-19.
-//  Copyright (c) 2018 adjust GmbH. All rights reserved.
-//  See the file MIT-LICENSE for copying permission.
+//  Created by Abdullah Obaied (@Obaied) on 19th October 2016.
+//  Copyright (c) 2016-2018 Adjust GmbH. All rights reserved.
 //
 
 package com.adjust.nativemodule;
 
 import java.util.Map;
 import java.util.List;
-import android.net.Uri;
 import java.util.HashMap;
 import java.util.ArrayList;
-
+import android.net.Uri;
 import javax.annotation.Nullable;
-
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
-
 import com.adjust.sdk.*;
 
 final class AdjustUtil {
-    private static final String ATTRIBUTION_TRACKER_TOKEN   = "trackerToken";
-    private static final String ATTRIBUTION_TRACKER_NAME    = "trackerName";
-    private static final String ATTRIBUTION_NETWORK         = "network";
-    private static final String ATTRIBUTION_CAMPAIGN        = "campaign";
-    private static final String ATTRIBUTION_ADGROUP         = "adgroup";
-    private static final String ATTRIBUTION_CREATIVE        = "creative";
-    private static final String ATTRIBUTION_CLICK_LABEL     = "clickLabel";
-    private static final String ATTRIBUTION_ADID            = "adid";
+    private static final String ATTRIBUTION_TRACKER_TOKEN = "trackerToken";
+    private static final String ATTRIBUTION_TRACKER_NAME = "trackerName";
+    private static final String ATTRIBUTION_NETWORK = "network";
+    private static final String ATTRIBUTION_CAMPAIGN = "campaign";
+    private static final String ATTRIBUTION_ADGROUP = "adgroup";
+    private static final String ATTRIBUTION_CREATIVE = "creative";
+    private static final String ATTRIBUTION_CLICK_LABEL = "clickLabel";
+    private static final String ATTRIBUTION_ADID = "adid";
 
-    private static final String EVENT_SUCCESS_MESSAGE       = "message";
-    private static final String EVENT_SUCCESS_TIMESTAMP     = "timestamp";
-    private static final String EVENT_SUCCESS_ADID          = "adid";
-    private static final String EVENT_SUCCESS_EVENT_TOKEN   = "eventToken";
+    private static final String EVENT_SUCCESS_MESSAGE = "message";
+    private static final String EVENT_SUCCESS_TIMESTAMP = "timestamp";
+    private static final String EVENT_SUCCESS_ADID = "adid";
+    private static final String EVENT_SUCCESS_EVENT_TOKEN = "eventToken";
+    private static final String EVENT_SUCCESS_CALLBACK_ID = "callbackId";
     private static final String EVENT_SUCCESS_JSON_RESPONSE = "jsonResponse";
 
-    private static final String EVENT_FAILED_MESSAGE        = "message";
-    private static final String EVENT_FAILED_TIMESTAMP      = "timestamp";
-    private static final String EVENT_FAILED_ADID           = "adid";
-    private static final String EVENT_FAILED_EVENT_TOKEN    = "eventToken";
-    private static final String EVENT_FAILED_WILL_RETRY     = "willRetry";
-    private static final String EVENT_FAILED_JSON_RESPONSE  = "jsonResponse";
+    private static final String EVENT_FAILED_MESSAGE = "message";
+    private static final String EVENT_FAILED_TIMESTAMP = "timestamp";
+    private static final String EVENT_FAILED_ADID = "adid";
+    private static final String EVENT_FAILED_EVENT_TOKEN = "eventToken";
+    private static final String EVENT_FAILED_CALLBACK_ID = "callbackId";
+    private static final String EVENT_FAILED_WILL_RETRY = "willRetry";
+    private static final String EVENT_FAILED_JSON_RESPONSE = "jsonResponse";
 
-    private static final String SESSION_SUCCESS_MESSAGE         = "message";
-    private static final String SESSION_SUCCESS_TIMESTAMP       = "timestamp";
-    private static final String SESSION_SUCCESS_ADID            = "adid";
-    private static final String SESSION_SUCCESS_JSON_RESPONSE   = "jsonResponse";
+    private static final String SESSION_SUCCESS_MESSAGE = "message";
+    private static final String SESSION_SUCCESS_TIMESTAMP = "timestamp";
+    private static final String SESSION_SUCCESS_ADID = "adid";
+    private static final String SESSION_SUCCESS_JSON_RESPONSE = "jsonResponse";
 
-    private static final String SESSION_FAILED_MESSAGE          = "message";
-    private static final String SESSION_FAILED_TIMESTAMP        = "timestamp";
-    private static final String SESSION_FAILED_ADID             = "adid";
-    private static final String SESSION_FAILED_WILL_RETRY       = "willRetry";
-    private static final String SESSION_FAILED_JSON_RESPONSE    = "jsonResponse";
+    private static final String SESSION_FAILED_MESSAGE = "message";
+    private static final String SESSION_FAILED_TIMESTAMP = "timestamp";
+    private static final String SESSION_FAILED_ADID = "adid";
+    private static final String SESSION_FAILED_WILL_RETRY = "willRetry";
+    private static final String SESSION_FAILED_JSON_RESPONSE = "jsonResponse";
 
     public static WritableMap attributionToMap(AdjustAttribution attribution) {
         WritableMap map = Arguments.createMap();
-
         if (null == attribution) {
             return map;
         }
@@ -71,13 +68,11 @@ final class AdjustUtil {
         map.putString(ATTRIBUTION_CREATIVE, null != attribution.creative ? attribution.creative : "");
         map.putString(ATTRIBUTION_CLICK_LABEL, null != attribution.clickLabel ? attribution.clickLabel : "");
         map.putString(ATTRIBUTION_ADID, null != attribution.adid ? attribution.adid : "");
-
         return map;
     }
 
     public static WritableMap eventSuccessToMap(AdjustEventSuccess eventSuccess) {
         WritableMap map = Arguments.createMap();
-
         if (null == eventSuccess) {
             return map;
         }
@@ -86,14 +81,13 @@ final class AdjustUtil {
         map.putString(EVENT_SUCCESS_TIMESTAMP, null != eventSuccess.timestamp ? eventSuccess.timestamp : "");
         map.putString(EVENT_SUCCESS_ADID, null != eventSuccess.adid ? eventSuccess.adid : "");
         map.putString(EVENT_SUCCESS_EVENT_TOKEN, null != eventSuccess.eventToken ? eventSuccess.eventToken : "");
+        map.putString(EVENT_SUCCESS_CALLBACK_ID, null != eventSuccess.callbackId ? eventSuccess.callbackId : "");
         map.putString(EVENT_SUCCESS_JSON_RESPONSE, null != eventSuccess.jsonResponse ? eventSuccess.jsonResponse.toString() : "");
-
         return map;
     }
 
     public static WritableMap eventFailureToMap(AdjustEventFailure eventFailure) {
         WritableMap map = Arguments.createMap();
-
         if (null == eventFailure) {
             return map;
         }
@@ -102,52 +96,46 @@ final class AdjustUtil {
         map.putString(EVENT_FAILED_TIMESTAMP, null != eventFailure.timestamp ? eventFailure.timestamp : "");
         map.putString(EVENT_FAILED_ADID, null != eventFailure.adid ? eventFailure.adid : "");
         map.putString(EVENT_FAILED_EVENT_TOKEN, null != eventFailure.eventToken ? eventFailure.eventToken : "");
+        map.putString(EVENT_FAILED_CALLBACK_ID, null != eventFailure.callbackId ? eventFailure.callbackId : "");
         map.putString(EVENT_FAILED_WILL_RETRY, eventFailure.willRetry ? "true" : "false");
         map.putString(EVENT_FAILED_JSON_RESPONSE, null != eventFailure.jsonResponse ? eventFailure.jsonResponse.toString() : "");
-
         return map;
     }
 
     public static WritableMap sessionSuccessToMap(AdjustSessionSuccess sessionSuccess) {
         WritableMap map = Arguments.createMap();
-
         if (null == sessionSuccess) {
             return map;
         }
-        
+
         map.putString(SESSION_SUCCESS_MESSAGE, null != sessionSuccess.message ? sessionSuccess.message : "");
         map.putString(SESSION_SUCCESS_TIMESTAMP, null != sessionSuccess.timestamp ? sessionSuccess.timestamp : "");
         map.putString(SESSION_SUCCESS_ADID, null != sessionSuccess.adid ? sessionSuccess.adid : "");
         map.putString(SESSION_SUCCESS_JSON_RESPONSE, null != sessionSuccess.jsonResponse ? sessionSuccess.jsonResponse.toString() : "");
-
         return map;
     }
 
     public static WritableMap sessionFailureToMap(AdjustSessionFailure sessionFailure) {
         WritableMap map = Arguments.createMap();
-
         if (null == sessionFailure) {
             return map;
         }
-        
+
         map.putString(SESSION_FAILED_MESSAGE, null != sessionFailure.message ? sessionFailure.message : "");
         map.putString(SESSION_FAILED_TIMESTAMP, null != sessionFailure.timestamp ? sessionFailure.timestamp : "");
         map.putString(SESSION_FAILED_ADID, null != sessionFailure.adid ? sessionFailure.adid : "");
         map.putString(SESSION_FAILED_WILL_RETRY, sessionFailure.willRetry ? "true" : "false");
         map.putString(SESSION_FAILED_JSON_RESPONSE, null != sessionFailure.jsonResponse ? sessionFailure.jsonResponse.toString() : "");
-
         return map;
     }
 
     public static WritableMap deferredDeeplinkToMap(Uri uri) {
         WritableMap map = Arguments.createMap();
-
         if (null == uri) {
             return map;
         }
 
         map.putString("uri", uri.toString());
-
         return map;
     }
 
@@ -163,22 +151,18 @@ final class AdjustUtil {
         }
 
         com.facebook.react.bridge.ReadableMapKeySetIterator iterator = readableMap.keySetIterator();
-        
         if (!iterator.hasNextKey()) {
             return null; 
         }
 
         Map<String, Object> result = new HashMap<>();
-        
         while (iterator.hasNextKey()) {
             String key = iterator.nextKey();
             String value = toObject(readableMap, key).toString();
-            
             if (value == null) {
                 AdjustFactory.getLogger().warn("Null parameter inside key-value pair with key: " + key);
                 continue;
             }
-
             result.put(key, value);
         }
 
@@ -197,10 +181,8 @@ final class AdjustUtil {
         }
 
         List<Object> result = new ArrayList<>(readableArray.size());
-
         for (int index = 0; index < readableArray.size(); index++) {
             ReadableType readableType = readableArray.getType(index);
-            
             switch (readableType) {
                 case Null: 
                     break; 
@@ -210,13 +192,11 @@ final class AdjustUtil {
                 case Number: 
                     // Can be int or double. 
                     double tmp = readableArray.getDouble(index);
-                    
                     if (tmp == (int)tmp) {
                         result.add((int)tmp);
                     } else { 
                         result.add(tmp);
                     }
-
                     break; 
                 case String: 
                     result.add(readableArray.getString(index));
@@ -259,7 +239,6 @@ final class AdjustUtil {
         }
 
         Object result = null;
-
         ReadableType readableType = readableMap.getType(key);
         switch (readableType) {
             case Null: 
@@ -271,13 +250,11 @@ final class AdjustUtil {
             case Number: 
                 // Can be int or double. 
                 double tmp = readableMap.getDouble(key);
-                
                 if (tmp == (int)tmp) {
                     result = (int)tmp;
                 } else { 
                     result = tmp;
                 }
-
                 break; 
             case String: 
                 result = readableMap.getString(key);

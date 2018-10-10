@@ -3,7 +3,7 @@
 //  Adjust SDK
 //
 //  Created by Abdullah Obaied (@obaied) on 25th October 2016.
-//  Copyright © 2012-2018 Adjust GmbH. All rights reserved.
+//  Copyright © 2016-2018 Adjust GmbH. All rights reserved.
 //
 
 #import "AdjustSdk.h"
@@ -39,10 +39,9 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSNumber *shouldLaunchDeeplink = dict[@"shouldLaunchDeeplink"];
     NSNumber *delayStart = dict[@"delayStart"];
     NSNumber *isDeviceKnown = dict[@"isDeviceKnown"];
-
     BOOL allowSuppressLogLevel = NO;
 
-    // Suppress log level
+    // Suppress log level.
     if ([self isFieldValid:logLevel]) {
         if ([logLevel isEqualToString:@"SUPPRESS"]) {
             allowSuppressLogLevel = YES;
@@ -50,34 +49,32 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     }
 
     ADJConfig *adjustConfig = [ADJConfig configWithAppToken:appToken environment:environment allowSuppressLogLevel:allowSuppressLogLevel];
-
     if (![adjustConfig isValid]) {
         return;
     }
 
-    // Log level
+    // Log level.
     if ([self isFieldValid:logLevel]) {
         [adjustConfig setLogLevel:[ADJLogger logLevelFromString:[logLevel lowercaseString]]];
     }
 
-    // Event buffering
+    // Event buffering.
     if ([self isFieldValid:eventBufferingEnabled]) {
         [adjustConfig setEventBufferingEnabled:[eventBufferingEnabled boolValue]];
     }
 
-    // SDK prefix
+    // SDK prefix.
     if ([self isFieldValid:sdkPrefix]) {
         [adjustConfig setSdkPrefix:sdkPrefix];
     }
 
-    // Default tracker
+    // Default tracker.
     if ([self isFieldValid:defaultTracker]) {
         [adjustConfig setDefaultTracker:defaultTracker];
     }
 
     // Attribution delegate & other delegates
     BOOL shouldLaunchDeferredDeeplink = [self isFieldValid:shouldLaunchDeeplink] ? [shouldLaunchDeeplink boolValue] : YES;
-
     if (_isAttributionCallbackImplemented
         || _isEventTrackingSucceededCallbackImplemented
         || _isEventTrackingFailedCallbackImplemented
@@ -94,17 +91,17 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
                                            shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
     }
 
-    // Send in background
+    // Send in background.
     if ([self isFieldValid:sendInBackground]) {
         [adjustConfig setSendInBackground:[sendInBackground boolValue]];
     }
 
-    // User agent
+    // User agent.
     if ([self isFieldValid:userAgent]) {
         [adjustConfig setUserAgent:userAgent];
     }
 
-    // App secret
+    // App secret.
     if ([self isFieldValid:secretId]
         && [self isFieldValid:info1]
         && [self isFieldValid:info2]
@@ -117,17 +114,17 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
                          info4:[[NSNumber numberWithLongLong:[info4 longLongValue]] unsignedIntegerValue]];
     }
 
-    // Device known
+    // Device known.
     if ([self isFieldValid:isDeviceKnown]) {
         [adjustConfig setIsDeviceKnown:[isDeviceKnown boolValue]];
     }
 
-    // Delay start
+    // Delay start.
     if ([self isFieldValid:delayStart]) {
         [adjustConfig setDelayStart:[delayStart doubleValue]];
     }
 
-    // Start SDK
+    // Start SDK.
     [Adjust appDidLaunch:adjustConfig];
     [Adjust trackSubsessionStart];
 }
@@ -137,22 +134,22 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
     NSString *revenue = dict[@"revenue"];
     NSString *currency = dict[@"currency"];
     NSString *transactionId = dict[@"transactionId"];
+    NSString *callbackId = dict[@"callbackId"];
     NSDictionary *callbackParameters = dict[@"callbackParameters"];
     NSDictionary *partnerParameters = dict[@"partnerParameters"];
 
     ADJEvent *adjustEvent = [ADJEvent eventWithEventToken:eventToken];
-
     if (![adjustEvent isValid]) {
         return;
     }
 
-    // Revenue
+    // Revenue.
     if ([self isFieldValid:revenue]) {
         double revenueValue = [revenue doubleValue];
         [adjustEvent setRevenue:revenueValue currency:currency];
     }
 
-    // Callback parameters
+    // Callback parameters.
     if ([self isFieldValid:callbackParameters]) {
         for (NSString *key in callbackParameters) {
             NSString *value = [callbackParameters objectForKey:key];
@@ -160,7 +157,7 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
         }
     }
 
-    // Partner parameters
+    // Partner parameters.
     if ([self isFieldValid:partnerParameters]) {
         for (NSString *key in partnerParameters) {
             NSString *value = [partnerParameters objectForKey:key];
@@ -168,12 +165,17 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
         }
     }
 
-    // Transaction ID
+    // Transaction ID.
     if ([self isFieldValid:transactionId]) {
         [adjustEvent setTransactionId:transactionId];
     }
 
-    // Track event
+    // Callback ID.
+    if ([self isFieldValid:callbackId]) {
+        [adjustEvent setCallbackId:callbackId];
+    }
+
+    // Track event.
     [Adjust trackEvent:adjustEvent];
 }
 
@@ -188,7 +190,6 @@ RCT_EXPORT_METHOD(setEnabled:(NSNumber * _Nonnull)isEnabled) {
 RCT_EXPORT_METHOD(isEnabled:(RCTResponseSenderBlock)callback) {
     BOOL isEnabled = [Adjust isEnabled];
     NSNumber *boolNumber = [NSNumber numberWithBool:isEnabled];
-
     callback(@[boolNumber]);
 }
 
@@ -213,7 +214,6 @@ RCT_EXPORT_METHOD(appWillOpenUrl:(NSString *)urlStr) {
         url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     }
 #pragma clang diagnostic pop
-
     [Adjust appWillOpenUrl:url];
 }
 
@@ -405,12 +405,12 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
 }
 
 RCT_EXPORT_METHOD(teardown) {
-    _isAttributionCallbackImplemented              = NO;
-    _isEventTrackingSucceededCallbackImplemented   = NO;
-    _isEventTrackingFailedCallbackImplemented      = NO;
+    _isAttributionCallbackImplemented = NO;
+    _isEventTrackingSucceededCallbackImplemented = NO;
+    _isEventTrackingFailedCallbackImplemented = NO;
     _isSessionTrackingSucceededCallbackImplemented = NO;
-    _isSessionTrackingFailedCallbackImplemented    = NO;
-    _isDeferredDeeplinkCallbackImplemented         = NO;
+    _isSessionTrackingFailedCallbackImplemented = NO;
+    _isDeferredDeeplinkCallbackImplemented = NO;
     [AdjustSdkDelegate teardown];
 }
 
@@ -429,12 +429,12 @@ RCT_EXPORT_METHOD(onPause) {
         return NO;
     }
 
-    // Check if its an instance of the singleton NSNull
+    // Check if its an instance of the singleton NSNull.
     if ([field isKindOfClass:[NSNull class]]) {
         return NO;
     }
 
-    // If `field` can be converted to a string, check if it has any content.
+    // If 'field' can be converted to a string, check if it has any content.
     NSString *str = [NSString stringWithFormat:@"%@", field];
     if (str != nil) {
         if ([str length] == 0) {
@@ -459,7 +459,7 @@ RCT_EXPORT_METHOD(onPause) {
 }
 
 - (NSNumber *)convertMilliStringToNumber:(NSString *)milliS {
-    NSNumber * number = [NSNumber numberWithInt:[milliS intValue]];
+    NSNumber *number = [NSNumber numberWithInt:[milliS intValue]];
     return number;
 }
 

@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -34,11 +35,11 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* AdjustTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AdjustTestTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		49F81C14FAB549109BCA784C /* libAdjustSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBFB6C5A5BD24022A678A132 /* libAdjustSdk.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		4F9BEB712F8440F1BF075B5D /* libAdjustSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7DE572BB890405D91DFA357 /* libAdjustSdk.a */; };
-		E48B5ED01EB34C57A66A9096 /* libAdjustSdkTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D5592AF1EE84CB69754CC5D /* libAdjustSdkTest.a */; };
+		C29AC5A514734C5B965F9DD9 /* libAdjustSdkTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4424D9ADE1CC453B8E1FFC8D /* libAdjustSdkTest.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,6 +309,20 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		9D43A26521C004EC00B2956F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9339376DD4D476A96233404 /* AdjustSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = AdjustSdk;
+		};
+		9D43A26A21C004EC00B2956F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D3BCF74AC7814DE6A0688A04 /* AdjustSdkTest.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9D13E90120CE887F00B58F3A;
+			remoteInfo = AdjustSdkTest;
+		};
 		ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
@@ -340,14 +355,14 @@
 		2D02E47B1E0B4A5D006451C7 /* AdjustTest-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AdjustTest-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* AdjustTest-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AdjustTest-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4424D9ADE1CC453B8E1FFC8D /* libAdjustSdkTest.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAdjustSdkTest.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
-		EDE850009E75457E87DD4493 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdk.xcodeproj"; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		C7DE572BB890405D91DFA357 /* libAdjustSdk.a */ = {isa = PBXFileReference; name = "libAdjustSdk.a"; path = "libAdjustSdk.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		7D3743E9178549499064B203 /* AdjustSdkTest.xcodeproj */ = {isa = PBXFileReference; name = "AdjustSdkTest.xcodeproj"; path = "../node_modules/react-native-adjust-test/ios/AdjustSdkTest.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		2D5592AF1EE84CB69754CC5D /* libAdjustSdkTest.a */ = {isa = PBXFileReference; name = "libAdjustSdkTest.a"; path = "libAdjustSdkTest.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		CBFB6C5A5BD24022A678A132 /* libAdjustSdk.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAdjustSdk.a; sourceTree = "<group>"; };
+		D3BCF74AC7814DE6A0688A04 /* AdjustSdkTest.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdkTest.xcodeproj; path = "../node_modules/react-native-adjust-test/ios/AdjustSdkTest.xcodeproj"; sourceTree = "<group>"; };
+		F9339376DD4D476A96233404 /* AdjustSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AdjustSdk.xcodeproj; path = "../node_modules/react-native-adjust/ios/AdjustSdk.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -376,8 +391,8 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				4F9BEB712F8440F1BF075B5D /* libAdjustSdk.a in Frameworks */,
-				E48B5ED01EB34C57A66A9096 /* libAdjustSdkTest.a in Frameworks */,
+				49F81C14FAB549109BCA784C /* libAdjustSdk.a in Frameworks */,
+				C29AC5A514734C5B965F9DD9 /* libAdjustSdkTest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,8 +579,8 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				EDE850009E75457E87DD4493 /* AdjustSdk.xcodeproj */,
-				7D3743E9178549499064B203 /* AdjustSdkTest.xcodeproj */,
+				F9339376DD4D476A96233404 /* AdjustSdk.xcodeproj */,
+				D3BCF74AC7814DE6A0688A04 /* AdjustSdkTest.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -608,10 +623,26 @@
 		9D13E7DF20CE7B2300B58F3A /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				E641C178EE5F43FF958D5361 /* libAdjustSdk.a */,
-				8360D660BD7D432C96ED3224 /* libAdjustSdkTest.a */,
+				CBFB6C5A5BD24022A678A132 /* libAdjustSdk.a */,
+				4424D9ADE1CC453B8E1FFC8D /* libAdjustSdkTest.a */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		9D43A26221C004EC00B2956F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9D43A26621C004EC00B2956F /* libAdjustSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9D43A26721C004EC00B2956F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9D43A26B21C004EC00B2956F /* libAdjustSdkTest.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		ADBDB9201DFEBF0600ED6528 /* Products */ = {
@@ -737,6 +768,14 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 9D43A26221C004EC00B2956F /* Products */;
+					ProjectRef = F9339376DD4D476A96233404 /* AdjustSdk.xcodeproj */;
+				},
+				{
+					ProductGroup = 9D43A26721C004EC00B2956F /* Products */;
+					ProjectRef = D3BCF74AC7814DE6A0688A04 /* AdjustSdkTest.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -1047,6 +1086,20 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9D43A26621C004EC00B2956F /* libAdjustSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdk.a;
+			remoteRef = 9D43A26521C004EC00B2956F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9D43A26B21C004EC00B2956F /* libAdjustSdkTest.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAdjustSdkTest.a;
+			remoteRef = 9D43A26A21C004EC00B2956F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */ = {

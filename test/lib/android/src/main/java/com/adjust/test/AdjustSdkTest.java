@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.ArrayList;
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
-import com.adjust.testlibrary.TestLibrary;
+import com.adjust.test.TestLibrary;
 
 public class AdjustSdkTest extends ReactContextBaseJavaModule {
     private static final String TAG = "AdjustSdkTest";

@@ -44,16 +44,18 @@
             var baseUrl = "";
             var gdprUrl = "";
             if (Platform.OS === "android") {
-                baseUrl = "https://10.0.2.2:8443";
-                gdprUrl = "https://10.0.2.2:8443";
+                baseUrl = "https://192.168.8.153:8443";
+                gdprUrl = "https://192.168.8.153:8443";
             } else if (Platform.OS === "ios") {
-                baseUrl = "http://127.0.0.1:8080";
-                gdprUrl = "http://127.0.0.1:8080";
+                baseUrl = "http://192.168.8.153:8080";
+                gdprUrl = "http://192.168.8.153:8080";
             }
 
             // AdjustSdkTest.addTestDirectory("current/appSecret/");
             // AdjustSdkTest.addTest("current/event/Test_Event_EventToken_Malformed");
-            AdjustSdkTest.startTestSession(baseUrl, Adjust.getSdkVersion());
+            Adjust.getSdkVersion(function(sdkVersion) {
+                AdjustSdkTest.startTestSession(baseUrl, sdkVersion);
+            });
 
             const commandExecutor = new CommandExecutor(baseUrl, gdprUrl);
             emitterSubscription = AdjustSdkTestEmitter.addListener('command', (json) => {

@@ -20,7 +20,7 @@ import org.json.JSONObject;
 import org.json.JSONException;
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
-import com.adjust.testlibrary.ICommandJsonListener;
+import com.adjust.test.ICommandJsonListener;
 
 public class CommandListener implements ICommandJsonListener {
     private static String TAG = "CommandListener";

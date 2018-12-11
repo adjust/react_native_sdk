@@ -112,6 +112,10 @@ typedef void (^isInactiveInjected)(BOOL);
 
 + (NSNumber *)readReachabilityFlags;
 
++ (BOOL)isDeeplinkValid:(NSURL *)url;
+
++ (NSString *)sdkVersion;
+
 #if !TARGET_OS_TV
 + (NSString *)readMCC;
 

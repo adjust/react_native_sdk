@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import os, sys
 from scripting_utils import *
 import run_android  as android

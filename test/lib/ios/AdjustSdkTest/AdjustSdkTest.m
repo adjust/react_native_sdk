@@ -21,7 +21,7 @@ RCT_EXPORT_MODULE();
 
 #pragma mark - Public methods
 
-RCT_EXPORT_METHOD(startTestSession:(NSString *)baseUrl) {
+RCT_EXPORT_METHOD(startTestSession:(NSString *)baseUrl sdkVersion:(NSString *)sdkVersion) {
     if (![self isFieldValid:baseUrl]) {
         return;
     }
@@ -38,7 +38,7 @@ RCT_EXPORT_METHOD(startTestSession:(NSString *)baseUrl) {
     }
 
     // Start test session.
-    [testLibrary startTestSession:@"react_native4.15.0@ios4.15.0"];
+    [testLibrary startTestSession:sdkVersion];
 }
 
 RCT_EXPORT_METHOD(addInfoToSend:(NSString *)key value:(NSString *)value) {

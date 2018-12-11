@@ -53,7 +53,7 @@
 
             // AdjustSdkTest.addTestDirectory("current/appSecret/");
             // AdjustSdkTest.addTest("current/event/Test_Event_EventToken_Malformed");
-            AdjustSdkTest.startTestSession(baseUrl);
+            AdjustSdkTest.startTestSession(baseUrl, Adjust.getSdkVersion());
 
             const commandExecutor = new CommandExecutor(baseUrl, gdprUrl);
             emitterSubscription = AdjustSdkTestEmitter.addListener('command', (json) => {

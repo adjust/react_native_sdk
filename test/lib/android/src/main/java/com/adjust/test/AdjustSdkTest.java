@@ -31,7 +31,7 @@ public class AdjustSdkTest extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void startTestSession(String baseUrl) {
+    public void startTestSession(String baseUrl, String sdkVersion) {
         testLibrary = new TestLibrary(baseUrl, new CommandListener(getReactApplicationContext()));
         for (int i = 0; i < selectedTests.size(); i++) {
             testLibrary.addTest(selectedTests.get(i));
@@ -39,7 +39,7 @@ public class AdjustSdkTest extends ReactContextBaseJavaModule {
         for (int i = 0; i < selectedTestDirs.size(); i++) {
             testLibrary.addTestDirectory(selectedTestDirs.get(i));
         }
-        testLibrary.startTestSession("react_native4.15.0@android4.15.0");
+        testLibrary.startTestSession(sdkVersion);
     }
 
     @ReactMethod

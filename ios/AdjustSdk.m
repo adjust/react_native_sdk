@@ -287,6 +287,15 @@ RCT_EXPORT_METHOD(getAdid:(RCTResponseSenderBlock)callback) {
     }
 }
 
+RCT_EXPORT_METHOD(getSdkVersion:(NSString *)sdkPrefix callback:(RCTResponseSenderBlock)callback) {
+    NSString *sdkVersion = [Adjust sdkVersion];
+    if (nil == sdkVersion) {
+        callback(@[@""]);
+    } else {
+        callback(@[[NSString stringWithFormat:@"%@@%@", sdkPrefix, sdkVersion]]);
+    }
+}
+
 RCT_EXPORT_METHOD(setReferrer:(NSString *)referrer) {}
 
 RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {

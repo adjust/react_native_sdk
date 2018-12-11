@@ -448,6 +448,16 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
+    public void getSdkVersion(String sdkPrefix, Callback callback) {
+        String sdkVersion = com.adjust.sdk.Adjust.getSdkVersion();
+        if (sdkVersion == null) {
+            callback.invoke("");
+        } else {
+            callback.invoke(sdkPrefix + "@" + sdkVersion);
+        }
+    }
+
+    @ReactMethod
     public void setAttributionCallbackListener() {
         this.attributionCallback = true;
     }

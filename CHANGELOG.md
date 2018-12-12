@@ -1,4 +1,4 @@
-### Version 4.17.0 (xxth December 2018)
+### Version 4.17.0 (12th December 2018)
 #### Added
 - Added `getSdkVersion()` method to `Adjust` interface to obtain current SDK version string.
 

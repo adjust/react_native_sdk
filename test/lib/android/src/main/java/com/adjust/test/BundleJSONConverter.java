@@ -1,4 +1,4 @@
-//steal from https://github.com/facebook/facebook-android-sdk/blob/master/facebook/src/main/java/com/facebook/internal/BundleJSONConverter.java
+// Taken from https://github.com/facebook/facebook-android-sdk/blob/master/facebook/src/main/java/com/facebook/internal/BundleJSONConverter.java
 
 /**
  * Copyright (c) 2014-present, Facebook, Inc. All rights reserved.

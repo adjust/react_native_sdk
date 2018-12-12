@@ -1,3 +1,16 @@
+### Version 4.17.0 (12th December 2018)
+#### Added
+- Added `getSdkVersion()` method to `Adjust` interface to obtain current SDK version string.
+
+#### Changed
+- Changed usage of `compile` keyword in plugin's `build.gradle` file into `implementation` (https://github.com/adjust/react_native_sdk/issues/47).
+
+#### Native SDKs
+- [iOS@v4.17.1][ios_sdk_v4.17.1]
+- [Android@v4.17.0][android_sdk_v4.17.0]
+
+---
+
 ### Version 4.15.0 (10th October 2018)
 #### Added
 - Added `setCallbackId` method on `AdjustEvent` object for users to set custom ID on event object which will later be reported in event success/failure callbacks.
@@ -247,6 +260,7 @@
 [ios_sdk_v4.13.0]: https://github.com/adjust/ios_sdk/tree/v4.13.0
 [ios_sdk_v4.14.1]: https://github.com/adjust/ios_sdk/tree/v4.14.1
 [ios_sdk_v4.15.0]: https://github.com/adjust/ios_sdk/tree/v4.15.0
+[ios_sdk_v4.17.1]: https://github.com/adjust/ios_sdk/tree/v4.17.1
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -261,3 +275,4 @@
 [android_sdk_v4.13.0]: https://github.com/adjust/android_sdk/tree/v4.13.0
 [android_sdk_v4.14.0]: https://github.com/adjust/android_sdk/tree/v4.14.0
 [android_sdk_v4.15.0]: https://github.com/adjust/android_sdk/tree/v4.15.0
+[android_sdk_v4.17.0]: https://github.com/adjust/android_sdk/tree/v4.17.0

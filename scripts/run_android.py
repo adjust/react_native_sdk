@@ -67,8 +67,8 @@ def run_example(_root_dir, _sdk_plugin_name, skip_uninstall):
     __copy_rn_content_to_temp()
     
     # ------------------------------------------------------------------
-    # Adding react-native-adjust to test app
-    debug_green('Adding react-native-adjust to test app ...')
+    # Adding react-native-adjust to example app
+    debug_green('Adding react-native-adjust to example app ...')
     os.chdir(example_app_dir)
     subprocess.call(['yarn', 'add', '../temp'])
 
@@ -83,8 +83,8 @@ def run_example(_root_dir, _sdk_plugin_name, skip_uninstall):
     remove_dir_if_exists(temp_dir)
 
     # ------------------------------------------------------------------
-    # Building and running test app on device/emulator
-    debug_green('Building and running test app on device/emulator ...')
+    # Building and running example app on device/emulator
+    debug_green('Building and running example app on device/emulator ...')
     subprocess.call(['react-native', 'run-android'])
 
 def run_testapp(_root_dir, _sdk_plugin_name, _test_plugin_name, skip_uninstall):

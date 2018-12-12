@@ -592,8 +592,7 @@ AdjustCommandExecutor.prototype.sendReferrer = function(params) {
     Adjust.setReferrer(referrer);
 };
 
-//Util
-//======================
+// Util
 function getValueFromKey(params, key) {
     if (key in params) {
         return params[key];
@@ -613,5 +612,3 @@ function getFirstParameterValue(params, key) {
 
     return null;
 }
-
-//export default CommandExecutor;

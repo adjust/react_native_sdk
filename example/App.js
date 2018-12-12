@@ -25,6 +25,10 @@
       this._onPress_getIds             = this._onPress_getIds.bind(this);
       this._onPress_isSdkEnabled       = this._onPress_isSdkEnabled.bind(this);
 
+      Adjust.getSdkVersion(function(sdkVersion) {
+        console.log("Adjust SDK version: " + sdkVersion);
+      });
+
       var adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
       adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
       adjustConfig.setShouldLaunchDeeplink(true);

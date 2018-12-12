@@ -15,7 +15,7 @@ if (Platform.OS === "android") {
     module_adjust_emitter = new NativeEventEmitter(NativeModules.AdjustEventEmitter);
 }
 
-// Adjust //
+// Adjust
 
 var Adjust = {};
 
@@ -23,7 +23,7 @@ Adjust.create = function(adjustConfig) {
     module_adjust.create(adjustConfig);
 };
 
-Adjust.trackEvent = function (adjustEvent) {
+Adjust.trackEvent = function(adjustEvent) {
     module_adjust.trackEvent(adjustEvent);
 };
 
@@ -105,6 +105,10 @@ Adjust.getAmazonAdId = function(callback) {
     module_adjust.getAmazonAdId(callback);
 };
 
+Adjust.getSdkVersion = function(callback) {
+    module_adjust.getSdkVersion("react-native4.17.0", callback);
+}
+
 Adjust.setReferrer = function(referrer) {
     module_adjust.setReferrer(referrer);
 };
@@ -172,10 +176,10 @@ Adjust.onPause = function(testParam) {
     module_adjust.onPause();
 };
 
-// AdjustConfig //
+// AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react_native4.15.0";
+    this.sdkPrefix = "react-native4.17.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
@@ -262,6 +266,10 @@ AdjustConfig.prototype.setDeviceKnown = function(isDeviceKnown) {
     this.isDeviceKnown = isDeviceKnown;
 };
 
+AdjustConfig.prototype.setSdkPrefix = function(sdkPrefix) {
+    this.sdkPrefix = sdkPrefix;
+};
+
 AdjustConfig.prototype.setReadMobileEquipmentIdentity = function(readMobileEquipmentIdentity) {
     // this.readMobileEquipmentIdentity = readMobileEquipmentIdentity;
 };
@@ -324,9 +332,9 @@ AdjustConfig.prototype.setDeferredDeeplinkCallbackListener = function(deferredDe
     }
 };
 
-// AdjustEvent //
+// AdjustEvent
 
-var AdjustEvent = function (eventToken) {
+var AdjustEvent = function(eventToken) {
     this.eventToken = eventToken;
     this.revenue = null;
     this.currency = null;
@@ -334,35 +342,35 @@ var AdjustEvent = function (eventToken) {
     this.callbackId = null;
     this.callbackParameters = {};
     this.partnerParameters = {};
+};
 
-    this.setRevenue = function(revenue, currency) {
-        if (revenue != null) {
-            this.revenue = revenue.toString();
-            this.currency = currency;
-        }
-    };
+AdjustEvent.prototype.setRevenue = function(revenue, currency) {
+    if (revenue != null) {
+        this.revenue = revenue.toString();
+        this.currency = currency;
+    }
+};
 
-    this.addCallbackParameter = function(key, value) {
-        if (typeof key !== 'string' || typeof value !== 'string') {
-            return;
-        }
-        this.callbackParameters[key] = value;
-    };
+AdjustEvent.prototype.addCallbackParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
+    this.callbackParameters[key] = value;
+};
 
-    this.addPartnerParameter = function(key, value) {
-        if (typeof key !== 'string' || typeof value !== 'string') {
-            return;
-        }
-        this.partnerParameters[key] = value;
-    };
+AdjustEvent.prototype.addPartnerParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
+    this.partnerParameters[key] = value;
+};
 
-    this.setTransactionId = function(transactionId) {
-        this.transactionId = transactionId;
-    };
+AdjustEvent.prototype.setTransactionId = function(transactionId) {
+    this.transactionId = transactionId;
+};
 
-    this.setCallbackId = function(callbackId) {
-        this.callbackId = callbackId;
-    };
+AdjustEvent.prototype.setCallbackId = function(callbackId) {
+    this.callbackId = callbackId;
 };
 
 module.exports = { Adjust, AdjustEvent, AdjustConfig }

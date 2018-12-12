@@ -23,7 +23,7 @@ Adjust.create = function(adjustConfig) {
     module_adjust.create(adjustConfig);
 };
 
-Adjust.trackEvent = function (adjustEvent) {
+Adjust.trackEvent = function(adjustEvent) {
     module_adjust.trackEvent(adjustEvent);
 };
 

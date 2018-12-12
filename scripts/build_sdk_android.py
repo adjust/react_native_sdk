@@ -55,4 +55,4 @@ def build(root_dir, android_submodule_dir, with_test_lib, is_release = True):
         # Moving the generated Android SDK JAR from jar in to jar out dir ...
         debug_green('Moving the generated Android SDK JAR from {0} to {1} dir ...'.format(test_jar_in_dir, test_jar_out_dir))
         copy_files('test-library-debug.jar', test_jar_in_dir, test_jar_out_dir)
-        rename_file('test-library-debug.jar', 'adjust-testing.jar', test_jar_out_dir)
+        rename_file('test-library-debug.jar', 'adjust-test.jar', test_jar_out_dir)

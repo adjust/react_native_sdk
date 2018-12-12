@@ -44,11 +44,11 @@
             var baseUrl = "";
             var gdprUrl = "";
             if (Platform.OS === "android") {
-                baseUrl = "https://192.168.8.153:8443";
-                gdprUrl = "https://192.168.8.153:8443";
+                baseUrl = "https://192.168.8.197:8443";
+                gdprUrl = "https://192.168.8.197:8443";
             } else if (Platform.OS === "ios") {
-                baseUrl = "http://192.168.8.153:8080";
-                gdprUrl = "http://192.168.8.153:8080";
+                baseUrl = "http://192.168.8.197:8080";
+                gdprUrl = "http://192.168.8.197:8080";
             }
 
             // AdjustSdkTest.addTestDirectory("current/appSecret/");
@@ -63,7 +63,6 @@
                 const functionName = json["functionName"];
                 const params       = json["params"];
                 const order        = json["order"];
-
                 commandExecutor.scheduleCommand(className, functionName, params, order);
             });
         }

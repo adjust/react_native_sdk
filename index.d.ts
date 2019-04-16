@@ -1,6 +1,16 @@
 declare module "react-native-adjust" {
     type Environment = "sandbox" | "production";
 
+    enum LogLevel {
+        Verbose,
+        Debug,
+        Info,
+        Warn,
+        Error,
+        Assert,
+        Suppress
+    }
+  
     interface AdjustAttribution {
         trackerToken: string;
         trackerName: string;
@@ -12,14 +22,42 @@ declare module "react-native-adjust" {
         adid: string;
     }
   
-    enum LogLevel {
-      Verbose,
-      Debug,
-      Info,
-      Warn,
-      Error,
-      Assert,
-      Suppress
+    interface AdjustEventTrackingSuccess {
+        message: string;
+        timestamp: string;
+        adid: string;
+        eventToken: string;
+        callbackId: string;
+        jsonResponse: string;
+    }
+
+    interface AdjustEventTrackingFailure {
+        message: string;
+        timestamp: string;
+        adid: string;
+        eventToken: string;
+        callbackId: string;
+        willRetry: boolean;
+        jsonResponse: string;
+    }
+
+    interface AdjustSessionTrackingSuccess {
+        message: string;
+        timestamp: string;
+        adid: string;
+        jsonResponse: string;
+    }
+  
+    interface AdjustSessionTrackingFailure {
+        message: string;
+        timestamp: string;
+        adid: string;
+        willRetry: boolean;
+        jsonResponse: string;
+    }
+
+    interface AdjustUri {
+        uri: string;
     }
   
     export class AdjustConfig {
@@ -28,6 +66,16 @@ declare module "react-native-adjust" {
       public setLogLevel(level: LogLevel): void {}
 
       public setAttributionCallbackListener(callback: (attribution: AdjustAttribution) => void): void {}
+
+      public setEventTrackingSucceededCallbackListener(callback: (eventSuccess: AdjustEventTrackingSuccess) => void): void {}
+
+      public setEventTrackingFailedCallbackListener(callback: (eventFailed: AdjustEventTrackingFailure) => void): void {}
+
+      public setSessionTrackingSucceededCallbackListener(callback: (sessionSuccess: AdjustSessionTrackingSuccess) => void): void {}
+
+      public setSessionTrackingFailedCallbackListener(callback: (sessionFailed: AdjustSessionTrackingFailure) => void): void {}
+
+      public setDeferredDeeplinkCallbackListener(callback: (uri: AdjustUri) => void): void {}
   
       static get LogLevelVerbose(): LogLevel {
         return LogLevel.Verbose;
@@ -60,13 +108,19 @@ declare module "react-native-adjust" {
       static get EnvironmentSandbox(): Environment {
         return "sandbox";
       }
+
       static get EnvironmentProduction(): Environment {
         return "production";
       }
     }
+
+    export class AdjustEvent {
+        constructor(eventToken: string) {}
+    }
   
     export const Adjust = {
+      componentWillUnmount: (): void => {},
       create: (adjustConfig: AdjustConfig): void => {},
-      componentWillUnmount: (): void => {}
+      trackEvent: (adjustEvent: AdjustEvent): void => {},
     };
 }

@@ -1,3 +1,13 @@
+### Version 4.17.1 (18th April 2019)
+#### Added
+- Added support for projects written in `TypeScript`.
+
+#### Native SDKs
+- [iOS@v4.17.1][ios_sdk_v4.17.1]
+- [Android@v4.17.0][android_sdk_v4.17.0]
+
+---
+
 ### Version 4.17.0 (12th December 2018)
 #### Added
 - Added `getSdkVersion()` method to `Adjust` interface to obtain current SDK version string.

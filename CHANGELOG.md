@@ -1,4 +1,4 @@
-### Version 4.17.1 (18th April 2019)
+### Version 4.17.1 (3rd May 2019)
 #### Added
 - Added support for projects written in `TypeScript`.
 

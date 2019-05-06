@@ -52,11 +52,12 @@
                 baseUrl = "http://192.168.8.197:8080";
                 gdprUrl = "http://192.168.8.197:8080";
             }
+            var controlUrl = "ws://192.168.8.209:1987";
 
             // AdjustSdkTest.addTestDirectory("current/appSecret/");
             // AdjustSdkTest.addTest("current/event/Test_Event_EventToken_Malformed");
             Adjust.getSdkVersion(function(sdkVersion) {
-                AdjustSdkTest.startTestSession(baseUrl, sdkVersion);
+                AdjustSdkTest.startTestSession(baseUrl, controlUrl, sdkVersion);
             });
 
             const commandExecutor = new CommandExecutor(baseUrl, gdprUrl);

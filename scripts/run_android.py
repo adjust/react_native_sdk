@@ -104,7 +104,7 @@ def run_testapp(_root_dir, _sdk_plugin_name, _test_plugin_name, skip_uninstall):
 
     # ------------------------------------------------------------------
     # Removing react-native-adjust and react-native-adjust-test modules from test app
-    debug_green('Removing "{0}" and "{1}" from example app ...'.format(sdk_plugin_name, test_plugin_name))
+    debug_green('Removing "{0}" and "{1}" from test app ...'.format(sdk_plugin_name, test_plugin_name))
     os.chdir(test_app_dir)
     subprocess.call(['react-native', 'unlink', sdk_plugin_name])
     subprocess.call(['react-native', 'unlink', test_plugin_name])

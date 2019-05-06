@@ -22,5 +22,6 @@ def build(root_dir, ios_submodule_dir, with_test_lib):
 
         # ------------------------------------------------------------------
         # Copying iOS test lib SDK source files from src in dir to src out dir ...
+        recreate_dir(test_lib_out_dir)
         debug_green('Copying iOS SDK test source files from {0} to {1} ...'.format(test_lib_in_dir, test_lib_out_dir))
         copy_dir_contents(test_lib_in_dir, test_lib_out_dir)

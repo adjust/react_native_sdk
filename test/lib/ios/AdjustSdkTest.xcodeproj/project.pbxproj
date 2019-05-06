@@ -7,16 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5200D8E222805A0D006F7C9D /* ATLTestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5200D8D422805A0D006F7C9D /* ATLTestInfo.m */; };
+		5200D8E322805A0D006F7C9D /* ATLUtilNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5200D8D922805A0D006F7C9D /* ATLUtilNetworking.m */; };
+		5200D8E422805A0D006F7C9D /* ATLControlWebSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5200D8DA22805A0D006F7C9D /* ATLControlWebSocketClient.m */; };
+		5200D8E522805A0D006F7C9D /* ATLBlockingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5200D8DB22805A0D006F7C9D /* ATLBlockingQueue.m */; };
+		5200D8E622805A0D006F7C9D /* ATLTestLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 5200D8DC22805A0D006F7C9D /* ATLTestLibrary.m */; };
+		5200D8E722805A0D006F7C9D /* ATLControlSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5200D8DF22805A0D006F7C9D /* ATLControlSignal.m */; };
+		5200D8E822805A0D006F7C9D /* ATLUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 5200D8E022805A0D006F7C9D /* ATLUtil.m */; };
 		9D13E90620CE887F00B58F3A /* AdjustSdkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D13E90520CE887F00B58F3A /* AdjustSdkTest.m */; };
 		9D13E90720CE887F00B58F3A /* AdjustSdkTest.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D13E90420CE887F00B58F3A /* AdjustSdkTest.h */; };
 		9D13E91120CE88DA00B58F3A /* ASTCommandListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D13E90D20CE88DA00B58F3A /* ASTCommandListener.m */; };
 		9D13E91220CE88DA00B58F3A /* ASTEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D13E90E20CE88DA00B58F3A /* ASTEventEmitter.m */; };
-		9D13E92120CE88E900B58F3A /* ATLTestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D13E91420CE88E900B58F3A /* ATLTestInfo.m */; };
-		9D13E92220CE88E900B58F3A /* ATLUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D13E91B20CE88E900B58F3A /* ATLUtil.m */; };
-		9D13E92320CE88E900B58F3A /* ATLControlChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D13E91D20CE88E900B58F3A /* ATLControlChannel.m */; };
-		9D13E92420CE88E900B58F3A /* ATLUtilNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D13E91E20CE88E900B58F3A /* ATLUtilNetworking.m */; };
-		9D13E92520CE88E900B58F3A /* ATLTestLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D13E91F20CE88E900B58F3A /* ATLTestLibrary.m */; };
-		9D13E92620CE88E900B58F3A /* ATLBlockingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D13E92020CE88E900B58F3A /* ATLBlockingQueue.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,22 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5200D8D2228059EB006F7C9D /* PocketSocket */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PocketSocket; sourceTree = "<group>"; };
+		5200D8D322805A0D006F7C9D /* ATLUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLUtil.h; sourceTree = "<group>"; };
+		5200D8D422805A0D006F7C9D /* ATLTestInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLTestInfo.m; sourceTree = "<group>"; };
+		5200D8D522805A0D006F7C9D /* ATLBlockingQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLBlockingQueue.h; sourceTree = "<group>"; };
+		5200D8D622805A0D006F7C9D /* ATLTestInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLTestInfo.h; sourceTree = "<group>"; };
+		5200D8D722805A0D006F7C9D /* ATLControlSignal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLControlSignal.h; sourceTree = "<group>"; };
+		5200D8D822805A0D006F7C9D /* ATLUtilNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLUtilNetworking.h; sourceTree = "<group>"; };
+		5200D8D922805A0D006F7C9D /* ATLUtilNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLUtilNetworking.m; sourceTree = "<group>"; };
+		5200D8DA22805A0D006F7C9D /* ATLControlWebSocketClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLControlWebSocketClient.m; sourceTree = "<group>"; };
+		5200D8DB22805A0D006F7C9D /* ATLBlockingQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLBlockingQueue.m; sourceTree = "<group>"; };
+		5200D8DC22805A0D006F7C9D /* ATLTestLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLTestLibrary.m; sourceTree = "<group>"; };
+		5200D8DD22805A0D006F7C9D /* ATLConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLConstants.h; sourceTree = "<group>"; };
+		5200D8DE22805A0D006F7C9D /* ATLTestLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLTestLibrary.h; sourceTree = "<group>"; };
+		5200D8DF22805A0D006F7C9D /* ATLControlSignal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLControlSignal.m; sourceTree = "<group>"; };
+		5200D8E022805A0D006F7C9D /* ATLUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLUtil.m; sourceTree = "<group>"; };
+		5200D8E122805A0D006F7C9D /* ATLControlWebSocketClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLControlWebSocketClient.h; sourceTree = "<group>"; };
 		9D13E90120CE887F00B58F3A /* libAdjustSdkTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAdjustSdkTest.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D13E90420CE887F00B58F3A /* AdjustSdkTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdjustSdkTest.h; sourceTree = "<group>"; };
 		9D13E90520CE887F00B58F3A /* AdjustSdkTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdjustSdkTest.m; sourceTree = "<group>"; };
@@ -40,19 +57,6 @@
 		9D13E90E20CE88DA00B58F3A /* ASTEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASTEventEmitter.m; sourceTree = "<group>"; };
 		9D13E90F20CE88DA00B58F3A /* ASTCommandListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTCommandListener.h; sourceTree = "<group>"; };
 		9D13E91020CE88DA00B58F3A /* ASTEventEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTEventEmitter.h; sourceTree = "<group>"; };
-		9D13E91420CE88E900B58F3A /* ATLTestInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLTestInfo.m; sourceTree = "<group>"; };
-		9D13E91520CE88E900B58F3A /* ATLUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLUtil.h; sourceTree = "<group>"; };
-		9D13E91620CE88E900B58F3A /* ATLControlChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLControlChannel.h; sourceTree = "<group>"; };
-		9D13E91720CE88E900B58F3A /* ATLConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLConstants.h; sourceTree = "<group>"; };
-		9D13E91820CE88E900B58F3A /* ATLTestLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLTestLibrary.h; sourceTree = "<group>"; };
-		9D13E91920CE88E900B58F3A /* ATLUtilNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLUtilNetworking.h; sourceTree = "<group>"; };
-		9D13E91A20CE88E900B58F3A /* ATLBlockingQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLBlockingQueue.h; sourceTree = "<group>"; };
-		9D13E91B20CE88E900B58F3A /* ATLUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLUtil.m; sourceTree = "<group>"; };
-		9D13E91C20CE88E900B58F3A /* ATLTestInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLTestInfo.h; sourceTree = "<group>"; };
-		9D13E91D20CE88E900B58F3A /* ATLControlChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLControlChannel.m; sourceTree = "<group>"; };
-		9D13E91E20CE88E900B58F3A /* ATLUtilNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLUtilNetworking.m; sourceTree = "<group>"; };
-		9D13E91F20CE88E900B58F3A /* ATLTestLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLTestLibrary.m; sourceTree = "<group>"; };
-		9D13E92020CE88E900B58F3A /* ATLBlockingQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLBlockingQueue.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,19 +103,22 @@
 		9D13E91320CE88E900B58F3A /* AdjustTestLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				9D13E91420CE88E900B58F3A /* ATLTestInfo.m */,
-				9D13E91520CE88E900B58F3A /* ATLUtil.h */,
-				9D13E91620CE88E900B58F3A /* ATLControlChannel.h */,
-				9D13E91720CE88E900B58F3A /* ATLConstants.h */,
-				9D13E91820CE88E900B58F3A /* ATLTestLibrary.h */,
-				9D13E91920CE88E900B58F3A /* ATLUtilNetworking.h */,
-				9D13E91A20CE88E900B58F3A /* ATLBlockingQueue.h */,
-				9D13E91B20CE88E900B58F3A /* ATLUtil.m */,
-				9D13E91C20CE88E900B58F3A /* ATLTestInfo.h */,
-				9D13E91D20CE88E900B58F3A /* ATLControlChannel.m */,
-				9D13E91E20CE88E900B58F3A /* ATLUtilNetworking.m */,
-				9D13E91F20CE88E900B58F3A /* ATLTestLibrary.m */,
-				9D13E92020CE88E900B58F3A /* ATLBlockingQueue.m */,
+				5200D8D522805A0D006F7C9D /* ATLBlockingQueue.h */,
+				5200D8DB22805A0D006F7C9D /* ATLBlockingQueue.m */,
+				5200D8DD22805A0D006F7C9D /* ATLConstants.h */,
+				5200D8D722805A0D006F7C9D /* ATLControlSignal.h */,
+				5200D8DF22805A0D006F7C9D /* ATLControlSignal.m */,
+				5200D8E122805A0D006F7C9D /* ATLControlWebSocketClient.h */,
+				5200D8DA22805A0D006F7C9D /* ATLControlWebSocketClient.m */,
+				5200D8D622805A0D006F7C9D /* ATLTestInfo.h */,
+				5200D8D422805A0D006F7C9D /* ATLTestInfo.m */,
+				5200D8DE22805A0D006F7C9D /* ATLTestLibrary.h */,
+				5200D8DC22805A0D006F7C9D /* ATLTestLibrary.m */,
+				5200D8D322805A0D006F7C9D /* ATLUtil.h */,
+				5200D8E022805A0D006F7C9D /* ATLUtil.m */,
+				5200D8D822805A0D006F7C9D /* ATLUtilNetworking.h */,
+				5200D8D922805A0D006F7C9D /* ATLUtilNetworking.m */,
+				5200D8D2228059EB006F7C9D /* PocketSocket */,
 			);
 			path = AdjustTestLibrary;
 			sourceTree = "<group>";
@@ -172,15 +179,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5200D8E322805A0D006F7C9D /* ATLUtilNetworking.m in Sources */,
+				5200D8E622805A0D006F7C9D /* ATLTestLibrary.m in Sources */,
 				9D13E91120CE88DA00B58F3A /* ASTCommandListener.m in Sources */,
-				9D13E92520CE88E900B58F3A /* ATLTestLibrary.m in Sources */,
-				9D13E92420CE88E900B58F3A /* ATLUtilNetworking.m in Sources */,
-				9D13E92320CE88E900B58F3A /* ATLControlChannel.m in Sources */,
-				9D13E92120CE88E900B58F3A /* ATLTestInfo.m in Sources */,
+				5200D8E422805A0D006F7C9D /* ATLControlWebSocketClient.m in Sources */,
+				5200D8E222805A0D006F7C9D /* ATLTestInfo.m in Sources */,
+				5200D8E722805A0D006F7C9D /* ATLControlSignal.m in Sources */,
 				9D13E90620CE887F00B58F3A /* AdjustSdkTest.m in Sources */,
+				5200D8E522805A0D006F7C9D /* ATLBlockingQueue.m in Sources */,
 				9D13E91220CE88DA00B58F3A /* ASTEventEmitter.m in Sources */,
-				9D13E92220CE88E900B58F3A /* ATLUtil.m in Sources */,
-				9D13E92620CE88E900B58F3A /* ATLBlockingQueue.m in Sources */,
+				5200D8E822805A0D006F7C9D /* ATLUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

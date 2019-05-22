@@ -130,7 +130,7 @@ import { Adjust, AdjustEvent, AdjustConfig } from 'react-native-adjust';
 In your `index.android.js` or `index.ios.js` file, add the following code to initialize the Adjust SDK:
 
 ```javascript
-componentWillMount() {
+componentDidMount() {
     var adjustConfig = new AdjustConfig("{YourAppToken}", AdjustConfig.EnvironmentSandbox);
     Adjust.create(adjustConfig);
 }

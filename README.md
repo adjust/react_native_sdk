@@ -131,7 +131,7 @@ In your `index.android.js` or `index.ios.js` file, add the following code to ini
 
 ```javascript
 componentDidMount() {
-    var adjustConfig = new AdjustConfig("{YourAppToken}", AdjustConfig.EnvironmentSandbox);
+    const adjustConfig = new AdjustConfig("{YourAppToken}", AdjustConfig.EnvironmentSandbox);
     Adjust.create(adjustConfig);
 }
 

@@ -45,7 +45,7 @@
             
             var baseUrl = "";
             var gdprUrl = "";
-            var ipAddress = "192.168.8.209";
+            var ipAddress = "192.168.8.144";
             if (Platform.OS === "android") {
                 baseUrl = "https://" + ipAddress + ":8223";
                 gdprUrl = "https://" + ipAddress + ":8223";
@@ -53,7 +53,7 @@
                 baseUrl = "http://" + ipAddress + ":8123";
                 gdprUrl = "http://" + ipAddress + ":8123";
             }
-            var controlUrl = "ws://192.168.8.209:1987";
+            var controlUrl = "ws://" + ipAddress + ":1987";
 
             // AdjustSdkTest.addTestDirectory("current/appSecret/");
             // AdjustSdkTest.addTest("current/event/Test_Event_EventToken_Malformed");

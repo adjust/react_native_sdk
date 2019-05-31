@@ -4,16 +4,9 @@
 
   type Props = {};
   export default class App extends Component<Props> {
-    componentDidMount() {
-      Linking.addEventListener('url', this.handleDeepLink);
-      Linking.getInitialURL().then((url) => {
-        if (url) {
-          this.handleDeepLink({ url });
-        }
-      })
-    }
+    constructor(props) {
+      super(props);
 
-    componentWillMount() {
       this._onPress_trackSimpleEvent   = this._onPress_trackSimpleEvent.bind(this);
       this._onPress_trackRevenueEvent  = this._onPress_trackRevenueEvent.bind(this);
       this._onPress_trackCallbackEvent = this._onPress_trackCallbackEvent.bind(this);
@@ -29,7 +22,7 @@
         console.log("Adjust SDK version: " + sdkVersion);
       });
 
-      var adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
+      const adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
       adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
       adjustConfig.setShouldLaunchDeeplink(true);
       adjustConfig.setSendInBackground(true);
@@ -114,6 +107,15 @@
       Adjust.create(adjustConfig);
 
       // Adjust.sendFirstPackages();
+    }
+
+    componentDidMount() {
+      Linking.addEventListener('url', this.handleDeepLink);
+      Linking.getInitialURL().then((url) => {
+        if (url) {
+          this.handleDeepLink({ url });
+        }
+      })
     }
 
     componentWillUnmount() {

@@ -40,7 +40,9 @@
 
     type Props = {};
     export default class App extends Component<Props> {
-        componentWillMount() {
+        constructor(props) {
+            super(props);
+            
             var baseUrl = "";
             var gdprUrl = "";
             if (Platform.OS === "android") {

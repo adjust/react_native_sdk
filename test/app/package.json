@@ -1,5 +1,5 @@
 {
-  "name": "AdjustTest",
+  "name": "app",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,16 +7,18 @@
     "test": "jest"
   },
   "dependencies": {
-    "react": "16.3.1",
-    "react-native": "0.55.4",
+    "react": "16.8.3",
+    "react-native": "0.59.9",
     "react-native-adjust": "../../temp",
     "react-native-adjust-test": "../lib"
   },
   "devDependencies": {
-    "babel-jest": "23.0.1",
-    "babel-preset-react-native": "4.0.0",
-    "jest": "23.1.0",
-    "react-test-renderer": "16.3.1"
+    "@babel/core": "^7.4.5",
+    "@babel/runtime": "^7.4.5",
+    "babel-jest": "^24.8.0",
+    "jest": "^24.8.0",
+    "metro-react-native-babel-preset": "^0.54.1",
+    "react-test-renderer": "16.8.3"
   },
   "jest": {
     "preset": "react-native"

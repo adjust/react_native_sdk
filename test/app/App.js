@@ -45,13 +45,13 @@
             
             var baseUrl = "";
             var gdprUrl = "";
-            var ipAddress = "192.168.8.144";
+            var ipAddress = "192.168.8.195";
             if (Platform.OS === "android") {
-                baseUrl = "https://" + ipAddress + ":8223";
-                gdprUrl = "https://" + ipAddress + ":8223";
+                baseUrl = "https://" + ipAddress + ":8443";
+                gdprUrl = "https://" + ipAddress + ":8443";
             } else if (Platform.OS === "ios") {
-                baseUrl = "http://" + ipAddress + ":8123";
-                gdprUrl = "http://" + ipAddress + ":8123";
+                baseUrl = "http://" + ipAddress + ":9000";
+                gdprUrl = "http://" + ipAddress + ":9000";
             }
             var controlUrl = "ws://" + ipAddress + ":1987";
 

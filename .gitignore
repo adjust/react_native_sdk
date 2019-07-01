@@ -33,7 +33,6 @@ Pods
 # built application files
 *.apk
 *.ap_
-*.jar
 
 # lint folder
 lint

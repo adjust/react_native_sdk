@@ -51,6 +51,10 @@ Adjust.sendFirstPackages = function() {
     module_adjust.sendFirstPackages();
 };
 
+Adjust.trackAdRevenue = function(source, payload) {
+    module_adjust.trackAdRevenue(source, payload);
+}
+
 Adjust.addSessionCallbackParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
         return;
@@ -106,7 +110,7 @@ Adjust.getAmazonAdId = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native4.17.2", callback);
+    module_adjust.getSdkVersion("react-native4.18.0", callback);
 }
 
 Adjust.setReferrer = function(referrer) {
@@ -179,7 +183,7 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native4.17.2";
+    this.sdkPrefix = "react-native4.18.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;

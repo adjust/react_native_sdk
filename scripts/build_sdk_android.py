@@ -14,13 +14,13 @@ def build(root_dir, android_submodule_dir, with_test_lib, is_release = True):
     # ------------------------------------------------------------------
     # Running make*Jar Gradle task ...
     if is_release:
-        debug_green('Running adjustSdkNonNativeJarRelease Gradle task ...')
+        debug_green('Running adjustCoreJarRelease Gradle task ...')
         jar_in_dir = '{0}/sdk-core/build/libs'.format(build_dir)
-        subprocess.call(['./gradlew', 'adjustSdkNonNativeJarRelease'])
+        subprocess.call(['./gradlew', 'adjustCoreJarRelease'])
     else:
-        debug_green('Running adjustSdkNonNativeJarDebug Gradle task ...')
+        debug_green('Running adjustCoreJarDebug Gradle task ...')
         jar_in_dir = '{0}/sdk-core/build/libs'.format(build_dir)
-        subprocess.call(['./gradlew', 'adjustSdkNonNativeJarDebug'])
+        subprocess.call(['./gradlew', 'adjustCoreJarDebug'])
 
     # ------------------------------------------------------------------
     # Moving Android SDK JAR from jarIn to jarOut dir
@@ -37,7 +37,6 @@ def build(root_dir, android_submodule_dir, with_test_lib, is_release = True):
         # ------------------------------------------------------------------
         # Test Library paths
         set_log_tag('ANROID-TEST-LIB-BUILD')
-        waiting_animation(duration=4.0, step=0.025)
         debug_green('Building Test Library started ...')
         test_jar_in_dir  = '{0}/test-library/build/libs'.format(build_dir)
         test_jar_out_dir = '{0}/test/lib/android/libs'.format(root_dir)
@@ -47,9 +46,9 @@ def build(root_dir, android_submodule_dir, with_test_lib, is_release = True):
 
         # ------------------------------------------------------------------
         # Running Gradle tasks: clean test-library:adjustMakeJarDebug.
-        debug_green('Running Gradle tasks: clean test-library:adjustMakeJarDebug ...')
+        debug_green('Running Gradle tasks: clean test-library:adjustTestLibraryJarDebug ...')
         os.chdir(build_dir)
-        subprocess.call(['./gradlew', 'clean', ':test-library:adjustMakeJarDebug'])
+        subprocess.call(['./gradlew', 'clean', ':test-library:adjustTestLibraryJarDebug'])
 
         # ------------------------------------------------------------------
         # Moving the generated Android SDK JAR from jar in to jar out dir ...

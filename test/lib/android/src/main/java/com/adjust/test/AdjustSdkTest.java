@@ -31,8 +31,8 @@ public class AdjustSdkTest extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void startTestSession(String baseUrl, String sdkVersion) {
-        testLibrary = new TestLibrary(baseUrl, new CommandListener(getReactApplicationContext()));
+    public void startTestSession(String baseUrl, String controlUrl, String sdkVersion) {
+        testLibrary = new TestLibrary(baseUrl, controlUrl, new CommandListener(getReactApplicationContext()));
         for (int i = 0; i < selectedTests.size(); i++) {
             testLibrary.addTest(selectedTests.get(i));
         }

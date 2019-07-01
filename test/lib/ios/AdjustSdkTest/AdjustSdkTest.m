@@ -21,13 +21,14 @@ RCT_EXPORT_MODULE();
 
 #pragma mark - Public methods
 
-RCT_EXPORT_METHOD(startTestSession:(NSString *)baseUrl sdkVersion:(NSString *)sdkVersion) {
+RCT_EXPORT_METHOD(startTestSession:(NSString *)baseUrl controlUrl:(NSString *)controlUrl sdkVersion:(NSString *)sdkVersion) {
     if (![self isFieldValid:baseUrl]) {
         return;
     }
 
     adjustCommandListener = [[ASTCommandListener alloc] init];
     testLibrary = [ATLTestLibrary testLibraryWithBaseUrl:baseUrl
+                                           andControlUrl:controlUrl
                                       andCommandDelegate:adjustCommandListener];
 
     for (id object in selectedTests) {

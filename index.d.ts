@@ -158,6 +158,7 @@ declare module "react-native-adjust" {
         setPushToken: (token: string): void => { },
         appWillOpenUrl: (url: string): void => { },
         sendFirstPackages: (): void => { },
+        trackAdRevenue: (source: string, payload: string): void => { },
         addSessionCallbackParameter: (key: string, value: string): void => { },
         addSessionPartnerParameter: (key: string, value: string): void => { },
         removeSessionCallbackParameter: (key: string): void => { },

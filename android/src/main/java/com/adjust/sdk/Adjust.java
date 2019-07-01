@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
+import org.json.JSONObject;
+import org.json.JSONException;
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
 import com.adjust.sdk.*;
@@ -380,6 +382,16 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     @ReactMethod
     public void sendFirstPackages() {
         com.adjust.sdk.Adjust.sendFirstPackages();
+    }
+
+    @ReactMethod
+    public void trackAdRevenue(String source, String payload) {
+        try {
+            JSONObject jsonPayload = new JSONObject(payload);
+            com.adjust.sdk.Adjust.trackAdRevenue(source, jsonPayload);
+        }catch (JSONException err){
+             Log.d(TAG, "Give ad revenue payload is not a valid JSON string");
+        }
     }
 
     @ReactMethod

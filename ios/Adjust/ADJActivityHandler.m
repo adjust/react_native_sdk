@@ -565,6 +565,14 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
                      }];
 }
 
+- (void)trackAdRevenue:(NSString *)source payload:(NSData *)payload {
+    [ADJUtil launchInQueue:self.internalQueue
+                selfInject:self
+                     block:^(ADJActivityHandler * selfI) {
+                         [selfI adRevenueI:selfI source:source payload:payload];
+                     }];
+}
+
 - (NSString *)getBasePath {
     return _basePath;
 }
@@ -939,6 +947,32 @@ preLaunchActionsArray:(NSArray*)preLaunchActionsArray
     [selfI writeActivityStateI:selfI];
 }
 
+- (void)adRevenueI:(ADJActivityHandler *)selfI
+            source:(NSString *)source
+           payload:(NSData *)payload {
+    if (!selfI.activityState) {
+        return;
+    }
+    if (![selfI isEnabledI:selfI]) {
+        return;
+    }
+    if (selfI.activityState.isGdprForgotten) {
+        return;
+    }
+
+    double now = [NSDate.date timeIntervalSince1970];
+
+    // Create and submit ad revenue package.
+    ADJPackageBuilder *adRevenueBuilder = [[ADJPackageBuilder alloc] initWithDeviceInfo:selfI.deviceInfo
+                                                                          activityState:selfI.activityState
+                                                                                 config:selfI.adjustConfig
+                                                                      sessionParameters:selfI.sessionParameters
+                                                                              createdAt:now];
+    ADJActivityPackage *adRevenuePackage = [adRevenueBuilder buildAdRevenuePackage:source payload:payload];
+    [selfI.packageHandler addPackage:adRevenuePackage];
+    [selfI.packageHandler sendFirstPackage];
+}
+
 - (void)launchEventResponseTasksI:(ADJActivityHandler *)selfI
                 eventResponseData:(ADJEventResponseData *)eventResponseData {
     [selfI updateAdidI:selfI adid:eventResponseData.adid];
@@ -1158,6 +1192,7 @@ preLaunchActionsArray:(NSArray*)preLaunchActionsArray
         if ([ADJUserDefaults getGdprForgetMe]) {
             [selfI setGdprForgetMe];
         }
+        [[UIDevice currentDevice] adjSetIad:selfI triesV3Left:kTryIadV3];
     }
 
     [selfI checkStatusI:selfI

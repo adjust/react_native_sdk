@@ -45,18 +45,20 @@
             
             var baseUrl = "";
             var gdprUrl = "";
+            var ipAddress = "192.168.8.195";
             if (Platform.OS === "android") {
-                baseUrl = "https://192.168.8.197:8443";
-                gdprUrl = "https://192.168.8.197:8443";
+                baseUrl = "https://" + ipAddress + ":8443";
+                gdprUrl = "https://" + ipAddress + ":8443";
             } else if (Platform.OS === "ios") {
-                baseUrl = "http://192.168.8.197:8080";
-                gdprUrl = "http://192.168.8.197:8080";
+                baseUrl = "http://" + ipAddress + ":9000";
+                gdprUrl = "http://" + ipAddress + ":9000";
             }
+            var controlUrl = "ws://" + ipAddress + ":1987";
 
             // AdjustSdkTest.addTestDirectory("current/appSecret/");
             // AdjustSdkTest.addTest("current/event/Test_Event_EventToken_Malformed");
             Adjust.getSdkVersion(function(sdkVersion) {
-                AdjustSdkTest.startTestSession(baseUrl, sdkVersion);
+                AdjustSdkTest.startTestSession(baseUrl, controlUrl, sdkVersion);
             });
 
             const commandExecutor = new CommandExecutor(baseUrl, gdprUrl);

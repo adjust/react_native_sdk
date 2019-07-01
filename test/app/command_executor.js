@@ -115,6 +115,7 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
         case "openDeeplink"                   : this.openDeeplink(command.params); break;
         case "sendReferrer"                   : this.sendReferrer(command.params); break;
         case "gdprForgetMe"                   : this.gdprForgetMe(command.params); break;
+        case "trackAdRevenue"                 : this.trackAdRevenue(command.params); break;
     }
 
     this.nextToSendCounter++;
@@ -523,6 +524,12 @@ AdjustCommandExecutor.prototype.sendFirstPackages = function(params) {
     Adjust.sendFirstPackages();
 };
 
+AdjustCommandExecutor.prototype.trackAdRevenue = function(params) {
+    var source = getFirstParameterValue(params, 'adRevenueSource');
+    var payload = getFirstParameterValue(params, 'adRevenueJsonString');
+    Adjust.trackAdRevenue(source, payload);
+}
+
 AdjustCommandExecutor.prototype.gdprForgetMe = function(params) {
     Adjust.gdprForgetMe();
 };
@@ -530,7 +537,7 @@ AdjustCommandExecutor.prototype.gdprForgetMe = function(params) {
 AdjustCommandExecutor.prototype.addSessionCallbackParameter = function(params) {
     var list = getValueFromKey(params, "KeyValue");
 
-    for (var i = 0; i < list.length; i = i+2){
+    for (var i = 0; i < list.length; i = i+2) {
         var key = list[i];
         var value = list[i+1];
 
@@ -541,7 +548,7 @@ AdjustCommandExecutor.prototype.addSessionCallbackParameter = function(params) {
 AdjustCommandExecutor.prototype.addSessionPartnerParameter = function(params) {
     var list = getValueFromKey(params, "KeyValue");
 
-    for (var i = 0; i < list.length; i = i+2){
+    for (var i = 0; i < list.length; i = i+2) {
         var key = list[i];
         var value = list[i+1];
 

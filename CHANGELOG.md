@@ -1,3 +1,14 @@
+### Version 4.18.0 (1st July 2019)
+#### Added
+- Added `trackAdRevenue` method to `Adjust` interface to allow tracking of ad revenue. With this release added support for `MoPub` ad revenue tracking.
+- Added reading of Facebook anonymous ID if available on iOS platform.
+
+#### Native SDKs
+- [iOS@v4.18.0][ios_sdk_v4.18.0]
+- [Android@v4.18.0][android_sdk_v4.18.0]
+
+---
+
 ### Version 4.17.2 (3rd May 2019)
 #### Changed
 - Updated iOS SDK version number in Podspec file to 4.17.2.

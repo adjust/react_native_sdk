@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import org.json.JSONObject;
+import org.json.JSONException;
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
 import com.adjust.sdk.*;

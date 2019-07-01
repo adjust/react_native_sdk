@@ -51,6 +51,10 @@ Adjust.sendFirstPackages = function() {
     module_adjust.sendFirstPackages();
 };
 
+Adjust.trackAdRevenue = function(source, payload) {
+    module_adjust.trackAdRevenue(source, payload);
+}
+
 Adjust.addSessionCallbackParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
         return;

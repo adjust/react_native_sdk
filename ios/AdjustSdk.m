@@ -221,6 +221,11 @@ RCT_EXPORT_METHOD(sendFirstPackages) {
     [Adjust sendFirstPackages];
 }
 
+RCT_EXPORT_METHOD(trackAdRevenue:(NSString *)source payload:(NSString *)payload) {
+    NSData *dataPayload = [payload dataUsingEncoding:NSUTF8StringEncoding];
+    [Adjust trackAdRevenue:source payload:dataPayload];
+}
+
 RCT_EXPORT_METHOD(addSessionCallbackParameter:(NSString *)key value:(NSString *)value) {
     if (!([self isFieldValid:key]) || !([self isFieldValid:value])) {
         return;

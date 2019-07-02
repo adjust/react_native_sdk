@@ -389,7 +389,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         try {
             JSONObject jsonPayload = new JSONObject(payload);
             com.adjust.sdk.Adjust.trackAdRevenue(source, jsonPayload);
-        }catch (JSONException err){
+        } catch (JSONException err) {
              Log.d(TAG, "Give ad revenue payload is not a valid JSON string");
         }
     }

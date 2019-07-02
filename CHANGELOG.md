@@ -1,3 +1,16 @@
+### Version 4.18.1 (2nd July 2019)
+#### Fixed
+- Fixed compile errors when trying to use Adjust SDK with TypeScript 2.9 and higher (thanks to @rawrmaan).
+
+#### Changed
+- Changed submodule endpoints from `SSH` to `HTTPS` (thanks to @rawrmaan).
+
+#### Native SDKs
+- [iOS@v4.18.0][ios_sdk_v4.18.0]
+- [Android@v4.18.0][android_sdk_v4.18.0]
+
+---
+
 ### Version 4.18.0 (1st July 2019)
 #### Added
 - Added `trackAdRevenue` method to `Adjust` interface to allow tracking of ad revenue. With this release added support for `MoPub` ad revenue tracking.

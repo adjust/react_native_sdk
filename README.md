@@ -529,13 +529,13 @@ var adjustConfig = new AdjustConfig(appToken, environment);
 adjustConfig.setEventTrackingFailedCallbackListener(function(eventFailure) {
     // Printing all event failure properties.
     console.log("Event tracking failed!");
-    console.log(eventSuccess.message);
-    console.log(eventSuccess.timestamp);
-    console.log(eventSuccess.eventToken);
-    console.log(eventSuccess.callbackId);
-    console.log(eventSuccess.adid);
-    console.log(eventSuccess.willRetry);
-    console.log(eventSuccess.jsonResponse);
+    console.log(eventFailure.message);
+    console.log(eventFailure.timestamp);
+    console.log(eventFailure.eventToken);
+    console.log(eventFailure.callbackId);
+    console.log(eventFailure.adid);
+    console.log(eventFailure.willRetry);
+    console.log(eventFailure.jsonResponse);
 });
 
 Adjust.create(adjustConfig);
@@ -566,11 +566,11 @@ var adjustConfig = new AdjustConfig(appToken, environment);
 adjustConfig.setSessionTrackingFailedCallbackListener(function(sessionFailure) {
     // Printing all session failure properties.
     console.log("Session tracking failed!");
-    console.log(sessionSuccess.message);
-    console.log(sessionSuccess.timestamp);
-    console.log(sessionSuccess.adid);
-    console.log(sessionSuccess.willRetry);
-    console.log(sessionSuccess.jsonResponse);
+    console.log(sessionFailure.message);
+    console.log(sessionFailure.timestamp);
+    console.log(sessionFailure.adid);
+    console.log(sessionFailure.willRetry);
+    console.log(sessionFailure.jsonResponse);
 });
 
 Adjust.create(adjustConfig);

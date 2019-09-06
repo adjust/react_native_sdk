@@ -149,6 +149,15 @@ Adjust.componentWillUnmount = function() {
     }
 };
 
+Adjust.convertUniversalLink = function(url, scheme, callback) {
+
+    if (!url || !scheme || !callback) {
+        return;
+    }
+
+    module_adjust.convertUniversalLink(url, scheme, callback);
+}
+
 // =========================================== //
 // Adjust methods used for SDK testing only.   //
 // Do NOT use any of these in production code. //

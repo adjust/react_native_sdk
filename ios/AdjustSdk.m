@@ -436,6 +436,18 @@ RCT_EXPORT_METHOD(onPause) {
     [Adjust trackSubsessionEnd];
 }
 
+RCT_EXPORT_METHOD(convertUniversalLink:(NSString*)urlString scheme:(NSString*)scheme callback:(RCTResponseSenderBlock)callback) {
+    
+    NSURL* url = [[NSURL alloc] initWithString:urlString];
+    NSURL* converted = [Adjust convertUniversalLink:url scheme:scheme];
+    
+    if (converted != nil && converted.absoluteString != nil && converted.absoluteString.length > 0) {
+        callback(@[converted.absoluteString]);
+    } else {
+        callback(nil);
+    }
+}
+
 #pragma mark - Private & helper methods
 
 - (BOOL)isFieldValid:(NSObject *)field {

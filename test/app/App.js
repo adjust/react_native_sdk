@@ -45,13 +45,13 @@
             
             var baseUrl = "";
             var gdprUrl = "";
-            var ipAddress = "192.168.8.195";
+            var ipAddress = "192.168.2.102";
             if (Platform.OS === "android") {
                 baseUrl = "https://" + ipAddress + ":8443";
                 gdprUrl = "https://" + ipAddress + ":8443";
             } else if (Platform.OS === "ios") {
-                baseUrl = "http://" + ipAddress + ":9000";
-                gdprUrl = "http://" + ipAddress + ":9000";
+                baseUrl = "http://" + ipAddress + ":8000";
+                gdprUrl = "http://" + ipAddress + ":8000";
             }
             var controlUrl = "ws://" + ipAddress + ":1987";
 

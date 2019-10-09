@@ -4859,10 +4859,10 @@ react-is@^16.8.1, react-is@^16.8.3, react-is@^16.8.4:
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
 react-native-adjust-test@../lib:
-  version "4.18.1"
+  version "4.18.2"
 
 react-native-adjust@../../temp:
-  version "4.18.1"
+  version "4.18.2"
 
 react-native@0.59.9:
   version "0.59.9"

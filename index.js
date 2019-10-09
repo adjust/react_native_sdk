@@ -117,6 +117,13 @@ Adjust.setReferrer = function(referrer) {
     module_adjust.setReferrer(referrer);
 };
 
+Adjust.convertUniversalLink = function(url, scheme, callback) {
+    if (!url || !scheme || !callback) {
+        return;
+    }
+    module_adjust.convertUniversalLink(url, scheme, callback);
+}
+
 Adjust.componentWillUnmount = function() {
     if (AdjustConfig.AttributionSubscription != null) {
         AdjustConfig.AttributionSubscription.remove();
@@ -148,15 +155,6 @@ Adjust.componentWillUnmount = function() {
         AdjustConfig.DeferredDeeplinkSubscription = null;
     }
 };
-
-Adjust.convertUniversalLink = function(url, scheme, callback) {
-
-    if (!url || !scheme || !callback) {
-        return;
-    }
-
-    module_adjust.convertUniversalLink(url, scheme, callback);
-}
 
 // =========================================== //
 // Adjust methods used for SDK testing only.   //

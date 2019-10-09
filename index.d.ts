@@ -151,5 +151,6 @@ declare module 'react-native-adjust' {
     getAmazonAdId: (callback: (adid: string) => void) => void
     getSdkVersion: (callback: (sdkVersion: string) => void) => void
     setReferrer: (referrer: string) => void
+    convertUniversalLink: (url: string, scheme: string, callback: (convertedUrl: string) => void) => void
   }
 }

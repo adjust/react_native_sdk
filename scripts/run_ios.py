@@ -122,8 +122,14 @@ def run_testapp(_root_dir, _sdk_plugin_name, _test_plugin_name):
     subprocess.call(['react-native', 'link', test_plugin_name])
 
     # ------------------------------------------------------------------
+    # Update all the Pods if needed
+    os.chdir('{0}/{1}'.format(example_app_dir, 'ios'))
+    subprocess.call(['pod', 'update'])
+
+    # ------------------------------------------------------------------
     # Cleanup
     debug_green('Cleanup ...')
+    os.chdir(test_app_dir)
     remove_dir_if_exists(temp_dir)
 
     debug_green('Run test app from Xcode. Project location: {0}/ios ...'.format(test_app_dir))

@@ -11,6 +11,10 @@
         "adjust",
         "test"
     ],
+    "homepage": "https://github.com/adjust/react_native_sdk",
+    "bugs": {
+        "url": "https://github.com/adjust/react_native_sdk/issues"
+    },
     "repository": {
         "type": "git",
         "url": "git://github.com/adjust/react_native_sdk.git"

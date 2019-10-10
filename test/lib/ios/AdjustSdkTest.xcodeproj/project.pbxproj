@@ -22,10 +22,9 @@
 		520E107722980C2A00FE19D7 /* PSWebSocketNetworkThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 520E106C22980C2A00FE19D7 /* PSWebSocketNetworkThread.m */; };
 		520E107822980C2A00FE19D7 /* PSWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 520E106F22980C2A00FE19D7 /* PSWebSocket.m */; };
 		520E107922980C2A00FE19D7 /* PSWebSocketServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 520E107122980C2A00FE19D7 /* PSWebSocketServer.m */; };
-		9D13E90620CE887F00B58F3A /* AdjustSdkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D13E90520CE887F00B58F3A /* AdjustSdkTest.m */; };
-		9D13E90720CE887F00B58F3A /* AdjustSdkTest.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9D13E90420CE887F00B58F3A /* AdjustSdkTest.h */; };
-		9D13E91120CE88DA00B58F3A /* ASTCommandListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D13E90D20CE88DA00B58F3A /* ASTCommandListener.m */; };
-		9D13E91220CE88DA00B58F3A /* ASTEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D13E90E20CE88DA00B58F3A /* ASTEventEmitter.m */; };
+		9D8D5813234F64DF008F7616 /* ASTEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D8D580D234F64DF008F7616 /* ASTEventEmitter.m */; };
+		9D8D5814234F64DF008F7616 /* ASTCommandListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D8D580E234F64DF008F7616 /* ASTCommandListener.m */; };
+		9D8D5815234F64DF008F7616 /* AdjustSdkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D8D5811234F64DF008F7616 /* AdjustSdkTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,7 +34,6 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				9D13E90720CE887F00B58F3A /* AdjustSdkTest.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,12 +75,12 @@
 		520E107022980C2A00FE19D7 /* PSWebSocketDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocketDriver.h; sourceTree = "<group>"; };
 		520E107122980C2A00FE19D7 /* PSWebSocketServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWebSocketServer.m; sourceTree = "<group>"; };
 		9D13E90120CE887F00B58F3A /* libAdjustSdkTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAdjustSdkTest.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D13E90420CE887F00B58F3A /* AdjustSdkTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdjustSdkTest.h; sourceTree = "<group>"; };
-		9D13E90520CE887F00B58F3A /* AdjustSdkTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdjustSdkTest.m; sourceTree = "<group>"; };
-		9D13E90D20CE88DA00B58F3A /* ASTCommandListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASTCommandListener.m; sourceTree = "<group>"; };
-		9D13E90E20CE88DA00B58F3A /* ASTEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASTEventEmitter.m; sourceTree = "<group>"; };
-		9D13E90F20CE88DA00B58F3A /* ASTCommandListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTCommandListener.h; sourceTree = "<group>"; };
-		9D13E91020CE88DA00B58F3A /* ASTEventEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTEventEmitter.h; sourceTree = "<group>"; };
+		9D8D580D234F64DF008F7616 /* ASTEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASTEventEmitter.m; sourceTree = "<group>"; };
+		9D8D580E234F64DF008F7616 /* ASTCommandListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASTCommandListener.m; sourceTree = "<group>"; };
+		9D8D580F234F64DF008F7616 /* ASTEventEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTEventEmitter.h; sourceTree = "<group>"; };
+		9D8D5810234F64DF008F7616 /* ASTCommandListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASTCommandListener.h; sourceTree = "<group>"; };
+		9D8D5811234F64DF008F7616 /* AdjustSdkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustSdkTest.m; sourceTree = "<group>"; };
+		9D8D5812234F64DF008F7616 /* AdjustSdkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustSdkTest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +123,12 @@
 		9D13E8F820CE887F00B58F3A = {
 			isa = PBXGroup;
 			children = (
-				9D13E90320CE887F00B58F3A /* AdjustSdkTest */,
+				9D8D5812234F64DF008F7616 /* AdjustSdkTest.h */,
+				9D8D5811234F64DF008F7616 /* AdjustSdkTest.m */,
+				9D8D5810234F64DF008F7616 /* ASTCommandListener.h */,
+				9D8D580E234F64DF008F7616 /* ASTCommandListener.m */,
+				9D8D580F234F64DF008F7616 /* ASTEventEmitter.h */,
+				9D8D580D234F64DF008F7616 /* ASTEventEmitter.m */,
 				9D13E91320CE88E900B58F3A /* AdjustTestLibrary */,
 				9D13E90220CE887F00B58F3A /* Products */,
 			);
@@ -137,19 +140,6 @@
 				9D13E90120CE887F00B58F3A /* libAdjustSdkTest.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		9D13E90320CE887F00B58F3A /* AdjustSdkTest */ = {
-			isa = PBXGroup;
-			children = (
-				9D13E90420CE887F00B58F3A /* AdjustSdkTest.h */,
-				9D13E90520CE887F00B58F3A /* AdjustSdkTest.m */,
-				9D13E91020CE88DA00B58F3A /* ASTEventEmitter.h */,
-				9D13E90E20CE88DA00B58F3A /* ASTEventEmitter.m */,
-				9D13E90F20CE88DA00B58F3A /* ASTCommandListener.h */,
-				9D13E90D20CE88DA00B58F3A /* ASTCommandListener.m */,
-			);
-			path = AdjustSdkTest;
 			sourceTree = "<group>";
 		};
 		9D13E91320CE88E900B58F3A /* AdjustTestLibrary */ = {
@@ -231,22 +221,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D8D5813234F64DF008F7616 /* ASTEventEmitter.m in Sources */,
 				5200D8E322805A0D006F7C9D /* ATLUtilNetworking.m in Sources */,
 				520E107722980C2A00FE19D7 /* PSWebSocketNetworkThread.m in Sources */,
 				5200D8E622805A0D006F7C9D /* ATLTestLibrary.m in Sources */,
-				9D13E91120CE88DA00B58F3A /* ASTCommandListener.m in Sources */,
 				520E107622980C2A00FE19D7 /* PSWebSocketBuffer.m in Sources */,
 				5200D8E422805A0D006F7C9D /* ATLControlWebSocketClient.m in Sources */,
+				9D8D5814234F64DF008F7616 /* ASTCommandListener.m in Sources */,
+				9D8D5815234F64DF008F7616 /* AdjustSdkTest.m in Sources */,
 				520E107522980C2A00FE19D7 /* PSWebSocketDriver.m in Sources */,
 				520E107422980C2A00FE19D7 /* PSWebSocketUTF8Decoder.m in Sources */,
 				5200D8E222805A0D006F7C9D /* ATLTestInfo.m in Sources */,
 				520E107922980C2A00FE19D7 /* PSWebSocketServer.m in Sources */,
 				520E107322980C2A00FE19D7 /* PSWebSocketDeflater.m in Sources */,
 				5200D8E722805A0D006F7C9D /* ATLControlSignal.m in Sources */,
-				9D13E90620CE887F00B58F3A /* AdjustSdkTest.m in Sources */,
 				520E107222980C2A00FE19D7 /* PSWebSocketInflater.m in Sources */,
 				5200D8E522805A0D006F7C9D /* ATLBlockingQueue.m in Sources */,
-				9D13E91220CE88DA00B58F3A /* ASTEventEmitter.m in Sources */,
 				5200D8E822805A0D006F7C9D /* ATLUtil.m in Sources */,
 				520E107822980C2A00FE19D7 /* PSWebSocket.m in Sources */,
 			);

@@ -1,7 +1,7 @@
-rootProject.name = 'app'
+rootProject.name = 'test'
 include ':react-native-adjust-test'
 project(':react-native-adjust-test').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-adjust-test/android')
 include ':react-native-adjust'
 project(':react-native-adjust').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-adjust/android')
-
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'

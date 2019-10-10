@@ -96,6 +96,11 @@ def run_testapp(_root_dir, _sdk_plugin_name, _test_plugin_name):
     remove_dir_if_exists(testplugin_node_modules_dir)
 
     # ------------------------------------------------------------------
+    # Installing node dependencies [npm install]
+    debug_green('Installing node dependencies [npm install] ...')
+    subprocess.call(['npm', 'install'])
+
+    # ------------------------------------------------------------------
     # Modifying react-native-adjust content and putting it to temp folder
     debug_green('Modifying react-native-adjust content and putting it to temp folder ...')
     __copy_rn_content_to_temp()
@@ -123,7 +128,7 @@ def run_testapp(_root_dir, _sdk_plugin_name, _test_plugin_name):
 
     # ------------------------------------------------------------------
     # Update all the Pods if needed
-    os.chdir('{0}/{1}'.format(example_app_dir, 'ios'))
+    os.chdir('{0}/{1}'.format(test_app_dir, 'ios'))
     subprocess.call(['pod', 'update'])
 
     # ------------------------------------------------------------------

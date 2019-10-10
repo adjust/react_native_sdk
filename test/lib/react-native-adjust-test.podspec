@@ -15,9 +15,8 @@ Pod::Spec.new do |s|
   s.requires_arc   = true
   s.platform       = :ios, '8.0'
 
-  s.preserve_paths = 'LICENSE', 'README.md', 'package.json', 'index.js'
-  s.source_files   = 'ios/*.{h,m}'
+  s.preserve_paths = 'package.json'
+  s.source_files   = 'ios/*.{h,m}', 'ios/AdjustTestLibrary/*.{h,m}', 'ios/AdjustTestLibrary/PocketSocket/*.{h,m}'
 
-  s.dependency 'Adjust', '~> 4.18.3'
   s.dependency 'React'
 end

@@ -188,6 +188,8 @@ PODS:
   - react-native-adjust (4.18.2):
     - Adjust (~> 4.18.3)
     - React
+  - react-native-adjust-test (4.18.2):
+    - React
   - React-RCTActionSheet (0.61.2):
     - React-Core/RCTActionSheetHeaders (= 0.61.2)
   - React-RCTAnimation (0.61.2):
@@ -243,6 +245,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-adjust (from `../node_modules/react-native-adjust`)
+  - react-native-adjust-test (from `../node_modules/react-native-adjust-test`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -292,6 +295,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-adjust:
     :path: "../node_modules/react-native-adjust"
+  react-native-adjust-test:
+    :path: "../node_modules/react-native-adjust-test"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -332,7 +337,8 @@ SPEC CHECKSUMS:
   React-jsi: 32285a21b1b24c36060493ed3057a34677d58d09
   React-jsiexecutor: 8909917ff7d8f21a57e443a866fd8d4560e50c65
   React-jsinspector: 111d7d342b07a904c400592e02a2b958f1098b60
-  react-native-adjust: d092bdb77203c46bb610abfefaa838bba6ddaad8
+  react-native-adjust: cd6bdd05e21aaf9e9d3e44c61020225a55fd1e27
+  react-native-adjust-test: 83355cfb0bf69e25ef017d261b69eca1a169d312
   React-RCTActionSheet: 89b037c0fb7d2671607cb645760164e7e0c013f6
   React-RCTAnimation: e3cefa93c38c004c318f7ec04b883eb14b8b8235
   React-RCTBlob: d26ac0e313fbf14e7203473fd593ccaaeee8329e
@@ -345,6 +351,6 @@ SPEC CHECKSUMS:
   ReactCommon: 5848032ed2f274fcb40f6b9ec24067787c42d479
   Yoga: 14927e37bd25376d216b150ab2a561773d57911f
 
-PODFILE CHECKSUM: be2835cf477bf80bf431ce9616ad95c07a655386
+PODFILE CHECKSUM: 31d06834c8fabd2c2b7f18e67576738cab6886c1
 
 COCOAPODS: 1.8.3

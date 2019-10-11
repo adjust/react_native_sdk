@@ -322,6 +322,17 @@ RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
     callback(@[dictionary]);
 }
 
+RCT_EXPORT_METHOD(convertUniversalLink:(NSString *)urlString scheme:(NSString *)scheme callback:(RCTResponseSenderBlock)callback) {
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSURL *converted = [Adjust convertUniversalLink:url scheme:scheme];
+    
+    if (converted != nil && converted.absoluteString != nil && converted.absoluteString.length > 0) {
+        callback(@[converted.absoluteString]);
+    } else {
+        callback(nil);
+    }
+}
+
 RCT_EXPORT_METHOD(setAttributionCallbackListener) {
     _isAttributionCallbackImplemented = YES;
 }

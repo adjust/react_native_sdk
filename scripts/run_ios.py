@@ -37,21 +37,19 @@ def run_example(_root_dir, _sdk_plugin_name):
     # Removing react-native-adjust from example app
     # This step is needed, since existence of "../temp" path for react-native-adjust is hostile towards "npm install".
     # Removing plugin with yarn in here makes it disappear from package.json of the example app.
-    debug_green('Removing "{0}" from example app ...'.format(sdk_plugin_name))
+    # Removing and unlinking react-native-adjust from example app
+    debug_green('Removing and unlinking react-native-adjust from example app ...')
+    # debug_green('Removing "{0}" from example app ...'.format(sdk_plugin_name))
     os.chdir(example_app_dir)
+    # subprocess.call(['yarn', 'remove', sdk_plugin_name])
+    subprocess.call(['react-native', 'unlink', sdk_plugin_name])
     subprocess.call(['yarn', 'remove', sdk_plugin_name])
+    remove_dir_if_exists(plugin_node_modules_dir)
 
     # ------------------------------------------------------------------
     # Installing node dependencies [npm install]
     debug_green('Installing node dependencies [npm install] ...')
     subprocess.call(['npm', 'install'])
-
-    # ------------------------------------------------------------------
-    # Removing and unlinking react-native-adjust from example app
-    debug_green('Removing and unlinking react-native-adjust from example app ...')
-    subprocess.call(['react-native', 'unlink', sdk_plugin_name])
-    subprocess.call(['yarn', 'remove', sdk_plugin_name])
-    remove_dir_if_exists(plugin_node_modules_dir)
 
     # ------------------------------------------------------------------
     # Modifying react-native-adjust content and putting it to temp folder
@@ -69,8 +67,14 @@ def run_example(_root_dir, _sdk_plugin_name):
     subprocess.call(['react-native', 'link', sdk_plugin_name])
 
     # ------------------------------------------------------------------
+    # Update all the Pods if needed
+    os.chdir('{0}/{1}'.format(example_app_dir, 'ios'))
+    subprocess.call(['pod', 'update'])
+
+    # ------------------------------------------------------------------
     # Cleanup
     debug_green('Cleanup ...')
+    os.chdir(example_app_dir)
     remove_dir_if_exists(temp_dir)
 
     debug_green('Run example app from Xcode. Project location: {0}/ios ...'.format(example_app_dir))
@@ -90,6 +94,11 @@ def run_testapp(_root_dir, _sdk_plugin_name, _test_plugin_name):
     subprocess.call(['yarn', 'remove', test_plugin_name])
     remove_dir_if_exists(plugin_node_modules_dir)
     remove_dir_if_exists(testplugin_node_modules_dir)
+
+    # ------------------------------------------------------------------
+    # Installing node dependencies [npm install]
+    debug_green('Installing node dependencies [npm install] ...')
+    subprocess.call(['npm', 'install'])
 
     # ------------------------------------------------------------------
     # Modifying react-native-adjust content and putting it to temp folder
@@ -118,8 +127,14 @@ def run_testapp(_root_dir, _sdk_plugin_name, _test_plugin_name):
     subprocess.call(['react-native', 'link', test_plugin_name])
 
     # ------------------------------------------------------------------
+    # Update all the Pods if needed
+    os.chdir('{0}/{1}'.format(test_app_dir, 'ios'))
+    subprocess.call(['pod', 'update'])
+
+    # ------------------------------------------------------------------
     # Cleanup
     debug_green('Cleanup ...')
+    os.chdir(test_app_dir)
     remove_dir_if_exists(temp_dir)
 
     debug_green('Run test app from Xcode. Project location: {0}/ios ...'.format(test_app_dir))

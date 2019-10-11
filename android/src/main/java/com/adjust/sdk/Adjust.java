@@ -470,6 +470,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
+    public void convertUniversalLink(final String url, final String scheme, final Callback callback) {
+        callback.invoke("");
+    }
+
+    @ReactMethod
     public void setAttributionCallbackListener() {
         this.attributionCallback = true;
     }

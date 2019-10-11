@@ -45,21 +45,19 @@ def run_example(_root_dir, _sdk_plugin_name, skip_uninstall):
     # Removing react-native-adjust from example app
     # This step is needed, since existence of "../temp" path for react-native-adjust is hostile towards "npm install".
     # Removing plugin with yarn in here makes it disappear from package.json of the example app.
-    debug_green('Removing "{0}" from example app ...'.format(sdk_plugin_name))
+    # Removing and unlinking react-native-adjust from example app
+    # debug_green('Removing "{0}" from example app ...'.format(sdk_plugin_name))
+    debug_green('Removing and unlinking react-native-adjust from example app ...')
     os.chdir(example_app_dir)
+    # subprocess.call(['yarn', 'remove', sdk_plugin_name])
+    subprocess.call(['react-native', 'unlink', sdk_plugin_name])
     subprocess.call(['yarn', 'remove', sdk_plugin_name])
+    remove_dir_if_exists(plugin_node_modules_dir)
 
     # ------------------------------------------------------------------
     # Installing node dependencies [npm install]
     debug_green('Installing node dependencies [npm install] ...')
     subprocess.call(['npm', 'install'])
-
-    # ------------------------------------------------------------------
-    # Removing and unlinking react-native-adjust from example app
-    debug_green('Removing and unlinking react-native-adjust from example app ...')
-    subprocess.call(['react-native', 'unlink', sdk_plugin_name])
-    subprocess.call(['yarn', 'remove', sdk_plugin_name])
-    remove_dir_if_exists(plugin_node_modules_dir)
 
     # ------------------------------------------------------------------
     # Modifying react-native-adjust content and putting it to temp folder
@@ -112,6 +110,11 @@ def run_testapp(_root_dir, _sdk_plugin_name, _test_plugin_name, skip_uninstall):
     subprocess.call(['yarn', 'remove', test_plugin_name])
     remove_dir_if_exists(plugin_node_modules_dir)
     remove_dir_if_exists(testplugin_node_modules_dir)
+
+    # ------------------------------------------------------------------
+    # Installing node dependencies [npm install]
+    debug_green('Installing node dependencies [npm install] ...')
+    subprocess.call(['npm', 'install'])
 
     # ------------------------------------------------------------------
     # Modifying react-native-adjust content and putting it to temp folder

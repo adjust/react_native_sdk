@@ -1,3 +1,17 @@
+### Version 4.18.2 (11th October 2019)
+#### Added
+- Added `convertUniversalLink` method from native iOS SDK to JS API (thanks to @tootsweet).
+
+#### Changed
+- Updated example and test app to RN 0.61.2.
+- Updated README to fix typos (thanks to @BorisMisnik).
+
+#### Native SDKs
+- [iOS@v4.18.3][ios_sdk_v4.18.3]
+- [Android@v4.18.3][android_sdk_v4.18.3]
+
+---
+
 ### Version 4.18.1 (2nd July 2019)
 #### Fixed
 - Fixed compile errors when trying to use Adjust SDK with TypeScript 2.9 and higher (thanks to @rawrmaan).
@@ -307,6 +321,7 @@
 [ios_sdk_v4.17.1]: https://github.com/adjust/ios_sdk/tree/v4.17.1
 [ios_sdk_v4.17.2]: https://github.com/adjust/ios_sdk/tree/v4.17.2
 [ios_sdk_v4.18.0]: https://github.com/adjust/ios_sdk/tree/v4.18.0
+[ios_sdk_v4.18.3]: https://github.com/adjust/ios_sdk/tree/v4.18.3
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -323,3 +338,4 @@
 [android_sdk_v4.15.0]: https://github.com/adjust/android_sdk/tree/v4.15.0
 [android_sdk_v4.17.0]: https://github.com/adjust/android_sdk/tree/v4.17.0
 [android_sdk_v4.18.0]: https://github.com/adjust/android_sdk/tree/v4.18.0
+[android_sdk_v4.18.3]: https://github.com/adjust/android_sdk/tree/v4.18.3

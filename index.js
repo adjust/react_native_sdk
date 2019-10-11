@@ -110,12 +110,19 @@ Adjust.getAmazonAdId = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native4.18.1", callback);
+    module_adjust.getSdkVersion("react-native4.18.2", callback);
 }
 
 Adjust.setReferrer = function(referrer) {
     module_adjust.setReferrer(referrer);
 };
+
+Adjust.convertUniversalLink = function(url, scheme, callback) {
+    if (!url || !scheme || !callback) {
+        return;
+    }
+    module_adjust.convertUniversalLink(url, scheme, callback);
+}
 
 Adjust.componentWillUnmount = function() {
     if (AdjustConfig.AttributionSubscription != null) {
@@ -183,7 +190,7 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native4.18.1";
+    this.sdkPrefix = "react-native4.18.2";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;

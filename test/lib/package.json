@@ -1,7 +1,7 @@
 {
     "name": "react-native-adjust-test",
     "description": "Adjust Test Plugin For React Native SDK",
-    "version": "4.18.1",
+    "version": "4.18.2",
     "author": "Adjust GmbH",
     "license": "MIT",
     "keywords": [
@@ -11,6 +11,10 @@
         "adjust",
         "test"
     ],
+    "homepage": "https://github.com/adjust/react_native_sdk",
+    "bugs": {
+        "url": "https://github.com/adjust/react_native_sdk/issues"
+    },
     "repository": {
         "type": "git",
         "url": "git://github.com/adjust/react_native_sdk.git"

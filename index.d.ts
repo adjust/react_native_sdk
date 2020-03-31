@@ -78,6 +78,10 @@ declare module 'react-native-adjust' {
 
     public setDeviceKnown(isDeviceKnown: boolean): void
 
+    public setAllowiAdInfoReading(allowiAdInfoReading: boolean): void
+
+    public setAllowIdfaReading(allowIdfaReading: boolean): void
+
     public setSdkPrefix(sdkPrefix: string): void
 
     public setShouldLaunchDeeplink(shouldLaunchDeeplink: boolean): void

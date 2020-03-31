@@ -154,6 +154,10 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
     if ('noBackoffWait' in params) {
         testOptions.noBackoffWait = getFirstParameterValue(params, 'noBackoffWait').toString() === 'true';
     }
+    if ('iAdFrameworkEnabled' in params) {
+        var iAdFrameworkEnabled = getFirstParameterValue(params, 'iAdFrameworkEnabled');
+        testOptions.iAdFrameworkEnabled = iAdFrameworkEnabled == 'true';
+    }
     if ('teardown' in params) {
         var teardownOptions = getValueFromKey(params, 'teardown');
         for (var i = 0; i < teardownOptions.length; i++) {
@@ -300,6 +304,18 @@ AdjustCommandExecutor.prototype.config = function(params) {
         var sendInBackgroundS = getFirstParameterValue(params, 'sendInBackground');
         var sendInBackground = sendInBackgroundS == 'true';
         adjustConfig.setSendInBackground(sendInBackground);
+    }
+
+    if ('allowiAdInfoReading' in params) {
+        var allowiAdInfoReadingS = getFirstParameterValue(params, 'allowiAdInfoReading');
+        var allowiAdInfoReading = allowiAdInfoReadingS == 'true';
+        adjustConfig.setAllowiAdInfoReading(allowiAdInfoReading);
+    }
+
+    if ('allowIdfaReading' in params) {
+        var allowIdfaReadingS = getFirstParameterValue(params, 'allowIdfaReading');
+        var allowIdfaReading = allowIdfaReadingS == 'true';
+        adjustConfig.setAllowIdfaReading(allowIdfaReading);
     }
 
     if ('userAgent' in params) {

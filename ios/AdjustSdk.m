@@ -39,6 +39,8 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSNumber *shouldLaunchDeeplink = dict[@"shouldLaunchDeeplink"];
     NSNumber *delayStart = dict[@"delayStart"];
     NSNumber *isDeviceKnown = dict[@"isDeviceKnown"];
+    NSNumber *allowiAdInfoReading = dict[@"allowiAdInfoReading"];
+    NSNumber *allowIdfaReading = dict[@"allowIdfaReading"];
     BOOL allowSuppressLogLevel = NO;
 
     // Suppress log level.
@@ -117,6 +119,16 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     // Device known.
     if ([self isFieldValid:isDeviceKnown]) {
         [adjustConfig setIsDeviceKnown:[isDeviceKnown boolValue]];
+    }
+
+    // iAd info reading.
+    if ([self isFieldValid:allowiAdInfoReading]) {
+        [adjustConfig setAllowiAdInfoReading:[allowiAdInfoReading boolValue]];
+    }
+
+    // IDFA reading.
+    if ([self isFieldValid:allowIdfaReading]) {
+        [adjustConfig setAllowIdfaReading:[allowIdfaReading boolValue]];
     }
 
     // Delay start.

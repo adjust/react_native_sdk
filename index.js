@@ -213,6 +213,9 @@ var AdjustConfig = function(appToken, environment) {
     // Android only
     this.processName = null;
     this.readMobileEquipmentIdentity = null;
+    // iOS only
+    this.allowiAdInfoReading = null;
+    this.allowIdfaReading = null;
 };
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
@@ -287,6 +290,14 @@ AdjustConfig.prototype.setSdkPrefix = function(sdkPrefix) {
 
 AdjustConfig.prototype.setReadMobileEquipmentIdentity = function(readMobileEquipmentIdentity) {
     // this.readMobileEquipmentIdentity = readMobileEquipmentIdentity;
+};
+
+AdjustConfig.prototype.setAllowiAdInfoReading = function(allowiAdInfoReading) {
+    this.allowiAdInfoReading = allowiAdInfoReading;
+};
+
+AdjustConfig.prototype.setAllowIdfaReading = function(allowIdfaReading) {
+    this.allowIdfaReading = allowIdfaReading;
 };
 
 AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) {

@@ -34,6 +34,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSString *sdkPrefix = dict[@"sdkPrefix"];
     NSString *userAgent = dict[@"userAgent"];
     NSString *defaultTracker = dict[@"defaultTracker"];
+    NSString *externalDeviceId = dict[@"externalDeviceId"];
     NSNumber *eventBufferingEnabled = dict[@"eventBufferingEnabled"];
     NSNumber *sendInBackground = dict[@"sendInBackground"];
     NSNumber *shouldLaunchDeeplink = dict[@"shouldLaunchDeeplink"];
@@ -73,6 +74,11 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     // Default tracker.
     if ([self isFieldValid:defaultTracker]) {
         [adjustConfig setDefaultTracker:defaultTracker];
+    }
+
+    // External device ID.
+    if ([self isFieldValid:externalDeviceId]) {
+        [adjustConfig setExternalDeviceId:externalDeviceId];
     }
 
     // Attribution delegate & other delegates

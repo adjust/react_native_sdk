@@ -259,7 +259,6 @@ AdjustCommandExecutor.prototype.config = function(params) {
         adjustConfig.setSdkPrefix(sdkPrefix);
     }
 
-    console.log("[*] params = " + params);
     if ('defaultTracker' in params) {
         var defaultTracker = getFirstParameterValue(params, 'defaultTracker');
         
@@ -269,6 +268,17 @@ AdjustCommandExecutor.prototype.config = function(params) {
         }
 
         adjustConfig.setDefaultTracker(defaultTracker);
+    }
+
+    if ('externalDeviceId' in params) {
+        var externalDeviceId = getFirstParameterValue(params, 'externalDeviceId');
+        
+        // Special handling for null value case.
+        if (externalDeviceId == 'null') {
+            externalDeviceId = null;
+        }
+
+        adjustConfig.setExternalDeviceId(externalDeviceId);
     }
 
     if ('appSecret' in params) {

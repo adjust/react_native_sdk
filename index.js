@@ -205,6 +205,7 @@ var AdjustConfig = function(appToken, environment) {
     this.userAgent = null;
     this.isDeviceKnown = null;
     this.defaultTracker = null;
+    this.externalDeviceId = null;
     this.secretId = null;
     this.info1 = null;
     this.info2 = null;
@@ -248,6 +249,10 @@ AdjustConfig.prototype.setProcessName = function(processName) {
 
 AdjustConfig.prototype.setDefaultTracker = function(defaultTracker) {
     this.defaultTracker = defaultTracker;
+};
+
+AdjustConfig.prototype.setExternalDeviceId = function(externalDeviceId) {
+    this.externalDeviceId = externalDeviceId;
 };
 
 AdjustConfig.prototype.setUserAgent = function(userAgent) {

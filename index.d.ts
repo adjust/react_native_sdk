@@ -62,6 +62,8 @@ declare module 'react-native-adjust' {
 
     public setDefaultTracker(defaultTracked: string): void
 
+    public setExternalDeviceId(externalDeviceId: string): void
+
     public setUserAgent(userAgent: string): void
 
     public setAppSecret(

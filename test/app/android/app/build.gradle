@@ -179,11 +179,10 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-adjust-test')
-    implementation project(':react-native-adjust')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation "com.google.code.gson:gson:+"
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.java-websocket:Java-WebSocket:1.4.0'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

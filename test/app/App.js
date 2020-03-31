@@ -49,7 +49,7 @@ const App: () => React$Node = () => {
 
   var baseUrl = "";
   var gdprUrl = "";
-  var ipAddress = "192.168.8.1";
+  var ipAddress = "192.168.2.101";
   if (Platform.OS === "android") {
     baseUrl = "https://" + ipAddress + ":8443";
     gdprUrl = "https://" + ipAddress + ":8443";

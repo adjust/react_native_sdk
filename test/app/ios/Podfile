@@ -26,7 +26,7 @@ target 'test' do
   pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
   pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
   pod 'React-jsinspector', :path => '../node_modules/react-native/ReactCommon/jsinspector'
-  pod 'ReactCommon/jscallinvoker', :path => "../node_modules/react-native/ReactCommon"
+  pod 'ReactCommon/callinvoker', :path => "../node_modules/react-native/ReactCommon"
   pod 'ReactCommon/turbomodule/core', :path => "../node_modules/react-native/ReactCommon"
   pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
 
@@ -58,9 +58,7 @@ target 'test' do
 
 
 
-  pod 'react-native-adjust', :path => '../node_modules/react-native-adjust'
 
-  pod 'react-native-adjust-test', :path => '../node_modules/react-native-adjust-test'
 
   target 'testTests' do
     inherit! :search_paths

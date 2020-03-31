@@ -1,6 +1,6 @@
 {
   "name": "Example",
-  "version": "0.0.1",
+  "version": "4.21.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "react": "16.11.0",
-    "react-native": "0.62.0"
+    "react-native": "0.62.0",
+    "react-native-adjust": "../temp"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

@@ -129,11 +129,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example"
+        applicationId "com.adjust.examples"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "4.21.0"
     }
     splits {
         abi {

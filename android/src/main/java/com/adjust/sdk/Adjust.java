@@ -430,6 +430,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
+    public void disableThirdPartySharing() {
+        com.adjust.sdk.Adjust.disableThirdPartySharing(getReactApplicationContext());
+    }
+
+    @ReactMethod
     public void getIdfa(Callback callback) {
         callback.invoke("");
     }

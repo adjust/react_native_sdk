@@ -116,6 +116,7 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
         case "sendReferrer"                   : this.sendReferrer(command.params); break;
         case "gdprForgetMe"                   : this.gdprForgetMe(command.params); break;
         case "trackAdRevenue"                 : this.trackAdRevenue(command.params); break;
+        case "disableThirdPartySharing"       : this.disableThirdPartySharing(command.params); break;
     }
 
     this.nextToSendCounter++;
@@ -532,6 +533,10 @@ AdjustCommandExecutor.prototype.trackAdRevenue = function(params) {
 
 AdjustCommandExecutor.prototype.gdprForgetMe = function(params) {
     Adjust.gdprForgetMe();
+};
+
+AdjustCommandExecutor.prototype.disableThirdPartySharing = function(params) {
+    Adjust.disableThirdPartySharing();
 };
 
 AdjustCommandExecutor.prototype.addSessionCallbackParameter = function(params) {

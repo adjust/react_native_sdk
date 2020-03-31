@@ -144,6 +144,7 @@ declare module 'react-native-adjust' {
     resetSessionCallbackParameters: () => void
     resetSessionPartnerParameters: () => void
     gdprForgetMe: () => void
+    disableThirdPartySharing: () => void
     getIdfa: (callback: (idfa: string) => void) => void
     getGoogleAdId: (callback: (adid: string) => void) => void
     getAdid: (callback: (adid: string) => void) => void

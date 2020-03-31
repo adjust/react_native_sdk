@@ -89,6 +89,10 @@ Adjust.gdprForgetMe = function() {
     module_adjust.gdprForgetMe();
 }
 
+Adjust.disableThirdPartySharing = function() {
+    module_adjust.disableThirdPartySharing();
+}
+
 Adjust.getIdfa = function(callback) {
     module_adjust.getIdfa(callback);
 };

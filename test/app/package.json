@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "react": "16.11.0",
-    "react-native": "0.62.0"
+    "react-native": "0.62.0",
+    "react-native-adjust": "../../temp",
+    "react-native-adjust-test": "../lib"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

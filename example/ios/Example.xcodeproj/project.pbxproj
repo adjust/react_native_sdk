@@ -18,6 +18,8 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* ExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ExampleTests.m */; };
 		675212AC50D4BA7CC34943BD /* libPods-Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44D65FE77806023C14AEA5F3 /* libPods-Example.a */; };
+		9D2CA8AD243415C500E3B98E /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2CA8AC243415C500E3B98E /* iAd.framework */; };
+		9D2CA8AF243415CB00E3B98E /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2CA8AE243415CB00E3B98E /* AdSupport.framework */; };
 		A83EB3E840CB5D21058F3745 /* libPods-Example-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 733E7AB08A84D22E97108B06 /* libPods-Example-tvOSTests.a */; };
 		F8BE0D6168FC11F48B15A397 /* libPods-Example-ExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 126869921792CE8C562D4F58 /* libPods-Example-ExampleTests.a */; };
 /* End PBXBuildFile section */
@@ -63,6 +65,8 @@
 		589C7AD663D3C0356E84A15C /* libPods-Example-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Example-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		733E7AB08A84D22E97108B06 /* libPods-Example-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Example-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89A907B95221C675FA777296 /* Pods-Example-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example-ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-Example-ExampleTests/Pods-Example-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		9D2CA8AC243415C500E3B98E /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		9D2CA8AE243415CB00E3B98E /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		CAA7DB0A7CE4E7D54C3BE72C /* Pods-Example-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Example-tvOSTests/Pods-Example-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		EA1400F410E5BB3B938FED9C /* Pods-Example-ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example-ExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-Example-ExampleTests/Pods-Example-ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -83,6 +87,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				675212AC50D4BA7CC34943BD /* libPods-Example.a in Frameworks */,
+				9D2CA8AD243415C500E3B98E /* iAd.framework in Frameworks */,
+				9D2CA8AF243415CB00E3B98E /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +145,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9D2CA8AE243415CB00E3B98E /* AdSupport.framework */,
+				9D2CA8AC243415C500E3B98E /* iAd.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				44D65FE77806023C14AEA5F3 /* libPods-Example.a */,

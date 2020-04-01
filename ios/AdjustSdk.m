@@ -447,6 +447,12 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
             testOptions.noBackoffWait = [value boolValue];
         }
     }
+    if ([dict objectForKey:@"iAdFrameworkEnabled"]) {
+        NSString *value = dict[@"iAdFrameworkEnabled"];
+        if ([self isFieldValid:value]) {
+            testOptions.iAdFrameworkEnabled = [value boolValue];
+        }
+    }
 
     [Adjust setTestOptions:testOptions];
 }

@@ -54,8 +54,8 @@ const App: () => React$Node = () => {
     baseUrl = "https://" + ipAddress + ":8443";
     gdprUrl = "https://" + ipAddress + ":8443";
   } else if (Platform.OS === "ios") {
-    baseUrl = "http://" + ipAddress + ":8000";
-    gdprUrl = "http://" + ipAddress + ":8000";
+    baseUrl = "http://" + ipAddress + ":8080";
+    gdprUrl = "http://" + ipAddress + ":8080";
   }
   var controlUrl = "ws://" + ipAddress + ":1987";
 

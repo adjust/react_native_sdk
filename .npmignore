@@ -12,6 +12,5 @@ node_modules
 
 # Adjust SDK
 ext/
-scripts/
 example/
 test/

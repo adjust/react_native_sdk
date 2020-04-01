@@ -34,11 +34,14 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSString *sdkPrefix = dict[@"sdkPrefix"];
     NSString *userAgent = dict[@"userAgent"];
     NSString *defaultTracker = dict[@"defaultTracker"];
+    NSString *externalDeviceId = dict[@"externalDeviceId"];
     NSNumber *eventBufferingEnabled = dict[@"eventBufferingEnabled"];
     NSNumber *sendInBackground = dict[@"sendInBackground"];
     NSNumber *shouldLaunchDeeplink = dict[@"shouldLaunchDeeplink"];
     NSNumber *delayStart = dict[@"delayStart"];
     NSNumber *isDeviceKnown = dict[@"isDeviceKnown"];
+    NSNumber *allowiAdInfoReading = dict[@"allowiAdInfoReading"];
+    NSNumber *allowIdfaReading = dict[@"allowIdfaReading"];
     BOOL allowSuppressLogLevel = NO;
 
     // Suppress log level.
@@ -71,6 +74,11 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     // Default tracker.
     if ([self isFieldValid:defaultTracker]) {
         [adjustConfig setDefaultTracker:defaultTracker];
+    }
+
+    // External device ID.
+    if ([self isFieldValid:externalDeviceId]) {
+        [adjustConfig setExternalDeviceId:externalDeviceId];
     }
 
     // Attribution delegate & other delegates
@@ -117,6 +125,16 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     // Device known.
     if ([self isFieldValid:isDeviceKnown]) {
         [adjustConfig setIsDeviceKnown:[isDeviceKnown boolValue]];
+    }
+
+    // iAd info reading.
+    if ([self isFieldValid:allowiAdInfoReading]) {
+        [adjustConfig setAllowiAdInfoReading:[allowiAdInfoReading boolValue]];
+    }
+
+    // IDFA reading.
+    if ([self isFieldValid:allowIdfaReading]) {
+        [adjustConfig setAllowIdfaReading:[allowIdfaReading boolValue]];
     }
 
     // Delay start.
@@ -264,6 +282,10 @@ RCT_EXPORT_METHOD(resetSessionPartnerParameters) {
 
 RCT_EXPORT_METHOD(gdprForgetMe) {
     [Adjust gdprForgetMe];
+}
+
+RCT_EXPORT_METHOD(disableThirdPartySharing) {
+    [Adjust disableThirdPartySharing];
 }
 
 RCT_EXPORT_METHOD(getIdfa:(RCTResponseSenderBlock)callback) {
@@ -423,6 +445,12 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
         NSString *value = dict[@"noBackoffWait"];
         if ([self isFieldValid:value]) {
             testOptions.noBackoffWait = [value boolValue];
+        }
+    }
+    if ([dict objectForKey:@"iAdFrameworkEnabled"]) {
+        NSString *value = dict[@"iAdFrameworkEnabled"];
+        if ([self isFieldValid:value]) {
+            testOptions.iAdFrameworkEnabled = [value boolValue];
         }
     }
 

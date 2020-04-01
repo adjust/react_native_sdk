@@ -116,6 +116,7 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
         case "sendReferrer"                   : this.sendReferrer(command.params); break;
         case "gdprForgetMe"                   : this.gdprForgetMe(command.params); break;
         case "trackAdRevenue"                 : this.trackAdRevenue(command.params); break;
+        case "disableThirdPartySharing"       : this.disableThirdPartySharing(command.params); break;
     }
 
     this.nextToSendCounter++;
@@ -152,6 +153,9 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
     }
     if ('noBackoffWait' in params) {
         testOptions.noBackoffWait = getFirstParameterValue(params, 'noBackoffWait').toString() === 'true';
+    }
+    if ('iAdFrameworkEnabled' in params) {
+        testOptions.iAdFrameworkEnabled = getFirstParameterValue(params, 'iAdFrameworkEnabled').toString() === 'true';
     }
     if ('teardown' in params) {
         var teardownOptions = getValueFromKey(params, 'teardown');
@@ -254,7 +258,6 @@ AdjustCommandExecutor.prototype.config = function(params) {
         adjustConfig.setSdkPrefix(sdkPrefix);
     }
 
-    console.log("[*] params = " + params);
     if ('defaultTracker' in params) {
         var defaultTracker = getFirstParameterValue(params, 'defaultTracker');
         
@@ -264,6 +267,17 @@ AdjustCommandExecutor.prototype.config = function(params) {
         }
 
         adjustConfig.setDefaultTracker(defaultTracker);
+    }
+
+    if ('externalDeviceId' in params) {
+        var externalDeviceId = getFirstParameterValue(params, 'externalDeviceId');
+        
+        // Special handling for null value case.
+        if (externalDeviceId == 'null') {
+            externalDeviceId = null;
+        }
+
+        adjustConfig.setExternalDeviceId(externalDeviceId);
     }
 
     if ('appSecret' in params) {
@@ -299,6 +313,18 @@ AdjustCommandExecutor.prototype.config = function(params) {
         var sendInBackgroundS = getFirstParameterValue(params, 'sendInBackground');
         var sendInBackground = sendInBackgroundS == 'true';
         adjustConfig.setSendInBackground(sendInBackground);
+    }
+
+    if ('allowiAdInfoReading' in params) {
+        var allowiAdInfoReadingS = getFirstParameterValue(params, 'allowiAdInfoReading');
+        var allowiAdInfoReading = allowiAdInfoReadingS == 'true';
+        adjustConfig.setAllowiAdInfoReading(allowiAdInfoReading);
+    }
+
+    if ('allowIdfaReading' in params) {
+        var allowIdfaReadingS = getFirstParameterValue(params, 'allowIdfaReading');
+        var allowIdfaReading = allowIdfaReadingS == 'true';
+        adjustConfig.setAllowIdfaReading(allowIdfaReading);
     }
 
     if ('userAgent' in params) {
@@ -532,6 +558,10 @@ AdjustCommandExecutor.prototype.trackAdRevenue = function(params) {
 
 AdjustCommandExecutor.prototype.gdprForgetMe = function(params) {
     Adjust.gdprForgetMe();
+};
+
+AdjustCommandExecutor.prototype.disableThirdPartySharing = function(params) {
+    Adjust.disableThirdPartySharing();
 };
 
 AdjustCommandExecutor.prototype.addSessionCallbackParameter = function(params) {

@@ -107,6 +107,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         String userAgent = null;
         String processName = null;
         String defaultTracker = null;
+        String externalDeviceId = null;
         long secretId  = 0L;
         long info1 = 0L;
         long info2 = 0L;
@@ -187,6 +188,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (checkKey(mapConfig, "defaultTracker")) {
             defaultTracker = mapConfig.getString("defaultTracker");
             adjustConfig.setDefaultTracker(defaultTracker);
+        }
+
+        // External device ID.
+        if (checkKey(mapConfig, "externalDeviceId")) {
+            externalDeviceId = mapConfig.getString("externalDeviceId");
+            adjustConfig.setExternalDeviceId(externalDeviceId);
         }
 
         // User agent.
@@ -427,6 +434,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     @ReactMethod
     public void gdprForgetMe() {
         com.adjust.sdk.Adjust.gdprForgetMe(getReactApplicationContext());
+    }
+
+    @ReactMethod
+    public void disableThirdPartySharing() {
+        com.adjust.sdk.Adjust.disableThirdPartySharing(getReactApplicationContext());
     }
 
     @ReactMethod

@@ -89,6 +89,10 @@ Adjust.gdprForgetMe = function() {
     module_adjust.gdprForgetMe();
 }
 
+Adjust.disableThirdPartySharing = function() {
+    module_adjust.disableThirdPartySharing();
+}
+
 Adjust.getIdfa = function(callback) {
     module_adjust.getIdfa(callback);
 };
@@ -110,7 +114,7 @@ Adjust.getAmazonAdId = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native4.18.2", callback);
+    module_adjust.getSdkVersion("react-native4.21.0", callback);
 }
 
 Adjust.setReferrer = function(referrer) {
@@ -190,7 +194,7 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native4.18.2";
+    this.sdkPrefix = "react-native4.21.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
@@ -201,6 +205,7 @@ var AdjustConfig = function(appToken, environment) {
     this.userAgent = null;
     this.isDeviceKnown = null;
     this.defaultTracker = null;
+    this.externalDeviceId = null;
     this.secretId = null;
     this.info1 = null;
     this.info2 = null;
@@ -209,6 +214,9 @@ var AdjustConfig = function(appToken, environment) {
     // Android only
     this.processName = null;
     this.readMobileEquipmentIdentity = null;
+    // iOS only
+    this.allowiAdInfoReading = null;
+    this.allowIdfaReading = null;
 };
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
@@ -241,6 +249,10 @@ AdjustConfig.prototype.setProcessName = function(processName) {
 
 AdjustConfig.prototype.setDefaultTracker = function(defaultTracker) {
     this.defaultTracker = defaultTracker;
+};
+
+AdjustConfig.prototype.setExternalDeviceId = function(externalDeviceId) {
+    this.externalDeviceId = externalDeviceId;
 };
 
 AdjustConfig.prototype.setUserAgent = function(userAgent) {
@@ -283,6 +295,14 @@ AdjustConfig.prototype.setSdkPrefix = function(sdkPrefix) {
 
 AdjustConfig.prototype.setReadMobileEquipmentIdentity = function(readMobileEquipmentIdentity) {
     // this.readMobileEquipmentIdentity = readMobileEquipmentIdentity;
+};
+
+AdjustConfig.prototype.setAllowiAdInfoReading = function(allowiAdInfoReading) {
+    this.allowiAdInfoReading = allowiAdInfoReading;
+};
+
+AdjustConfig.prototype.setAllowIdfaReading = function(allowIdfaReading) {
+    this.allowIdfaReading = allowIdfaReading;
 };
 
 AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) {

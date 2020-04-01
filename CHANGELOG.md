@@ -1,3 +1,17 @@
+### Version 4.21.0 (1st April 2020)
+#### Added
+- Added `disableThirdPartySharing` method to `Adjust` interface to allow disabling of data sharing with third parties outside of Adjust ecosystem.
+- Added support for signature library as a plugin.
+- Added more aggressive sending retry logic for install session package.
+- Added additional parameters to `ad_revenue` package payload.
+- Added external device ID support.
+
+#### Native SDKs
+- [iOS@v4.21.0][ios_sdk_v4.21.0]
+- [Android@v4.21.0][android_sdk_v4.21.0]
+
+---
+
 ### Version 4.18.2 (11th October 2019)
 #### Added
 - Added `convertUniversalLink` method from native iOS SDK to JS API (thanks to @tootsweet).
@@ -322,6 +336,7 @@
 [ios_sdk_v4.17.2]: https://github.com/adjust/ios_sdk/tree/v4.17.2
 [ios_sdk_v4.18.0]: https://github.com/adjust/ios_sdk/tree/v4.18.0
 [ios_sdk_v4.18.3]: https://github.com/adjust/ios_sdk/tree/v4.18.3
+[ios_sdk_v4.21.0]: https://github.com/adjust/ios_sdk/tree/v4.21.0
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -339,3 +354,4 @@
 [android_sdk_v4.17.0]: https://github.com/adjust/android_sdk/tree/v4.17.0
 [android_sdk_v4.18.0]: https://github.com/adjust/android_sdk/tree/v4.18.0
 [android_sdk_v4.18.3]: https://github.com/adjust/android_sdk/tree/v4.18.3
+[android_sdk_v4.21.0]: https://github.com/adjust/android_sdk/tree/v4.21.0

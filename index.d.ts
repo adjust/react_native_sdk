@@ -62,6 +62,8 @@ declare module 'react-native-adjust' {
 
     public setDefaultTracker(defaultTracked: string): void
 
+    public setExternalDeviceId(externalDeviceId: string): void
+
     public setUserAgent(userAgent: string): void
 
     public setAppSecret(
@@ -77,6 +79,10 @@ declare module 'react-native-adjust' {
     public setSendInBackground(sendInBackground: boolean): void
 
     public setDeviceKnown(isDeviceKnown: boolean): void
+
+    public setAllowiAdInfoReading(allowiAdInfoReading: boolean): void
+
+    public setAllowIdfaReading(allowIdfaReading: boolean): void
 
     public setSdkPrefix(sdkPrefix: string): void
 
@@ -144,6 +150,7 @@ declare module 'react-native-adjust' {
     resetSessionCallbackParameters: () => void
     resetSessionPartnerParameters: () => void
     gdprForgetMe: () => void
+    disableThirdPartySharing: () => void
     getIdfa: (callback: (idfa: string) => void) => void
     getGoogleAdId: (callback: (adid: string) => void) => void
     getAdid: (callback: (adid: string) => void) => void

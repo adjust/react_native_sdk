@@ -35,6 +35,7 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
    * [Offline mode](#offline-mode)
    * [Event buffering](#event-buffering)
    * [GDPR right to be forgotten](#gdpr-forget-me)
+   * [Disable third-party sharing](#disable-third-party-sharing)
    * [SDK signature](#sdk-signature)
    * [Background tracking](#background-tracking)
    * [Device IDs](#device-ids)
@@ -637,6 +638,19 @@ Adjust.gdprForgetMe();
 ```
 
 Upon receiving this information, Adjust will erase the user's data and the Adjust SDK will stop tracking the user. No requests from this device will be sent to Adjust in the future.
+
+### <a id="disable-third-party-sharing"></a>Disable third-party sharing for specific users
+
+You can now notify Adjust when a user has exercised their right to stop sharing their data with partners for marketing purposes, but has allowed it to be shared for statistics purposes. 
+
+Call the following method to instruct the Adjust SDK to communicate the user's choice to disable data sharing to the Adjust backend:
+
+
+```cs
+Adjust.disableThirdPartySharing();
+```
+
+Upon receiving this information, Adjust will block the sharing of that specific user's data to partners and the Adjust SDK will continue to work as usual.
 
 ### <a id="sdk-signature"></a>SDK signature
 

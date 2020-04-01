@@ -3,7 +3,7 @@
  * https://github.com/facebook/react-native
  *
  * @format
- * @flow
+ * @flow strict-local
  */
 
 import React from 'react';
@@ -49,13 +49,13 @@ const App: () => React$Node = () => {
 
   var baseUrl = "";
   var gdprUrl = "";
-  var ipAddress = "192.168.8.1";
+  var ipAddress = "192.168.2.101";
   if (Platform.OS === "android") {
     baseUrl = "https://" + ipAddress + ":8443";
     gdprUrl = "https://" + ipAddress + ":8443";
   } else if (Platform.OS === "ios") {
-    baseUrl = "http://" + ipAddress + ":8000";
-    gdprUrl = "http://" + ipAddress + ":8000";
+    baseUrl = "http://" + ipAddress + ":8080";
+    gdprUrl = "http://" + ipAddress + ":8080";
   }
   var controlUrl = "ws://" + ipAddress + ":1987";
 

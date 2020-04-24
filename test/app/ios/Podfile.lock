@@ -1,7 +1,7 @@
 PODS:
-  - Adjust (4.21.2):
-    - Adjust/Core (= 4.21.2)
-  - Adjust/Core (4.21.2)
+  - Adjust (4.21.3):
+    - Adjust/Core (= 4.21.3)
+  - Adjust/Core (4.21.3)
   - boost-for-react-native (1.63.0)
   - CocoaAsyncSocket (7.6.4)
   - CocoaLibEvent (1.0.0)
@@ -428,7 +428,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adjust: 2f90b971d48927c7ceea2b0d51eec5b472d682a3
+  Adjust: 4e8fe76a28dd413c183ba621df50493dcd10e28b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f

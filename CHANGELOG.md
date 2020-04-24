@@ -1,12 +1,13 @@
 ### Version 4.21.1 (xxth April 2020)
 #### Added
+- Added OAID plugin for Adjust SDK named `react-native-adjust-oaid`. With this plugin added next to Adjust SDK, SDK will be able to read Open Advertising ID if present on the device.
 - Added support for Huawei App Gallery install referrer.
 
 #### Changed
 - Updated communication flow with `iAd.framework`.
 
 #### Native SDKs
-- [iOS@v4.21.2][ios_sdk_v4.21.2]
+- [iOS@v4.21.3][ios_sdk_v4.21.3]
 - [Android@v4.21.1][android_sdk_v4.21.1]
 
 ---
@@ -350,7 +351,7 @@
 [ios_sdk_v4.18.0]: https://github.com/adjust/ios_sdk/tree/v4.18.0
 [ios_sdk_v4.18.3]: https://github.com/adjust/ios_sdk/tree/v4.18.3
 [ios_sdk_v4.21.0]: https://github.com/adjust/ios_sdk/tree/v4.21.0
-[ios_sdk_v4.21.2]: https://github.com/adjust/ios_sdk/tree/v4.21.2
+[ios_sdk_v4.21.3]: https://github.com/adjust/ios_sdk/tree/v4.21.3
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0

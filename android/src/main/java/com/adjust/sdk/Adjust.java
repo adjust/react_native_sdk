@@ -279,6 +279,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             adjustConfig.setOnDeeplinkResponseListener(this);
         }
 
+        // Start SDK.
         com.adjust.sdk.Adjust.onCreate(adjustConfig);
         com.adjust.sdk.Adjust.onResume();
     }
@@ -352,6 +353,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
+        // Track event.
         com.adjust.sdk.Adjust.trackEvent(event);
     }
 
@@ -399,6 +401,94 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         } catch (JSONException err) {
              Log.d(TAG, "Give ad revenue payload is not a valid JSON string");
         }
+    }
+
+    @ReactMethod
+    public void trackPlayStoreSubscription(ReadableMap mapEvent) {
+        if (mapEvent == null) {
+            return;
+        }
+
+        long price = -1;
+        String currency = null;
+        String sku = null;
+        String orderId = null;
+        String signature = null;
+        String purchaseToken = null;
+        long purchaseTime = -1;
+        Map<String, Object> callbackParameters = null;
+        Map<String, Object> partnerParameters = null;
+
+        // Price.
+        if (checkKey(mapEvent, "price")) {
+            try {
+                price = Long.parseLong(mapEvent.getString("price"));
+            } catch (NumberFormatException ignore) {}
+        }
+
+        // Currency.
+        if (checkKey(mapEvent, "currency")) {
+            currency = mapEvent.getString("currency");
+        }
+
+        // SKU.
+        if (checkKey(mapEvent, "sku")) {
+            sku = mapEvent.getString("sku");
+        }
+
+        // Order ID.
+        if (checkKey(mapEvent, "orderId")) {
+            orderId = mapEvent.getString("orderId");
+        }
+
+        // Signature.
+        if (checkKey(mapEvent, "signature")) {
+            signature = mapEvent.getString("signature");
+        }
+
+        // Purchase token.
+        if (checkKey(mapEvent, "purchaseToken")) {
+            purchaseToken = mapEvent.getString("purchaseToken");
+        }
+
+        AdjustPlayStoreSubscription subscription = new AdjustPlayStoreSubscription(
+                price,
+                currency,
+                sku,
+                orderId,
+                signature,
+                purchaseToken);
+
+        // Purchase time.
+        if (checkKey(mapEvent, "purchaseTime")) {
+            try {
+                purchaseTime = Long.parseLong(mapEvent.getString("purchaseTime"));
+                subscription.setPurchaseTime(purchaseTime);
+            } catch (NumberFormatException ignore) {}
+        }
+
+        // Callback parameters.
+        if (checkKey(mapEvent, "callbackParameters")) {
+            callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
+            if (null != callbackParameters) {
+                for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
+                    subscription.addCallbackParameter(entry.getKey(), entry.getValue().toString());
+                }
+            }
+        }
+
+        // Partner parameters.
+        if (checkKey(mapEvent, "partnerParameters")) {
+            partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
+            if (null != partnerParameters) {
+                for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
+                    subscription.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+                }
+            }
+        }
+
+        // Track subscription.
+        com.adjust.sdk.Adjust.trackPlayStoreSubscription(subscription);
     }
 
     @ReactMethod
@@ -547,6 +637,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             String value = mapTest.getString("gdprUrl");
             testOptions.gdprUrl = value;
         }
+        if (checkKey(mapTest, "subscriptionUrl")) {
+            String value = mapTest.getString("subscriptionUrl");
+            testOptions.subscriptionUrl = value;
+        }
         if (checkKey(mapTest, "basePath")) {
             String value = mapTest.getString("basePath");
             testOptions.basePath = value;
@@ -554,6 +648,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (checkKey(mapTest, "gdprPath")) {
             String value = mapTest.getString("gdprPath");
             testOptions.gdprPath = value;
+        }
+        if (checkKey(mapTest, "subscriptionPath")) {
+            String value = mapTest.getString("subscriptionPath");
+            testOptions.subscriptionPath = value;
         }
         if (checkKey(mapTest, "useTestConnectionOptions")) {
             boolean value = mapTest.getBoolean("useTestConnectionOptions");

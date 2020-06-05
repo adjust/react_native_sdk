@@ -53,7 +53,15 @@ Adjust.sendFirstPackages = function() {
 
 Adjust.trackAdRevenue = function(source, payload) {
     module_adjust.trackAdRevenue(source, payload);
-}
+};
+
+Adjust.trackAppStoreSubscription = function(subscription) {
+    module_adjust.trackAppStoreSubscription(subscription);
+};
+
+Adjust.trackPlayStoreSubscription = function(subscription) {
+    module_adjust.trackPlayStoreSubscription(subscription);
+};
 
 Adjust.addSessionCallbackParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
@@ -87,11 +95,11 @@ Adjust.resetSessionPartnerParameters = function() {
 
 Adjust.gdprForgetMe = function() {
     module_adjust.gdprForgetMe();
-}
+};
 
 Adjust.disableThirdPartySharing = function() {
     module_adjust.disableThirdPartySharing();
-}
+};
 
 Adjust.getIdfa = function(callback) {
     module_adjust.getIdfa(callback);
@@ -115,7 +123,7 @@ Adjust.getAmazonAdId = function(callback) {
 
 Adjust.getSdkVersion = function(callback) {
     module_adjust.getSdkVersion("react-native4.22.0", callback);
-}
+};
 
 Adjust.setReferrer = function(referrer) {
     module_adjust.setReferrer(referrer);
@@ -126,7 +134,7 @@ Adjust.convertUniversalLink = function(url, scheme, callback) {
         return;
     }
     module_adjust.convertUniversalLink(url, scheme, callback);
-}
+};
 
 Adjust.componentWillUnmount = function() {
     if (AdjustConfig.AttributionSubscription != null) {

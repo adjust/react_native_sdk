@@ -1,5 +1,6 @@
-### Version 4.21.1 (7th May 2020)
+### Version 4.22.0 (6th June 2020)
 #### Added
+- Added subscription tracking feature.
 - Added OAID plugin for Adjust SDK named `react-native-adjust-oaid`. With this plugin added next to Adjust SDK, SDK will be able to read Open Advertising ID if present on the device.
 - Added support for Huawei App Gallery install referrer.
 
@@ -7,8 +8,8 @@
 - Updated communication flow with `iAd.framework`.
 
 #### Native SDKs
-- [iOS@v4.21.3][ios_sdk_v4.21.3]
-- [Android@v4.21.1][android_sdk_v4.21.1]
+- [iOS@v4.22.1][ios_sdk_v4.22.1]
+- [Android@v4.22.0][android_sdk_v4.22.0]
 
 ---
 
@@ -352,6 +353,7 @@
 [ios_sdk_v4.18.3]: https://github.com/adjust/ios_sdk/tree/v4.18.3
 [ios_sdk_v4.21.0]: https://github.com/adjust/ios_sdk/tree/v4.21.0
 [ios_sdk_v4.21.3]: https://github.com/adjust/ios_sdk/tree/v4.21.3
+[ios_sdk_v4.22.1]: https://github.com/adjust/ios_sdk/tree/v4.22.1
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -371,3 +373,4 @@
 [android_sdk_v4.18.3]: https://github.com/adjust/android_sdk/tree/v4.18.3
 [android_sdk_v4.21.0]: https://github.com/adjust/android_sdk/tree/v4.21.0
 [android_sdk_v4.21.1]: https://github.com/adjust/android_sdk/tree/v4.21.1
+[android_sdk_v4.22.0]: https://github.com/adjust/android_sdk/tree/v4.22.0

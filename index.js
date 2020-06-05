@@ -56,11 +56,15 @@ Adjust.trackAdRevenue = function(source, payload) {
 };
 
 Adjust.trackAppStoreSubscription = function(subscription) {
-    module_adjust.trackAppStoreSubscription(subscription);
+    if (Platform.OS === "ios") {
+        module_adjust.trackAppStoreSubscription(subscription);
+    }
 };
 
 Adjust.trackPlayStoreSubscription = function(subscription) {
-    module_adjust.trackPlayStoreSubscription(subscription);
+    if (Platform.OS === "android") {
+        module_adjust.trackPlayStoreSubscription(subscription);
+    }
 };
 
 Adjust.addSessionCallbackParameter = function(key, value) {
@@ -126,7 +130,9 @@ Adjust.getSdkVersion = function(callback) {
 };
 
 Adjust.setReferrer = function(referrer) {
-    module_adjust.setReferrer(referrer);
+    if (Platform.OS === "android") {
+        module_adjust.setReferrer(referrer);
+    }
 };
 
 Adjust.convertUniversalLink = function(url, scheme, callback) {

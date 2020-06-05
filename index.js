@@ -404,4 +404,71 @@ AdjustEvent.prototype.setCallbackId = function(callbackId) {
     this.callbackId = callbackId;
 };
 
-module.exports = { Adjust, AdjustEvent, AdjustConfig }
+// AdjustAppStoreSubscription
+
+var AdjustAppStoreSubscription = function(price, currency, transactionId, receipt) {
+    this.price = price;
+    this.currency = currency;
+    this.transactionId = transactionId;
+    this.receipt = receipt;
+    this.transactionDate = null;
+    this.salesRegion = null;
+    this.callbackParameters = {};
+    this.partnerParameters = {};
+};
+
+AdjustAppStoreSubscription.prototype.setTransactionDate = function(transactionDate) {
+    this.transactionDate = transactionDate;
+};
+
+AdjustAppStoreSubscription.prototype.setSalesRegion = function(salesRegion) {
+    this.salesRegion = salesRegion;
+};
+
+AdjustAppStoreSubscription.prototype.addCallbackParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
+    this.callbackParameters[key] = value;
+};
+
+AdjustAppStoreSubscription.prototype.addPartnerParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
+    this.partnerParameters[key] = value;
+};
+
+// AdjustPlayStoreSubscription
+
+var AdjustPlayStoreSubscription = function(price, currency, sku, orderId, signature, purchaseToken) {
+    this.price = price;
+    this.currency = currency;
+    this.sku = sku;
+    this.orderId = orderId;
+    this.signature = signature;
+    this.purchaseToken = purchaseToken;
+    this.purchaseTime = null;
+    this.callbackParameters = {};
+    this.partnerParameters = {};
+};
+
+AdjustPlayStoreSubscription.prototype.setPurchaseTime = function(purchaseTime) {
+    this.purchaseTime = purchaseTime;
+};
+
+AdjustPlayStoreSubscription.prototype.addCallbackParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
+    this.callbackParameters[key] = value;
+};
+
+AdjustPlayStoreSubscription.prototype.addPartnerParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
+    this.partnerParameters[key] = value;
+};
+
+module.exports = { Adjust, AdjustEvent, AdjustConfig, AdjustAppStoreSubscription, AdjustPlayStoreSubscription }

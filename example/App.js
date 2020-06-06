@@ -28,6 +28,7 @@ import {
   AdjustEvent,
   AdjustConfig
 } from 'react-native-adjust';
+import { AdjustOaid } from 'react-native-adjust-oaid';
 
 const App: () => React$Node = () => {
   Adjust.getSdkVersion(function(sdkVersion) {
@@ -107,6 +108,7 @@ const App: () => React$Node = () => {
   // Adjust.resetSessionCallbackParameters();
   // Adjust.resetSessionPartnerParameters();
 
+  AdjustOaid.readOaid();
   Adjust.create(adjustConfig);
 
   function componentDidMount() {

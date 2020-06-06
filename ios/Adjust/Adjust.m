@@ -85,44 +85,64 @@ static dispatch_once_t onceToken = 0;
 #pragma mark - Public static methods
 
 + (void)appDidLaunch:(ADJConfig *)adjustConfig {
-    [[Adjust getInstance] appDidLaunch:adjustConfig];
+    @synchronized (self) {
+        [[Adjust getInstance] appDidLaunch:adjustConfig];
+    }
 }
 
 + (void)trackEvent:(ADJEvent *)event {
-    [[Adjust getInstance] trackEvent:event];
+    @synchronized (self) {
+        [[Adjust getInstance] trackEvent:event];
+    }
 }
 
 + (void)trackSubsessionStart {
-    [[Adjust getInstance] trackSubsessionStart];
+    @synchronized (self) {
+        [[Adjust getInstance] trackSubsessionStart];
+    }
 }
 
 + (void)trackSubsessionEnd {
-    [[Adjust getInstance] trackSubsessionEnd];
+    @synchronized (self) {
+        [[Adjust getInstance] trackSubsessionEnd];
+    }
 }
 
 + (void)setEnabled:(BOOL)enabled {
-    Adjust *instance = [Adjust getInstance];
-    [instance setEnabled:enabled];
+    @synchronized (self) {
+        Adjust *instance = [Adjust getInstance];
+        [instance setEnabled:enabled];
+    }
 }
 
 + (BOOL)isEnabled {
-    return [[Adjust getInstance] isEnabled];
+    @synchronized (self) {
+        return [[Adjust getInstance] isEnabled];
+    }
 }
 
 + (void)appWillOpenUrl:(NSURL *)url {
-    [[Adjust getInstance] appWillOpenUrl:url];
+    @synchronized (self) {
+        [[Adjust getInstance] appWillOpenUrl:[url copy]];
+    }
 }
 
 + (void)setDeviceToken:(NSData *)deviceToken {
-    [[Adjust getInstance] setDeviceToken:deviceToken];
+    @synchronized (self) {
+        [[Adjust getInstance] setDeviceToken:[deviceToken copy]];
+    }
 }
 
 + (void)setPushToken:(NSString *)pushToken {
-    [[Adjust getInstance] setPushToken:pushToken];
+    @synchronized (self) {
+        [[Adjust getInstance] setPushToken:[pushToken copy]];
+    }
 }
 
 + (void)setOfflineMode:(BOOL)enabled {
-    [[Adjust getInstance] setOfflineMode:enabled];
+    @synchronized (self) {
+        [[Adjust getInstance] setOfflineMode:enabled];
+    }
 }
 
 + (void)sendAdWordsRequest {
@@ -130,77 +150,113 @@ static dispatch_once_t onceToken = 0;
 }
 
 + (NSString *)idfa {
-    return [[Adjust getInstance] idfa];
+    @synchronized (self) {
+        return [[Adjust getInstance] idfa];
+    }
 }
 
 + (NSString *)sdkVersion {
-    return [[Adjust getInstance] sdkVersion];
+    @synchronized (self) {
+        return [[Adjust getInstance] sdkVersion];
+    }
 }
 
 + (NSURL *)convertUniversalLink:(NSURL *)url scheme:(NSString *)scheme {
-    return [[Adjust getInstance] convertUniversalLink:url scheme:scheme];
+    @synchronized (self) {
+        return [[Adjust getInstance] convertUniversalLink:[url copy] scheme:[scheme copy]];
+    }
 }
 
 + (void)sendFirstPackages {
-    [[Adjust getInstance] sendFirstPackages];
+    @synchronized (self) {
+        [[Adjust getInstance] sendFirstPackages];
+    }
 }
 
 + (void)addSessionCallbackParameter:(NSString *)key value:(NSString *)value {
-    [[Adjust getInstance] addSessionCallbackParameter:key value:value];
-
+    @synchronized (self) {
+        [[Adjust getInstance] addSessionCallbackParameter:[key copy] value:[value copy]];
+    }
 }
 
 + (void)addSessionPartnerParameter:(NSString *)key value:(NSString *)value {
-    [[Adjust getInstance] addSessionPartnerParameter:key value:value];
+    @synchronized (self) {
+        [[Adjust getInstance] addSessionPartnerParameter:[key copy] value:[value copy]];
+    }
 }
 
-
 + (void)removeSessionCallbackParameter:(NSString *)key {
-    [[Adjust getInstance] removeSessionCallbackParameter:key];
+    @synchronized (self) {
+        [[Adjust getInstance] removeSessionCallbackParameter:[key copy]];
+    }
 }
 
 + (void)removeSessionPartnerParameter:(NSString *)key {
-    [[Adjust getInstance] removeSessionPartnerParameter:key];
+    @synchronized (self) {
+        [[Adjust getInstance] removeSessionPartnerParameter:[key copy]];
+    }
 }
 
 + (void)resetSessionCallbackParameters {
-    [[Adjust getInstance] resetSessionCallbackParameters];
+    @synchronized (self) {
+        [[Adjust getInstance] resetSessionCallbackParameters];
+    }
 }
 
 + (void)resetSessionPartnerParameters {
-    [[Adjust getInstance] resetSessionPartnerParameters];
+    @synchronized (self) {
+        [[Adjust getInstance] resetSessionPartnerParameters];
+    }
 }
 
 + (void)gdprForgetMe {
-    [[Adjust getInstance] gdprForgetMe];
+    @synchronized (self) {
+        [[Adjust getInstance] gdprForgetMe];
+    }
 }
 
 + (void)trackAdRevenue:(nonnull NSString *)source payload:(nonnull NSData *)payload {
-    [[Adjust getInstance] trackAdRevenue:source payload:payload];
+    @synchronized (self) {
+        [[Adjust getInstance] trackAdRevenue:[source copy] payload:[payload copy]];
+    }
 }
 
 + (void)disableThirdPartySharing {
-    [[Adjust getInstance] disableThirdPartySharing];
+    @synchronized (self) {
+        [[Adjust getInstance] disableThirdPartySharing];
+    }
+}
+
++ (void)trackSubscription:(nonnull ADJSubscription *)subscription {
+    @synchronized (self) {
+        [[Adjust getInstance] trackSubscription:subscription];
+    }
 }
 
 + (ADJAttribution *)attribution {
-    return [[Adjust getInstance] attribution];
+    @synchronized (self) {
+        return [[Adjust getInstance] attribution];
+    }
 }
 
 + (NSString *)adid {
-    return [[Adjust getInstance] adid];
+    @synchronized (self) {
+        return [[Adjust getInstance] adid];
+    }
 }
 
 + (void)setTestOptions:(AdjustTestOptions *)testOptions {
-    if (testOptions.teardown) {
-        if (defaultInstance != nil) {
-            [defaultInstance teardown];
+    @synchronized (self) {
+        if (testOptions.teardown) {
+            if (defaultInstance != nil) {
+                [defaultInstance teardown];
+            }
+            defaultInstance = nil;
+            onceToken = 0;
+            [ADJAdjustFactory teardown:testOptions.deleteState];
         }
-        defaultInstance = nil;
-        onceToken = 0;
-        [ADJAdjustFactory teardown:testOptions.deleteState];
+        [[Adjust getInstance] setTestOptions:(AdjustTestOptions *)testOptions];
     }
-    [[Adjust getInstance] setTestOptions:(AdjustTestOptions *)testOptions];
 }
 
 #pragma mark - Public instance methods
@@ -211,8 +267,9 @@ static dispatch_once_t onceToken = 0;
         return;
     }
 
-    self.activityHandler = [ADJAdjustFactory activityHandlerWithConfig:adjustConfig
-                                                        savedPreLaunch:self.savedPreLaunch];
+    self.activityHandler = [[ADJActivityHandler alloc]
+                                initWithConfig:adjustConfig
+                                savedPreLaunch:self.savedPreLaunch];
 }
 
 - (void)trackEvent:(ADJEvent *)event {
@@ -430,6 +487,14 @@ static dispatch_once_t onceToken = 0;
     [self.activityHandler disableThirdPartySharing];
 }
 
+- (void)trackSubscription:(ADJSubscription *)subscription {
+    if (![self checkActivityHandler]) {
+        return;
+    }
+
+    [self.activityHandler trackSubscription:subscription];
+}
+
 - (ADJAttribution *)attribution {
     if (![self checkActivityHandler]) {
         return nil;
@@ -461,17 +526,17 @@ static dispatch_once_t onceToken = 0;
 }
 
 - (void)setTestOptions:(AdjustTestOptions *)testOptions {
-    if (testOptions.basePath != nil) {
-        self.savedPreLaunch.basePath = testOptions.basePath;
-    }
-    if (testOptions.gdprPath != nil) {
-        self.savedPreLaunch.gdprPath = testOptions.gdprPath;
+    if (testOptions.extraPath != nil) {
+        self.savedPreLaunch.extraPath = testOptions.extraPath;
     }
     if (testOptions.baseUrl != nil) {
         [ADJAdjustFactory setBaseUrl:testOptions.baseUrl];
     }
     if (testOptions.gdprUrl != nil) {
         [ADJAdjustFactory setGdprUrl:testOptions.gdprUrl];
+    }
+    if (testOptions.subscriptionUrl != nil) {
+        [ADJAdjustFactory setSubscriptionUrl:testOptions.subscriptionUrl];
     }
     if (testOptions.timerIntervalInMilliseconds != nil) {
         NSTimeInterval timerIntervalInSeconds = [testOptions.timerIntervalInMilliseconds intValue] / 1000.0;

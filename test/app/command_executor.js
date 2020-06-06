@@ -2,7 +2,14 @@
 let {
     NativeModules
 } = require('react-native');
-import { Adjust, AdjustEvent, AdjustConfig } from 'react-native-adjust';
+import { Platform } from 'react-native';
+import {
+    Adjust,
+    AdjustEvent,
+    AdjustConfig,
+    AdjustAppStoreSubscription,
+    AdjustPlayStoreSubscription
+} from 'react-native-adjust';
 import { AdjustTestOptions } from './test_options.js';
 const AdjustSdkTest = NativeModules.AdjustSdkTest;
 
@@ -32,10 +39,10 @@ function AdjustCommand(functionName, params, order) {
     this.functionName = functionName;
     this.params = params;
     this.order = order;
-}
+};
 
-export function CommandExecutor(baseUrl, gdprUrl) {
-    this.adjustCommandExecutor = new AdjustCommandExecutor(baseUrl, gdprUrl);
+export function CommandExecutor(baseUrl, gdprUrl, subscriptionUrl) {
+    this.adjustCommandExecutor = new AdjustCommandExecutor(baseUrl, gdprUrl, subscriptionUrl);
 };
 
 CommandExecutor.prototype.scheduleCommand = function(className, functionName, params, order) {
@@ -47,14 +54,17 @@ CommandExecutor.prototype.scheduleCommand = function(className, functionName, pa
     }
 };
 
-function AdjustCommandExecutor(baseUrl, gdprUrl) {
-    this.baseUrl           = baseUrl;
-    this.gdprUrl           = gdprUrl;
-    this.basePath          = null;
-    this.gdprPath          = null;
-    this.savedEvents       = {};
-    this.savedConfigs      = {};
-    this.savedCommands     = [];
+function AdjustCommandExecutor(baseUrl, gdprUrl, subscriptionUrl) {
+    this.baseUrl = baseUrl;
+    this.gdprUrl = gdprUrl;
+    this.subscriptionUrl = subscriptionUrl;
+    this.extraPath = null;
+    this.basePath = null;
+    this.gdprPath = null;
+    this.subscriptionPath = null;
+    this.savedEvents = {};
+    this.savedConfigs = {};
+    this.savedCommands = [];
     this.nextToSendCounter = 0;
 };
 
@@ -71,7 +81,7 @@ AdjustCommandExecutor.prototype.scheduleCommand = function(command) {
 
     // Recheck list
     this.checkList();
-}
+};
 
 // Check the list of commands to see which one is in order
 AdjustCommandExecutor.prototype.checkList = function() {
@@ -83,7 +93,7 @@ AdjustCommandExecutor.prototype.checkList = function() {
             return;
         }
     }
-}
+};
 
 // Execute the command. This will always be invoked either from:
 //  - checkList() after scheduling a command
@@ -94,29 +104,30 @@ AdjustCommandExecutor.prototype.checkList = function() {
 AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
     console.log("[*] executeCommand(): " + JSON.stringify(command));
     switch (command.functionName) {
-        case "testOptions"                    : this.testOptions(command.params); break;
-        case "config"                         : this.config(command.params); break;
-        case "start"                          : this.start(command.params); break;
-        case "event"                          : this.event(command.params); break;
-        case "trackEvent"                     : this.trackEvent(command.params); break;
-        case "resume"                         : this.resume(command.params); break;
-        case "pause"                          : this.pause(command.params); break;
-        case "setEnabled"                     : this.setEnabled(command.params); break;
-        case "setReferrer"                    : this.setReferrer(command.params); break;
-        case "setOfflineMode"                 : this.setOfflineMode(command.params); break;
-        case "sendFirstPackages"              : this.sendFirstPackages(command.params); break;
-        case "addSessionCallbackParameter"    : this.addSessionCallbackParameter(command.params); break;
-        case "addSessionPartnerParameter"     : this.addSessionPartnerParameter(command.params); break;
-        case "removeSessionCallbackParameter" : this.removeSessionCallbackParameter(command.params); break;
-        case "removeSessionPartnerParameter"  : this.removeSessionPartnerParameter(command.params); break;
+        case "testOptions" : this.testOptions(command.params); break;
+        case "config" : this.config(command.params); break;
+        case "start" : this.start(command.params); break;
+        case "event" : this.event(command.params); break;
+        case "trackEvent" : this.trackEvent(command.params); break;
+        case "resume" : this.resume(command.params); break;
+        case "pause" : this.pause(command.params); break;
+        case "setEnabled" : this.setEnabled(command.params); break;
+        case "setReferrer" : this.setReferrer(command.params); break;
+        case "setOfflineMode" : this.setOfflineMode(command.params); break;
+        case "sendFirstPackages" : this.sendFirstPackages(command.params); break;
+        case "addSessionCallbackParameter" : this.addSessionCallbackParameter(command.params); break;
+        case "addSessionPartnerParameter" : this.addSessionPartnerParameter(command.params); break;
+        case "removeSessionCallbackParameter": this.removeSessionCallbackParameter(command.params); break;
+        case "removeSessionPartnerParameter" : this.removeSessionPartnerParameter(command.params); break;
         case "resetSessionCallbackParameters" : this.resetSessionCallbackParameters(command.params); break;
-        case "resetSessionPartnerParameters"  : this.resetSessionPartnerParameters(command.params); break;
-        case "setPushToken"                   : this.setPushToken(command.params); break;
-        case "openDeeplink"                   : this.openDeeplink(command.params); break;
-        case "sendReferrer"                   : this.sendReferrer(command.params); break;
-        case "gdprForgetMe"                   : this.gdprForgetMe(command.params); break;
-        case "trackAdRevenue"                 : this.trackAdRevenue(command.params); break;
-        case "disableThirdPartySharing"       : this.disableThirdPartySharing(command.params); break;
+        case "resetSessionPartnerParameters" : this.resetSessionPartnerParameters(command.params); break;
+        case "setPushToken" : this.setPushToken(command.params); break;
+        case "openDeeplink" : this.openDeeplink(command.params); break;
+        case "sendReferrer" : this.sendReferrer(command.params); break;
+        case "gdprForgetMe" : this.gdprForgetMe(command.params); break;
+        case "trackAdRevenue" : this.trackAdRevenue(command.params); break;
+        case "disableThirdPartySharing" : this.disableThirdPartySharing(command.params); break;
+        case "trackSubscription" : this.trackSubscription(command.params); break;
     }
 
     this.nextToSendCounter++;
@@ -134,10 +145,13 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
     var testOptions = new AdjustTestOptions();
     testOptions.baseUrl = this.baseUrl;
     testOptions.gdprUrl = this.gdprUrl;
+    testOptions.subscriptionUrl = this.subscriptionUrl;
     
     if ('basePath' in params) {
+        this.extraPath = getFirstParameterValue(params, 'basePath');
         this.basePath = getFirstParameterValue(params, 'basePath');
         this.gdprPath = getFirstParameterValue(params, 'basePath');
+        this.subscriptionPath = getFirstParameterValue(params, 'basePath');
     }
     if ('timerInterval' in params) {
         testOptions.timerIntervalInMilliseconds = getFirstParameterValue(params, 'timerInterval').toString();
@@ -163,9 +177,11 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
             var option = teardownOptions[i];
 
             if ('resetSdk' === option) {
-                testOptions.teardown                 = true;
-                testOptions.basePath                 = this.basePath;
-                testOptions.gdprPath                 = this.gdprPath;
+                testOptions.teardown = true;
+                testOptions.extraPath = this.extraPath;
+                testOptions.basePath = this.basePath;
+                testOptions.gdprPath = this.gdprPath;
+                testOptions.subscriptionPath = this.subscriptionPath;
                 testOptions.useTestConnectionOptions = true;
                 Adjust.teardown('test');
             }
@@ -177,24 +193,26 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
             if ('resetTest' === option) {
                 this.savedEvents = {};
                 this.savedConfigs = {};
-                testOptions.timerIntervalInMilliseconds      = (-1).toString();
-                testOptions.timerStartInMilliseconds         = (-1).toString();
-                testOptions.sessionIntervalInMilliseconds    = (-1).toString();
+                testOptions.timerIntervalInMilliseconds = (-1).toString();
+                testOptions.timerStartInMilliseconds = (-1).toString();
+                testOptions.sessionIntervalInMilliseconds = (-1).toString();
                 testOptions.subsessionIntervalInMilliseconds = (-1).toString();
             }
             if ('sdk' === option) {
-                testOptions.teardown                 = true;
-                testOptions.basePath                 = null;
-                testOptions.gdprPath                 = null;
+                testOptions.teardown = true;
+                testOptions.extraPath = null;
+                testOptions.basePath = null;
+                testOptions.gdprPath = null;
+                testOptions.subscriptionPath = null;
                 testOptions.useTestConnectionOptions = false;
                 Adjust.teardown('test');
             }
             if ('test' === option) {
-                this.savedEvents                             = null;
-                this.savedConfigs                            = null;
-                testOptions.timerIntervalInMilliseconds      = (-1).toString();
-                testOptions.timerStartInMilliseconds         = (-1).toString();
-                testOptions.sessionIntervalInMilliseconds    = (-1).toString();
+                this.savedEvents = null;
+                this.savedConfigs = null;
+                testOptions.timerIntervalInMilliseconds = (-1).toString();
+                testOptions.timerStartInMilliseconds = (-1).toString();
+                testOptions.sessionIntervalInMilliseconds = (-1).toString();
                 testOptions.subsessionIntervalInMilliseconds = (-1).toString();
             }
         }
@@ -283,10 +301,10 @@ AdjustCommandExecutor.prototype.config = function(params) {
     if ('appSecret' in params) {
         var appSecretArray = getValueFromKey(params, 'appSecret');
         var secretId = appSecretArray[0].toString();
-        var info1    = appSecretArray[1].toString();
-        var info2    = appSecretArray[2].toString();
-        var info3    = appSecretArray[3].toString();
-        var info4    = appSecretArray[4].toString();
+        var info1 = appSecretArray[1].toString();
+        var info2 = appSecretArray[2].toString();
+        var info3 = appSecretArray[3].toString();
+        var info4 = appSecretArray[4].toString();
 
         adjustConfig.setAppSecret(secretId, info1, info2, info3, info4);
     }
@@ -554,7 +572,7 @@ AdjustCommandExecutor.prototype.trackAdRevenue = function(params) {
     var source = getFirstParameterValue(params, 'adRevenueSource');
     var payload = getFirstParameterValue(params, 'adRevenueJsonString');
     Adjust.trackAdRevenue(source, payload);
-}
+};
 
 AdjustCommandExecutor.prototype.gdprForgetMe = function(params) {
     Adjust.gdprForgetMe();
@@ -562,6 +580,72 @@ AdjustCommandExecutor.prototype.gdprForgetMe = function(params) {
 
 AdjustCommandExecutor.prototype.disableThirdPartySharing = function(params) {
     Adjust.disableThirdPartySharing();
+};
+
+AdjustCommandExecutor.prototype.trackSubscription = function(params) {
+    if (Platform.OS === "ios") {
+        var price = getFirstParameterValue(params, 'revenue');
+        var currency = getFirstParameterValue(params, 'currency');
+        var transactionId = getFirstParameterValue(params, 'transactionId');
+        var receipt = getFirstParameterValue(params, 'receipt');
+        var transactionDate = getFirstParameterValue(params, 'transactionDate');
+        var salesRegion = getFirstParameterValue(params, 'salesRegion');
+
+        var subscription = new AdjustAppStoreSubscription(price, currency, transactionId, receipt);
+        subscription.setTransactionDate(transactionDate);
+        subscription.setSalesRegion(salesRegion);
+
+        if ('callbackParams' in params) {
+            var callbackParams = getValueFromKey(params, "callbackParams");
+            for (var i = 0; i < callbackParams.length; i = i + 2) {
+                var key = callbackParams[i];
+                var value = callbackParams[i + 1];
+                subscription.addCallbackParameter(key, value);
+            }
+        }
+
+        if ('partnerParams' in params) {
+            var partnerParams = getValueFromKey(params, "partnerParams");
+            for (var i = 0; i < partnerParams.length; i = i + 2) {
+                var key = partnerParams[i];
+                var value = partnerParams[i + 1];
+                subscription.addPartnerParameter(key, value);
+            }
+        }
+
+        Adjust.trackAppStoreSubscription(subscription);
+    } else if (Platform.OS === "android") {
+        var price = getFirstParameterValue(params, 'revenue');
+        var currency = getFirstParameterValue(params, 'currency');
+        var sku = getFirstParameterValue(params, 'productId');
+        var signature = getFirstParameterValue(params, 'receipt');
+        var purchaseToken = getFirstParameterValue(params, 'purchaseToken');
+        var orderId = getFirstParameterValue(params, 'transactionId');
+        var purchaseTime = getFirstParameterValue(params, 'transactionDate');
+
+        var subscription = new AdjustPlayStoreSubscription(price, currency, sku, orderId, signature, purchaseToken);
+        subscription.setPurchaseTime(purchaseTime);
+
+        if ('callbackParams' in params) {
+            var callbackParams = getValueFromKey(params, "callbackParams");
+            for (var i = 0; i < callbackParams.length; i = i + 2) {
+                var key = callbackParams[i];
+                var value = callbackParams[i + 1];
+                subscription.addCallbackParameter(key, value);
+            }
+        }
+
+        if ('partnerParams' in params) {
+            var partnerParams = getValueFromKey(params, "partnerParams");
+            for (var i = 0; i < partnerParams.length; i = i + 2) {
+                var key = partnerParams[i];
+                var value = partnerParams[i + 1];
+                subscription.addPartnerParameter(key, value);
+            }
+        }
+
+        Adjust.trackPlayStoreSubscription(subscription);
+    }
 };
 
 AdjustCommandExecutor.prototype.addSessionCallbackParameter = function(params) {

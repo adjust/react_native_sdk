@@ -1,0 +1,22 @@
+{
+    "name": "react-native-adjust-oaid",
+    "description": "Adjust React Native OAID plugin",
+    "version": "4.22.0",
+    "main": "index.js",
+    "author": "Adjust GmbH",
+    "license": "MIT",
+    "keywords": [
+        "react-native",
+        "android",
+        "adjust",
+        "oaid"
+    ],
+    "homepage": "https://github.com/adjust/react_native_sdk",
+    "bugs": {
+        "url": "https://github.com/adjust/react_native_sdk/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/adjust/react_native_sdk.git"
+    }
+}

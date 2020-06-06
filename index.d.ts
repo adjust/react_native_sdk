@@ -132,6 +132,27 @@ declare module 'react-native-adjust' {
     public setCallbackId(callbackId: string): void
   }
 
+  export class AdjustAppStoreSubscription {
+    constructor(price: string, currency: string, transactionId: string, receipt: string)
+    public setTransactionDate(transactionDate: string): void
+    public setSalesRegion(salesRegion: string): void
+    public addCallbackParameter(key: string, value: string): void
+    public addPartnerParameter(key: string, value: string): void
+  }
+
+  export class AdjustPlayStoreSubscription {
+    constructor(
+      price: string,
+      currency: string,
+      sku: string,
+      orderId: string,
+      signature: string,
+      purchaseToken: string)
+    public setPurchaseTime(purchaseTime: string): void
+    public addCallbackParameter(key: string, value: string): void
+    public addPartnerParameter(key: string, value: string): void
+  }
+
   export const Adjust: {
     componentWillUnmount: () => void
     create: (adjustConfig: AdjustConfig) => void
@@ -143,6 +164,8 @@ declare module 'react-native-adjust' {
     appWillOpenUrl: (url: string) => void
     sendFirstPackages: () => void
     trackAdRevenue: (source: string, payload: string) => void
+    trackAppStoreSubscription: (subscription: AdjustAppStoreSubscription) => void
+    trackPlayStoreSubscription: (subscription: AdjustPlayStoreSubscription) => void
     addSessionCallbackParameter: (key: string, value: string) => void
     addSessionPartnerParameter: (key: string, value: string) => void
     removeSessionCallbackParameter: (key: string) => void

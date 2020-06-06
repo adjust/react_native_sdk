@@ -53,7 +53,19 @@ Adjust.sendFirstPackages = function() {
 
 Adjust.trackAdRevenue = function(source, payload) {
     module_adjust.trackAdRevenue(source, payload);
-}
+};
+
+Adjust.trackAppStoreSubscription = function(subscription) {
+    if (Platform.OS === "ios") {
+        module_adjust.trackAppStoreSubscription(subscription);
+    }
+};
+
+Adjust.trackPlayStoreSubscription = function(subscription) {
+    if (Platform.OS === "android") {
+        module_adjust.trackPlayStoreSubscription(subscription);
+    }
+};
 
 Adjust.addSessionCallbackParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
@@ -87,11 +99,11 @@ Adjust.resetSessionPartnerParameters = function() {
 
 Adjust.gdprForgetMe = function() {
     module_adjust.gdprForgetMe();
-}
+};
 
 Adjust.disableThirdPartySharing = function() {
     module_adjust.disableThirdPartySharing();
-}
+};
 
 Adjust.getIdfa = function(callback) {
     module_adjust.getIdfa(callback);
@@ -114,11 +126,13 @@ Adjust.getAmazonAdId = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native4.21.0", callback);
-}
+    module_adjust.getSdkVersion("react-native4.22.0", callback);
+};
 
 Adjust.setReferrer = function(referrer) {
-    module_adjust.setReferrer(referrer);
+    if (Platform.OS === "android") {
+        module_adjust.setReferrer(referrer);
+    }
 };
 
 Adjust.convertUniversalLink = function(url, scheme, callback) {
@@ -126,7 +140,7 @@ Adjust.convertUniversalLink = function(url, scheme, callback) {
         return;
     }
     module_adjust.convertUniversalLink(url, scheme, callback);
-}
+};
 
 Adjust.componentWillUnmount = function() {
     if (AdjustConfig.AttributionSubscription != null) {
@@ -194,7 +208,7 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native4.21.0";
+    this.sdkPrefix = "react-native4.22.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
@@ -404,4 +418,71 @@ AdjustEvent.prototype.setCallbackId = function(callbackId) {
     this.callbackId = callbackId;
 };
 
-module.exports = { Adjust, AdjustEvent, AdjustConfig }
+// AdjustAppStoreSubscription
+
+var AdjustAppStoreSubscription = function(price, currency, transactionId, receipt) {
+    this.price = price;
+    this.currency = currency;
+    this.transactionId = transactionId;
+    this.receipt = receipt;
+    this.transactionDate = null;
+    this.salesRegion = null;
+    this.callbackParameters = {};
+    this.partnerParameters = {};
+};
+
+AdjustAppStoreSubscription.prototype.setTransactionDate = function(transactionDate) {
+    this.transactionDate = transactionDate;
+};
+
+AdjustAppStoreSubscription.prototype.setSalesRegion = function(salesRegion) {
+    this.salesRegion = salesRegion;
+};
+
+AdjustAppStoreSubscription.prototype.addCallbackParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
+    this.callbackParameters[key] = value;
+};
+
+AdjustAppStoreSubscription.prototype.addPartnerParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
+    this.partnerParameters[key] = value;
+};
+
+// AdjustPlayStoreSubscription
+
+var AdjustPlayStoreSubscription = function(price, currency, sku, orderId, signature, purchaseToken) {
+    this.price = price;
+    this.currency = currency;
+    this.sku = sku;
+    this.orderId = orderId;
+    this.signature = signature;
+    this.purchaseToken = purchaseToken;
+    this.purchaseTime = null;
+    this.callbackParameters = {};
+    this.partnerParameters = {};
+};
+
+AdjustPlayStoreSubscription.prototype.setPurchaseTime = function(purchaseTime) {
+    this.purchaseTime = purchaseTime;
+};
+
+AdjustPlayStoreSubscription.prototype.addCallbackParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
+    this.callbackParameters[key] = value;
+};
+
+AdjustPlayStoreSubscription.prototype.addPartnerParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
+    this.partnerParameters[key] = value;
+};
+
+module.exports = { Adjust, AdjustEvent, AdjustConfig, AdjustAppStoreSubscription, AdjustPlayStoreSubscription }

@@ -3,7 +3,7 @@
 //  Adjust SDK
 //
 //  Created by Abdullah Obaied (@obaied) on 25th October 2016.
-//  Copyright © 2016-2018 Adjust GmbH. All rights reserved.
+//  Copyright © 2016-2020 Adjust GmbH. All rights reserved.
 //
 
 #import "AdjustSdk.h"
@@ -244,6 +244,65 @@ RCT_EXPORT_METHOD(trackAdRevenue:(NSString *)source payload:(NSString *)payload)
     [Adjust trackAdRevenue:source payload:dataPayload];
 }
 
+RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
+    NSString *price = dict[@"price"];
+    NSString *currency = dict[@"currency"];
+    NSString *transactionId = dict[@"transactionId"];
+    NSString *receipt = dict[@"receipt"];
+    NSString *transactionDate = dict[@"transactionDate"];
+    NSString *salesRegion = dict[@"salesRegion"];
+    NSDictionary *callbackParameters = dict[@"callbackParameters"];
+    NSDictionary *partnerParameters = dict[@"partnerParameters"];
+
+    // Price.
+    NSDecimalNumber *priceValue;
+    if ([self isFieldValid:price]) {
+        priceValue = [NSDecimalNumber decimalNumberWithString:price];
+    }
+
+    // Receipt.
+    NSData *receiptValue;
+    if ([self isFieldValid:receipt]) {
+        receiptValue = [receipt dataUsingEncoding:NSUTF8StringEncoding];
+    }
+
+    ADJSubscription *subscription = [[ADJSubscription alloc] initWithPrice:priceValue
+                                                                  currency:currency
+                                                             transactionId:transactionId
+                                                                andReceipt:receiptValue];
+
+    // Transaction date.
+    if ([self isFieldValid:transactionDate]) {
+        NSTimeInterval transactionDateInterval = [transactionDate doubleValue];
+        NSDate *oTransactionDate = [NSDate dateWithTimeIntervalSince1970:transactionDateInterval];
+        [subscription setTransactionDate:oTransactionDate];
+    }
+
+    // Sales region.
+    if ([self isFieldValid:salesRegion]) {
+        [subscription setSalesRegion:salesRegion];
+    }
+
+    // Callback parameters.
+    if ([self isFieldValid:callbackParameters]) {
+        for (NSString *key in callbackParameters) {
+            NSString *value = [callbackParameters objectForKey:key];
+            [subscription addCallbackParameter:key value:value];
+        }
+    }
+
+    // Partner parameters.
+    if ([self isFieldValid:partnerParameters]) {
+        for (NSString *key in partnerParameters) {
+            NSString *value = [partnerParameters objectForKey:key];
+            [subscription addPartnerParameter:key value:value];
+        }
+    }
+
+    // Track subscription.
+    [Adjust trackSubscription:subscription];
+}
+
 RCT_EXPORT_METHOD(addSessionCallbackParameter:(NSString *)key value:(NSString *)value) {
     if (!([self isFieldValid:key]) || !([self isFieldValid:value])) {
         return;
@@ -325,6 +384,8 @@ RCT_EXPORT_METHOD(getSdkVersion:(NSString *)sdkPrefix callback:(RCTResponseSende
 
 RCT_EXPORT_METHOD(setReferrer:(NSString *)referrer) {}
 
+RCT_EXPORT_METHOD(trackPlayStoreSubscription:(NSDictionary *)dict) {}
+
 RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
     ADJAttribution *attribution = [Adjust attribution];
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
@@ -399,16 +460,16 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
             testOptions.gdprUrl = value;
         }
     }
-    if ([dict objectForKey:@"basePath"]) {
-        NSString *value = dict[@"basePath"];
+    if ([dict objectForKey:@"subscriptionUrl"]) {
+        NSString *value = dict[@"subscriptionUrl"];
         if ([self isFieldValid:value]) {
-            testOptions.basePath = value;
+            testOptions.subscriptionUrl = value;
         }
     }
-    if ([dict objectForKey:@"gdprPath"]) {
-        NSString *value = dict[@"gdprPath"];
+    if ([dict objectForKey:@"extraPath"]) {
+        NSString *value = dict[@"extraPath"];
         if ([self isFieldValid:value]) {
-            testOptions.gdprPath = value;
+            testOptions.extraPath = value;
         }
     }
     if ([dict objectForKey:@"timerIntervalInMilliseconds"]) {

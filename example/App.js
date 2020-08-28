@@ -40,6 +40,8 @@ const App: () => React$Node = () => {
   // adjustConfig.setDelayStart(6.0);
   // adjustConfig.setEventBufferingEnabled(true);
   // adjustConfig.setUserAgent("Custom Adjust User Agent");
+  adjustConfig.setUrlStrategy(AdjustConfig.UrlStrategyChina);
+  adjustConfig.deactivateSKAdNetworkHandling();
 
   adjustConfig.setAttributionCallbackListener(function(attribution) {
     console.log("Attribution callback received");
@@ -107,6 +109,11 @@ const App: () => React$Node = () => {
 
   // Adjust.resetSessionCallbackParameters();
   // Adjust.resetSessionPartnerParameters();
+
+  Adjust.requestTrackingAuthorizationWithCompletionHandler(function (status) {
+    console.log("Authorization status update");
+    console.log("Authorization status = " + status);
+  });
 
   AdjustOaid.readOaid();
   Adjust.create(adjustConfig);

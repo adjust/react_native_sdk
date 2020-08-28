@@ -64,6 +64,8 @@ declare module 'react-native-adjust' {
 
     public setExternalDeviceId(externalDeviceId: string): void
 
+    public setUrlStrategy(urlStrategy: string): void
+
     public setUserAgent(userAgent: string): void
 
     public setAppSecret(

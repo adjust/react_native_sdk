@@ -112,7 +112,24 @@ const App: () => React$Node = () => {
 
   Adjust.requestTrackingAuthorizationWithCompletionHandler(function (status) {
     console.log("Authorization status update");
-    console.log("Authorization status = " + status);
+    switch (status) {
+        case 0:
+            // ATTrackingManagerAuthorizationStatusNotDetermined case
+            console.log("Authorization status: ATTrackingManagerAuthorizationStatusNotDetermined");
+            break;
+        case 1:
+            // ATTrackingManagerAuthorizationStatusRestricted case
+            console.log("Authorization status: ATTrackingManagerAuthorizationStatusRestricted");
+            break;
+        case 2:
+            // ATTrackingManagerAuthorizationStatusDenied case
+            console.log("Authorization status: ATTrackingManagerAuthorizationStatusDenied");
+            break;
+        case 3:
+            // ATTrackingManagerAuthorizationStatusAuthorized case
+            console.log("Authorization status: ATTrackingManagerAuthorizationStatusAuthorized");
+            break;
+    }
   });
 
   AdjustOaid.readOaid();

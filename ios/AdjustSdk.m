@@ -35,6 +35,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSString *userAgent = dict[@"userAgent"];
     NSString *defaultTracker = dict[@"defaultTracker"];
     NSString *externalDeviceId = dict[@"externalDeviceId"];
+    NSString *urlStrategy = dict[@"urlStrategy"];
     NSNumber *eventBufferingEnabled = dict[@"eventBufferingEnabled"];
     NSNumber *sendInBackground = dict[@"sendInBackground"];
     NSNumber *shouldLaunchDeeplink = dict[@"shouldLaunchDeeplink"];
@@ -42,6 +43,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSNumber *isDeviceKnown = dict[@"isDeviceKnown"];
     NSNumber *allowiAdInfoReading = dict[@"allowiAdInfoReading"];
     NSNumber *allowIdfaReading = dict[@"allowIdfaReading"];
+    NSNumber *skAdNetworkHandling = dict[@"skAdNetworkHandling"];
     BOOL allowSuppressLogLevel = NO;
 
     // Suppress log level.
@@ -79,6 +81,15 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     // External device ID.
     if ([self isFieldValid:externalDeviceId]) {
         [adjustConfig setExternalDeviceId:externalDeviceId];
+    }
+
+    // URL strategy.
+    if ([self isFieldValid:urlStrategy]) {
+        if ([urlStrategy isEqualToString:@"china"]) {
+            [adjustConfig setUrlStrategy:ADJUrlStrategyChina];
+        } else if ([urlStrategy isEqualToString:@"india"]) {
+            [adjustConfig setUrlStrategy:ADJUrlStrategyIndia];
+        }
     }
 
     // Attribution delegate & other delegates
@@ -135,6 +146,13 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     // IDFA reading.
     if ([self isFieldValid:allowIdfaReading]) {
         [adjustConfig setAllowIdfaReading:[allowIdfaReading boolValue]];
+    }
+
+    // SKAdNetwork handling.
+    if ([self isFieldValid:skAdNetworkHandling]) {
+        if ([skAdNetworkHandling boolValue] == NO) {
+            [adjustConfig deactivateSKAdNetworkHandling];
+        }
     }
 
     // Delay start.
@@ -345,6 +363,12 @@ RCT_EXPORT_METHOD(gdprForgetMe) {
 
 RCT_EXPORT_METHOD(disableThirdPartySharing) {
     [Adjust disableThirdPartySharing];
+}
+
+RCT_EXPORT_METHOD(requestTrackingAuthorizationWithCompletionHandler:(RCTResponseSenderBlock)callback) {
+    [Adjust requestTrackingAuthorizationWithCompletionHandler:^(NSUInteger status) {
+        callback(@[@(status)]);
+    }];
 }
 
 RCT_EXPORT_METHOD(getIdfa:(RCTResponseSenderBlock)callback) {

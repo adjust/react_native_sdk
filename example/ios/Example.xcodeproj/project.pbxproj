@@ -18,6 +18,11 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* ExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ExampleTests.m */; };
 		4839C605884D648B39FDABCA /* libPods-Example-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E087459BCF5409F7E05C62AF /* libPods-Example-tvOS.a */; };
+		9D2606D524F8831600E6A596 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2606D424F8831600E6A596 /* AppTrackingTransparency.framework */; };
+		9D2606D924F8832300E6A596 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2606D824F8832300E6A596 /* StoreKit.framework */; };
+		9D2606DB24F8832900E6A596 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2606DA24F8832900E6A596 /* AdSupport.framework */; };
+		9D2606DD24F8832D00E6A596 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2606DC24F8832D00E6A596 /* iAd.framework */; };
+		9D2606DF24F8833300E6A596 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2606DE24F8833300E6A596 /* CoreTelephony.framework */; };
 		BCB9158A9F5778C9BEE6E144 /* libPods-Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59AFA88E5DB9499067C92687 /* libPods-Example.a */; };
 		F3CD60700218F6B493962DC1 /* libPods-Example-ExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 621EEB5BA88EA61B55791395 /* libPods-Example-ExampleTests.a */; };
 /* End PBXBuildFile section */
@@ -60,6 +65,12 @@
 		621EEB5BA88EA61B55791395 /* libPods-Example-ExampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Example-ExampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CC442113DDDE77A0E4B4D86 /* Pods-Example-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Example-tvOS/Pods-Example-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		845150E1D833B4F50A639E53 /* libPods-Example-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Example-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D2606D424F8831600E6A596 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
+		9D2606D624F8831A00E6A596 /* StoreKitTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKitTest.framework; path = Developer/Library/Frameworks/StoreKitTest.framework; sourceTree = SDKROOT; };
+		9D2606D824F8832300E6A596 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		9D2606DA24F8832900E6A596 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		9D2606DC24F8832D00E6A596 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		9D2606DE24F8833300E6A596 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		A973B9CBB5673BAA3EAD0A64 /* Pods-Example-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Example-tvOS/Pods-Example-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		B1CF934BC273C8EE588D6E39 /* Pods-Example-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example-ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-Example-ExampleTests/Pods-Example-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		CEADF439DD607D632E350619 /* Pods-Example-ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example-ExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-Example-ExampleTests/Pods-Example-ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -82,7 +93,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D2606D924F8832300E6A596 /* StoreKit.framework in Frameworks */,
+				9D2606DD24F8832D00E6A596 /* iAd.framework in Frameworks */,
+				9D2606DB24F8832900E6A596 /* AdSupport.framework in Frameworks */,
 				BCB9158A9F5778C9BEE6E144 /* libPods-Example.a in Frameworks */,
+				9D2606DF24F8833300E6A596 /* CoreTelephony.framework in Frameworks */,
+				9D2606D524F8831600E6A596 /* AppTrackingTransparency.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +155,12 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9D2606DE24F8833300E6A596 /* CoreTelephony.framework */,
+				9D2606DC24F8832D00E6A596 /* iAd.framework */,
+				9D2606DA24F8832900E6A596 /* AdSupport.framework */,
+				9D2606D824F8832300E6A596 /* StoreKit.framework */,
+				9D2606D624F8831A00E6A596 /* StoreKitTest.framework */,
+				9D2606D424F8831600E6A596 /* AppTrackingTransparency.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				59AFA88E5DB9499067C92687 /* libPods-Example.a */,
@@ -291,6 +313,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = QGUGW9AUMK;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -629,6 +652,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QGUGW9AUMK;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -636,7 +660,7 @@
 				);
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 4.22.0;
+				MARKETING_VERSION = 4.23.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -657,9 +681,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QGUGW9AUMK;
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 4.22.0;
+				MARKETING_VERSION = 4.23.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

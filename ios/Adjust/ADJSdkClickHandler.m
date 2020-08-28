@@ -11,6 +11,7 @@
 #import "ADJAdjustFactory.h"
 #import "ADJSdkClickHandler.h"
 #import "ADJBackoffStrategy.h"
+#import "ADJUserDefaults.h"
 
 static const char * const kInternalQueueName = "com.adjust.SdkClickQueue";
 
@@ -37,7 +38,7 @@ static const char * const kInternalQueueName = "com.adjust.SdkClickQueue";
 - (id)initWithActivityHandler:(id<ADJActivityHandler>)activityHandler
                 startsSending:(BOOL)startsSending
                     userAgent:(NSString *)userAgent
-                    extraPath:(NSString *)extraPath
+                  urlStrategy:(ADJUrlStrategy *)urlStrategy
 {
     self = [super init];
     if (self == nil) {
@@ -50,10 +51,7 @@ static const char * const kInternalQueueName = "com.adjust.SdkClickQueue";
 
     self.requestHandler = [[ADJRequestHandler alloc]
                            initWithResponseCallback:self
-                           extraPath:extraPath
-                           baseUrl:[ADJAdjustFactory baseUrl]
-                           gdprUrl:[ADJAdjustFactory gdprUrl]
-                           subscriptionUrl:[ADJAdjustFactory subscriptionUrl]
+                           urlStrategy:urlStrategy
                            userAgent:userAgent
                            requestTimeout:[ADJAdjustFactory requestTimeout]];
 
@@ -192,6 +190,11 @@ activityHandler:(id<ADJActivityHandler>)activityHandler
         return;
     }
     self.lastPackageRetriesCount = 0;
+    
+    if ([responseData.sdkClickPackage.parameters.allValues containsObject:ADJiAdPackageKey]) {
+        // received iAd click package response, clear the errors from UserDefaults
+        [ADJUserDefaults cleariAdErrors];
+    }
 
     [self.activityHandler finishedTracking:responseData];
 }

@@ -16,8 +16,12 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
       * [Install referrer](#android-referrer)
          * [Google Play Referrer API](#android-referrer-gpr-api)
          * [Google Play Store intent](#android-referrer-gps-intent)
+         * [Huawei Referrer API](#android-huawei-referrer-api)
       * [iOS frameworks](#ios-frameworks)
 * [Additional features](#additional-features)
+   * [AppTrackingTransparency framework](#att-framework)
+      * [App-tracking authorisation wrapper](#ata-wrapper)
+   * [SKAdNetwork framework](#skadn-framework)
    * [Event tracking](#event-tracking)
       * [Revenue tracking](#revenue-tracking)
       * [Revenue deduplication](#revenue-deduplication)
@@ -271,19 +275,88 @@ The Google Play Store `INSTALL_REFERRER` intent should be captured with a broadc
 
 Please bear in mind that, if you are using your own broadcast receiver which handles the `INSTALL_REFERRER` intent, you don't need to add the Adjust broadcast receiver to your manifest file. You can remove it, but inside your own receiver add the call to the Adjust broadcast receiver as described in our [Android guide][broadcast-receiver-custom].
 
+#### <a id="android-huawei-referrer-api"></a>Huawei Referrer API
+
+As of v4.22.0, the Adjust SDK supports install tracking on Huawei devices with Huawei App Gallery version 10.4 and higher. No additional integration steps are needed to start using the Huawei Referrer API.
+
 ### <a id="ios-frameworks"></a>iOS frameworks
 
-Select your project in the Project Navigator. In the left hand side of the main view, select your target. In the tab `Build Phases`, expand the group `Link Binary with Libraries`. On the bottom of that section click on the `+` button. Select the `AdSupport.framework` and click the `Add` button. Unless you are using `tvOS`, repeat the same steps to add the `iAd.framework` and `CoreTelephony.framework`. Change the `Status` of both frameworks to `Optional`. Adjust SDK uses these frameworks with following purpose:
+Select your project in the Project Navigator. In the left hand side of the main view, select your target. In the tab `Build Phases`, expand the group `Link Binary with Libraries`. On the bottom of that section click on the `+` button. Select the `AdSupport.framework` and click the `Add` button. Unless you are using `tvOS`, repeat the same steps to add the `iAd.framework`, `CoreTelephony.framework`, `AppTrackingTransparency.framework` and `StoreKit.framework`. Change the `Status` of both frameworks to `Optional`. Adjust SDK uses these frameworks with following purpose:
 
 * `iAd.framework` - in case you are running iAd campaigns
 * `AdSupport.framework` - for reading iOS Advertising Id (IDFA)
 * `CoreTelephony.framework` - for reading MCC and MNC information
+* `StoreKit.framework` - for communication with SKAdNetwork framework
+* `AppTrackingTransparency.framework` - to ask for user's consent to be tracked and obtain status of that consent
 
-If you are not running any iAd campaigns, you can feel free to remove the `iAd.framework` dependency.
+If you are not running any iAd campaigns, you can feel free to remove the `iAd.framework` dependency. If you don't use SKAdNetwork framework, feel free to remove `StoreKit.framework` dependency (unless you need it for something else).
 
 ## <a id="additional-features"></a>Additional features
 
 You can take advantage of the following features once the Adjust SDK is integrated into your project.
+
+### <a id="att-framework"></a>AppTrackingTransparency framework
+
+**Note**: This feature exists only in iOS platform.
+
+For each package sent, the Adjust backend receives one of the following four (4) states of consent for access to app-related data that can be used for tracking the user or the device:
+
+- Authorized
+- Denied
+- Not Determined
+- Restricted
+
+After a device receives an authorization request to approve access to app-related data, which is used for user device tracking, the returned status will either be Authorized or Denied.
+
+Before a device receives an authorization request for access to app-related data, which is used for tracking the user or device, the returned status will be Not Determined.
+
+If authorization to use app tracking data is restricted, the returned status will be Restricted.
+
+The SDK has a built-in mechanism to receive an updated status after a user responds to the pop-up dialog, in case you don't want to customize your displayed dialog pop-up. To conveniently and efficiently communicate the new state of consent to the backend, Adjust SDK offers a wrapper around the app tracking authorization method described in the following chapter, App-tracking authorization wrapper.
+
+### <a id="ata-wrapper"></a>App-tracking authorisation wrapper
+
+**Note**: This feature exists only in iOS platform.
+
+Adjust SDK offers the possibility to use it for requesting user authorization in accessing their app-related data. Adjust SDK has a wrapper built on top of the [requestTrackingAuthorizationWithCompletionHandler:](https://developer.apple.com/documentation/apptrackingtransparency/attrackingmanager/3547037-requesttrackingauthorizationwith?language=objc) method, where you can as well define the callback method to get information about a user's choice. Also, with the use of this wrapper, as soon as a user responds to the pop-up dialog, it's then communicated back using your callback method. The SDK will also inform the backend of the user's choice. Integer value will be delivered via your callback method with the following meaning:
+
+- 0: `ATTrackingManagerAuthorizationStatusNotDetermined`
+- 1: `ATTrackingManagerAuthorizationStatusRestricted`
+- 2: `ATTrackingManagerAuthorizationStatusDenied`
+- 3: `ATTrackingManagerAuthorizationStatusAuthorized`
+
+To use this wrapper, you can call it as such:
+
+```js
+Adjust.requestTrackingAuthorizationWithCompletionHandler(function(status) {
+    switch (status) {
+        case 0:
+            // ATTrackingManagerAuthorizationStatusNotDetermined case
+            break;
+        case 1:
+            // ATTrackingManagerAuthorizationStatusRestricted case
+            break;
+        case 2:
+            // ATTrackingManagerAuthorizationStatusDenied case
+            break;
+        case 3:
+            // ATTrackingManagerAuthorizationStatusAuthorized case
+            break;
+    }
+});
+```
+
+### <a id="skadn-framework"></a>SKAdNetwork framework
+
+**Note**: This feature exists only in iOS platform.
+
+If you have implemented the Adjust iOS SDK v4.23.0 or above and your app is running on iOS 14, the communication with SKAdNetwork will be set on by default, although you can choose to turn it off. When set on, Adjust automatically registers for SKAdNetwork attribution when the SDK is initialized. If events are set up in the Adjust dashboard to receive conversion values, the Adjust backend sends the conversion value data to the SDK. The SDK then sets the conversion value. After Adjust receives the SKAdNetwork callback data, it is then displayed in the dashboard.
+
+In case you don't want the Adjust SDK to automatically communicate with SKAdNetwork, you can disable that by calling the following method on configuration object:
+
+```js
+adjustConfig.deactivateSKAdNetworkHandling();
+```
 
 ### <a id="event-tracking"></a>Event tracking
 

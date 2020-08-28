@@ -108,6 +108,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         String processName = null;
         String defaultTracker = null;
         String externalDeviceId = null;
+        String urlStrategy = null;
         long secretId  = 0L;
         long info1 = 0L;
         long info2 = 0L;
@@ -194,6 +195,16 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (checkKey(mapConfig, "externalDeviceId")) {
             externalDeviceId = mapConfig.getString("externalDeviceId");
             adjustConfig.setExternalDeviceId(externalDeviceId);
+        }
+
+        // URL strategy.
+        if (checkKey(mapConfig, "urlStrategy")) {
+            urlStrategy = mapConfig.getString("urlStrategy");
+            if (urlStrategy.equalsIgnoreCase("china")) {
+                adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_CHINA);
+            } else if (urlStrategy.equalsIgnoreCase("india")) {
+                adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_INDIA);
+            }
         }
 
         // User agent.
@@ -573,6 +584,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void convertUniversalLink(final String url, final String scheme, final Callback callback) {
+        callback.invoke("");
+    }
+
+    @ReactMethod
+    public void requestTrackingAuthorizationWithCompletionHandler(Callback callback) {
         callback.invoke("");
     }
 

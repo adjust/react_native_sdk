@@ -126,7 +126,7 @@ Adjust.getAmazonAdId = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native4.22.0", callback);
+    module_adjust.getSdkVersion("react-native4.23.0", callback);
 };
 
 Adjust.setReferrer = function(referrer) {
@@ -140,6 +140,10 @@ Adjust.convertUniversalLink = function(url, scheme, callback) {
         return;
     }
     module_adjust.convertUniversalLink(url, scheme, callback);
+};
+
+Adjust.requestTrackingAuthorizationWithCompletionHandler = function(callback) {
+    module_adjust.requestTrackingAuthorizationWithCompletionHandler(callback);
 };
 
 Adjust.componentWillUnmount = function() {
@@ -208,7 +212,7 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native4.22.0";
+    this.sdkPrefix = "react-native4.23.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
@@ -225,12 +229,14 @@ var AdjustConfig = function(appToken, environment) {
     this.info2 = null;
     this.info3 = null;
     this.info4 = null;
+    this.urlStrategy = null;
     // Android only
     this.processName = null;
     this.readMobileEquipmentIdentity = null;
     // iOS only
     this.allowiAdInfoReading = null;
     this.allowIdfaReading = null;
+    this.skAdNetworkHandling = null;
 };
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
@@ -248,6 +254,8 @@ AdjustConfig.EventTrackingFailedSubscription = null;
 AdjustConfig.SessionTrackingSucceededSubscription = null;
 AdjustConfig.SessionTrackingFailedSubscription = null;
 AdjustConfig.DeferredDeeplinkSubscription = null;
+AdjustConfig.UrlStrategyChina = "china";
+AdjustConfig.UrlStrategyIndia = "india";
 
 AdjustConfig.prototype.setEventBufferingEnabled = function(isEnabled) {
     this.eventBufferingEnabled = isEnabled;
@@ -307,6 +315,10 @@ AdjustConfig.prototype.setSdkPrefix = function(sdkPrefix) {
     this.sdkPrefix = sdkPrefix;
 };
 
+AdjustConfig.prototype.setUrlStrategy = function(urlStrategy) {
+    this.urlStrategy = urlStrategy;
+};
+
 AdjustConfig.prototype.setReadMobileEquipmentIdentity = function(readMobileEquipmentIdentity) {
     // this.readMobileEquipmentIdentity = readMobileEquipmentIdentity;
 };
@@ -321,6 +333,10 @@ AdjustConfig.prototype.setAllowIdfaReading = function(allowIdfaReading) {
 
 AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) {
     this.shouldLaunchDeeplink = shouldLaunchDeeplink;
+};
+
+AdjustConfig.prototype.deactivateSKAdNetworkHandling = function() {
+    this.skAdNetworkHandling = false;
 };
 
 AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {

@@ -20,6 +20,9 @@
 #import "NSString+ADJAdditions.h"
 #import "ADJSdkClickHandler.h"
 #import "ADJUserDefaults.h"
+#import "ADJUrlStrategy.h"
+
+NSString * const ADJiAdPackageKey = @"iad3";
 
 typedef void (^activityHandlerBlockI)(ADJActivityHandler * activityHandler);
 
@@ -106,15 +109,21 @@ static const int kiAdRetriesCount = 3;
 // copy from ADClientError
 typedef NS_ENUM(NSInteger, AdjADClientError) {
     AdjADClientErrorUnknown = 0,
-    AdjADClientErrorLimitAdTracking = 1,
+    AdjADClientErrorTrackingRestrictedOrDenied = 1,
     AdjADClientErrorMissingData = 2,
     AdjADClientErrorCorruptResponse = 3,
+    AdjADClientErrorRequestClientError = 4,
+    AdjADClientErrorRequestServerError = 5,
+    AdjADClientErrorRequestNetworkError = 6,
+    AdjADClientErrorUnsupportedPlatform = 7,
+    AdjCustomErrorTimeout = 100,
 };
 
 #pragma mark -
 @implementation ADJActivityHandler
 
 @synthesize attribution = _attribution;
+@synthesize trackingStatusManager = _trackingStatusManager;
 
 - (id)initWithConfig:(ADJConfig *)adjustConfig
       savedPreLaunch:(ADJSavedPreLaunch *)savedPreLaunch
@@ -157,6 +166,9 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
     // read files to have sync values available
     [self readAttribution];
     [self readActivityState];
+    
+    // register SKAdNetwork attribution
+    [self registerForSKAdNetworkAttribution];
 
     self.internalState = [[ADJInternalState alloc] init];
 
@@ -194,6 +206,8 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
     self.internalState.sessionResponseProcessed = NO;
 
     self.iAdRetriesLeft = kiAdRetriesCount;
+
+    self.trackingStatusManager = [[ADJTrackingStatusManager alloc] initWithActivityHandler:self];
 
     self.internalQueue = dispatch_queue_create(kInternalQueueName, DISPATCH_QUEUE_SERIAL);
     [ADJUtil launchInQueue:self.internalQueue
@@ -262,6 +276,8 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
 }
 
 - (void)finishedTracking:(ADJResponseData *)responseData {
+    [self checkConversionValue:responseData];
+
     // redirect session responses to attribution handler to check for attribution information
     if ([responseData isKindOfClass:[ADJSessionResponseData class]]) {
         [self.attributionHandler checkSessionResponse:(ADJSessionResponseData*)responseData];
@@ -396,18 +412,22 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
             return;
         }
 
-        // if first request was unsuccessful and ended up with one of the following error codes:
-        //      - AdjADClientErrorUnknown
-        //      - AdjADClientErrorMissingData
-        //      - AdjADClientErrorCorruptResponse
-        // apply following retry logic:
-        //      - 1st retry after 5 seconds
-        //      - 2nd retry after 2 seconds
-        //      - 3rd retry after 2 seconds
         switch (error.code) {
+            // if first request was unsuccessful and ended up with one of the following error codes:
+            // apply following retry logic:
+            //      - 1st retry after 5 seconds
+            //      - 2nd retry after 2 seconds
+            //      - 3rd retry after 2 seconds
             case AdjADClientErrorUnknown:
             case AdjADClientErrorMissingData:
-            case AdjADClientErrorCorruptResponse: {
+            case AdjADClientErrorCorruptResponse:
+            case AdjADClientErrorRequestClientError:
+            case AdjADClientErrorRequestServerError:
+            case AdjADClientErrorRequestNetworkError:
+            case AdjCustomErrorTimeout: {
+                
+                [self saveiAdErrorCode:error.code];
+                
                 int64_t iAdRetryDelay = 0;
                 switch (self.iAdRetriesLeft) {
                     case 2:
@@ -420,11 +440,12 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
                 self.iAdRetriesLeft = self.iAdRetriesLeft - 1;
                 dispatch_time_t retryTime = dispatch_time(DISPATCH_TIME_NOW, iAdRetryDelay);
                 dispatch_after(retryTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    [self checkForiAd];
+                    [self checkForiAdI:self];
                 });
                 return;
             }
-            case AdjADClientErrorLimitAdTracking:
+            case AdjADClientErrorTrackingRestrictedOrDenied:
+            case AdjADClientErrorUnsupportedPlatform:
                 return;
             default:
                 return;
@@ -469,6 +490,31 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
                      }];
 }
 
+- (void)saveiAdErrorCode:(NSInteger)code {
+    NSString *codeKey;
+    switch (code) {
+        case AdjADClientErrorUnknown:
+            codeKey = @"AdjADClientErrorUnknown";
+            break;
+        case AdjADClientErrorMissingData:
+            codeKey = @"AdjADClientErrorMissingData";
+            break;
+        case AdjADClientErrorCorruptResponse:
+            codeKey = @"AdjADClientErrorCorruptResponse";
+            break;
+        case AdjCustomErrorTimeout:
+            codeKey = @"AdjCustomErrorTimeout";
+            break;
+        default:
+            codeKey = @"";
+            break;
+    }
+    
+    if (![codeKey isEqualToString:@""]) {
+        [ADJUserDefaults saveiAdErrorKey:codeKey];
+    }
+}
+
 - (void)sendIad3ClickPackage:(ADJActivityHandler *)selfI
           attributionDetails:(NSDictionary *)attributionDetails
  {
@@ -494,11 +540,12 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
                                         activityState:selfI.activityState
                                         config:selfI.adjustConfig
                                         sessionParameters:self.sessionParameters
+                                        trackingStatusManager:self.trackingStatusManager
                                         createdAt:now];
 
      clickBuilder.attributionDetails = attributionDetails;
 
-     ADJActivityPackage *clickPackage = [clickBuilder buildClickPackage:@"iad3"];
+     ADJActivityPackage *clickPackage = [clickBuilder buildClickPackage:ADJiAdPackageKey];     
      [selfI.sdkClickHandler sendSdkClick:clickPackage];
 }
 
@@ -618,6 +665,42 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
                      block:^(ADJActivityHandler * selfI) {
                          [selfI disableThirdPartySharingI:selfI];
                      }];
+}
+
+- (void)writeActivityState {
+    [ADJUtil launchInQueue:self.internalQueue
+                selfInject:self
+                     block:^(ADJActivityHandler * selfI) {
+                         [selfI writeActivityStateI:selfI];
+                     }];
+}
+
+- (void)trackAttStatusUpdate {
+    [ADJUtil launchInQueue:self.internalQueue
+                selfInject:self
+                     block:^(ADJActivityHandler * selfI) {
+                        [selfI trackAttStatusUpdateI:selfI];
+                     }];
+}
+- (void)trackAttStatusUpdateI:(ADJActivityHandler *)selfI {
+    double now = [NSDate.date timeIntervalSince1970];
+
+    ADJPackageBuilder *infoBuilder = [[ADJPackageBuilder alloc]
+                                            initWithDeviceInfo:selfI.deviceInfo
+                                                activityState:selfI.activityState
+                                                config:selfI.adjustConfig
+                                                sessionParameters:selfI.sessionParameters
+                                                trackingStatusManager:self.trackingStatusManager
+                                                createdAt:now];
+
+    ADJActivityPackage *infoPackage = [infoBuilder buildInfoPackage:@"att"];
+    [selfI.packageHandler addPackage:infoPackage];
+    
+    if (selfI.adjustConfig.eventBufferingEnabled) {
+        [selfI.logger info:@"Buffered event %@", infoPackage.suffix];
+    } else {
+        [selfI.packageHandler sendFirstPackage];
+    }
 }
 
 - (NSString *)getBasePath {
@@ -775,34 +858,52 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
 
     [ADJUtil updateUrlSessionConfiguration:selfI.adjustConfig];
 
+    ADJUrlStrategy *packageHandlerUrlStrategy =
+        [[ADJUrlStrategy alloc]
+             initWithUrlStrategyInfo:selfI.adjustConfig.urlStrategy
+             extraPath:preLaunchActions.extraPath];
+
     selfI.packageHandler = [[ADJPackageHandler alloc]
                                 initWithActivityHandler:selfI
                                 startsSending:
                                     [selfI toSendI:selfI sdkClickHandlerOnly:NO]
                                 userAgent:selfI.adjustConfig.userAgent
-                                extraPath:preLaunchActions.extraPath];
+                                urlStrategy:packageHandlerUrlStrategy];
 
     // update session parameters in package queue
     if ([selfI itHasToUpdatePackagesI:selfI]) {
         [selfI updatePackagesI:selfI];
      }
 
+
+    ADJUrlStrategy *attributionHandlerUrlStrategy =
+        [[ADJUrlStrategy alloc]
+             initWithUrlStrategyInfo:selfI.adjustConfig.urlStrategy
+             extraPath:preLaunchActions.extraPath];
+
     selfI.attributionHandler = [[ADJAttributionHandler alloc]
                                     initWithActivityHandler:selfI
                                     startsSending:
                                         [selfI toSendI:selfI sdkClickHandlerOnly:NO]
                                     userAgent:selfI.adjustConfig.userAgent
-                                    extraPath:preLaunchActions.extraPath];
+                                    urlStrategy:attributionHandlerUrlStrategy];
+
+    ADJUrlStrategy *sdkClickHandlerUrlStrategy =
+        [[ADJUrlStrategy alloc]
+             initWithUrlStrategyInfo:selfI.adjustConfig.urlStrategy
+             extraPath:preLaunchActions.extraPath];
 
     selfI.sdkClickHandler = [[ADJSdkClickHandler alloc]
                                 initWithActivityHandler:selfI
                                 startsSending:[selfI toSendI:selfI sdkClickHandlerOnly:YES]
                                 userAgent:selfI.adjustConfig.userAgent
-                                extraPath:preLaunchActions.extraPath];
+                                urlStrategy:sdkClickHandlerUrlStrategy];
 
     if (selfI.adjustConfig.allowiAdInfoReading == YES) {
         [selfI checkForiAdI:selfI];
     }
+
+    [selfI.trackingStatusManager checkForNewAttStatus];
 
     [selfI preLaunchActionsI:selfI
        preLaunchActionsArray:preLaunchActions.preLaunchActionsArray];
@@ -945,6 +1046,7 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
                                          activityState:selfI.activityState
                                          config:selfI.adjustConfig
                                          sessionParameters:selfI.sessionParameters
+                                         trackingStatusManager:self.trackingStatusManager
                                          createdAt:now];
     ADJActivityPackage *sessionPackage = [sessionBuilder buildSessionPackage:[selfI.internalState isInDelayedStart]];
     [selfI.packageHandler addPackage:sessionPackage];
@@ -1019,6 +1121,7 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
                                        activityState:selfI.activityState
                                        config:selfI.adjustConfig
                                        sessionParameters:selfI.sessionParameters
+                                       trackingStatusManager:self.trackingStatusManager
                                        createdAt:now];
     ADJActivityPackage *eventPackage = [eventBuilder buildEventPackage:event
                                                              isInDelay:[selfI.internalState isInDelayedStart]];
@@ -1054,14 +1157,21 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
     double now = [NSDate.date timeIntervalSince1970];
 
     // Create and submit ad revenue package.
-    ADJPackageBuilder *adRevenueBuilder = [[ADJPackageBuilder alloc] initWithDeviceInfo:selfI.deviceInfo
-                                                                          activityState:selfI.activityState
-                                                                                 config:selfI.adjustConfig
-                                                                      sessionParameters:selfI.sessionParameters
-                                                                              createdAt:now];
+    ADJPackageBuilder *adRevenueBuilder = [[ADJPackageBuilder alloc]
+                                               initWithDeviceInfo:selfI.deviceInfo
+                                                   activityState:selfI.activityState
+                                                   config:selfI.adjustConfig
+                                                   sessionParameters:selfI.sessionParameters
+                                                   trackingStatusManager:self.trackingStatusManager
+                                                   createdAt:now];
+
     ADJActivityPackage *adRevenuePackage = [adRevenueBuilder buildAdRevenuePackage:source payload:payload];
     [selfI.packageHandler addPackage:adRevenuePackage];
-    [selfI.packageHandler sendFirstPackage];
+    if (selfI.adjustConfig.eventBufferingEnabled) {
+        [selfI.logger info:@"Buffered event %@", adRevenuePackage.suffix];
+    } else {
+        [selfI.packageHandler sendFirstPackage];
+    }
 }
 
 - (void)trackSubscriptionI:(ADJActivityHandler *)selfI
@@ -1079,15 +1189,22 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
     double now = [NSDate.date timeIntervalSince1970];
 
     // Create and submit ad revenue package.
-    ADJPackageBuilder *subscriptionBuilder = [[ADJPackageBuilder alloc] initWithDeviceInfo:selfI.deviceInfo
-                                                                             activityState:selfI.activityState
-                                                                                    config:selfI.adjustConfig
-                                                                         sessionParameters:selfI.sessionParameters
-                                                                                 createdAt:now];
+    ADJPackageBuilder *subscriptionBuilder = [[ADJPackageBuilder alloc]
+                                                initWithDeviceInfo:selfI.deviceInfo
+                                                    activityState:selfI.activityState
+                                                    config:selfI.adjustConfig
+                                                    sessionParameters:selfI.sessionParameters
+                                                    trackingStatusManager:self.trackingStatusManager
+                                                    createdAt:now];
+
     ADJActivityPackage *subscriptionPackage = [subscriptionBuilder buildSubscriptionPackage:subscription
                                                                                   isInDelay:[selfI.internalState isInDelayedStart]];
     [selfI.packageHandler addPackage:subscriptionPackage];
-    [selfI.packageHandler sendFirstPackage];
+    if (selfI.adjustConfig.eventBufferingEnabled) {
+        [selfI.logger info:@"Buffered event %@", subscriptionPackage.suffix];
+    } else {
+        [selfI.packageHandler sendFirstPackage];
+    }
 }
 
 - (void)disableThirdPartySharingI:(ADJActivityHandler *)selfI {
@@ -1118,11 +1235,12 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
 
     // build package
     ADJPackageBuilder *dtpsBuilder = [[ADJPackageBuilder alloc]
-                                       initWithDeviceInfo:selfI.deviceInfo
-                                       activityState:selfI.activityState
-                                       config:selfI.adjustConfig
-                                       sessionParameters:selfI.sessionParameters
-                                       createdAt:now];
+                                        initWithDeviceInfo:selfI.deviceInfo
+                                            activityState:selfI.activityState
+                                            config:selfI.adjustConfig
+                                            sessionParameters:selfI.sessionParameters
+                                            trackingStatusManager:self.trackingStatusManager
+                                            createdAt:now];
 
     ADJActivityPackage *dtpsPackage = [dtpsBuilder buildDisableThirdPartySharingPackage];
 
@@ -1226,6 +1344,8 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
 
 - (void)launchAttributionResponseTasksI:(ADJActivityHandler *)selfI
                 attributionResponseData:(ADJAttributionResponseData *)attributionResponseData {
+    [selfI checkConversionValue:attributionResponseData];
+
     [selfI updateAdidI:selfI adid:attributionResponseData.adid];
 
     BOOL toLaunchAttributionDelegate = [selfI updateAttributionI:selfI
@@ -1376,16 +1496,8 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
         unPausingMessage:@"Resuming handlers due to SDK being enabled"];
 }
 
-- (void)checkForiAd {
-    [ADJUtil launchInQueue:self.internalQueue
-                selfInject:self
-                     block:^(ADJActivityHandler *selfI) {
-        [selfI checkForiAdI:selfI];
-    }];
-}
-
 - (void)checkForiAdI:(ADJActivityHandler *)selfI {
-    [[UIDevice currentDevice] adjCheckForiAd:selfI];
+    [[UIDevice currentDevice] adjCheckForiAd:selfI queue:selfI.internalQueue];
 }
 
 - (void)setOfflineModeI:(ADJActivityHandler *)selfI
@@ -1495,11 +1607,14 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
         double lastInterval = now - selfI.activityState.lastActivity;
         selfI.activityState.lastInterval = lastInterval;
     }];
-    ADJPackageBuilder *clickBuilder = [[ADJPackageBuilder alloc] initWithDeviceInfo:selfI.deviceInfo
-                                                                      activityState:selfI.activityState
-                                                                             config:selfI.adjustConfig
-                                                                  sessionParameters:selfI.sessionParameters
-                                                                          createdAt:now];
+    ADJPackageBuilder *clickBuilder = [[ADJPackageBuilder alloc]
+                                            initWithDeviceInfo:selfI.deviceInfo
+                                                activityState:selfI.activityState
+                                                config:selfI.adjustConfig
+                                                sessionParameters:selfI.sessionParameters
+                                                trackingStatusManager:self.trackingStatusManager
+                                                createdAt:now];
+
     clickBuilder.deeplinkParameters = [adjustDeepLinks copy];
     clickBuilder.attribution = deeplinkAttribution;
     clickBuilder.clickTime = clickTime;
@@ -1596,11 +1711,13 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
 
     // send info package
     double now = [NSDate.date timeIntervalSince1970];
-    ADJPackageBuilder *infoBuilder = [[ADJPackageBuilder alloc] initWithDeviceInfo:selfI.deviceInfo
-                                                                     activityState:selfI.activityState
-                                                                            config:selfI.adjustConfig
-                                                                 sessionParameters:selfI.sessionParameters
-                                                                         createdAt:now];
+    ADJPackageBuilder *infoBuilder = [[ADJPackageBuilder alloc]
+                                            initWithDeviceInfo:selfI.deviceInfo
+                                                activityState:selfI.activityState
+                                                config:selfI.adjustConfig
+                                                sessionParameters:selfI.sessionParameters
+                                                trackingStatusManager:self.trackingStatusManager
+                                                createdAt:now];
 
     ADJActivityPackage *infoPackage = [infoBuilder buildInfoPackage:@"push"];
 
@@ -1643,11 +1760,14 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
 
     // send info package
     double now = [NSDate.date timeIntervalSince1970];
-    ADJPackageBuilder *infoBuilder = [[ADJPackageBuilder alloc] initWithDeviceInfo:selfI.deviceInfo
-                                                                     activityState:selfI.activityState
-                                                                            config:selfI.adjustConfig
-                                                                 sessionParameters:selfI.sessionParameters
-                                                                         createdAt:now];
+    ADJPackageBuilder *infoBuilder = [[ADJPackageBuilder alloc]
+                                            initWithDeviceInfo:selfI.deviceInfo
+                                                activityState:selfI.activityState
+                                                config:selfI.adjustConfig
+                                                sessionParameters:selfI.sessionParameters
+                                                trackingStatusManager:self.trackingStatusManager
+                                                createdAt:now];
+
     ADJActivityPackage *infoPackage = [infoBuilder buildInfoPackage:@"push"];
     [selfI.packageHandler addPackage:infoPackage];
 
@@ -1681,11 +1801,13 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
 
     // Send GDPR package
     double now = [NSDate.date timeIntervalSince1970];
-    ADJPackageBuilder *gdprBuilder = [[ADJPackageBuilder alloc] initWithDeviceInfo:selfI.deviceInfo
-                                                                     activityState:selfI.activityState
-                                                                            config:selfI.adjustConfig
-                                                                 sessionParameters:selfI.sessionParameters
-                                                                         createdAt:now];
+    ADJPackageBuilder *gdprBuilder = [[ADJPackageBuilder alloc]
+                                        initWithDeviceInfo:selfI.deviceInfo
+                                            activityState:selfI.activityState
+                                            config:selfI.adjustConfig
+                                            sessionParameters:selfI.sessionParameters
+                                            trackingStatusManager:self.trackingStatusManager
+                                            createdAt:now];
 
     ADJActivityPackage *gdprPackage = [gdprBuilder buildGdprPackage];
     [selfI.packageHandler addPackage:gdprPackage];
@@ -2000,6 +2122,8 @@ sdkClickHandlerOnly:(BOOL)sdkClickHandlerOnly
     if ([selfI updateActivityStateI:selfI now:now]) {
         [selfI writeActivityStateI:selfI];
     }
+
+    [selfI.trackingStatusManager checkForNewAttStatus];
 }
 
 - (void)startBackgroundTimerI:(ADJActivityHandler *)selfI {
@@ -2307,6 +2431,147 @@ sdkClickHandlerOnly:(BOOL)sdkClickHandlerOnly
         [selfI.logger error:@"Missing activity state"];
         return NO;
     }
+    return YES;
+}
+
+- (void)registerForSKAdNetworkAttribution {
+    if (!self.adjustConfig.isSKAdNetworkHandlingActive) {
+        return;
+    }
+    id<ADJLogger> logger = [ADJAdjustFactory logger];
+    
+    Class skAdNetwork = NSClassFromString(@"SKAdNetwork");
+    if (skAdNetwork == nil) {
+        [logger warn:@"StoreKit framework not found in user's app (SKAdNetwork not found)"];
+        return;
+    }
+    
+    SEL registerAttributionSelector = NSSelectorFromString(@"registerAppForAdNetworkAttribution");
+    if ([skAdNetwork respondsToSelector:registerAttributionSelector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [skAdNetwork performSelector:registerAttributionSelector];
+#pragma clang diagnostic pop
+    }
+}
+
+- (void)checkConversionValue:(ADJResponseData *)responseData {
+    if (!self.adjustConfig.isSKAdNetworkHandlingActive) {
+        return;
+    }
+    if (responseData.jsonResponse == nil) {
+        return;
+    }
+
+    NSNumber *conversionValue = [responseData.jsonResponse objectForKey:@"skadn_conv_value"];
+
+    if (!conversionValue) {
+        return;
+    }
+
+    id<ADJLogger> logger = [ADJAdjustFactory logger];
+    
+    Class skAdNetwork = NSClassFromString(@"SKAdNetwork");
+    if (skAdNetwork == nil) {
+        [logger warn:@"StoreKit framework not found in user's app (SKAdNetwork not found)"];
+        return;
+    }
+    
+    SEL updateConversionValueSelector = NSSelectorFromString(@"updateConversionValue:");
+    if ([skAdNetwork respondsToSelector:updateConversionValueSelector]) {
+        NSInteger intValue = [conversionValue integerValue];
+        
+        NSMethodSignature *conversionValueMethodSignature = [skAdNetwork methodSignatureForSelector:updateConversionValueSelector];
+        NSInvocation *conversionInvocation = [NSInvocation invocationWithMethodSignature:conversionValueMethodSignature];
+        [conversionInvocation setSelector:updateConversionValueSelector];
+        [conversionInvocation setTarget:skAdNetwork];
+
+        [conversionInvocation setArgument:&intValue atIndex:2];
+        [conversionInvocation invoke];
+    }
+}
+
+- (void)updateAttStatusFromUserCallback:(int)newAttStatusFromUser {
+    [self.trackingStatusManager updateAttStatusFromUserCallback:newAttStatusFromUser];
+}
+
+@end
+
+@interface ADJTrackingStatusManager ()
+
+@property (nonatomic, readonly, weak) ADJActivityHandler *activityHandler;
+
+@end
+
+@implementation ADJTrackingStatusManager
+// constructors
+- (instancetype)initWithActivityHandler:(ADJActivityHandler *)activityHandler {
+    self = [super init];
+
+    _activityHandler = activityHandler;
+
+    return self;
+}
+// public api
+- (BOOL)canGetAttStatus {
+    return SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"14.0");
+}
+
+- (BOOL)trackingEnabled {
+    return UIDevice.currentDevice.adjTrackingEnabled;
+}
+
+- (int)attStatus {
+    int readAttStatus = UIDevice.currentDevice.adjATTStatus;
+
+    [self updateAttStatus:readAttStatus];
+
+    // does not need to track AttStatus update, since it will be send with package
+
+    return readAttStatus;
+}
+
+- (void)checkForNewAttStatus {
+    int readAttStatus = UIDevice.currentDevice.adjATTStatus;
+
+    BOOL didUpdateAttStatus = [self updateAttStatus:readAttStatus];
+
+    if (!didUpdateAttStatus) {
+        return;
+    }
+
+    [self.activityHandler trackAttStatusUpdate];
+}
+- (void)updateAttStatusFromUserCallback:(int)newAttStatusFromUser {
+    BOOL didUpdateAttStatus = [self updateAttStatus:newAttStatusFromUser];
+
+    if (!didUpdateAttStatus) {
+        return;
+    }
+
+    [self.activityHandler trackAttStatusUpdate];
+}
+
+// internal methods
+- (BOOL)updateAttStatus:(int)readAttStatus {
+    if (readAttStatus < 0) {
+        return NO;
+    }
+
+    if (self.activityHandler == nil || self.activityHandler.activityState == nil) {
+        return NO;
+    }
+
+    if (readAttStatus == self.activityHandler.activityState.trackingManagerAuthorizationStatus) {
+        return NO;
+    }
+
+    [ADJUtil launchSynchronisedWithObject:[ADJActivityState class]
+                                    block:^{
+        self.activityHandler.activityState.trackingManagerAuthorizationStatus = readAttStatus;
+    }];
+    [self.activityHandler writeActivityState];
+
     return YES;
 }
 @end

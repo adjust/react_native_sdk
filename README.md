@@ -73,57 +73,13 @@ First, download the library from `npm`:
 $ npm install react-native-adjust --save
 ```
 
-Then you must install the native dependencies. You can use `react-native` cli tool to add native dependencies automatically and then continue the directions below depending on your target OS.
+For iOS app make sure to go to `ios` folder and install Cocoapods dependencies:
 
 ```
-$ react-native link
+$ cd ios && pod install
 ```
 
-**Or** if you use CocoaPods for **iOS**, add the following to your `Podfile` and run `pod install` afterwards:
-
-```
-pod 'react-native-adjust', :path => '../node_modules/react-native-adjust'
-```
-
-For **iOS**, you don't need to do anything else.
-
-For **Android**, you *may* need to check if Adjust package was added to the native module's package list.
-
-- Go to your app's `MainApplication.java` class. It should be located in
-`./android/app/src/main/java/[your app]/MainApplication.java`
-
-- There is a method called `getPackages()` that looks like this by default:
-
-```java
-@Override
-protected List<ReactPackage> getPackages() {
-  return Arrays.<ReactPackage>asList(
-      new MainReactPackage()
-  );
-}
-```
-
-- After adding Adjust SDK via `npm` and running `react-native link` command, Adjust package should be added automatically to this list and it should look something like this:
-
-```java
-import com.adjust.nativemodule.AdjustPackage;
-
-// ...
-
-@Override
-protected List<ReactPackage> getPackages() {
-  return Arrays.<ReactPackage>asList(
-      new MainReactPackage(),
-      new AdjustPackage()
-  );
-}
-```
-
-- In case that the line `new AdjustPackage()` was not added automatically, you'll have to add it to the list of packages by yourself like described above. Also, don't forget to add the import statement on top of the `MainApplication.java` file:
-
-```java
-import com.adjust.nativemodule.AdjustPackage;
-```
+After this Adjust SDK should be successfully added to your app.
 
 ### <a id="sdk-integrate"></a>Integrate the SDK into your app
 
@@ -345,6 +301,8 @@ Adjust.requestTrackingAuthorizationWithCompletionHandler(function(status) {
     }
 });
 ```
+
+Before calling the method, make sure that your iOS app's `Info.plist` contains an entry for `NSUserTrackingUsageDescription` key. In absence of that key and usage of this method, app will crash.
 
 ### <a id="skadn-framework"></a>SKAdNetwork framework
 

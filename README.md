@@ -302,7 +302,7 @@ Adjust.requestTrackingAuthorizationWithCompletionHandler(function(status) {
 });
 ```
 
-Before calling the method, ensure that your app's Info.plist contains an entry for 'NSUserTrackingUsageDescription' explaining your tracking usage, as the app will crash otherwise.
+Before calling the method, make sure that your iOS app's `Info.plist` contains an entry for `NSUserTrackingUsageDescription` key. In absence of that key and usage of this method, app will crash.
 
 ### <a id="skadn-framework"></a>SKAdNetwork framework
 

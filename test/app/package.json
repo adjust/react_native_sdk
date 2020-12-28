@@ -10,11 +10,14 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "node-notifier": "^9.0.0",
     "react": "16.13.1",
     "react-native": "0.62.2",
     "react-native-adjust": "../../temp",
     "react-native-adjust-oaid": "../../plugins/oaid",
-    "react-native-adjust-test": "../lib"
+    "react-native-adjust-test": "../lib",
+    "semver": "^7.3.4",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",

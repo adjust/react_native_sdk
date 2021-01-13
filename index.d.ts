@@ -184,5 +184,6 @@ declare module 'react-native-adjust' {
     getSdkVersion: (callback: (sdkVersion: string) => void) => void
     setReferrer: (referrer: string) => void
     convertUniversalLink: (url: string, scheme: string, callback: (convertedUrl: string) => void) => void
+    requestTrackingAuthorizationWithCompletionHandler: (handler: (status: number) => void) => void
   }
 }

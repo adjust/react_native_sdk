@@ -669,10 +669,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             String value = mapTest.getString("subscriptionPath");
             testOptions.subscriptionPath = value;
         }
-        if (checkKey(mapTest, "useTestConnectionOptions")) {
-            boolean value = mapTest.getBoolean("useTestConnectionOptions");
-            testOptions.useTestConnectionOptions = value;
-        }
+        // if (checkKey(mapTest, "useTestConnectionOptions")) {
+        //     boolean value = mapTest.getBoolean("useTestConnectionOptions");
+        //     testOptions.useTestConnectionOptions = value;
+        // }
         if (checkKey(mapTest, "timerIntervalInMilliseconds")) {
             try {
                 Long value = Long.parseLong(mapTest.getString("timerIntervalInMilliseconds"));

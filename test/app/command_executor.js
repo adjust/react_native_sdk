@@ -171,6 +171,7 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
     if ('iAdFrameworkEnabled' in params) {
         testOptions.iAdFrameworkEnabled = getFirstParameterValue(params, 'iAdFrameworkEnabled').toString() === 'true';
     }
+    var useTestConnectionOptions = false;
     if ('teardown' in params) {
         var teardownOptions = getValueFromKey(params, 'teardown');
         for (var i = 0; i < teardownOptions.length; i++) {
@@ -183,6 +184,7 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
                 testOptions.gdprPath = this.gdprPath;
                 testOptions.subscriptionPath = this.subscriptionPath;
                 testOptions.useTestConnectionOptions = true;
+                useTestConnectionOptions = true;
                 Adjust.teardown('test');
             }
 
@@ -219,6 +221,9 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
     }
 
     Adjust.setTestOptions(testOptions);
+    if (useTestConnectionOptions == true) {
+        AdjustSdkTest.setTestConnectionOptions();
+    }
 };
 
 AdjustCommandExecutor.prototype.config = function(params) {

@@ -18,8 +18,8 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* ExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ExampleTests.m */; };
 		4839C605884D648B39FDABCA /* libPods-Example-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E087459BCF5409F7E05C62AF /* libPods-Example-tvOS.a */; };
-		9D2606D524F8831600E6A596 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2606D424F8831600E6A596 /* AppTrackingTransparency.framework */; };
-		9D2606D924F8832300E6A596 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2606D824F8832300E6A596 /* StoreKit.framework */; };
+		9D2606D524F8831600E6A596 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2606D424F8831600E6A596 /* AppTrackingTransparency.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		9D2606D924F8832300E6A596 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2606D824F8832300E6A596 /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		9D2606DB24F8832900E6A596 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2606DA24F8832900E6A596 /* AdSupport.framework */; };
 		9D2606DD24F8832D00E6A596 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2606DC24F8832D00E6A596 /* iAd.framework */; };
 		9D2606DF24F8833300E6A596 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D2606DE24F8833300E6A596 /* CoreTelephony.framework */; };

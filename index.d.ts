@@ -11,6 +11,9 @@ declare module 'react-native-adjust' {
     creative: string
     clickLabel: string
     adid: string
+    costType: string
+    costAmount: number
+    costCurrency: string
   }
 
   interface AdjustEventTrackingSuccess {
@@ -53,43 +56,29 @@ declare module 'react-native-adjust' {
 
   export class AdjustConfig {
     constructor(appToken: string, environment: Environment)
-
     public setLogLevel(level: LogLevel): void
-
     public setEventBufferingEnabled(isEnabled: boolean): void
-
     public setProcessName(processName: string): void
-
     public setDefaultTracker(defaultTracked: string): void
-
     public setExternalDeviceId(externalDeviceId: string): void
-
     public setUrlStrategy(urlStrategy: string): void
-
     public setUserAgent(userAgent: string): void
-
     public setAppSecret(
       secretId: number,
       info1: number,
       info2: number,
       info3: number,
-      info4: number
-    ): void
-
+      info4: number): void
     public setDelayStart(delayStart: number): void
-
     public setSendInBackground(sendInBackground: boolean): void
-
     public setDeviceKnown(isDeviceKnown: boolean): void
-
+    public setNeedsCost(needsCost: boolean): void
+    public setPreinstallTrackingEnabled(preinstallTrackingEnabled: boolean): void
     public setAllowiAdInfoReading(allowiAdInfoReading: boolean): void
-
+    public setAllowAdServicesInfoReading(allowAdServicesInfoReading: boolean): void
     public setAllowIdfaReading(allowIdfaReading: boolean): void
-
     public setSdkPrefix(sdkPrefix: string): void
-
     public setShouldLaunchDeeplink(shouldLaunchDeeplink: boolean): void
-    
     public deactivateSKAdNetworkHandling(): void;
 
     public setAttributionCallbackListener(
@@ -157,6 +146,11 @@ declare module 'react-native-adjust' {
     public addPartnerParameter(key: string, value: string): void
   }
 
+  export class AdjustThirdPartySharing {
+    constructor(isEnabled: boolean)
+    public addGranularOption(partnerName: string, key: string, value: string): void
+  }
+
   export const Adjust: {
     componentWillUnmount: () => void
     create: (adjustConfig: AdjustConfig) => void
@@ -187,5 +181,9 @@ declare module 'react-native-adjust' {
     setReferrer: (referrer: string) => void
     convertUniversalLink: (url: string, scheme: string, callback: (convertedUrl: string) => void) => void
     requestTrackingAuthorizationWithCompletionHandler: (handler: (status: number) => void) => void
+    updateConversionValue: (conversionValue: number) => void
+    getAppTrackingAuthorizationStatus: (callback: (authorizationStatus: number) => void) => void
+    trackThirdPartySharing: (adjustThirdPartySharing: AdjustThirdPartySharing) => void
+    trackMeasurementConsent: (measurementConsent: boolean) => void
   }
 }

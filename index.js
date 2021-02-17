@@ -346,6 +346,10 @@ AdjustConfig.prototype.setReadMobileEquipmentIdentity = function(readMobileEquip
     // this.readMobileEquipmentIdentity = readMobileEquipmentIdentity;
 };
 
+AdjustConfig.prototype.setPreinstallTrackingEnabled = function(isEnabled) {
+    this.preinstallTrackingEnabled = isEnabled;
+};
+
 AdjustConfig.prototype.setAllowiAdInfoReading = function(allowiAdInfoReading) {
     this.allowiAdInfoReading = allowiAdInfoReading;
 };

@@ -23,6 +23,7 @@
 #import "ADJUrlStrategy.h"
 
 NSString * const ADJiAdPackageKey = @"iad3";
+NSString * const ADJAdServicesPackageKey = @"apple_ads";
 
 typedef void (^activityHandlerBlockI)(ADJActivityHandler * activityHandler);
 
@@ -42,15 +43,9 @@ static NSTimeInterval kBackgroundTimerInterval;
 static double kSessionInterval;
 static double kSubSessionInterval;
 static const int kiAdRetriesCount = 3;
+static const int kAdServicesdRetriesCount = 1;
 
 @implementation ADJInternalState
-
-- (id)init {
-    self = [super init];
-    if (self == nil) return nil;
-
-    return self;
-}
 
 - (BOOL)isEnabled { return self.enabled; }
 - (BOOL)isDisabled { return !self.enabled; }
@@ -70,10 +65,10 @@ static const int kiAdRetriesCount = 3;
 
 - (id)init {
     self = [super init];
-    if (self == nil) return nil;
-
-    // online by default
-    self.offline = NO;
+    if (self) {
+        // online by default
+        self.offline = NO;
+    }
     return self;
 }
 
@@ -90,6 +85,7 @@ static const int kiAdRetriesCount = 3;
 @property (nonatomic, strong) ADJTimerCycle *foregroundTimer;
 @property (nonatomic, strong) ADJTimerOnce *backgroundTimer;
 @property (nonatomic, assign) NSInteger iAdRetriesLeft;
+@property (nonatomic, assign) NSInteger adServicesRetriesLeft;
 @property (nonatomic, strong) ADJInternalState *internalState;
 @property (nonatomic, strong) ADJDeviceInfo *deviceInfo;
 @property (nonatomic, strong) ADJTimerOnce *delayStartTimer;
@@ -99,6 +95,7 @@ static const int kiAdRetriesCount = 3;
 @property (nonatomic, weak) NSObject<AdjustDelegate> *adjustDelegate;
 // copy for objects shared with the user
 @property (nonatomic, copy) ADJConfig *adjustConfig;
+@property (nonatomic, weak) ADJSavedPreLaunch *savedPreLaunch;
 @property (nonatomic, copy) NSData* deviceTokenData;
 @property (nonatomic, copy) NSString* basePath;
 @property (nonatomic, copy) NSString* gdprPath;
@@ -148,8 +145,12 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
     if (adjustConfig.allowiAdInfoReading == NO) {
         [ADJAdjustFactory.logger warn:@"iAd info reading has been switched off"];
     }
+    if (adjustConfig.allowAdServicesInfoReading == NO) {
+        [ADJAdjustFactory.logger warn:@"AdServices info reading has been switched off"];
+    }
 
     self.adjustConfig = adjustConfig;
+    self.savedPreLaunch = savedPreLaunch;
     self.adjustDelegate = adjustConfig.delegate;
 
     // init logger to be available everywhere
@@ -206,6 +207,7 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
     self.internalState.sessionResponseProcessed = NO;
 
     self.iAdRetriesLeft = kiAdRetriesCount;
+    self.adServicesRetriesLeft = kAdServicesdRetriesCount;
 
     self.trackingStatusManager = [[ADJTrackingStatusManager alloc] initWithActivityHandler:self];
 
@@ -400,6 +402,30 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
                      }];
 }
 
+- (void)setAdServicesAttributionToken:(NSString *)token
+                                error:(NSError *)error {
+    if (![ADJUtil isNull:error]) {
+        [self.logger warn:@"Unable to read AdServices details"];
+        
+        // 3 == platform not supported
+        if (error.code != 3 && self.adServicesRetriesLeft > 0) {
+            self.adServicesRetriesLeft = self.adServicesRetriesLeft - 1;
+            // retry after 5 seconds
+            dispatch_time_t retryTime = dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC);
+            dispatch_after(retryTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [self checkForAdServicesAttributionI:self];
+            });
+        } else {
+            [self sendAdServicesClickPackage:self
+                                      token:nil
+                            errorCodeNumber:[NSNumber numberWithInteger:error.code]];
+        }
+    } else {
+        [self sendAdServicesClickPackage:self
+                                  token:token
+                        errorCodeNumber:nil];
+    }
+}
 
 - (void)setAttributionDetails:(NSDictionary *)attributionDetails
                         error:(NSError *)error
@@ -521,7 +547,7 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
      if (![selfI isEnabledI:selfI]) {
          return;
      }
-     
+
      if (ADJAdjustFactory.iAdFrameworkEnabled == NO) {
          [self.logger verbose:@"Sending iAd details to server suppressed."];
          return;
@@ -545,7 +571,43 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
 
      clickBuilder.attributionDetails = attributionDetails;
 
-     ADJActivityPackage *clickPackage = [clickBuilder buildClickPackage:ADJiAdPackageKey];     
+     ADJActivityPackage *clickPackage = [clickBuilder buildClickPackage:ADJiAdPackageKey];
+     [selfI.sdkClickHandler sendSdkClick:clickPackage];
+}
+
+- (void)sendAdServicesClickPackage:(ADJActivityHandler *)selfI
+                             token:(NSString *)token
+                   errorCodeNumber:(NSNumber *)errorCodeNumber
+ {
+     if (![selfI isEnabledI:selfI]) {
+         return;
+     }
+
+     if (ADJAdjustFactory.adServicesFrameworkEnabled == NO) {
+         [self.logger verbose:@"Sending AdServices attribution to server suppressed."];
+         return;
+     }
+
+     double now = [NSDate.date timeIntervalSince1970];
+     if (selfI.activityState != nil) {
+         [ADJUtil launchSynchronisedWithObject:[ADJActivityState class]
+                                         block:^{
+             double lastInterval = now - selfI.activityState.lastActivity;
+             selfI.activityState.lastInterval = lastInterval;
+         }];
+     }
+     ADJPackageBuilder *clickBuilder = [[ADJPackageBuilder alloc]
+                                       initWithDeviceInfo:selfI.deviceInfo
+                                       activityState:selfI.activityState
+                                       config:selfI.adjustConfig
+                                       sessionParameters:self.sessionParameters
+                                       trackingStatusManager:self.trackingStatusManager
+                                       createdAt:now];
+
+     ADJActivityPackage *clickPackage =
+        [clickBuilder buildClickPackage:ADJAdServicesPackageKey
+                                  token:token
+                        errorCodeNumber:errorCodeNumber];
      [selfI.sdkClickHandler sendSdkClick:clickPackage];
 }
 
@@ -665,6 +727,37 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
                      block:^(ADJActivityHandler * selfI) {
                          [selfI disableThirdPartySharingI:selfI];
                      }];
+}
+
+- (void)trackThirdPartySharing:(nonnull ADJThirdPartySharing *)thirdPartySharing {
+    [ADJUtil launchInQueue:self.internalQueue
+                selfInject:self
+                     block:^(ADJActivityHandler * selfI) {
+        BOOL tracked =
+            [selfI trackThirdPartySharingI:selfI thirdPartySharing:thirdPartySharing];
+        if (! tracked) {
+            if (self.savedPreLaunch.preLaunchAdjustThirdPartySharingArray == nil) {
+                self.savedPreLaunch.preLaunchAdjustThirdPartySharingArray =
+                    [[NSMutableArray alloc] init];
+            }
+
+            [self.savedPreLaunch.preLaunchAdjustThirdPartySharingArray
+                addObject:thirdPartySharing];
+        }
+    }];
+}
+
+- (void)trackMeasurementConsent:(BOOL)enabled {
+    [ADJUtil launchInQueue:self.internalQueue
+                selfInject:self
+                     block:^(ADJActivityHandler * selfI) {
+        BOOL tracked =
+            [selfI trackMeasurementConsentI:selfI enabled:enabled];
+        if (! tracked) {
+            selfI.savedPreLaunch.lastMeasurementConsentTracked =
+                [NSNumber numberWithBool:enabled];
+        }
+    }];
 }
 
 - (void)writeActivityState {
@@ -902,6 +995,10 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
     if (selfI.adjustConfig.allowiAdInfoReading == YES) {
         [selfI checkForiAdI:selfI];
     }
+    
+    if (selfI.adjustConfig.allowAdServicesInfoReading == YES) {
+        [selfI checkForAdServicesAttributionI:selfI];
+    }
 
     [selfI.trackingStatusManager checkForNewAttStatus];
 
@@ -963,6 +1060,24 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
                 if ([ADJUserDefaults getDisableThirdPartySharing]) {
                     [selfI disableThirdPartySharingI:selfI];
                 }
+                if (selfI.savedPreLaunch.preLaunchAdjustThirdPartySharingArray != nil) {
+                    for (ADJThirdPartySharing *thirdPartySharing
+                         in selfI.savedPreLaunch.preLaunchAdjustThirdPartySharingArray)
+                    {
+                        [selfI trackThirdPartySharingI:selfI
+                                     thirdPartySharing:thirdPartySharing];
+                    }
+
+                    selfI.savedPreLaunch.preLaunchAdjustThirdPartySharingArray = nil;
+                }
+                if (selfI.savedPreLaunch.lastMeasurementConsentTracked != nil) {
+                    [selfI
+                        trackMeasurementConsentI:selfI
+                        enabled:[selfI.savedPreLaunch.lastMeasurementConsentTracked boolValue]];
+
+                    selfI.savedPreLaunch.lastMeasurementConsentTracked = nil;
+                }
+
                 [ADJUtil launchSynchronisedWithObject:[ADJActivityState class]
                                                 block:^{
                     selfI.activityState.sessionCount = 1; // this is the first session
@@ -1024,6 +1139,8 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
     if (selfI.activityState.isGdprForgotten) {
         return;
     }
+
+    [selfI checkForAdServicesAttributionI:selfI];
 
     double lastInterval = now - selfI.activityState.lastActivity;
     [ADJUtil launchSynchronisedWithObject:[ADJActivityState class]
@@ -1255,6 +1372,80 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
     }
 }
 
+- (BOOL)trackThirdPartySharingI:(ADJActivityHandler *)selfI
+                thirdPartySharing:(nonnull ADJThirdPartySharing *)thirdPartySharing
+{
+    if (!selfI.activityState) {
+        return NO;
+    }
+    if (![selfI isEnabledI:selfI]) {
+        return NO;
+    }
+    if (selfI.activityState.isGdprForgotten) {
+        return NO;
+    }
+
+    double now = [NSDate.date timeIntervalSince1970];
+
+    // build package
+    ADJPackageBuilder *tpsBuilder = [[ADJPackageBuilder alloc]
+                                        initWithDeviceInfo:selfI.deviceInfo
+                                            activityState:selfI.activityState
+                                            config:selfI.adjustConfig
+                                            sessionParameters:selfI.sessionParameters
+                                            trackingStatusManager:self.trackingStatusManager
+                                            createdAt:now];
+
+    ADJActivityPackage *dtpsPackage = [tpsBuilder buildThirdPartySharingPackage:thirdPartySharing];
+
+    [selfI.packageHandler addPackage:dtpsPackage];
+
+    if (selfI.adjustConfig.eventBufferingEnabled) {
+        [selfI.logger info:@"Buffered event %@", dtpsPackage.suffix];
+    } else {
+        [selfI.packageHandler sendFirstPackage];
+    }
+
+    return YES;
+}
+
+- (BOOL)trackMeasurementConsentI:(ADJActivityHandler *)selfI
+                         enabled:(BOOL)enabled
+{
+    if (!selfI.activityState) {
+        return NO;
+    }
+    if (![selfI isEnabledI:selfI]) {
+        return NO;
+    }
+    if (selfI.activityState.isGdprForgotten) {
+        return NO;
+    }
+
+    double now = [NSDate.date timeIntervalSince1970];
+
+    // build package
+    ADJPackageBuilder *tpsBuilder = [[ADJPackageBuilder alloc]
+                                        initWithDeviceInfo:selfI.deviceInfo
+                                            activityState:selfI.activityState
+                                            config:selfI.adjustConfig
+                                            sessionParameters:selfI.sessionParameters
+                                            trackingStatusManager:self.trackingStatusManager
+                                            createdAt:now];
+
+    ADJActivityPackage *mcPackage = [tpsBuilder buildMeasurementConsentPackage:enabled];
+
+    [selfI.packageHandler addPackage:mcPackage];
+
+    if (selfI.adjustConfig.eventBufferingEnabled) {
+        [selfI.logger info:@"Buffered event %@", mcPackage.suffix];
+    } else {
+        [selfI.packageHandler sendFirstPackage];
+    }
+
+    return YES;
+}
+
 - (void)launchEventResponseTasksI:(ADJActivityHandler *)selfI
                 eventResponseData:(ADJEventResponseData *)eventResponseData {
     [selfI updateAdidI:selfI adid:eventResponseData.adid];
@@ -1481,11 +1672,33 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
         }
         if ([ADJUserDefaults getGdprForgetMe]) {
             [selfI setGdprForgetMe];
-        } else if ([ADJUserDefaults getDisableThirdPartySharing]) {
-            [selfI disableThirdPartySharing];
+        } else {
+            if ([ADJUserDefaults getDisableThirdPartySharing]) {
+                [selfI disableThirdPartySharing];
+            }
+            if (selfI.savedPreLaunch.preLaunchAdjustThirdPartySharingArray != nil) {
+                for (ADJThirdPartySharing *thirdPartySharing
+                     in selfI.savedPreLaunch.preLaunchAdjustThirdPartySharingArray)
+                {
+                    [selfI trackThirdPartySharing:thirdPartySharing];
+                }
+
+                selfI.savedPreLaunch.preLaunchAdjustThirdPartySharingArray = nil;
+            }
+            if (selfI.savedPreLaunch.lastMeasurementConsentTracked != nil) {
+                [selfI
+                    trackMeasurementConsent:
+                        [selfI.savedPreLaunch.lastMeasurementConsentTracked boolValue]];
+
+                selfI.savedPreLaunch.lastMeasurementConsentTracked = nil;
+            }
+
         }
         if (selfI.adjustConfig.allowiAdInfoReading == YES) {
             [selfI checkForiAdI:selfI];
+        }
+        if (selfI.adjustConfig.allowAdServicesInfoReading == YES) {
+            [selfI checkForAdServicesAttributionI:selfI];
         }
     }
 
@@ -1498,6 +1711,25 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
 
 - (void)checkForiAdI:(ADJActivityHandler *)selfI {
     [[UIDevice currentDevice] adjCheckForiAd:selfI queue:selfI.internalQueue];
+}
+
+- (BOOL)shouldFetchAdServicesI:(ADJActivityHandler *)selfI {
+    if (selfI.adjustConfig.allowAdServicesInfoReading == NO) {
+        return NO;
+    }
+    
+    // Fetch if no attribution OR not sent to backend yet
+    return (selfI.attribution == nil || ![ADJUserDefaults getAdServicesTracked]);
+}
+
+- (void)checkForAdServicesAttributionI:(ADJActivityHandler *)selfI {
+    if (@available(iOS 14.3, tvOS 14.3, *)) {
+        if ([selfI shouldFetchAdServicesI:selfI]) {
+            NSError *error = nil;
+            NSString *token = [[UIDevice currentDevice] adjFetchAdServicesAttribution:&error];
+            [selfI setAdServicesAttributionToken:token error:error];
+        }
+    }
 }
 
 - (void)setOfflineModeI:(ADJActivityHandler *)selfI
@@ -2452,6 +2684,7 @@ sdkClickHandlerOnly:(BOOL)sdkClickHandlerOnly
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [skAdNetwork performSelector:registerAttributionSelector];
 #pragma clang diagnostic pop
+        [logger verbose:@"Call to SKAdNetwork's registerAppForAdNetworkAttribution method made"];
     }
 }
 
@@ -2468,27 +2701,8 @@ sdkClickHandlerOnly:(BOOL)sdkClickHandlerOnly
     if (!conversionValue) {
         return;
     }
-
-    id<ADJLogger> logger = [ADJAdjustFactory logger];
     
-    Class skAdNetwork = NSClassFromString(@"SKAdNetwork");
-    if (skAdNetwork == nil) {
-        [logger warn:@"StoreKit framework not found in user's app (SKAdNetwork not found)"];
-        return;
-    }
-    
-    SEL updateConversionValueSelector = NSSelectorFromString(@"updateConversionValue:");
-    if ([skAdNetwork respondsToSelector:updateConversionValueSelector]) {
-        NSInteger intValue = [conversionValue integerValue];
-        
-        NSMethodSignature *conversionValueMethodSignature = [skAdNetwork methodSignatureForSelector:updateConversionValueSelector];
-        NSInvocation *conversionInvocation = [NSInvocation invocationWithMethodSignature:conversionValueMethodSignature];
-        [conversionInvocation setSelector:updateConversionValueSelector];
-        [conversionInvocation setTarget:skAdNetwork];
-
-        [conversionInvocation setArgument:&intValue atIndex:2];
-        [conversionInvocation invoke];
-    }
+    [ADJUtil updateSkAdNetworkConversionValue:conversionValue];
 }
 
 - (void)updateAttStatusFromUserCallback:(int)newAttStatusFromUser {
@@ -2514,7 +2728,10 @@ sdkClickHandlerOnly:(BOOL)sdkClickHandlerOnly
 }
 // public api
 - (BOOL)canGetAttStatus {
-    return SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"14.0");
+    if (@available(iOS 14.0, tvOS 14.0, *)) {
+        return YES;
+    }
+    return NO;
 }
 
 - (BOOL)trackingEnabled {

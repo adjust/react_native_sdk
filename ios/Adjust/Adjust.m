@@ -25,6 +25,7 @@ NSString * const ADJEnvironmentProduction = @"production";
 NSString * const ADJAdRevenueSourceMopub = @"mopub";
 NSString * const ADJAdRevenueSourceAdmob = @"admob";
 NSString * const ADJAdRevenueSourceFbNativeAd = @"facebook_native_ad";
+NSString * const ADJAdRevenueSourceFbAudienceNetwork = @"facebook_audience_network";
 NSString * const ADJAdRevenueSourceIronsource = @"ironsource";
 NSString * const ADJAdRevenueSourceFyber = @"fyber";
 NSString * const ADJAdRevenueSourceAerserv = @"aerserv";
@@ -231,16 +232,39 @@ static dispatch_once_t onceToken = 0;
     }
 }
 
++ (void)trackThirdPartySharing:(nonnull ADJThirdPartySharing *)thirdPartySharing {
+    @synchronized (self) {
+        [[Adjust getInstance] trackThirdPartySharing:thirdPartySharing];
+    }
+}
+
++ (void)trackMeasurementConsent:(BOOL)enabled {
+    @synchronized (self) {
+        [[Adjust getInstance] trackMeasurementConsent:enabled];
+    }
+}
+
 + (void)trackSubscription:(nonnull ADJSubscription *)subscription {
     @synchronized (self) {
         [[Adjust getInstance] trackSubscription:subscription];
     }
 }
 
-+ (void)requestTrackingAuthorizationWithCompletionHandler:(void (^_Nullable)(NSUInteger status))completion
-{
++ (void)requestTrackingAuthorizationWithCompletionHandler:(void (^_Nullable)(NSUInteger status))completion {
     @synchronized (self) {
         [[Adjust getInstance] requestTrackingAuthorizationWithCompletionHandler:completion];
+    }
+}
+
++ (int)appTrackingAuthorizationStatus {
+    @synchronized (self) {
+        return [[Adjust getInstance] appTrackingAuthorizationStatus];
+    }
+}
+
++ (void)updateConversionValue:(NSInteger)conversionValue {
+    @synchronized (self) {
+        [[Adjust getInstance] updateConversionValue:conversionValue];
     }
 }
 
@@ -498,6 +522,29 @@ static dispatch_once_t onceToken = 0;
     [self.activityHandler disableThirdPartySharing];
 }
 
+- (void)trackThirdPartySharing:(nonnull ADJThirdPartySharing *)thirdPartySharing {
+    if (![self checkActivityHandler]) {
+        if (self.savedPreLaunch.preLaunchAdjustThirdPartySharingArray == nil) {
+            self.savedPreLaunch.preLaunchAdjustThirdPartySharingArray =
+                [[NSMutableArray alloc] init];
+        }
+
+        [self.savedPreLaunch.preLaunchAdjustThirdPartySharingArray addObject:thirdPartySharing];
+        return;
+    }
+
+    [self.activityHandler trackThirdPartySharing:thirdPartySharing];
+}
+
+- (void)trackMeasurementConsent:(BOOL)enabled {
+    if (![self checkActivityHandler]) {
+        self.savedPreLaunch.lastMeasurementConsentTracked = [NSNumber numberWithBool:enabled];
+        return;
+    }
+
+    [self.activityHandler trackMeasurementConsent:enabled];
+}
+
 - (void)trackSubscription:(ADJSubscription *)subscription {
     if (![self checkActivityHandler]) {
         return;
@@ -506,10 +553,8 @@ static dispatch_once_t onceToken = 0;
     [self.activityHandler trackSubscription:subscription];
 }
 
-- (void)requestTrackingAuthorizationWithCompletionHandler:(void (^_Nullable)(NSUInteger status))completion
-{
-    [UIDevice.currentDevice requestTrackingAuthorizationWithCompletionHandler:^(NSUInteger status)
-    {
+- (void)requestTrackingAuthorizationWithCompletionHandler:(void (^_Nullable)(NSUInteger status))completion {
+    [UIDevice.currentDevice requestTrackingAuthorizationWithCompletionHandler:^(NSUInteger status) {
         if (completion) {
             completion(status);
         }
@@ -520,6 +565,14 @@ static dispatch_once_t onceToken = 0;
 
         [self.activityHandler updateAttStatusFromUserCallback:(int)status];
     }];
+}
+
+- (int)appTrackingAuthorizationStatus {
+    return [[UIDevice currentDevice] adjATTStatus];
+}
+
+- (void)updateConversionValue:(NSInteger)conversionValue {
+    [ADJUtil updateSkAdNetworkConversionValue:[NSNumber numberWithInteger:conversionValue]];
 }
 
 - (ADJAttribution *)attribution {
@@ -595,6 +648,7 @@ static dispatch_once_t onceToken = 0;
     }
 
     [ADJAdjustFactory setiAdFrameworkEnabled:testOptions.iAdFrameworkEnabled];
+    [ADJAdjustFactory setAdServicesFrameworkEnabled:testOptions.adServicesFrameworkEnabled];
 }
 
 #pragma mark - Private & helper methods

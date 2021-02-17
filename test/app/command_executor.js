@@ -174,6 +174,9 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
     if ('iAdFrameworkEnabled' in params) {
         testOptions.iAdFrameworkEnabled = getFirstParameterValue(params, 'iAdFrameworkEnabled').toString() === 'true';
     }
+    if ('adServicesFrameworkEnabled' in params) {
+        testOptions.adServicesFrameworkEnabled = getFirstParameterValue(params, 'adServicesFrameworkEnabled').toString() === 'true';
+    }
     var useTestConnectionOptions = false;
     if ('teardown' in params) {
         var teardownOptions = getValueFromKey(params, 'teardown');
@@ -345,6 +348,12 @@ AdjustCommandExecutor.prototype.config = function(params) {
         var allowiAdInfoReadingS = getFirstParameterValue(params, 'allowiAdInfoReading');
         var allowiAdInfoReading = allowiAdInfoReadingS == 'true';
         adjustConfig.setAllowiAdInfoReading(allowiAdInfoReading);
+    }
+
+    if ('allowAdServicesInfoReading' in params) {
+        var allowAdServicesInfoReadingS = getFirstParameterValue(params, 'allowAdServicesInfoReading');
+        var allowAdServicesInfoReading = allowAdServicesInfoReadingS == 'true';
+        adjustConfig.setAllowAdServicesInfoReading(allowAdServicesInfoReading);
     }
 
     if ('allowIdfaReading' in params) {

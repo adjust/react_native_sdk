@@ -69,6 +69,10 @@ RCT_EXPORT_METHOD(addTestDirectory:(NSString *)testDirToAdd) {
     [selectedTestDirs addObject:testDirToAdd];
 }
 
+RCT_EXPORT_METHOD(setTestConnectionOptions) {
+    // nothing for now, Android functionality only
+}
+
 #pragma mark - Private & helper methods
 
 - (BOOL)isFieldValid:(NSObject *)field {

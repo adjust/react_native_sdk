@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId 'com.adjust.test.app'
+        applicationId 'com.adjust.examples'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

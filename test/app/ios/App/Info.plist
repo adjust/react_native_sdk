@@ -59,7 +59,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.adjust.test.app</string>
+          <string>com.adjust.examples</string>
         </array>
       </dict>
     </array>

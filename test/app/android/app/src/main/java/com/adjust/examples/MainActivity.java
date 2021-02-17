@@ -1,4 +1,4 @@
-package com.adjust.test.app;
+package com.adjust.examples;
 
 import android.os.Bundle;
 

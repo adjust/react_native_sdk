@@ -9,10 +9,10 @@
       "**/*"
     ],
     "android": {
-      "package": "com.adjust.test.app"
+      "package": "com.adjust.examples"
     },
     "ios": {
-      "bundleIdentifier": "com.adjust.test.app"
+      "bundleIdentifier": "com.adjust.examples"
     }
   }
 }

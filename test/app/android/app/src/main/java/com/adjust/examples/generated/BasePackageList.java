@@ -1,4 +1,4 @@
-package com.adjust.test.app.generated;
+package com.adjust.examples.generated;
 
 import java.util.Arrays;
 import java.util.List;

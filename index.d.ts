@@ -57,7 +57,7 @@ declare module 'react-native-adjust' {
   export class AdjustConfig {
     constructor(appToken: string, environment: Environment)
     public setLogLevel(level: LogLevel): void
-    public setEventBufferingEnabled(isEnabled: boolean): void
+    public setEventBufferingEnabled(eventBufferingEnabled: boolean): void
     public setProcessName(processName: string): void
     public setDefaultTracker(defaultTracked: string): void
     public setExternalDeviceId(externalDeviceId: string): void

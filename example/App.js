@@ -40,8 +40,9 @@ const App: () => React$Node = () => {
   // adjustConfig.setDelayStart(6.0);
   // adjustConfig.setEventBufferingEnabled(true);
   // adjustConfig.setUserAgent("Custom Adjust User Agent");
-  adjustConfig.setUrlStrategy(AdjustConfig.UrlStrategyChina);
-  adjustConfig.deactivateSKAdNetworkHandling();
+  // adjustConfig.setUrlStrategy(AdjustConfig.UrlStrategyChina);
+  // adjustConfig.deactivateSKAdNetworkHandling();
+  adjustConfig.setNeedsCost(true);
 
   adjustConfig.setAttributionCallbackListener(function(attribution) {
     console.log("Attribution callback received");
@@ -53,6 +54,9 @@ const App: () => React$Node = () => {
     console.log("Creative = " + attribution.creative);
     console.log("Click label = " + attribution.clickLabel);
     console.log("Adid = " + attribution.adid);
+    console.log("Cost type = " + attribution.costType);
+    console.log("Cost amount = " + attribution.costAmount);
+    console.log("Cost currency = " + attribution.costCurrency);
   });
 
   adjustConfig.setEventTrackingSucceededCallbackListener(function(eventSuccess) {
@@ -110,7 +114,7 @@ const App: () => React$Node = () => {
   // Adjust.resetSessionCallbackParameters();
   // Adjust.resetSessionPartnerParameters();
 
-  Adjust.requestTrackingAuthorizationWithCompletionHandler(function (status) {
+  Adjust.requestTrackingAuthorizationWithCompletionHandler(function(status) {
     console.log("Authorization status update");
     switch (status) {
         case 0:
@@ -156,6 +160,10 @@ const App: () => React$Node = () => {
   function _onPress_trackSimpleEvent() {
     var adjustEvent = new AdjustEvent("g3mfiw");
     Adjust.trackEvent(adjustEvent);
+    Adjust.updateConversionValue(6);
+    Adjust.getAppTrackingAuthorizationStatus(function(status) {
+      console.log("Authorization status = " + status);
+    });
   }
 
   function _onPress_trackRevenueEvent() {

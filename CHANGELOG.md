@@ -2,7 +2,7 @@
 #### Added
 - Added possibility to get cost data information in attribution callback.
 - Added `setNeedsCost` method to `AdjustConfig` to indicate if cost data is needed in attribution callback (by default cost data will not be part of attribution callback if not enabled with this setter method).
-- Added `setPreinstallTrackingEnabled` method to `AdjustConfig` to allow enabling of preintall tracking (this feature is OFF by default).
+- Added `setPreinstallTrackingEnabled` method to `AdjustConfig` to allow enabling of preinstall tracking (this feature is OFF by default).
 - Added support for Apple Search Ads attribution with usage of `AdServices.framework`.
 - Added `setAllowAdServicesInfoReading` method to `AdjustConfig` to allow option for users to prevent SDK from performing any tasks related to Apple Search Ads attribution with usage of `AdServices.framework`.
 - Added wrapper method `updateConversionValue` method to `Adjust` to allow updating SKAdNetwork conversion value via SDK API.

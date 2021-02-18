@@ -10,6 +10,7 @@ package com.adjust.nativemodule;
 
 import android.net.Uri;
 import android.util.Log;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -121,6 +122,8 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         boolean shouldLaunchDeeplink = false;
         boolean eventBufferingEnabled = false;
         boolean readMobileEquipmentIdentity = false;
+        boolean preinstallTrackingEnabled = false;
+        boolean needsCost = false;
 
         // Suppress log level.
         if (checkKey(mapConfig, "logLevel")) {
@@ -247,6 +250,18 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         //     readMobileEquipmentIdentity = mapConfig.getBoolean("readMobileEquipmentIdentity");
         //     adjustConfig.setReadMobileEquipmentIdentity(readMobileEquipmentIdentity);
         // }
+
+        // Preinstall tracking.
+        if (checkKey(mapConfig, "preinstallTrackingEnabled")) {
+            preinstallTrackingEnabled = mapConfig.getBoolean("preinstallTrackingEnabled");
+            adjustConfig.setPreinstallTrackingEnabled(preinstallTrackingEnabled);
+        }
+
+        // Cost data.
+        if (checkKey(mapConfig, "needsCost")) {
+            needsCost = mapConfig.getBoolean("needsCost");
+            adjustConfig.setNeedsCost(needsCost);
+        }
 
         // Launching deferred deep link.
         if (checkKey(mapConfig, "shouldLaunchDeeplink")) {
@@ -593,6 +608,54 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
+    public void updateConversionValue(int conversionValue) {
+        // do nothing
+    }
+
+    @ReactMethod
+    public void getAppTrackingAuthorizationStatus(Callback callback) {
+        callback.invoke("-1");
+    }
+
+    @ReactMethod
+    public void trackThirdPartySharing(ReadableMap mapThirdPartySharing) {
+        if (mapThirdPartySharing == null) {
+            return;
+        }
+
+        Boolean isEnabled = null;
+        List<Object> granularOptions = null;
+
+        // Enabled.
+        if (checkKey(mapThirdPartySharing, "isEnabled")) {
+            isEnabled = mapThirdPartySharing.getBoolean("isEnabled");
+        }
+
+        final AdjustThirdPartySharing thirdPartySharing = new AdjustThirdPartySharing(isEnabled);
+
+        // Granular options.
+        if (checkKey(mapThirdPartySharing, "granularOptions")) {
+            granularOptions = AdjustUtil.toList(mapThirdPartySharing.getArray("granularOptions"));
+            if (null != granularOptions) {
+                for (int i = 0; i < granularOptions.size(); i += 3) {
+                    thirdPartySharing.addGranularOption(
+                        granularOptions.get(i).toString(),
+                        granularOptions.get(i+1).toString(),
+                        granularOptions.get(i+2).toString());
+                }
+            }
+        }
+
+        // Track third party sharing.
+        com.adjust.sdk.Adjust.trackThirdPartySharing(thirdPartySharing);
+    }
+
+    @ReactMethod
+    public void trackMeasurementConsent(boolean measurementConsent) {
+        com.adjust.sdk.Adjust.trackMeasurementConsent(measurementConsent);
+    }
+
+    @ReactMethod
     public void setAttributionCallbackListener() {
         this.attributionCallback = true;
     }
@@ -669,10 +732,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             String value = mapTest.getString("subscriptionPath");
             testOptions.subscriptionPath = value;
         }
-        if (checkKey(mapTest, "useTestConnectionOptions")) {
-            boolean value = mapTest.getBoolean("useTestConnectionOptions");
-            testOptions.useTestConnectionOptions = value;
-        }
+        // if (checkKey(mapTest, "useTestConnectionOptions")) {
+        //     boolean value = mapTest.getBoolean("useTestConnectionOptions");
+        //     testOptions.useTestConnectionOptions = value;
+        // }
         if (checkKey(mapTest, "timerIntervalInMilliseconds")) {
             try {
                 Long value = Long.parseLong(mapTest.getString("timerIntervalInMilliseconds"));

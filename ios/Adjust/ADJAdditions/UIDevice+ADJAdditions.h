@@ -23,6 +23,7 @@
 - (NSString *)adjVendorId;
 - (NSString *)adjDeviceId:(ADJDeviceInfo *)deviceInfo;
 - (void)adjCheckForiAd:(ADJActivityHandler *)activityHandler queue:(dispatch_queue_t)queue;
+- (NSString *)adjFetchAdServicesAttribution:(NSError **)errorPtr;
 
 - (void)requestTrackingAuthorizationWithCompletionHandler:(void (^)(NSUInteger status))completion;
 

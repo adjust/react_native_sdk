@@ -8,7 +8,8 @@ import {
     AdjustEvent,
     AdjustConfig,
     AdjustAppStoreSubscription,
-    AdjustPlayStoreSubscription
+    AdjustPlayStoreSubscription,
+    AdjustThirdPartySharing
 } from 'react-native-adjust';
 import { AdjustTestOptions } from './test_options.js';
 const AdjustSdkTest = NativeModules.AdjustSdkTest;
@@ -128,6 +129,8 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
         case "trackAdRevenue" : this.trackAdRevenue(command.params); break;
         case "disableThirdPartySharing" : this.disableThirdPartySharing(command.params); break;
         case "trackSubscription" : this.trackSubscription(command.params); break;
+        case "thirdPartySharing" : this.trackThirdPartySharing(command.params); break;
+        case "measurementConsent" : this.trackMeasurementConsent(command.params); break;
     }
 
     this.nextToSendCounter++;
@@ -171,6 +174,10 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
     if ('iAdFrameworkEnabled' in params) {
         testOptions.iAdFrameworkEnabled = getFirstParameterValue(params, 'iAdFrameworkEnabled').toString() === 'true';
     }
+    if ('adServicesFrameworkEnabled' in params) {
+        testOptions.adServicesFrameworkEnabled = getFirstParameterValue(params, 'adServicesFrameworkEnabled').toString() === 'true';
+    }
+    var useTestConnectionOptions = false;
     if ('teardown' in params) {
         var teardownOptions = getValueFromKey(params, 'teardown');
         for (var i = 0; i < teardownOptions.length; i++) {
@@ -183,6 +190,7 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
                 testOptions.gdprPath = this.gdprPath;
                 testOptions.subscriptionPath = this.subscriptionPath;
                 testOptions.useTestConnectionOptions = true;
+                useTestConnectionOptions = true;
                 Adjust.teardown('test');
             }
 
@@ -219,6 +227,9 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
     }
 
     Adjust.setTestOptions(testOptions);
+    if (useTestConnectionOptions == true) {
+        AdjustSdkTest.setTestConnectionOptions();
+    }
 };
 
 AdjustCommandExecutor.prototype.config = function(params) {
@@ -339,6 +350,12 @@ AdjustCommandExecutor.prototype.config = function(params) {
         adjustConfig.setAllowiAdInfoReading(allowiAdInfoReading);
     }
 
+    if ('allowAdServicesInfoReading' in params) {
+        var allowAdServicesInfoReadingS = getFirstParameterValue(params, 'allowAdServicesInfoReading');
+        var allowAdServicesInfoReading = allowAdServicesInfoReadingS == 'true';
+        adjustConfig.setAllowAdServicesInfoReading(allowAdServicesInfoReading);
+    }
+
     if ('allowIdfaReading' in params) {
         var allowIdfaReadingS = getFirstParameterValue(params, 'allowIdfaReading');
         var allowIdfaReading = allowIdfaReadingS == 'true';
@@ -361,6 +378,9 @@ AdjustCommandExecutor.prototype.config = function(params) {
             AdjustSdkTest.addInfoToSend("creative", attribution.creative);
             AdjustSdkTest.addInfoToSend("clickLabel", attribution.clickLabel);
             AdjustSdkTest.addInfoToSend("adid", attribution.adid);
+            AdjustSdkTest.addInfoToSend("costType", attribution.costType);
+            AdjustSdkTest.addInfoToSend("costAmount", attribution.costAmount.toString());
+            AdjustSdkTest.addInfoToSend("costCurrency", attribution.costCurrency);
 
             AdjustSdkTest.sendInfoToServer(_this.basePath);
         });
@@ -711,6 +731,31 @@ AdjustCommandExecutor.prototype.openDeeplink = function(params) {
 AdjustCommandExecutor.prototype.sendReferrer = function(params) {
     var referrer = getFirstParameterValue(params, 'referrer');
     Adjust.setReferrer(referrer);
+};
+
+AdjustCommandExecutor.prototype.trackThirdPartySharing = function(params) {
+    var isEnabled = null;
+    if ('isEnabled' in params) {
+        isEnabled = getFirstParameterValue(params, 'isEnabled') == 'true';
+    }
+    var adjustThirdPartySharing = new AdjustThirdPartySharing(isEnabled);
+
+    if ('granularOptions' in params) {
+        var granularOptions = getValueFromKey(params, 'granularOptions');
+        for (var i = 0; i < granularOptions.length; i += 3) {
+            var partnerName = granularOptions[i];
+            var key = granularOptions[i+1];
+            var value = granularOptions[i+2];
+            adjustThirdPartySharing.addGranularOption(partnerName, key, value);
+        }
+    }
+
+    Adjust.trackThirdPartySharing(adjustThirdPartySharing);
+};
+
+AdjustCommandExecutor.prototype.trackMeasurementConsent = function(params) {
+    var isEnabled = getFirstParameterValue(params, 'isEnabled') == 'true';
+    Adjust.trackMeasurementConsent(isEnabled);
 };
 
 // Util

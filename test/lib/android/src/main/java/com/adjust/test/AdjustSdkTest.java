@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
 import com.adjust.test.TestLibrary;
+import com.adjust.test_options.TestConnectionOptions;
 
 public class AdjustSdkTest extends ReactContextBaseJavaModule {
     private static final String TAG = "AdjustSdkTest";
@@ -64,5 +65,10 @@ public class AdjustSdkTest extends ReactContextBaseJavaModule {
     @ReactMethod
     public void addTestDirectory(String testDir) {
         this.selectedTestDirs.add(testDir);
+    }
+
+    @ReactMethod
+    public void setTestConnectionOptions() {
+        TestConnectionOptions.setTestConnectionOptions();
     }
 }

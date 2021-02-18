@@ -21,7 +21,9 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
 * [Additional features](#additional-features)
    * [AppTrackingTransparency framework](#att-framework)
       * [App-tracking authorisation wrapper](#ata-wrapper)
+      * [Get current authorisation status](#ata-getter)
    * [SKAdNetwork framework](#skadn-framework)
+      * [Update SKAdNetwork conversion value](#skadn-update-conversion-value)
    * [Event tracking](#event-tracking)
       * [Revenue tracking](#revenue-tracking)
       * [Revenue deduplication](#revenue-deduplication)
@@ -40,7 +42,10 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
    * [Offline mode](#offline-mode)
    * [Event buffering](#event-buffering)
    * [GDPR right to be forgotten](#gdpr-forget-me)
-   * [Disable third-party sharing](#disable-third-party-sharing)
+   * [Third-party sharing](#third-party-sharing)
+      * [Disable third-party sharing](#disable-third-party-sharing)
+      * [Enable third-party sharing](#enable-third-party-sharing)
+   * [Measurement consent](#measurement-consent)
    * [SDK signature](#sdk-signature)
    * [Background tracking](#background-tracking)
    * [Device IDs](#device-ids)
@@ -237,15 +242,14 @@ As of v4.22.0, the Adjust SDK supports install tracking on Huawei devices with H
 
 ### <a id="ios-frameworks"></a>iOS frameworks
 
-Select your project in the Project Navigator. In the left hand side of the main view, select your target. In the tab `Build Phases`, expand the group `Link Binary with Libraries`. On the bottom of that section click on the `+` button. Select the `AdSupport.framework` and click the `Add` button. Unless you are using `tvOS`, repeat the same steps to add the `iAd.framework`, `CoreTelephony.framework`, `AppTrackingTransparency.framework` and `StoreKit.framework`. Change the `Status` of both frameworks to `Optional`. Adjust SDK uses these frameworks with following purpose:
+Select your project in the Project Navigator. In the left hand side of the main view, select your target. In the tab `Build Phases`, expand the group `Link Binary with Libraries`. On the bottom of that section click on the `+` button. Select below mentined frameworks and make sure to change the `Status` of frameworks to `Optional`. Adjust SDK uses these frameworks with following purpose:
 
-* `iAd.framework` - in case you are running iAd campaigns
-* `AdSupport.framework` - for reading iOS Advertising Id (IDFA)
-* `CoreTelephony.framework` - for reading MCC and MNC information
-* `StoreKit.framework` - for communication with SKAdNetwork framework
+* `iAd.framework` - to support Apple Searh Ads campaigns
+* `AdServices.framework` - to support Apple Searh Ads campaigns
+* `AdSupport.framework` - to read iOS Advertising Id (IDFA) value
+* `CoreTelephony.framework` - to read MCC and MNC information
+* `StoreKit.framework` - to communicate with `SKAdNetwork` framework
 * `AppTrackingTransparency.framework` - to ask for user's consent to be tracked and obtain status of that consent
-
-If you are not running any iAd campaigns, you can feel free to remove the `iAd.framework` dependency. If you don't use SKAdNetwork framework, feel free to remove `StoreKit.framework` dependency (unless you need it for something else).
 
 ## <a id="additional-features"></a>Additional features
 
@@ -304,6 +308,18 @@ Adjust.requestTrackingAuthorizationWithCompletionHandler(function(status) {
 
 Before calling the method, make sure that your iOS app's `Info.plist` contains an entry for `NSUserTrackingUsageDescription` key. In absence of that key and usage of this method, app will crash.
 
+### <a id="ata-getter"></a>Get current authorisation status
+
+**Note**: This feature exists only in iOS platform.
+
+To get the current app tracking authorization status you can call `getAppTrackingAuthorizationStatus` method of `Adjust` class that will return one of the following possibilities:
+
+* `0`: The user hasn't been asked yet
+* `1`: The user device is restricted
+* `2`: The user denied access to IDFA
+* `3`: The user authorized access to IDFA
+* `-1`: The status is not available
+
 ### <a id="skadn-framework"></a>SKAdNetwork framework
 
 **Note**: This feature exists only in iOS platform.
@@ -314,6 +330,16 @@ In case you don't want the Adjust SDK to automatically communicate with SKAdNetw
 
 ```js
 adjustConfig.deactivateSKAdNetworkHandling();
+```
+
+### <a id="skadn-update-conversion-value"></a>Update SKAdNetwork conversion value
+
+**Note**: This feature exists only in iOS platform.
+
+You can use Adjust SDK wrapper method `updateConversionValue` to update SKAdNetwork conversion value for your user:
+
+```js
+Adjust.updateConversionValue(6);
 ```
 
 ### <a id="event-tracking"></a>Event tracking
@@ -596,6 +622,9 @@ adjustConfig.setAttributionCallbackListener(function(attribution) {
     console.log(attribution.creative);
     console.log(attribution.clickLabel);
     console.log(attribution.adid);
+    console.log(attribution.costType);
+    console.log(attribution.costAmount);
+    console.log(attribution.costCurrency);
 });
 
 Adjust.create(adjustConfig);
@@ -611,8 +640,13 @@ Within the listener function you have access to the `attribution` parameters. He
 - `creative`        the creative grouping level of the current attribution.
 - `clickLabel`      the click label of the current attribution.
 - `adid`            the Adjust device identifier.
+- `costType`        the cost type.
+- `costAmount`      the cost amount.
+- `costCurrency`    the cost currency.
 
 Please make sure to consider our [applicable attribution data policies][attribution-data].
+
+**Note**: The cost data - `costType`, `costAmount` & `costCurrency` are only available when configured in `AdjustConfig` by calling `setNeedsCost` method. If not configured or configured, but not being part of the attribution, these fields will have value `null`. This feature is available in SDK v4.26.0 and above.
 
 ### <a id="session-event-callbacks"></a>Session and event callbacks
 
@@ -754,18 +788,51 @@ Adjust.gdprForgetMe();
 
 Upon receiving this information, Adjust will erase the user's data and the Adjust SDK will stop tracking the user. No requests from this device will be sent to Adjust in the future.
 
-### <a id="disable-third-party-sharing"></a>Disable third-party sharing for specific users
+## <a id="third-party-sharing"></a>Third-party sharing for specific users
 
-You can now notify Adjust when a user has exercised their right to stop sharing their data with partners for marketing purposes, but has allowed it to be shared for statistics purposes. 
+You can notify Adjust when a user disables, enables, and re-enables data sharing with third-party partners.
+
+### <a id="disable-third-party-sharing"></a>Disable third-party sharing for specific users
 
 Call the following method to instruct the Adjust SDK to communicate the user's choice to disable data sharing to the Adjust backend:
 
-
-```cs
-Adjust.disableThirdPartySharing();
+```js
+var adjustThirdPartySharing = new AdjustThirdPartySharing(false);
+Adjust.trackThirdPartySharing(adjustThirdPartySharing);
 ```
 
 Upon receiving this information, Adjust will block the sharing of that specific user's data to partners and the Adjust SDK will continue to work as usual.
+
+### <a id="enable-third-party-sharing">Enable or re-enable third-party sharing for specific users</a>
+
+Call the following method to instruct the Adjust SDK to communicate the user's choice to share data or change data sharing, to the Adjust backend:
+
+```js
+var adjustThirdPartySharing = new AdjustThirdPartySharing(false);
+Adjust.trackThirdPartySharing(adjustThirdPartySharing);
+```
+
+Upon receiving this information, Adjust changes sharing the specific user's data to partners. The Adjust SDK will continue to work as expected.
+
+Call the following method to instruct the Adjust SDK to send the granular options to the Adjust backend:
+
+```js
+var adjustThirdPartySharing = new AdjustThirdPartySharing(null);
+adjustThirdPartySharing.addGranularOption("PartnerA", "foo", "bar");
+Adjust.trackThirdPartySharing(adjustThirdPartySharing);
+```
+
+### <a id="measurement-consent"></a>Consent measurement for specific users
+
+You can notify Adjust when a user exercises their right to change data sharing with partners for marketing purposes, but they allow data sharing for statistical purposes. 
+
+Call the following method to instruct the Adjust SDK to communicate the user's choice to change data sharing, to the Adjust backend:
+
+```js
+Adjust.trackMeasurementConsent(true);
+```
+
+Upon receiving this information, Adjust changes sharing the specific user's data to partners. The Adjust SDK will continue to work as expected.
 
 ### <a id="sdk-signature"></a>SDK signature
 

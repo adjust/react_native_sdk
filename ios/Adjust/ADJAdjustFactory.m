@@ -23,6 +23,7 @@ static ADJBackoffStrategy * installSessionBackoffStrategy = nil;
 static BOOL internalTesting = NO;
 static NSTimeInterval internalMaxDelayStart = -1;
 static BOOL internaliAdFrameworkEnabled = YES;
+static BOOL internalAdServicesFrameworkEnabled = YES;
 
 static NSString * internalBaseUrl = nil;
 static NSString * internalGdprUrl = nil;
@@ -102,6 +103,10 @@ static NSString * internalSubscriptionUrl = nil;
     return internaliAdFrameworkEnabled;
 }
 
++ (BOOL)adServicesFrameworkEnabled {
+    return internalAdServicesFrameworkEnabled;
+}
+
 + (NSTimeInterval)maxDelayStart {
     if (internalMaxDelayStart < 0) {
         return 10.0;               // 10 seconds
@@ -159,6 +164,10 @@ static NSString * internalSubscriptionUrl = nil;
 
 + (void)setiAdFrameworkEnabled:(BOOL)iAdFrameworkEnabled {
     internaliAdFrameworkEnabled = iAdFrameworkEnabled;
+}
+
++ (void)setAdServicesFrameworkEnabled:(BOOL)adServicesFrameworkEnabled {
+    internalAdServicesFrameworkEnabled = adServicesFrameworkEnabled;
 }
 
 + (void)setMaxDelayStart:(NSTimeInterval)maxDelayStart {
@@ -233,11 +242,13 @@ static NSString * internalSubscriptionUrl = nil;
     internalRequestTimeout = -1;
     packageHandlerBackoffStrategy = nil;
     sdkClickHandlerBackoffStrategy = nil;
+    installSessionBackoffStrategy = nil;
     internalTesting = NO;
     internalMaxDelayStart = -1;
     internalBaseUrl = nil;
     internalGdprUrl = nil;
     internalSubscriptionUrl = nil;
     internaliAdFrameworkEnabled = YES;
+    internalAdServicesFrameworkEnabled = YES;
 }
 @end

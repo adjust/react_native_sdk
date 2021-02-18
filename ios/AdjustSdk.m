@@ -38,10 +38,12 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSString *urlStrategy = dict[@"urlStrategy"];
     NSNumber *eventBufferingEnabled = dict[@"eventBufferingEnabled"];
     NSNumber *sendInBackground = dict[@"sendInBackground"];
+    NSNumber *needsCost = dict[@"needsCost"];
     NSNumber *shouldLaunchDeeplink = dict[@"shouldLaunchDeeplink"];
     NSNumber *delayStart = dict[@"delayStart"];
     NSNumber *isDeviceKnown = dict[@"isDeviceKnown"];
     NSNumber *allowiAdInfoReading = dict[@"allowiAdInfoReading"];
+    NSNumber *allowAdServicesInfoReading = dict[@"allowAdServicesInfoReading"];
     NSNumber *allowIdfaReading = dict[@"allowIdfaReading"];
     NSNumber *skAdNetworkHandling = dict[@"skAdNetworkHandling"];
     BOOL allowSuppressLogLevel = NO;
@@ -138,9 +140,19 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
         [adjustConfig setIsDeviceKnown:[isDeviceKnown boolValue]];
     }
 
+    // Cost data.
+    if ([self isFieldValid:needsCost]) {
+        [adjustConfig setNeedsCost:[needsCost boolValue]];
+    }
+
     // iAd info reading.
     if ([self isFieldValid:allowiAdInfoReading]) {
         [adjustConfig setAllowiAdInfoReading:[allowiAdInfoReading boolValue]];
+    }
+
+    // AdServices info reading.
+    if ([self isFieldValid:allowAdServicesInfoReading]) {
+        [adjustConfig setAllowAdServicesInfoReading:[allowAdServicesInfoReading boolValue]];
     }
 
     // IDFA reading.
@@ -371,6 +383,14 @@ RCT_EXPORT_METHOD(requestTrackingAuthorizationWithCompletionHandler:(RCTResponse
     }];
 }
 
+RCT_EXPORT_METHOD(updateConversionValue:(NSNumber * _Nonnull)conversionValue) {
+    [Adjust updateConversionValue:[conversionValue intValue]];
+}
+
+RCT_EXPORT_METHOD(getAppTrackingAuthorizationStatus:(RCTResponseSenderBlock)callback) {
+    callback(@[@([Adjust appTrackingAuthorizationStatus])]);
+}
+
 RCT_EXPORT_METHOD(getIdfa:(RCTResponseSenderBlock)callback) {
     NSString *idfa = [Adjust idfa];
     if (nil == idfa) {
@@ -438,6 +458,33 @@ RCT_EXPORT_METHOD(convertUniversalLink:(NSString *)urlString scheme:(NSString *)
     } else {
         callback(nil);
     }
+}
+
+RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
+    NSNumber *isEnabled = dict[@"isEnabled"];
+    NSArray *granularOptions = dict[@"granularOptions"];
+
+    if (isEnabled != nil && [isEnabled isKindOfClass:[NSNull class]]) {
+        isEnabled = nil;
+    }
+    ADJThirdPartySharing *adjustThirdPartySharing = [[ADJThirdPartySharing alloc] initWithIsEnabledNumberBool:isEnabled];
+
+    // Granular options.
+    if ([self isFieldValid:granularOptions]) {
+        for (int i = 0; i < [granularOptions count]; i += 3) {
+            NSString *partnerName = [granularOptions objectAtIndex:i];
+            NSString *key = [granularOptions objectAtIndex:i+1];
+            NSString *value = [granularOptions objectAtIndex:i+2];
+            [adjustThirdPartySharing addGranularOption:partnerName key:key value:value];
+        }
+    }
+
+    // Track third party sharing.
+    [Adjust trackThirdPartySharing:adjustThirdPartySharing];
+}
+
+RCT_EXPORT_METHOD(trackMeasurementConsent:(NSNumber * _Nonnull)measurementConsent) {
+    [Adjust trackMeasurementConsent:[measurementConsent boolValue]];
 }
 
 RCT_EXPORT_METHOD(setAttributionCallbackListener) {
@@ -536,6 +583,12 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
         NSString *value = dict[@"iAdFrameworkEnabled"];
         if ([self isFieldValid:value]) {
             testOptions.iAdFrameworkEnabled = [value boolValue];
+        }
+    }
+    if ([dict objectForKey:@"adServicesFrameworkEnabled"]) {
+        NSString *value = dict[@"adServicesFrameworkEnabled"];
+        if ([self isFieldValid:value]) {
+            testOptions.adServicesFrameworkEnabled = [value boolValue];
         }
     }
 

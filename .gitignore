@@ -101,3 +101,5 @@ ios/Index/
 
 # Just in case
 temp/
+
+node_modules/

@@ -19,7 +19,7 @@
         "type": "git",
         "url": "git://github.com/adjust/react_native_sdk.git"
     },
-    "dependencies": {
+    "devDependencies": {
         "create-react-native-app": "^3.5.3"
     }
 }

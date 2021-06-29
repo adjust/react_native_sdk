@@ -53,6 +53,7 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
       * [Google Play Services advertising identifier](#di-gps-adid)
       * [Amazon advertising identifier](#di-fire-adid)
       * [Adjust device identifier](#di-adid)
+   * [Set external device ID](#set-external-device-id)
    * [Push token](#push-token)
    * [Track additional device identifiers](#track-additional-ids)
    * [Pre-installed trackers](#pre-installed-trackers)
@@ -910,6 +911,30 @@ Adjust.getAdid((adid) => {
 ```
 
 **Note**: Information about the **adid** is only available after an app installation has been tracked by the Adjust backend. From that moment on, the Adjust SDK has information about the device **adid** and you can access it with this method. So, **it is not possible** to access the **adid** value before the SDK has been initialized and installation of your app has been successfully tracked.
+
+### <a id="set-external-device-id"></a>Set external device ID
+
+> **Note** If you want to use external device IDs, please contact your Adjust representative. They will talk you through the best approach for your use case.
+
+An external device identifier is a custom value that you can assign to a device or user. They can help you to recognize users across sessions and platforms. They can also help you to deduplicate installs by user so that a user isn't counted as multiple new installs.
+
+You can also use an external device ID as a custom identifier for a device. This can be useful if you use these identifiers elsewhere and want to keep continuity.
+
+Check out our [external device identifiers article](https://help.adjust.com/en/article/external-device-identifiers) for more information.
+
+> **Note** This setting requires Adjust SDK v4.21.0 or later.
+
+To set an external device ID, assign the identifier to the `externalDeviceId` property of your config instance. Do this before you initialize the Adjust SDK.
+
+```js
+adjustConfig.setExternalDeviceId("{Your-External-Device-Id}");
+```
+
+> **Important**: You need to make sure this ID is **unique to the user or device** depending on your use-case. Using the same ID across different users or devices could lead to duplicated data. Talk to your Adjust representative for more information.
+
+If you want to use the external device ID in your business analytics, you can pass it as a session callback parameter. See the section on [session callback parameters](#session-callback-parameters) for more information.
+
+You can import existing external device IDs into Adjust. This ensures that the backend matches future data to your existing device records. If you want to do this, please contact your Adjust representative.
 
 ### <a id="user-attribution"></a>User attribution
 

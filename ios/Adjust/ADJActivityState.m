@@ -8,8 +8,8 @@
 
 #import "ADJAdjustFactory.h"
 #import "ADJActivityState.h"
-#import "UIDevice+ADJAdditions.h"
 #import "NSString+ADJAdditions.h"
+#import "ADJUtil.h"
 
 static const int kTransactionIdCount = 10;
 static NSString *appToken = nil;
@@ -24,7 +24,7 @@ static NSString *appToken = nil;
         return nil;
     }
 
-    [self assignUuid:[UIDevice.currentDevice adjCreateUuid]];
+    [self assignRandomToken:[ADJUtil generateRandomUuid]];
 
     self.eventCount = 0;
     self.sessionCount = 0;
@@ -82,8 +82,20 @@ static NSString *appToken = nil;
 
 #pragma mark - Private & helper methods
 
-- (void)assignUuid:(NSString *)uuid {
-    self.uuid = uuid;
+- (void)assignRandomToken:(NSString *)randomToken {
+    // self.secondaryDedupeToken = [[NSUUID UUID] UUIDString];
+    NSString *persistedDedupeToken = [ADJUtil getPersistedRandomToken];
+    if (persistedDedupeToken != nil) {
+        if ((bool)[[NSUUID alloc] initWithUUIDString:persistedDedupeToken]) {
+            [[ADJAdjustFactory logger] verbose:@"Primary dedupe token successfully read"];
+            self.dedupeToken = persistedDedupeToken;
+            self.isPersisted = YES;
+            return;
+        }
+    }
+    
+    self.dedupeToken = randomToken;
+    self.isPersisted = [ADJUtil setPersistedRandomToken:self.dedupeToken];
 }
 
 - (NSString *)description {
@@ -111,10 +123,10 @@ static NSString *appToken = nil;
     
     // Default values for migrating devices.
     if ([decoder containsValueForKey:@"uuid"]) {
-        [self assignUuid:[decoder decodeObjectForKey:@"uuid"]];
+        [self assignRandomToken:[decoder decodeObjectForKey:@"uuid"]];
     }
-    if (self.uuid == nil) {
-        [self assignUuid:[UIDevice.currentDevice adjCreateUuid]];
+    if (self.dedupeToken == nil) {
+        [self assignRandomToken:[ADJUtil generateRandomUuid]];
     }
 
     if ([decoder containsValueForKey:@"transactionIds"]) {
@@ -185,7 +197,7 @@ static NSString *appToken = nil;
     [encoder encodeDouble:self.sessionLength forKey:@"sessionLength"];
     [encoder encodeDouble:self.timeSpent forKey:@"timeSpent"];
     [encoder encodeDouble:self.lastActivity forKey:@"lastActivity"];
-    [encoder encodeObject:self.uuid forKey:@"uuid"];
+    [encoder encodeObject:self.dedupeToken forKey:@"uuid"];
     [encoder encodeObject:self.transactionIds forKey:@"transactionIds"];
     [encoder encodeBool:self.enabled forKey:@"enabled"];
     [encoder encodeBool:self.isGdprForgotten forKey:@"isGdprForgotten"];
@@ -210,7 +222,7 @@ static NSString *appToken = nil;
         copy.subsessionCount = self.subsessionCount;
         copy.sessionLength = self.sessionLength;
         copy.timeSpent = self.timeSpent;
-        copy.uuid = [self.uuid copyWithZone:zone];
+        copy.dedupeToken = [self.dedupeToken copyWithZone:zone];
         copy.lastInterval = self.lastInterval;
         copy.eventCount = self.eventCount;
         copy.enabled = self.enabled;

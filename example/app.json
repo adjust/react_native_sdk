@@ -1,6 +1,4 @@
 {
-  "name": "example",
-  "displayName": "example",
   "expo": {
     "name": "example",
     "slug": "example",
@@ -14,5 +12,6 @@
     "ios": {
       "bundleIdentifier": "com.adjust.examples"
     }
-  }
+  },
+  "name": "example"
 }

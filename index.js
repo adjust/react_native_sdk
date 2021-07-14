@@ -55,6 +55,10 @@ Adjust.trackAdRevenue = function(source, payload) {
     module_adjust.trackAdRevenue(source, payload);
 };
 
+Adjust.trackAdRevenueNew = function(adjustAdRevenue) {
+    module_adjust.trackAdRevenueNew(adjustAdRevenue);
+};
+
 Adjust.trackAppStoreSubscription = function(subscription) {
     if (Platform.OS === "ios") {
         module_adjust.trackAppStoreSubscription(subscription);
@@ -251,6 +255,7 @@ var AdjustConfig = function(appToken, environment) {
     this.processName = null;
     this.readMobileEquipmentIdentity = null;
     this.preinstallTrackingEnabled = null;
+    this.preinstallFilePath = null;
     // iOS only
     this.allowiAdInfoReading = null;
     this.allowAdServicesInfoReading = null;
@@ -260,6 +265,7 @@ var AdjustConfig = function(appToken, environment) {
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
 AdjustConfig.EnvironmentProduction = "production";
+
 AdjustConfig.LogLevelVerbose = "VERBOSE";
 AdjustConfig.LogLevelDebug = "DEBUG";
 AdjustConfig.LogLevelInfo = "INFO";
@@ -267,33 +273,26 @@ AdjustConfig.LogLevelWarn = "WARN";
 AdjustConfig.LogLevelError = "ERROR";
 AdjustConfig.LogLevelAssert = "ASSERT";
 AdjustConfig.LogLevelSuppress = "SUPPRESS";
+
 AdjustConfig.AttributionSubscription = null;
 AdjustConfig.EventTrackingSucceededSubscription = null;
 AdjustConfig.EventTrackingFailedSubscription = null;
 AdjustConfig.SessionTrackingSucceededSubscription = null;
 AdjustConfig.SessionTrackingFailedSubscription = null;
 AdjustConfig.DeferredDeeplinkSubscription = null;
+AdjustConfig.ConversionValueUpdatedSubscription = null;
+
 AdjustConfig.UrlStrategyChina = "china";
 AdjustConfig.UrlStrategyIndia = "india";
+
+AdjustConfig.DataResidencyEU = "data-residency-eu";
+AdjustConfig.DataResidencyTR = "data-residency-tr";
+AdjustConfig.DataResidencyUS = "data-residency-us";
+
+AdjustConfig.AdRevenueSourceAppLovinMAX = "applovin_max_sdk";
 AdjustConfig.AdRevenueSourceMopub = "mopub";
-AdjustConfig.AdRevenueSourceAdmob = "admob";
-AdjustConfig.AdRevenueSourceFbNativeAd = "facebook_native_ad";
-AdjustConfig.AdRevenueSourceFbAudienceNetwork = "facebook_audience_network";
-AdjustConfig.AdRevenueSourceIronsource = "ironsource";
-AdjustConfig.AdRevenueSourceFyber = "fyber";
-AdjustConfig.AdRevenueSourceAerserv = "aerserv";
-AdjustConfig.AdRevenueSourceAppodeal = "appodeal";
-AdjustConfig.AdRevenueSourceAdincube = "adincube";
-AdjustConfig.AdRevenueSourceFusePowered = "fusepowered";
-AdjustConfig.AdRevenueSourceAddapptr = "addapptr";
-AdjustConfig.AdRevenueSourceMillennialMediation = "millennial_mediation";
-AdjustConfig.AdRevenueSourceFlurry = "flurry";
-AdjustConfig.AdRevenueSourceAdmost = "admost";
-AdjustConfig.AdRevenueSourceDeltadna = "deltadna";
-AdjustConfig.AdRevenueSourceUpsight = "upsight";
-AdjustConfig.AdRevenueSourceUnityAds = "unityads";
-AdjustConfig.AdRevenueSourceAdtoapp = "adtoapp";
-AdjustConfig.AdRevenueSourceTapdaq = "tapdaq";
+AdjustConfig.AdRevenueSourceAdmob = "admob_sdk";
+AdjustConfig.AdRevenueSourceIronSource = "ironsource_sdk";
 
 AdjustConfig.prototype.setEventBufferingEnabled = function(isEnabled) {
     this.eventBufferingEnabled = isEnabled;
@@ -369,6 +368,10 @@ AdjustConfig.prototype.setPreinstallTrackingEnabled = function(isEnabled) {
     this.preinstallTrackingEnabled = isEnabled;
 };
 
+AdjustConfig.prototype.setPreinstallFilePath = function(preinstallFilePath) {
+    this.preinstallFilePath = preinstallFilePath;
+};
+
 AdjustConfig.prototype.setAllowiAdInfoReading = function(allowiAdInfoReading) {
     this.allowiAdInfoReading = allowiAdInfoReading;
 };
@@ -440,6 +443,17 @@ AdjustConfig.prototype.setDeferredDeeplinkCallbackListener = function(deferredDe
         AdjustConfig.DeferredDeeplinkSubscription = module_adjust_emitter.addListener(
             'adjust_deferredDeeplink', deferredDeeplinkCallbackListener
         );
+    }
+};
+
+AdjustConfig.prototype.setConversionValueUpdatedCallbackListener = function(conversionValueUpdatedCallbackListener) {
+    if (Platform.OS === "ios") {
+        if (null == AdjustConfig.ConversionValueUpdatedSubscription) {
+            module_adjust.setConversionValueUpdatedCallbackListener();
+            AdjustConfig.ConversionValueUpdatedSubscription = module_adjust_emitter.addListener(
+                'adjust_conversionValueUpdated', conversionValueUpdatedCallbackListener
+            );
+        }
     }
 };
 
@@ -567,11 +581,63 @@ AdjustThirdPartySharing.prototype.addGranularOption = function(partnerName, key,
     this.granularOptions.push(value);
 };
 
+// AdjustAdRevenue
+
+var AdjustAdRevenue = function(source) {
+    this.source = source;
+    this.revenue = null;
+    this.currency = null;
+    this.adImpressionsCount = null;
+    this.adRevenueNetwork = null;
+    this.adRevenueUnit = null;
+    this.adRevenuePlacement = null;
+    this.callbackParameters = {};
+    this.partnerParameters = {};
+};
+
+AdjustAdRevenue.prototype.setRevenue = function(revenue, currency) {
+    if (revenue != null) {
+        this.revenue = revenue.toString();
+        this.currency = currency;
+    }
+};
+
+AdjustAdRevenue.prototype.setAdImpressionsCount = function(adImpressionsCount) {
+    this.adImpressionsCount = adImpressionsCount.toString();
+};
+
+AdjustAdRevenue.prototype.setAdRevenueNetwork = function(adRevenueNetwork) {
+    this.adRevenueNetwork = adRevenueNetwork;
+};
+
+AdjustAdRevenue.prototype.setAdRevenueUnit = function(adRevenueUnit) {
+    this.adRevenueUnit = adRevenueUnit;
+};
+
+AdjustAdRevenue.prototype.setAdRevenuePlacement = function(adRevenuePlacement) {
+    this.adRevenuePlacement = adRevenuePlacement;
+};
+
+AdjustAdRevenue.prototype.addCallbackParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
+    this.callbackParameters[key] = value;
+};
+
+AdjustAdRevenue.prototype.addPartnerParameter = function(key, value) {
+    if (typeof key !== 'string' || typeof value !== 'string') {
+        return;
+    }
+    this.partnerParameters[key] = value;
+};
+
 module.exports = {
     Adjust,
     AdjustEvent,
     AdjustConfig,
     AdjustAppStoreSubscription,
     AdjustPlayStoreSubscription,
-    AdjustThirdPartySharing
+    AdjustThirdPartySharing,
+    AdjustAdRevenue
 }

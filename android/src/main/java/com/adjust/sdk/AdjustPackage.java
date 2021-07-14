@@ -3,7 +3,7 @@
 //  Adjust SDK
 //
 //  Created by Abdullah Obaied (@Obaied) on 19th October 2016.
-//  Copyright (c) 2016-2018 Adjust GmbH. All rights reserved.
+//  Copyright (c) 2016-2021 Adjust GmbH. All rights reserved.
 //
 
 package com.adjust.nativemodule;

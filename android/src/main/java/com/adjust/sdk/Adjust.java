@@ -3,7 +3,7 @@
 //  Adjust SDK
 //
 //  Created by Abdullah Obaied (@Obaied) on 19th October 2016.
-//  Copyright (c) 2016-2018 Adjust GmbH. All rights reserved.
+//  Copyright (c) 2016-2021 Adjust GmbH. All rights reserved.
 //
 
 package com.adjust.nativemodule;
@@ -110,6 +110,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         String defaultTracker = null;
         String externalDeviceId = null;
         String urlStrategy = null;
+        String preinstallFilePath = null;
         long secretId  = 0L;
         long info1 = 0L;
         long info2 = 0L;
@@ -207,6 +208,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_CHINA);
             } else if (urlStrategy.equalsIgnoreCase("india")) {
                 adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_INDIA);
+            } else if (urlStrategy.equalsIgnoreCase("data-residency-eu")) {
+                adjustConfig.setUrlStrategy(AdjustConfig.DATA_RESIDENCY_EU);
+            } else if (urlStrategy.equalsIgnoreCase("data-residency-us")) {
+                adjustConfig.setUrlStrategy(AdjustConfig.DATA_RESIDENCY_US);
+            } else if (urlStrategy.equalsIgnoreCase("data-residency-tr")) {
+                adjustConfig.setUrlStrategy(AdjustConfig.DATA_RESIDENCY_TR);
             }
         }
 
@@ -214,6 +221,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (checkKey(mapConfig, "userAgent")) {
             userAgent = mapConfig.getString("userAgent");
             adjustConfig.setUserAgent(userAgent);
+        }
+
+        if (checkKey(mapConfig, "preinstallFilePath")) {
+            preinstallFilePath = mapConfig.getString("preinstallFilePath");
+            adjustConfig.setPreinstallFilePath(preinstallFilePath);
         }
 
         // App secret.
@@ -427,6 +439,94 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         } catch (JSONException err) {
              Log.d(TAG, "Give ad revenue payload is not a valid JSON string");
         }
+    }
+
+    @ReactMethod
+    public void trackAdRevenueNew(ReadableMap mapAdRevenue) {
+        if (mapAdRevenue == null) {
+            return;
+        }
+
+        double revenue = -1.0;
+        int adImpressionsCount = -1;
+        String source = null;
+        String currency = null;
+        String adRevenueNetwork = null;
+        String adRevenueUnit = null;
+        String adRevenuePlacement = null;
+        Map<String, Object> callbackParameters = null;
+        Map<String, Object> partnerParameters = null;
+
+        // Source.
+        if (checkKey(mapAdRevenue, "source")) {
+            source = mapAdRevenue.getString("source");
+        }
+
+        final AdjustAdRevenue adRevenue = new AdjustAdRevenue(source);
+
+        // Revenue.
+        if (checkKey(mapAdRevenue, "revenue") || checkKey(mapAdRevenue, "currency")) {
+            try {
+                revenue = Double.parseDouble(mapAdRevenue.getString("revenue"));
+            } catch (NumberFormatException ignore) {}
+            currency = mapAdRevenue.getString("currency");
+            adRevenue.setRevenue(revenue, currency);
+        }
+
+        // Ad impressions count.
+        if (checkKey(mapAdRevenue, "adImpressionsCount")) {
+            try {
+                adImpressionsCount = Integer.parseInt(mapAdRevenue.getString("adImpressionsCount"));
+            } catch (NumberFormatException ignore) {}
+            adRevenue.setAdImpressionsCount(adImpressionsCount);
+        }
+
+        // Ad revenue network.
+        if (checkKey(mapAdRevenue, "adRevenueNetwork")) {
+            adRevenueNetwork = mapAdRevenue.getString("adRevenueNetwork");
+            if (null != adRevenueNetwork) {
+                adRevenue.setAdRevenueNetwork(adRevenueNetwork);
+            }
+        }
+
+        // Ad revenue unit.
+        if (checkKey(mapAdRevenue, "adRevenueUnit")) {
+            adRevenueUnit = mapAdRevenue.getString("adRevenueUnit");
+            if (null != adRevenueUnit) {
+                adRevenue.setAdRevenueUnit(adRevenueUnit);
+            }
+        }
+
+        // Ad revenue placement.
+        if (checkKey(mapAdRevenue, "adRevenuePlacement")) {
+            adRevenuePlacement = mapAdRevenue.getString("adRevenuePlacement");
+            if (null != adRevenuePlacement) {
+                adRevenue.setAdRevenuePlacement(adRevenuePlacement);
+            }
+        }
+
+        // Callback parameters.
+        if (checkKey(mapAdRevenue, "callbackParameters")) {
+            callbackParameters = AdjustUtil.toMap(mapAdRevenue.getMap("callbackParameters"));
+            if (null != callbackParameters) {
+                for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
+                    adRevenue.addCallbackParameter(entry.getKey(), entry.getValue().toString());
+                }
+            }
+        }
+
+        // Partner parameters.
+        if (checkKey(mapAdRevenue, "partnerParameters")) {
+            partnerParameters = AdjustUtil.toMap(mapAdRevenue.getMap("partnerParameters"));
+            if (null != partnerParameters) {
+                for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
+                    adRevenue.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+                }
+            }
+        }
+
+        // Track ad revenue.
+        com.adjust.sdk.Adjust.trackAdRevenue(adRevenue);
     }
 
     @ReactMethod

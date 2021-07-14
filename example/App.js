@@ -15,6 +15,7 @@ import {
   Text,
   StatusBar,
   TouchableHighlight,
+  Platform,
 } from 'react-native';
 import {
   Header,
@@ -102,6 +103,11 @@ const App: () => React$Node = () => {
     console.log("URL: " + uri.uri);
   });
 
+  adjustConfig.setConversionValueUpdatedCallbackListener(function(conversionValue) {
+    console.log("Conversion value updated callback recveived");
+    console.log("Conversion value: " + conversionValue.conversionValue);
+  });
+
   Adjust.addSessionCallbackParameter("scpk1", "scpv1");
   Adjust.addSessionCallbackParameter("scpk2", "scpv2");
 
@@ -136,7 +142,9 @@ const App: () => React$Node = () => {
     }
   });
 
-  AdjustOaid.readOaid();
+  if (Platform.OS === "android") {
+    AdjustOaid.readOaid();
+  }
   Adjust.create(adjustConfig);
 
   function componentDidMount() {

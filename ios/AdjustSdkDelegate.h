@@ -3,7 +3,7 @@
 //  Adjust SDK
 //
 //  Created by Abdullah Obaied (@obaied) on 17th November 2016.
-//  Copyright © 2016-2020 Adjust GmbH. All rights reserved.
+//  Copyright © 2016-2021 Adjust GmbH. All rights reserved.
 //
 
 #import "AdjustSdk.h"
@@ -19,6 +19,7 @@
 						 sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
 						    sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
 					     deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
+				   conversionValueUpdatedCallback:(BOOL)swizzleConversionValueUpdatedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink;
 
 + (void)teardown;

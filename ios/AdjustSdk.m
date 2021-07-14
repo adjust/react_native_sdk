@@ -3,7 +3,7 @@
 //  Adjust SDK
 //
 //  Created by Abdullah Obaied (@obaied) on 25th October 2016.
-//  Copyright © 2016-2020 Adjust GmbH. All rights reserved.
+//  Copyright © 2016-2021 Adjust GmbH. All rights reserved.
 //
 
 #import "AdjustSdk.h"
@@ -19,6 +19,7 @@ BOOL _isEventTrackingFailedCallbackImplemented;
 BOOL _isSessionTrackingSucceededCallbackImplemented;
 BOOL _isSessionTrackingFailedCallbackImplemented;
 BOOL _isDeferredDeeplinkCallbackImplemented;
+BOOL _isConversionValueUpdatedCallbackImplemented;
 
 #pragma mark - Public methods
 
@@ -91,6 +92,12 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
             [adjustConfig setUrlStrategy:ADJUrlStrategyChina];
         } else if ([urlStrategy isEqualToString:@"india"]) {
             [adjustConfig setUrlStrategy:ADJUrlStrategyIndia];
+        } else if ([urlStrategy isEqualToString:@"data-residency-eu"]) {
+            [adjustConfig setUrlStrategy:ADJDataResidencyEU];
+        } else if ([urlStrategy isEqualToString:@"data-residency-tr"]) {
+            [adjustConfig setUrlStrategy:ADJDataResidencyTR];
+        } else if ([urlStrategy isEqualToString:@"data-residency-us"]) {
+            [adjustConfig setUrlStrategy:ADJDataResidencyUS];
         }
     }
 
@@ -101,7 +108,8 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
         || _isEventTrackingFailedCallbackImplemented
         || _isSessionTrackingSucceededCallbackImplemented
         || _isSessionTrackingFailedCallbackImplemented
-        || _isDeferredDeeplinkCallbackImplemented) {
+        || _isDeferredDeeplinkCallbackImplemented
+        || _isConversionValueUpdatedCallbackImplemented) {
         [adjustConfig setDelegate:
          [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
                                                  eventSucceededCallback:_isEventTrackingSucceededCallbackImplemented
@@ -109,6 +117,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
                                                sessionSucceededCallback:_isSessionTrackingSucceededCallbackImplemented
                                                   sessionFailedCallback:_isSessionTrackingFailedCallbackImplemented
                                                deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
+                                         conversionValueUpdatedCallback:_isConversionValueUpdatedCallbackImplemented
                                            shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
     }
 
@@ -272,6 +281,69 @@ RCT_EXPORT_METHOD(sendFirstPackages) {
 RCT_EXPORT_METHOD(trackAdRevenue:(NSString *)source payload:(NSString *)payload) {
     NSData *dataPayload = [payload dataUsingEncoding:NSUTF8StringEncoding];
     [Adjust trackAdRevenue:source payload:dataPayload];
+}
+
+RCT_EXPORT_METHOD(trackAdRevenueNew:(NSDictionary *)dict) {
+    NSString *source = dict[@"source"];
+    NSString *revenue = dict[@"revenue"];
+    NSString *currency = dict[@"currency"];
+    NSString *adImpressionsCount = dict[@"adImpressionsCount"];
+    NSString *adRevenueNetwork = dict[@"adRevenueNetwork"];
+    NSString *adRevenueUnit = dict[@"adRevenueUnit"];
+    NSString *adRevenuePlacement = dict[@"adRevenuePlacement"];
+    NSDictionary *callbackParameters = dict[@"callbackParameters"];
+    NSDictionary *partnerParameters = dict[@"partnerParameters"];
+
+    if ([source isKindOfClass:[NSNull class]]) {
+        return;
+    }
+    ADJAdRevenue *adjustAdRevenue = [[ADJAdRevenue alloc] initWithSource:source];
+
+    // Revenue.
+    if ([self isFieldValid:revenue]) {
+        double revenueValue = [revenue doubleValue];
+        [adjustAdRevenue setRevenue:revenueValue currency:currency];
+    }
+
+    // Ad impressions count.
+    if ([self isFieldValid:adImpressionsCount]) {
+        int adImpressionsCountValue = [adImpressionsCount intValue];
+        [adjustAdRevenue setAdImpressionsCount:adImpressionsCountValue];
+    }
+
+    // Ad revenue network.
+    if ([self isFieldValid:adRevenueNetwork]) {
+        [adjustAdRevenue setAdRevenueNetwork:adRevenueNetwork];
+    }
+
+    // Ad revenue unit.
+    if ([self isFieldValid:adRevenueUnit]) {
+        [adjustAdRevenue setAdRevenueUnit:adRevenueUnit];
+    }
+
+    // Ad revenue placement.
+    if ([self isFieldValid:adRevenuePlacement]) {
+        [adjustAdRevenue setAdRevenuePlacement:adRevenuePlacement];
+    }
+
+    // Callback parameters.
+    if ([self isFieldValid:callbackParameters]) {
+        for (NSString *key in callbackParameters) {
+            NSString *value = [callbackParameters objectForKey:key];
+            [adjustAdRevenue addCallbackParameter:key value:value];
+        }
+    }
+
+    // Partner parameters.
+    if ([self isFieldValid:partnerParameters]) {
+        for (NSString *key in partnerParameters) {
+            NSString *value = [partnerParameters objectForKey:key];
+            [adjustAdRevenue addPartnerParameter:key value:value];
+        }
+    }
+
+    // Track ad revenue.
+    [Adjust trackAdRevenue:adjustAdRevenue];
 }
 
 RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
@@ -511,6 +583,10 @@ RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener) {
     _isDeferredDeeplinkCallbackImplemented = YES;
 }
 
+RCT_EXPORT_METHOD(setConversionValueUpdatedCallbackListener) {
+    _isConversionValueUpdatedCallbackImplemented = YES;
+}
+
 RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
     AdjustTestOptions *testOptions = [[AdjustTestOptions alloc] init];
     if ([dict objectForKey:@"hasContext"]) {
@@ -602,6 +678,7 @@ RCT_EXPORT_METHOD(teardown) {
     _isSessionTrackingSucceededCallbackImplemented = NO;
     _isSessionTrackingFailedCallbackImplemented = NO;
     _isDeferredDeeplinkCallbackImplemented = NO;
+    _isConversionValueUpdatedCallbackImplemented = NO;
     [AdjustSdkDelegate teardown];
 }
 

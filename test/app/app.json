@@ -1,6 +1,4 @@
 {
-  "name": "app",
-  "displayName": "app",
   "expo": {
     "name": "app",
     "slug": "app",
@@ -14,5 +12,6 @@
     "ios": {
       "bundleIdentifier": "com.adjust.examples"
     }
-  }
+  },
+  "name": "app"
 }

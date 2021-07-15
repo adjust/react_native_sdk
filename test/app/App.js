@@ -50,7 +50,7 @@ const App: () => React$Node = () => {
   var baseUrl = "";
   var gdprUrl = "";
   var subscriptionUrl = "";
-  var ipAddress = "192.168.86.75";
+  var ipAddress = "192.168.86.32";
   if (Platform.OS === "android") {
     baseUrl = "https://" + ipAddress + ":8443";
     gdprUrl = "https://" + ipAddress + ":8443";
@@ -63,7 +63,7 @@ const App: () => React$Node = () => {
   var controlUrl = "ws://" + ipAddress + ":1987";
 
   // AdjustSdkTest.addTestDirectory("current/appSecret/");
-  // AdjustSdkTest.addTest("current/event/Test_Event_EventToken_Malformed");
+  // AdjustSdkTest.addTest("Test_AdRevenue_ad_revenue_v2");
   Adjust.getSdkVersion(function(sdkVersion) {
     AdjustSdkTest.startTestSession(baseUrl, controlUrl, sdkVersion);
   });

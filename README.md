@@ -24,6 +24,7 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
       * [Get current authorisation status](#ata-getter)
    * [SKAdNetwork framework](#skadn-framework)
       * [Update SKAdNetwork conversion value](#skadn-update-conversion-value)
+      * [Conversion value updated callback](#skadn-cv-updated-callback)
    * [Event tracking](#event-tracking)
       * [Revenue tracking](#revenue-tracking)
       * [Revenue deduplication](#revenue-deduplication)
@@ -53,6 +54,7 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
       * [Google Play Services advertising identifier](#di-gps-adid)
       * [Amazon advertising identifier](#di-fire-adid)
       * [Adjust device identifier](#di-adid)
+   * [Set external device ID](#set-external-device-id)
    * [Push token](#push-token)
    * [Track additional device identifiers](#track-additional-ids)
    * [Pre-installed trackers](#pre-installed-trackers)
@@ -60,6 +62,7 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
       * [Standard deep linking](#deeplinking-standard)
       * [Deferred deep linking](#deeplinking-deferred)
       * [Reattribution via deep links](#deeplinking-reattribution)
+   * [[beta] Data residency](#data-residency)
 * [License](#license)
 
 ## <a id="example-app"></a>Example app
@@ -340,6 +343,23 @@ You can use Adjust SDK wrapper method `updateConversionValue` to update SKAdNetw
 
 ```js
 Adjust.updateConversionValue(6);
+```
+
+### <a id="af-skadn-cv-updated-callback"></a>Conversion value updated callback
+
+**Note**: This feature exists only in iOS platform.
+
+You can register callback to get notified each time when Adjust SDK updates conversion value for the user.
+
+```js
+var adjustConfig = new AdjustConfig(appToken, environment);
+
+adjustConfig.setConversionValueUpdatedCallbackListener(function(conversionValue) {
+    console.log("Conversion value updated callback recveived");
+    console.log("Conversion value: " + conversionValue.conversionValue);
+  });
+
+Adjust.create(adjustConfig);
 ```
 
 ### <a id="event-tracking"></a>Event tracking
@@ -911,6 +931,30 @@ Adjust.getAdid((adid) => {
 
 **Note**: Information about the **adid** is only available after an app installation has been tracked by the Adjust backend. From that moment on, the Adjust SDK has information about the device **adid** and you can access it with this method. So, **it is not possible** to access the **adid** value before the SDK has been initialized and installation of your app has been successfully tracked.
 
+### <a id="set-external-device-id"></a>Set external device ID
+
+> **Note** If you want to use external device IDs, please contact your Adjust representative. They will talk you through the best approach for your use case.
+
+An external device identifier is a custom value that you can assign to a device or user. They can help you to recognize users across sessions and platforms. They can also help you to deduplicate installs by user so that a user isn't counted as multiple new installs.
+
+You can also use an external device ID as a custom identifier for a device. This can be useful if you use these identifiers elsewhere and want to keep continuity.
+
+Check out our [external device identifiers article](https://help.adjust.com/en/article/external-device-identifiers) for more information.
+
+> **Note** This setting requires Adjust SDK v4.21.0 or later.
+
+To set an external device ID, assign the identifier to the `externalDeviceId` property of your config instance. Do this before you initialize the Adjust SDK.
+
+```js
+adjustConfig.setExternalDeviceId("{Your-External-Device-Id}");
+```
+
+> **Important**: You need to make sure this ID is **unique to the user or device** depending on your use-case. Using the same ID across different users or devices could lead to duplicated data. Talk to your Adjust representative for more information.
+
+If you want to use the external device ID in your business analytics, you can pass it as a session callback parameter. See the section on [session callback parameters](#session-callback-parameters) for more information.
+
+You can import existing external device IDs into Adjust. This ensures that the backend matches future data to your existing device records. If you want to do this, please contact your Adjust representative.
+
 ### <a id="user-attribution"></a>User attribution
 
 This callback is triggered as described in the [attribution callback section](#attribution-callback), providing you with information about a new attribution whenever it changes. If you want to access information about a user's current attribution status at any other time, you can make a call to the `getAttribution` method of the `Adjust` instance and pass your callback as a parameter to which the attribution value will be sent once obtained:
@@ -1060,6 +1104,18 @@ handleDeepLink(event) {
 }
 ```
 
+### <a id="data-residency"></a>[beta] Data residency
+
+In order to enable data residency feature, make sure to call `setUrlStrategy` method of the `AdjustConfig` instance with one of the following constants:
+
+```js
+adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyEU); // for EU data residency region
+adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyTR); // for Turkey data residency region
+adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyUS); // for US data residency region
+```
+
+**Note:** This feature is currently in beta testing phase. If you are interested in getting access to it, please contact your dedicated account manager or write an email to support@adjust.com. Please, do not turn this setting on before making sure with the support team that this feature is enabled for your app because otherwise SDK traffic will get dropped.
+
 [dashboard]:    http://adjust.com
 [adjust.com]:   http://adjust.com
 
@@ -1090,7 +1146,7 @@ handleDeepLink(event) {
 
 The Adjust SDK is licensed under the MIT License.
 
-Copyright (c) 2012-2018 Adjust GmbH, http://www.adjust.com
+Copyright (c) 2012-2021 Adjust GmbH, http://www.adjust.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

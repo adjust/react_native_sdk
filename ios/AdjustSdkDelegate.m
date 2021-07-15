@@ -3,7 +3,7 @@
 //  Adjust SDK
 //
 //  Created by Abdullah Obaied (@obaied) on 17th November 2016.
-//  Copyright © 2016-2020 Adjust GmbH. All rights reserved.
+//  Copyright © 2016-2021 Adjust GmbH. All rights reserved.
 //
 
 #import <objc/runtime.h>
@@ -38,6 +38,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
                          sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
+                   conversionValueUpdatedCallback:(BOOL)swizzleConversionValueUpdatedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
     dispatch_once(&onceToken, ^{
         defaultInstance = [[AdjustSdkDelegate alloc] init];
@@ -66,6 +67,10 @@ static AdjustSdkDelegate *defaultInstance = nil;
         if (swizzleDeferredDeeplinkCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustDeeplinkResponse:)
                                   swizzledSelector:@selector(adjustDeeplinkResponseWannabe:)];
+        }
+        if (swizzleConversionValueUpdatedCallback) {
+            [defaultInstance swizzleCallbackMethod:@selector(adjustConversionValueUpdated:)
+                                  swizzledSelector:@selector(adjustConversionValueUpdatedWannabe:)];
         }
         [defaultInstance setShouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink];
     });
@@ -187,6 +192,11 @@ static AdjustSdkDelegate *defaultInstance = nil;
     NSString *path = [deeplink absoluteString];
     [AdjustEventEmitter dispatchEvent:@"adjust_deferredDeeplink" withDictionary:@{@"uri": path}];
     return _shouldLaunchDeferredDeeplink;
+}
+
+- (void)adjustConversionValueUpdatedWannabe:(NSNumber *)conversionValue {
+    // NSString *strConversionValue = [conversionValue stringValue];
+    [AdjustEventEmitter dispatchEvent:@"adjust_conversionValueUpdated" withDictionary:@{@"conversionValue": conversionValue}];
 }
 
 - (void)swizzleCallbackMethod:(SEL)originalSelector

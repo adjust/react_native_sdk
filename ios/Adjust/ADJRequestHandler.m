@@ -345,7 +345,7 @@ authorizationHeader:(NSString *)authorizationHeader
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@",
                            urlHostString, self.urlStrategy.extraPath, path];
 
-    [self.logger verbose:@"Makig request to endpoint: %@", urlString];
+    [self.logger verbose:@"Sending request to endpoint: %@", urlString];
 
     NSURL *url = [NSURL URLWithString:urlString];
     //NSURL *url = [baseUrl URLByAppendingPathComponent:path];
@@ -562,13 +562,13 @@ authorizationHeader:(NSString *)authorizationHeader
 
 - (NSString *)getValidIdentifier:(NSDictionary *)parameters {
     NSString *idfaName = @"idfa";
-    NSString *uuidName = @"ios_uuid";
+    NSString *randomTokenName = @"random_token";
 
     if ([parameters objectForKey:idfaName] != nil) {
         return idfaName;
     }
-    if ([parameters objectForKey:uuidName] != nil) {
-        return uuidName;
+    if ([parameters objectForKey:randomTokenName] != nil) {
+        return randomTokenName;
     }
     return nil;
 }

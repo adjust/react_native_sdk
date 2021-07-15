@@ -54,6 +54,10 @@ declare module 'react-native-adjust' {
     uri: string
   }
 
+  interface AdjustConversionValue {
+    conversionValue: number
+  }
+
   export class AdjustConfig {
     constructor(appToken: string, environment: Environment)
     public setLogLevel(level: LogLevel): void
@@ -74,6 +78,7 @@ declare module 'react-native-adjust' {
     public setDeviceKnown(isDeviceKnown: boolean): void
     public setNeedsCost(needsCost: boolean): void
     public setPreinstallTrackingEnabled(preinstallTrackingEnabled: boolean): void
+    public setPreinstallFilePath(preinstallFilePath: string): void
     public setAllowiAdInfoReading(allowiAdInfoReading: boolean): void
     public setAllowAdServicesInfoReading(allowAdServicesInfoReading: boolean): void
     public setAllowIdfaReading(allowIdfaReading: boolean): void
@@ -103,6 +108,10 @@ declare module 'react-native-adjust' {
 
     public setDeferredDeeplinkCallbackListener(
       callback: (uri: AdjustUri) => void
+    ): void
+
+    public setConversionValueUpdatedCallbackListener(
+      callback: (conversionValue: AdjustConversionValue) => void
     ): void
 
     static LogLevelVerbose: LogLevel
@@ -151,6 +160,17 @@ declare module 'react-native-adjust' {
     public addGranularOption(partnerName: string, key: string, value: string): void
   }
 
+  export class AdjustAdRevenue {
+    constructor(source: string)
+    public setRevenue(revenue: number, currency: string): void
+    public setAdImpressionsCount(adImpressionsCount: number): void
+    public setAdRevenueNetwork(adRevenueNetwork: string): void
+    public setAdRevenueUnit(adRevenueUnit: string): void
+    public setAdRevenuePlacement(adRevenuePlacement: string): void
+    public addCallbackParameter(key: string, value: string): void
+    public addPartnerParameter(key: string, value: string): void
+  }
+
   export const Adjust: {
     componentWillUnmount: () => void
     create: (adjustConfig: AdjustConfig) => void
@@ -161,7 +181,7 @@ declare module 'react-native-adjust' {
     setPushToken: (token: string) => void
     appWillOpenUrl: (url: string) => void
     sendFirstPackages: () => void
-    trackAdRevenue: (source: string, payload: string) => void
+    trackAdRevenue: (source: string, payload: string) => void | (source: AdjustAdRevenue) => void
     trackAppStoreSubscription: (subscription: AdjustAppStoreSubscription) => void
     trackPlayStoreSubscription: (subscription: AdjustPlayStoreSubscription) => void
     addSessionCallbackParameter: (key: string, value: string) => void

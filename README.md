@@ -24,6 +24,7 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
       * [Get current authorisation status](#ata-getter)
    * [SKAdNetwork framework](#skadn-framework)
       * [Update SKAdNetwork conversion value](#skadn-update-conversion-value)
+      * [Conversion value updated callback](#skadn-cv-updated-callback)
    * [Event tracking](#event-tracking)
       * [Revenue tracking](#revenue-tracking)
       * [Revenue deduplication](#revenue-deduplication)
@@ -61,6 +62,7 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
       * [Standard deep linking](#deeplinking-standard)
       * [Deferred deep linking](#deeplinking-deferred)
       * [Reattribution via deep links](#deeplinking-reattribution)
+   * [[beta] Data residency](#data-residency)
 * [License](#license)
 
 ## <a id="example-app"></a>Example app
@@ -341,6 +343,23 @@ You can use Adjust SDK wrapper method `updateConversionValue` to update SKAdNetw
 
 ```js
 Adjust.updateConversionValue(6);
+```
+
+### <a id="af-skadn-cv-updated-callback"></a>Conversion value updated callback
+
+**Note**: This feature exists only in iOS platform.
+
+You can register callback to get notified each time when Adjust SDK updates conversion value for the user.
+
+```js
+var adjustConfig = new AdjustConfig(appToken, environment);
+
+adjustConfig.setConversionValueUpdatedCallbackListener(function(conversionValue) {
+    console.log("Conversion value updated callback recveived");
+    console.log("Conversion value: " + conversionValue.conversionValue);
+  });
+
+Adjust.create(adjustConfig);
 ```
 
 ### <a id="event-tracking"></a>Event tracking
@@ -1085,6 +1104,18 @@ handleDeepLink(event) {
 }
 ```
 
+### <a id="data-residency"></a>[beta] Data residency
+
+In order to enable data residency feature, make sure to call `setUrlStrategy` method of the `AdjustConfig` instance with one of the following constants:
+
+```js
+adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyEU); // for EU data residency region
+adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyTR); // for Turkey data residency region
+adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyUS); // for US data residency region
+```
+
+**Note:** This feature is currently in beta testing phase. If you are interested in getting access to it, please contact your dedicated account manager or write an email to support@adjust.com. Please, do not turn this setting on before making sure with the support team that this feature is enabled for your app because otherwise SDK traffic will get dropped.
+
 [dashboard]:    http://adjust.com
 [adjust.com]:   http://adjust.com
 
@@ -1115,7 +1146,7 @@ handleDeepLink(event) {
 
 The Adjust SDK is licensed under the MIT License.
 
-Copyright (c) 2012-2018 Adjust GmbH, http://www.adjust.com
+Copyright (c) 2012-2021 Adjust GmbH, http://www.adjust.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

@@ -838,7 +838,7 @@ AdjustCommandExecutor.prototype.trackAdRevenueV2 = function(params) {
         }
     }
 
-    Adjust.trackAdRevenueNew(adjustAdRevenue);
+    Adjust.trackAdRevenue(adjustAdRevenue);
 };
 
 // Util

@@ -177,8 +177,7 @@ declare module 'react-native-adjust' {
     setPushToken: (token: string) => void
     appWillOpenUrl: (url: string) => void
     sendFirstPackages: () => void
-    trackAdRevenue: (source: string, payload: string) => void
-    trackAdRevenueNew: (adRevenue: AdjustAdRevenue) => void
+    trackAdRevenue: (source: string, payload: string) => void | (source: AdjustAdRevenue) => void
     trackAppStoreSubscription: (subscription: AdjustAppStoreSubscription) => void
     trackPlayStoreSubscription: (subscription: AdjustPlayStoreSubscription) => void
     addSessionCallbackParameter: (key: string, value: string) => void

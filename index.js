@@ -51,12 +51,14 @@ Adjust.sendFirstPackages = function() {
     module_adjust.sendFirstPackages();
 };
 
-Adjust.trackAdRevenue = function(source, payload) {
-    module_adjust.trackAdRevenue(source, payload);
-};
-
-Adjust.trackAdRevenueNew = function(adjustAdRevenue) {
-    module_adjust.trackAdRevenueNew(adjustAdRevenue);
+Adjust.trackAdRevenue = function(source, payload = undefined) {
+    if (payload === undefined) {
+        // new API
+        module_adjust.trackAdRevenueNew(source);
+    } else {
+        // old API
+        module_adjust.trackAdRevenue(source, payload);
+    }
 };
 
 Adjust.trackAppStoreSubscription = function(subscription) {

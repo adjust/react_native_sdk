@@ -54,6 +54,10 @@ declare module 'react-native-adjust' {
     uri: string
   }
 
+  interface AdjustConversionValue {
+    conversionValue: number
+  }
+
   export class AdjustConfig {
     constructor(appToken: string, environment: Environment)
     public setLogLevel(level: LogLevel): void
@@ -107,7 +111,7 @@ declare module 'react-native-adjust' {
     ): void
 
     public setConversionValueUpdatedCallbackListener(
-      callback: (conversionValue: number) => void
+      callback: (conversionValue: AdjustConversionValue) => void
     ): void
 
     static LogLevelVerbose: LogLevel

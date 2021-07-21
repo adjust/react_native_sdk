@@ -1,3 +1,14 @@
+### Version 4.29.1 (21st July 2021)
+#### Fixed
+- Fixed wrong `trackAdRevenue` TypeScript method declaration (https://github.com/adjust/react_native_sdk/issues/134).
+- Fixed missing authorization header in retry requests on Android.
+
+#### Native SDKs
+- [iOS@v4.29.3][ios_sdk_v4.29.3]
+- [Android@v4.28.3][android_sdk_v4.28.3]
+
+---
+
 ### Version 4.29.0 (15th July 2021)
 #### Added
 - [beta] Added data residency feature. You can choose this setting by calling `setUrlStrategy` method of `AdjustConfig` instance with `AdjustConfig.DataResidencyEU` (for EU data residency region), `AdjustConfig.DataResidencyTR` (for TR data residency region) or `AdjustConfig.DataResidencyUS` value (for US data residency region).
@@ -451,3 +462,4 @@
 [android_sdk_v4.26.2]: https://github.com/adjust/android_sdk/tree/v4.26.2
 [android_sdk_v4.27.0]: https://github.com/adjust/android_sdk/tree/v4.27.0
 [android_sdk_v4.28.2]: https://github.com/adjust/android_sdk/tree/v4.28.2
+[android_sdk_v4.28.3]: https://github.com/adjust/android_sdk/tree/v4.28.3

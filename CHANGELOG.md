@@ -1,3 +1,13 @@
+### Version 4.29.2 (26th July 2021)
+#### Fixed
+- Removed accidentally added `create-react-native-app` plugin dependency (thanks to @kelleyvanevert).
+
+#### Native SDKs
+- [iOS@v4.29.3][ios_sdk_v4.29.3]
+- [Android@v4.28.3][android_sdk_v4.28.3]
+
+---
+
 ### Version 4.29.1 (21st July 2021)
 #### Fixed
 - Fixed wrong `trackAdRevenue` TypeScript method declaration (https://github.com/adjust/react_native_sdk/issues/134).

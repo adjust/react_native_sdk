@@ -1,7 +1,7 @@
 {
     "name": "react-native-adjust",
     "description": "Adjust React Native SDK",
-    "version": "4.29.1",
+    "version": "4.29.2",
     "main": "index.js",
     "author": "Adjust GmbH",
     "license": "MIT",
@@ -18,8 +18,5 @@
     "repository": {
         "type": "git",
         "url": "git://github.com/adjust/react_native_sdk.git"
-    },
-    "dependencies": {
-        "create-react-native-app": "^3.5.3"
     }
 }

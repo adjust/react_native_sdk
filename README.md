@@ -62,7 +62,7 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
       * [Standard deep linking](#deeplinking-standard)
       * [Deferred deep linking](#deeplinking-deferred)
       * [Reattribution via deep links](#deeplinking-reattribution)
-   * [[beta] Data residency](#data-residency)
+   * [Data residency](#data-residency)
 * [License](#license)
 
 ## <a id="example-app"></a>Example app
@@ -1104,7 +1104,7 @@ handleDeepLink(event) {
 }
 ```
 
-### <a id="data-residency"></a>[beta] Data residency
+### <a id="data-residency"></a>Data residency
 
 In order to enable data residency feature, make sure to call `setUrlStrategy` method of the `AdjustConfig` instance with one of the following constants:
 
@@ -1113,8 +1113,6 @@ adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyEU); // for EU data reside
 adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyTR); // for Turkey data residency region
 adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyUS); // for US data residency region
 ```
-
-**Note:** This feature is currently in beta testing phase. If you are interested in getting access to it, please contact your dedicated account manager or write an email to support@adjust.com. Please, do not turn this setting on before making sure with the support team that this feature is enabled for your app because otherwise SDK traffic will get dropped.
 
 [dashboard]:    http://adjust.com
 [adjust.com]:   http://adjust.com

@@ -1,3 +1,16 @@
+### Version 4.29.3 (11th August 2021)
+#### Added
+- Added support to OAID plugin for MSA SDK v1.0.26.
+
+#### Fixed
+- Fixed wrong `trackAdRevenue` TypeScript method declaration (https://github.com/adjust/react_native_sdk/issues/134#issuecomment-892761735).
+
+#### Native SDKs
+- [iOS@v4.29.4][ios_sdk_v4.29.4]
+- [Android@v4.28.4][android_sdk_v4.28.4]
+
+---
+
 ### Version 4.29.2 (26th July 2021)
 #### Fixed
 - Removed accidentally added `create-react-native-app` plugin dependency (thanks to @kelleyvanevert).
@@ -447,6 +460,7 @@
 [ios_sdk_v4.26.1]: https://github.com/adjust/ios_sdk/tree/v4.26.1
 [ios_sdk_v4.28.0]: https://github.com/adjust/ios_sdk/tree/v4.28.0
 [ios_sdk_v4.29.3]: https://github.com/adjust/ios_sdk/tree/v4.29.3
+[ios_sdk_v4.29.4]: https://github.com/adjust/ios_sdk/tree/v4.29.4
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -473,3 +487,4 @@
 [android_sdk_v4.27.0]: https://github.com/adjust/android_sdk/tree/v4.27.0
 [android_sdk_v4.28.2]: https://github.com/adjust/android_sdk/tree/v4.28.2
 [android_sdk_v4.28.3]: https://github.com/adjust/android_sdk/tree/v4.28.3
+[android_sdk_v4.28.4]: https://github.com/adjust/android_sdk/tree/v4.28.4

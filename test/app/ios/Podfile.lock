@@ -1,7 +1,7 @@
 PODS:
-  - Adjust (4.29.3):
-    - Adjust/Core (= 4.29.3)
-  - Adjust/Core (4.29.3)
+  - Adjust (4.29.4):
+    - Adjust/Core (= 4.29.4)
+  - Adjust/Core (4.29.4)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
   - EXApplication (3.2.0):
@@ -37,7 +37,7 @@ PODS:
     - UMCore
   - EXStructuredHeaders (1.1.1):
     - UMCore
-  - EXUpdates (0.8.2):
+  - EXUpdates (0.8.4):
     - EXStructuredHeaders
     - EXUpdatesInterface
     - React-Core
@@ -245,10 +245,10 @@ PODS:
     - React-jsi (= 0.64.2)
     - React-perflogger (= 0.64.2)
   - React-jsinspector (0.64.2)
-  - react-native-adjust (4.29.2):
-    - Adjust (= 4.29.3)
+  - react-native-adjust (4.29.3):
+    - Adjust (= 4.29.4)
     - React
-  - react-native-adjust-test (4.29.2):
+  - react-native-adjust-test (4.29.3):
     - React
   - React-perflogger (0.64.2)
   - React-RCTActionSheet (0.64.2):
@@ -350,7 +350,7 @@ PODS:
     - React-RCTImage
   - UMAppLoader (2.2.0)
   - UMCore (7.1.1)
-  - UMReactNativeAdapter (6.3.4):
+  - UMReactNativeAdapter (6.3.5):
     - ExpoModulesCore
     - React-Core
     - UMCore
@@ -517,7 +517,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adjust: ad533ac69e620bda48fa26a26fea2343aba39449
+  Adjust: 91943278041fbadf3049b5118803c1355b0b31d4
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EXApplication: 9ff2a206009d6e55bca6c20b3f33d07986b51ef3
@@ -530,7 +530,7 @@ SPEC CHECKSUMS:
   ExpoModulesCore: 2734852616127a6c1fc23012197890a6f3763dc7
   EXSplashScreen: 6208ca88470ff5979fd49a08ef3feb01143a2b79
   EXStructuredHeaders: e52b880264d15b8ad07d36670226c29476af6334
-  EXUpdates: dcc9d0432e1ad0a3f51b8721375401b4708bf7a1
+  EXUpdates: af3ecad91644a171deaa310326e73b4e70f6963c
   EXUpdatesInterface: b68e78b912a03fff7901a5f46ec200c45e3506a5
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
   FBReactNativeSpec: db336d91dafad02732c6016f0b6eaf3a2d3fd598
@@ -546,8 +546,8 @@ SPEC CHECKSUMS:
   React-jsi: 67747b9722f6dab2ffe15b011bcf6b3f2c3f1427
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
-  react-native-adjust: 97c4e820fd443eee7383842978623f612be0e4d3
-  react-native-adjust-test: a5f6bed0e06ab800febba8d1d7af80565f186abd
+  react-native-adjust: 2a4892a66059a717ee0e7f2799504bd540678a31
+  react-native-adjust-test: 97307fa8acb5148e737faad7ec4b0bc50892eb26
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa
@@ -565,10 +565,10 @@ SPEC CHECKSUMS:
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
   UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
   UMCore: 2f671796d7439604a1cf8ac7bbe5809cd5c50437
-  UMReactNativeAdapter: 684b07b79d5fe52b496d2b50bfe31f68d7daf71a
+  UMReactNativeAdapter: f808906d586a16cebdc3844d86e1bdb8f114a873
   UMTaskManagerInterface: 2be431101b73604e64fbfffcf759336f9d8fccbb
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
 
 PODFILE CHECKSUM: 827c956884a0c3740c2beb9440d17691e8fb5637
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.2

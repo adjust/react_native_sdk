@@ -1,3 +1,13 @@
+### Version 4.29.4 (19th August 2021)
+#### Fixed
+- Fixed issue with insufficient buffer size for storing SDK prefix (https://github.com/adjust/react_native_sdk/issues/140).
+
+#### Native SDKs
+- [iOS@v4.29.5][ios_sdk_v4.29.5]
+- [Android@v4.28.4][android_sdk_v4.28.4]
+
+---
+
 ### Version 4.29.3 (11th August 2021)
 #### Added
 - Added support to OAID plugin for MSA SDK v1.0.26.
@@ -461,6 +471,7 @@
 [ios_sdk_v4.28.0]: https://github.com/adjust/ios_sdk/tree/v4.28.0
 [ios_sdk_v4.29.3]: https://github.com/adjust/ios_sdk/tree/v4.29.3
 [ios_sdk_v4.29.4]: https://github.com/adjust/ios_sdk/tree/v4.29.4
+[ios_sdk_v4.29.5]: https://github.com/adjust/ios_sdk/tree/v4.29.5
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0

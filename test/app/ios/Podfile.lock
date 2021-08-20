@@ -1,7 +1,7 @@
 PODS:
-  - Adjust (4.29.4):
-    - Adjust/Core (= 4.29.4)
-  - Adjust/Core (4.29.4)
+  - Adjust (4.29.5):
+    - Adjust/Core (= 4.29.5)
+  - Adjust/Core (4.29.5)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
   - EXApplication (3.2.0):
@@ -245,10 +245,10 @@ PODS:
     - React-jsi (= 0.64.2)
     - React-perflogger (= 0.64.2)
   - React-jsinspector (0.64.2)
-  - react-native-adjust (4.29.3):
-    - Adjust (= 4.29.4)
+  - react-native-adjust (4.29.4):
+    - Adjust (= 4.29.5)
     - React
-  - react-native-adjust-test (4.29.3):
+  - react-native-adjust-test (4.29.4):
     - React
   - React-perflogger (0.64.2)
   - React-RCTActionSheet (0.64.2):
@@ -517,7 +517,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adjust: 91943278041fbadf3049b5118803c1355b0b31d4
+  Adjust: 5cab100ac05eebde8141b48a2acffd6b5ce0564b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EXApplication: 9ff2a206009d6e55bca6c20b3f33d07986b51ef3
@@ -546,8 +546,8 @@ SPEC CHECKSUMS:
   React-jsi: 67747b9722f6dab2ffe15b011bcf6b3f2c3f1427
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
-  react-native-adjust: 2a4892a66059a717ee0e7f2799504bd540678a31
-  react-native-adjust-test: 97307fa8acb5148e737faad7ec4b0bc50892eb26
+  react-native-adjust: 437fc17a2dc0d2531cfd1422e3cbd8dd7da82127
+  react-native-adjust-test: 3aff90c1c206d7a3b56f185823291a829e1973e0
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa

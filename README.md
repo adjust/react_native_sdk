@@ -28,7 +28,6 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
    * [Event tracking](#event-tracking)
       * [Revenue tracking](#revenue-tracking)
       * [Revenue deduplication](#revenue-deduplication)
-      * [In-app purchase verification](#iap-verification)
       * [Callback parameters](#callback-parameters)
       * [Partner parameters](#partner-parameters)
       * [Callback identifier](#callback-id)
@@ -411,10 +410,6 @@ Adjust.trackEvent(adjustEvent);
 ```
 
 **Note**: Transaction ID is the iOS term, unique identifier for successfully finished Android In-App-Purchases is named **Order ID**.
-
-### <a id="iap-verification"></a>In-app purchase verification
-
-In-app purchase verification can be conducted through the React Native Purchase SDK which is currently in development and will soon be made publicly available. For more information, please contact support@adjust.com.
 
 ### <a id="callback-parameters"></a>Callback parameters
 

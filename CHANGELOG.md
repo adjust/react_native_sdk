@@ -1,4 +1,21 @@
+### Version 4.29.5 (14th December 2021)
+#### Added
+- Added Huawei Install Referrer Track ID support.
+- Added support for `Admost` ad revenue tracking.
+
+#### Fixed
+- Fixed `NativeEventEmitter` warnings caused by RN 0.66 upgrade (https://github.com/adjust/react_native_sdk/issues/147).
+
+#### Native SDKs
+- [iOS@v4.29.6][ios_sdk_v4.29.6]
+- [Android@v4.28.8][android_sdk_v4.28.8]
+
+---
+
 ### Version 4.29.4 (19th August 2021)
+#### Added
+- Added support to OAID plugin for MSA SDK v1.0.26.
+
 #### Fixed
 - Fixed issue with insufficient buffer size for storing SDK prefix (https://github.com/adjust/react_native_sdk/issues/140).
 
@@ -472,6 +489,7 @@
 [ios_sdk_v4.29.3]: https://github.com/adjust/ios_sdk/tree/v4.29.3
 [ios_sdk_v4.29.4]: https://github.com/adjust/ios_sdk/tree/v4.29.4
 [ios_sdk_v4.29.5]: https://github.com/adjust/ios_sdk/tree/v4.29.5
+[ios_sdk_v4.29.6]: https://github.com/adjust/ios_sdk/tree/v4.29.6
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -499,3 +517,4 @@
 [android_sdk_v4.28.2]: https://github.com/adjust/android_sdk/tree/v4.28.2
 [android_sdk_v4.28.3]: https://github.com/adjust/android_sdk/tree/v4.28.3
 [android_sdk_v4.28.4]: https://github.com/adjust/android_sdk/tree/v4.28.4
+[android_sdk_v4.28.8]: https://github.com/adjust/android_sdk/tree/v4.28.8

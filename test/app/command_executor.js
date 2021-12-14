@@ -364,6 +364,14 @@ AdjustCommandExecutor.prototype.config = function(params) {
         adjustConfig.setAllowIdfaReading(allowIdfaReading);
     }
 
+    if ('allowSkAdNetworkHandling' in params) {
+        var allowSkAdNetworkHandlingS = getFirstParameterValue(params, 'allowSkAdNetworkHandling');
+        var allowSkAdNetworkHandling = allowSkAdNetworkHandlingS == 'true';
+        if (allowSkAdNetworkHandling == false) {
+            adjustConfig.deactivateSKAdNetworkHandling();
+        }
+    }
+
     if ('userAgent' in params) {
         var userAgent = getFirstParameterValue(params, 'userAgent');
         adjustConfig.setUserAgent(userAgent);

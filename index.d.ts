@@ -1,6 +1,7 @@
 declare module 'react-native-adjust' {
   type Environment = 'sandbox' | 'production'
   type LogLevel = string
+  type UrlStrategy = string
 
   interface AdjustAttribution {
     trackerToken: string
@@ -65,7 +66,7 @@ declare module 'react-native-adjust' {
     public setProcessName(processName: string): void
     public setDefaultTracker(defaultTracked: string): void
     public setExternalDeviceId(externalDeviceId: string): void
-    public setUrlStrategy(urlStrategy: string): void
+    public setUrlStrategy(urlStrategy: UrlStrategy): void
     public setUserAgent(userAgent: string): void
     public setAppSecret(
       secretId: number,
@@ -123,6 +124,11 @@ declare module 'react-native-adjust' {
     static LogLevelSuppress: LogLevel
     static EnvironmentSandbox: Environment
     static EnvironmentProduction: Environment
+    static UrlStrategyChina: UrlStrategy
+    static UrlStrategyIndia: UrlStrategy
+    static DataResidencyEU: UrlStrategy
+    static DataResidencyTR: UrlStrategy
+    static DataResidencyUS: UrlStrategy
   }
 
   export class AdjustEvent {

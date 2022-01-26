@@ -245,10 +245,10 @@ PODS:
     - React-jsi (= 0.64.3)
     - React-perflogger (= 0.64.3)
   - React-jsinspector (0.64.3)
-  - react-native-adjust (4.29.5):
+  - react-native-adjust (4.29.6):
     - Adjust (= 4.29.6)
     - React
-  - react-native-adjust-test (4.29.5):
+  - react-native-adjust-test (4.29.6):
     - React
   - React-perflogger (0.64.3)
   - React-RCTActionSheet (0.64.3):
@@ -546,8 +546,8 @@ SPEC CHECKSUMS:
   React-jsi: a8b09c29521c798f1783348b37b511ba7b3dbeb3
   React-jsiexecutor: df6abc9fafbecb8e5b7a5fbc5e6d4bd017d594d5
   React-jsinspector: 34e23860273a23695342f58eed3ffd3ba10c31e0
-  react-native-adjust: 165816c3e8e77a2b4c12d9f520e006d9dee885b6
-  react-native-adjust-test: c919c8e4b2fc803dcf1cba070674719df8c8f20f
+  react-native-adjust: 8152efdf7a2e94a85ce427f2096b4167f2824273
+  react-native-adjust-test: f701a267610b4f80e5e60283b1a190939f3f5e7a
   React-perflogger: cc76a4254d19640f1d8ad1c66fdee800414b805c
   React-RCTActionSheet: 7448f049318d8d7e8a9a1ebb742ada721757eea8
   React-RCTAnimation: fb9b3fa1a4a9f5e6ab01b3368693ce69860ba76a

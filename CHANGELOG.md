@@ -1,3 +1,16 @@
+### Version 4.29.6 (26th January 2022)
+#### Added
+- Added support to OAID plugin for MSA SDK v1.1.0.
+
+#### Fixed
+- Added missing URL strategy constants to `index.d.ts` (https://github.com/adjust/react_native_sdk/issues/157).
+
+#### Native SDKs
+- [iOS@v4.29.6][ios_sdk_v4.29.6]
+- [Android@v4.28.9][android_sdk_v4.28.9]
+
+---
+
 ### Version 4.29.5 (14th December 2021)
 #### Added
 - Added Huawei Install Referrer Track ID support.
@@ -518,3 +531,4 @@
 [android_sdk_v4.28.3]: https://github.com/adjust/android_sdk/tree/v4.28.3
 [android_sdk_v4.28.4]: https://github.com/adjust/android_sdk/tree/v4.28.4
 [android_sdk_v4.28.8]: https://github.com/adjust/android_sdk/tree/v4.28.8
+[android_sdk_v4.28.9]: https://github.com/adjust/android_sdk/tree/v4.28.9

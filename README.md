@@ -254,7 +254,7 @@ As of v4.22.0, the Adjust SDK supports install tracking on Huawei devices with H
 
 ### <a id="ios-frameworks"></a>iOS frameworks
 
-Select your project in the Project Navigator. In the left hand side of the main view, select your target. In the tab `Build Phases`, expand the group `Link Binary with Libraries`. On the bottom of that section click on the `+` button. Select below mentined frameworks and make sure to change the `Status` of frameworks to `Optional`. Adjust SDK uses these frameworks with following purpose:
+Select your project in the Project Navigator. In the left hand side of the main view, select your target. In the tab `Build Phases`, expand the group `Link Binary with Libraries`. On the bottom of that section click on the `+` button. Select below mentioned frameworks and make sure to change the `Status` of frameworks to `Optional`. Adjust SDK uses these frameworks with following purpose:
 
 * `iAd.framework` - to support Apple Search Ads campaigns
 * `AdServices.framework` - to support Apple Search Ads campaigns

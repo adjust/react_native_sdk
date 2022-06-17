@@ -714,7 +714,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void getAppTrackingAuthorizationStatus(Callback callback) {
-        callback.invoke("-1");
+        callback.invoke(-1);
     }
 
     @ReactMethod

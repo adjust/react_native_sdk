@@ -861,19 +861,9 @@ Upon receiving this information, Adjust changes sharing the specific user's data
 
 ### <a id="sdk-signature"></a>SDK signature
 
-An account manager must activate the Adjust SDK signature. Contact Adjust support (support@adjust.com) if you are interested in using this feature.
+When you set up the SDK Signature, each SDK communication package is "signed". This lets Adjust’s servers easily detect and reject any install activity that is not legitimate. 
 
-If the SDK signature has already been enabled on your account and you have access to App Secrets in your Adjust Dashboard, please use the method below to integrate the SDK signature into your app.
-
-An App Secret is set by passing all secret parameters (`secretId`, `info1`, `info2`, `info3`, `info4`) to `setAppSecret` method of `AdjustConfig` instance:
-
-```js
-var adjustConfig = new AdjustConfig(appToken, environment);
-
-adjustConfig.setAppSecret(secretId, info1, info2, info3, info4);
-
-Adjust.create(adjustConfig);
-```
+There are just a few steps involved in setting up the SDK Signature. Please contact your Technical Account Manager or support@adjust.com to get started.
 
 ### <a id="background-tracking"></a>Background tracking
 

@@ -67,9 +67,11 @@
     // default values
     self.sendInBackground = NO;
     self.eventBufferingEnabled = NO;
+    self.coppaCompliantEnabled = NO;
     self.allowIdfaReading = YES;
     self.allowiAdInfoReading = YES;
     self.allowAdServicesInfoReading = YES;
+    self.linkMeEnabled = NO;
     _isSKAdNetworkHandlingActive = YES;
 
     return self;
@@ -203,6 +205,7 @@
         copy.allowiAdInfoReading = self.allowiAdInfoReading;
         copy.allowAdServicesInfoReading = self.allowAdServicesInfoReading;
         copy.delayStart = self.delayStart;
+        copy.coppaCompliantEnabled = self.coppaCompliantEnabled;
         copy.userAgent = [self.userAgent copyWithZone:zone];
         copy.externalDeviceId = [self.externalDeviceId copyWithZone:zone];
         copy.isDeviceKnown = self.isDeviceKnown;
@@ -211,6 +214,7 @@
         copy->_appSecret = [self.appSecret copyWithZone:zone];
         copy->_isSKAdNetworkHandlingActive = self.isSKAdNetworkHandlingActive;
         copy->_urlStrategy = [self.urlStrategy copyWithZone:zone];
+        copy.linkMeEnabled = self.linkMeEnabled;
         // adjust delegate not copied
     }
 

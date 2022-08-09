@@ -215,6 +215,11 @@
 @property (nonatomic, copy, readwrite, nullable) NSString *urlStrategy;
 
 /**
+ * @brief Enables/disables linkMe
+ */
+@property (nonatomic, assign) BOOL linkMeEnabled;
+
+/**
  * @brief Get configuration object for the initialization of the Adjust SDK.
  *
  * @param appToken The App Token of your app. This unique identifier can
@@ -258,9 +263,14 @@
 
 /**
  * @brief Check if adjust configuration object is valid.
- * 
+ *
  * @return Boolean indicating whether adjust config object is valid or not.
  */
 - (BOOL)isValid;
+ 
+/**
+ * @brief Enable COPPA (Children's Online Privacy Protection Act) compliant for the application.
+ */
+@property (nonatomic, assign) BOOL coppaCompliantEnabled;
 
 @end

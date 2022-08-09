@@ -1,17 +1,4 @@
 {
-  "expo": {
-    "name": "example",
-    "slug": "example",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "android": {
-      "package": "com.adjust.examples"
-    },
-    "ios": {
-      "bundleIdentifier": "com.adjust.examples"
-    }
-  },
-  "name": "example"
+  "name": "AdjustExample",
+  "displayName": "AdjustExample"
 }

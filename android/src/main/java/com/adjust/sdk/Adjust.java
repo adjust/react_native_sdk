@@ -295,6 +295,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             adjustConfig.setDelayStart(delayStart);
         }
 
+        // COPPA compliance.
+        if (checkKey(mapConfig, "coppaCompliantEnabled")) {
+            coppaCompliantEnabled = mapConfig.getBoolean("coppaCompliantEnabled");
+            adjustConfig.setCoppaCompliantEnabled(coppaCompliantEnabled);
+        }
+
         // Attribution callback.
         if (attributionCallback) {
             adjustConfig.setOnAttributionChangedListener(this);

@@ -47,6 +47,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSNumber *allowAdServicesInfoReading = dict[@"allowAdServicesInfoReading"];
     NSNumber *allowIdfaReading = dict[@"allowIdfaReading"];
     NSNumber *skAdNetworkHandling = dict[@"skAdNetworkHandling"];
+    NSNumber *coppaCompliantEnabled = dict[@"coppaCompliantEnabled"];
     BOOL allowSuppressLogLevel = NO;
 
     // Suppress log level.
@@ -179,6 +180,11 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     // Delay start.
     if ([self isFieldValid:delayStart]) {
         [adjustConfig setDelayStart:[delayStart doubleValue]];
+    }
+
+    // COPPA compliance.
+    if ([self isFieldValid:coppaCompliantEnabled]) {
+        [adjustConfig setCoppaCompliantEnabled:[coppaCompliantEnabled boolValue]];
     }
 
     // Start SDK.

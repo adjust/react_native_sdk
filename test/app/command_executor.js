@@ -352,6 +352,12 @@ AdjustCommandExecutor.prototype.config = function(params) {
         adjustConfig.setPlayStoreKidsAppEnabled(playStoreKids);
     }
 
+    if ('coppaCompliant' in params) {
+        var coppaCompliantS = getFirstParameterValue(params, 'coppaCompliant');
+        var coppaCompliant = coppaCompliantS == 'true';
+        adjustConfig.setCoppaCompliantEnabled(coppaCompliant);
+    }
+
     if ('allowiAdInfoReading' in params) {
         var allowiAdInfoReadingS = getFirstParameterValue(params, 'allowiAdInfoReading');
         var allowiAdInfoReading = allowiAdInfoReadingS == 'true';

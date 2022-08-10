@@ -80,6 +80,7 @@ declare module 'react-native-adjust' {
     public setNeedsCost(needsCost: boolean): void
     public setPreinstallTrackingEnabled(preinstallTrackingEnabled: boolean): void
     public setPreinstallFilePath(preinstallFilePath: string): void
+    public setCoppaCompliantEnabled(coppaCompliantEnabled: boolean): void
     public setPlayStoreKidsAppEnabled(playStoreKidsAppEnabled: boolean): void
     public setAllowiAdInfoReading(allowiAdInfoReading: boolean): void
     public setAllowAdServicesInfoReading(allowAdServicesInfoReading: boolean): void

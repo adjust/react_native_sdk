@@ -257,6 +257,7 @@ var AdjustConfig = function(appToken, environment) {
     this.info3 = null;
     this.info4 = null;
     this.urlStrategy = null;
+    this.coppaCompliantEnabled = null;
     // Android only
     this.processName = null;
     this.readMobileEquipmentIdentity = null;
@@ -367,6 +368,10 @@ AdjustConfig.prototype.setSdkPrefix = function(sdkPrefix) {
 
 AdjustConfig.prototype.setUrlStrategy = function(urlStrategy) {
     this.urlStrategy = urlStrategy;
+};
+
+AdjustConfig.prototype.setCoppaCompliantEnabled = function(coppaCompliantEnabled) {
+    this.coppaCompliantEnabled = coppaCompliantEnabled;
 };
 
 AdjustConfig.prototype.setReadMobileEquipmentIdentity = function(readMobileEquipmentIdentity) {

@@ -168,6 +168,10 @@ Adjust.trackMeasurementConsent = function(measurementConsent) {
     module_adjust.trackMeasurementConsent(measurementConsent);
 };
 
+Adjust.checkForNewAttStatus = function() {
+    module_adjust.checkForNewAttStatus();
+}
+
 Adjust.componentWillUnmount = function() {
     if (AdjustConfig.AttributionSubscription != null) {
         AdjustConfig.AttributionSubscription.remove();

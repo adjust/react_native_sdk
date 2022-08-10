@@ -559,6 +559,10 @@ RCT_EXPORT_METHOD(trackMeasurementConsent:(NSNumber * _Nonnull)measurementConsen
     [Adjust trackMeasurementConsent:[measurementConsent boolValue]];
 }
 
+RCT_EXPORT_METHOD(checkForNewAttStatus) {
+    [Adjust checkForNewAttStatus];
+}
+
 RCT_EXPORT_METHOD(setAttributionCallbackListener) {
     _isAttributionCallbackImplemented = YES;
 }

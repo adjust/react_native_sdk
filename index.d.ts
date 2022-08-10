@@ -211,5 +211,6 @@ declare module 'react-native-adjust' {
     getAppTrackingAuthorizationStatus: (callback: (authorizationStatus: number) => void) => void
     trackThirdPartySharing: (adjustThirdPartySharing: AdjustThirdPartySharing) => void
     trackMeasurementConsent: (measurementConsent: boolean) => void
+    checkForNewAttStatus: () => void
   }
 }

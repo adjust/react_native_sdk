@@ -756,6 +756,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
+    public void checkForNewAttStatus() {
+        // do nothing
+    }
+
+    @ReactMethod
     public void setAttributionCallbackListener() {
         this.attributionCallback = true;
     }

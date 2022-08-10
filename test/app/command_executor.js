@@ -403,6 +403,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
             AdjustSdkTest.addInfoToSend("costType", attribution.costType);
             AdjustSdkTest.addInfoToSend("costAmount", attribution.costAmount.toString());
             AdjustSdkTest.addInfoToSend("costCurrency", attribution.costCurrency);
+            AdjustSdkTest.addInfoToSend("fbInstallReferrer", attribution.fbInstallReferrer);
 
             AdjustSdkTest.sendInfoToServer(_this.basePath);
         });

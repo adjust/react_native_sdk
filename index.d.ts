@@ -15,6 +15,7 @@ declare module 'react-native-adjust' {
     costType: string
     costAmount: number
     costCurrency: string
+    fbInstallReferrer: string
   }
 
   interface AdjustEventTrackingSuccess {

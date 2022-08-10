@@ -48,6 +48,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSNumber *allowIdfaReading = dict[@"allowIdfaReading"];
     NSNumber *skAdNetworkHandling = dict[@"skAdNetworkHandling"];
     NSNumber *coppaCompliantEnabled = dict[@"coppaCompliantEnabled"];
+    NSNumber *linkMeEnabled = dict[@"linkMeEnabled"];
     BOOL allowSuppressLogLevel = NO;
 
     // Suppress log level.
@@ -185,6 +186,11 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     // COPPA compliance.
     if ([self isFieldValid:coppaCompliantEnabled]) {
         [adjustConfig setCoppaCompliantEnabled:[coppaCompliantEnabled boolValue]];
+    }
+
+    // LinkMe.
+    if ([self isFieldValid:linkMeEnabled]) {
+        [adjustConfig setLinkMeEnabled:[linkMeEnabled boolValue]];
     }
 
     // Start SDK.

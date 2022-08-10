@@ -269,6 +269,7 @@ var AdjustConfig = function(appToken, environment) {
     this.allowAdServicesInfoReading = null;
     this.allowIdfaReading = null;
     this.skAdNetworkHandling = null;
+    this.linkMeEnabled = null;
 };
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
@@ -408,6 +409,10 @@ AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) 
 
 AdjustConfig.prototype.deactivateSKAdNetworkHandling = function() {
     this.skAdNetworkHandling = false;
+};
+
+AdjustConfig.prototype.setLinkMeEnabled = function(linkMeEnabled) {
+    this.linkMeEnabled = linkMeEnabled;
 };
 
 AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {

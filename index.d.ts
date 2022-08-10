@@ -88,6 +88,7 @@ declare module 'react-native-adjust' {
     public setSdkPrefix(sdkPrefix: string): void
     public setShouldLaunchDeeplink(shouldLaunchDeeplink: boolean): void
     public deactivateSKAdNetworkHandling(): void;
+    public setLinkMeEnabled(linkMeEnabled: boolean): void;
 
     public setAttributionCallbackListener(
       callback: (attribution: AdjustAttribution) => void

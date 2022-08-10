@@ -1143,7 +1143,7 @@ adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyUS); // for US data reside
 
 The Adjust SDK is licensed under the MIT License.
 
-Copyright (c) 2012-2021 Adjust GmbH, http://www.adjust.com
+Copyright (c) 2012-Present Adjust GmbH, http://www.adjust.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

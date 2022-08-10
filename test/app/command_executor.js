@@ -346,6 +346,12 @@ AdjustCommandExecutor.prototype.config = function(params) {
         adjustConfig.setSendInBackground(sendInBackground);
     }
 
+    if ('playStoreKids' in params) {
+        var playStoreKidsS = getFirstParameterValue(params, 'playStoreKids');
+        var playStoreKids = playStoreKidsS == 'true';
+        adjustConfig.setPlayStoreKidsAppEnabled(playStoreKids);
+    }
+
     if ('allowiAdInfoReading' in params) {
         var allowiAdInfoReadingS = getFirstParameterValue(params, 'allowiAdInfoReading');
         var allowiAdInfoReading = allowiAdInfoReadingS == 'true';

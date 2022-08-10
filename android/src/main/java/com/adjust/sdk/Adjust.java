@@ -125,6 +125,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         boolean readMobileEquipmentIdentity = false;
         boolean preinstallTrackingEnabled = false;
         boolean needsCost = false;
+        boolean playStoreKidsAppEnabled = false;
 
         // Suppress log level.
         if (checkKey(mapConfig, "logLevel")) {
@@ -223,6 +224,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             adjustConfig.setUserAgent(userAgent);
         }
 
+        // Preinstall file path.
         if (checkKey(mapConfig, "preinstallFilePath")) {
             preinstallFilePath = mapConfig.getString("preinstallFilePath");
             adjustConfig.setPreinstallFilePath(preinstallFilePath);
@@ -273,6 +275,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (checkKey(mapConfig, "needsCost")) {
             needsCost = mapConfig.getBoolean("needsCost");
             adjustConfig.setNeedsCost(needsCost);
+        }
+
+        // Google Play Store kids app.
+        if (checkKey(mapConfig, "playStoreKidsAppEnabled")) {
+            playStoreKidsAppEnabled = mapConfig.getBoolean("playStoreKidsAppEnabled");
+            adjustConfig.setPlayStoreKidsAppEnabled(playStoreKidsAppEnabled);
         }
 
         // Launching deferred deep link.

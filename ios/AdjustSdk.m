@@ -47,6 +47,8 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSNumber *allowAdServicesInfoReading = dict[@"allowAdServicesInfoReading"];
     NSNumber *allowIdfaReading = dict[@"allowIdfaReading"];
     NSNumber *skAdNetworkHandling = dict[@"skAdNetworkHandling"];
+    NSNumber *coppaCompliantEnabled = dict[@"coppaCompliantEnabled"];
+    NSNumber *linkMeEnabled = dict[@"linkMeEnabled"];
     BOOL allowSuppressLogLevel = NO;
 
     // Suppress log level.
@@ -179,6 +181,16 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     // Delay start.
     if ([self isFieldValid:delayStart]) {
         [adjustConfig setDelayStart:[delayStart doubleValue]];
+    }
+
+    // COPPA compliance.
+    if ([self isFieldValid:coppaCompliantEnabled]) {
+        [adjustConfig setCoppaCompliantEnabled:[coppaCompliantEnabled boolValue]];
+    }
+
+    // LinkMe.
+    if ([self isFieldValid:linkMeEnabled]) {
+        [adjustConfig setLinkMeEnabled:[linkMeEnabled boolValue]];
     }
 
     // Start SDK.
@@ -557,6 +569,10 @@ RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
 
 RCT_EXPORT_METHOD(trackMeasurementConsent:(NSNumber * _Nonnull)measurementConsent) {
     [Adjust trackMeasurementConsent:[measurementConsent boolValue]];
+}
+
+RCT_EXPORT_METHOD(checkForNewAttStatus) {
+    [Adjust checkForNewAttStatus];
 }
 
 RCT_EXPORT_METHOD(setAttributionCallbackListener) {

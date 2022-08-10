@@ -125,6 +125,8 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         boolean readMobileEquipmentIdentity = false;
         boolean preinstallTrackingEnabled = false;
         boolean needsCost = false;
+        boolean playStoreKidsAppEnabled = false;
+        boolean coppaCompliantEnabled = false;
 
         // Suppress log level.
         if (checkKey(mapConfig, "logLevel")) {
@@ -223,6 +225,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             adjustConfig.setUserAgent(userAgent);
         }
 
+        // Preinstall file path.
         if (checkKey(mapConfig, "preinstallFilePath")) {
             preinstallFilePath = mapConfig.getString("preinstallFilePath");
             adjustConfig.setPreinstallFilePath(preinstallFilePath);
@@ -275,6 +278,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             adjustConfig.setNeedsCost(needsCost);
         }
 
+        // Google Play Store kids app.
+        if (checkKey(mapConfig, "playStoreKidsAppEnabled")) {
+            playStoreKidsAppEnabled = mapConfig.getBoolean("playStoreKidsAppEnabled");
+            adjustConfig.setPlayStoreKidsAppEnabled(playStoreKidsAppEnabled);
+        }
+
         // Launching deferred deep link.
         if (checkKey(mapConfig, "shouldLaunchDeeplink")) {
             shouldLaunchDeeplink = mapConfig.getBoolean("shouldLaunchDeeplink");
@@ -285,6 +294,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (checkKey(mapConfig, "delayStart")) {
             delayStart = mapConfig.getDouble("delayStart");
             adjustConfig.setDelayStart(delayStart);
+        }
+
+        // COPPA compliance.
+        if (checkKey(mapConfig, "coppaCompliantEnabled")) {
+            coppaCompliantEnabled = mapConfig.getBoolean("coppaCompliantEnabled");
+            adjustConfig.setCoppaCompliantEnabled(coppaCompliantEnabled);
         }
 
         // Attribution callback.
@@ -714,7 +729,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void getAppTrackingAuthorizationStatus(Callback callback) {
-        callback.invoke("-1");
+        callback.invoke(-1);
     }
 
     @ReactMethod
@@ -753,6 +768,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     @ReactMethod
     public void trackMeasurementConsent(boolean measurementConsent) {
         com.adjust.sdk.Adjust.trackMeasurementConsent(measurementConsent);
+    }
+
+    @ReactMethod
+    public void checkForNewAttStatus() {
+        // do nothing
     }
 
     @ReactMethod

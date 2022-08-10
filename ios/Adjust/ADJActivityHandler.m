@@ -776,6 +776,14 @@ typedef NS_ENUM(NSInteger, AdjADClientError) {
     }];
 }
 
+- (void)checkForNewAttStatus {
+    [ADJUtil launchInQueue:self.internalQueue
+                selfInject:self
+                     block:^(ADJActivityHandler * selfI) {
+        [selfI checkForNewAttStatusI:selfI];
+    }];
+}
+
 - (void)writeActivityState {
     [ADJUtil launchInQueue:self.internalQueue
                 selfInject:self
@@ -914,7 +922,7 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
     if (selfI.adjustConfig.eventBufferingEnabled)  {
         [selfI.logger info:@"Event buffering is enabled"];
     }
-
+    
     if (selfI.adjustConfig.defaultTracker != nil) {
         [selfI.logger info:@"Default tracker: '%@'", selfI.adjustConfig.defaultTracker];
     }
@@ -1008,6 +1016,7 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
                                 userAgent:selfI.adjustConfig.userAgent
                                 urlStrategy:sdkClickHandlerUrlStrategy];
 
+    [selfI checkLinkMeI:selfI];
     [selfI.trackingStatusManager checkForNewAttStatus];
 
     [selfI preLaunchActionsI:selfI
@@ -1034,7 +1043,9 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
     }
 
     [selfI updateHandlersStatusAndSendI:selfI];
-
+    
+    [selfI processCoppaComplianceI:selfI];
+    
     [selfI processSessionI:selfI];
 
     [selfI checkAttributionStateI:selfI];
@@ -1064,6 +1075,8 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
             if ([ADJUserDefaults getGdprForgetMe]) {
                 [selfI setGdprForgetMeI:selfI];
             } else {
+                [selfI processCoppaComplianceI:selfI];
+                
                 // check if disable third party sharing request came, then send it first
                 if ([ADJUserDefaults getDisableThirdPartySharing]) {
                     [selfI disableThirdPartySharingI:selfI];
@@ -1356,6 +1369,10 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
     if (selfI.activityState.isThirdPartySharingDisabled) {
         return;
     }
+    if (selfI.adjustConfig.coppaCompliantEnabled) {
+        [selfI.logger warn:@"Call to disable third party sharing API ignored, already done when COPPA enabled"];
+        return;
+    }
 
     [ADJUtil launchSynchronisedWithObject:[ADJActivityState class]
                                     block:^{
@@ -1397,6 +1414,10 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
         return NO;
     }
     if (selfI.activityState.isGdprForgotten) {
+        return NO;
+    }
+    if (selfI.adjustConfig.coppaCompliantEnabled) {
+        [selfI.logger warn:@"Calling third party sharing API not allowed when COPPA enabled"];
         return NO;
     }
 
@@ -1495,6 +1516,23 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
     } else {
         [selfI.packageHandler sendFirstPackage];
     }
+}
+
+- (void)checkForNewAttStatusI:(ADJActivityHandler *)selfI {
+    if (!selfI.activityState) {
+        return;
+    }
+    if (![selfI isEnabledI:selfI]) {
+        return;
+    }
+    if (selfI.activityState.isGdprForgotten) {
+        return;
+    }
+    if (!selfI.trackingStatusManager) {
+        return;
+    }
+    
+    [selfI.trackingStatusManager checkForNewAttStatus];
 }
 
 - (void)launchEventResponseTasksI:(ADJActivityHandler *)selfI
@@ -1709,21 +1747,10 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
 
     // Check if upon enabling install has been tracked.
     if (enabled) {
-        if (![ADJUserDefaults getInstallTracked]) {
-            double now = [NSDate.date timeIntervalSince1970];
-            [self trackNewSessionI:now withActivityHandler:selfI];
-        }
-        NSData *deviceToken = [ADJUserDefaults getPushTokenData];
-        if (deviceToken != nil && ![selfI.activityState.deviceToken isEqualToString:[ADJUtil convertDeviceToken:deviceToken]]) {
-            [self setDeviceToken:deviceToken];
-        }
-        NSString *pushToken = [ADJUserDefaults getPushTokenString];
-        if (pushToken != nil && ![selfI.activityState.deviceToken isEqualToString:pushToken]) {
-            [self setPushToken:pushToken];
-        }
         if ([ADJUserDefaults getGdprForgetMe]) {
             [selfI setGdprForgetMe];
         } else {
+            [selfI processCoppaComplianceI:selfI];
             if ([ADJUserDefaults getDisableThirdPartySharing]) {
                 [selfI disableThirdPartySharing];
             }
@@ -1731,7 +1758,7 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
                 for (ADJThirdPartySharing *thirdPartySharing
                      in selfI.savedPreLaunch.preLaunchAdjustThirdPartySharingArray)
                 {
-                    [selfI trackThirdPartySharing:thirdPartySharing];
+                    [selfI trackThirdPartySharingI:selfI thirdPartySharing:thirdPartySharing];
                 }
 
                 selfI.savedPreLaunch.preLaunchAdjustThirdPartySharingArray = nil;
@@ -1744,6 +1771,20 @@ preLaunchActions:(ADJSavedPreLaunch*)preLaunchActions
                 selfI.savedPreLaunch.lastMeasurementConsentTracked = nil;
             }
 
+            [selfI checkLinkMeI:selfI];
+        }
+
+        if (![ADJUserDefaults getInstallTracked]) {
+            double now = [NSDate.date timeIntervalSince1970];
+            [self trackNewSessionI:now withActivityHandler:selfI];
+        }
+        NSData *deviceToken = [ADJUserDefaults getPushTokenData];
+        if (deviceToken != nil && ![selfI.activityState.deviceToken isEqualToString:[ADJUtil convertDeviceToken:deviceToken]]) {
+            [self setDeviceToken:deviceToken];
+        }
+        NSString *pushToken = [ADJUserDefaults getPushTokenString];
+        if (pushToken != nil && ![selfI.activityState.deviceToken isEqualToString:pushToken]) {
+            [self setPushToken:pushToken];
         }
         if (selfI.adjustConfig.allowiAdInfoReading == YES) {
             [selfI checkForiAdI:selfI];
@@ -2120,6 +2161,63 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
 
     [selfI setEnabled:NO];
     [selfI.packageHandler flush];
+}
+
+- (void)checkLinkMeI:(ADJActivityHandler *)selfI {
+#if TARGET_OS_IOS
+    if (@available(iOS 15.0, *)) {
+        if (selfI.adjustConfig.linkMeEnabled == NO) {
+            [self.logger debug:@"LinkMe not allowed by client"];
+            return;
+        }
+        if ([ADJUserDefaults getLinkMeChecked] == YES) {
+            [self.logger debug:@"LinkMe already checked"];
+            return;
+        }
+        if (selfI.internalState.isFirstLaunch == NO) {
+            [self.logger debug:@"LinkMe only valid for install"];
+            return;
+        }
+        if ([ADJUserDefaults getGdprForgetMe]) {
+            [self.logger debug:@"LinkMe not happening for GDPR forgotten user"];
+            return;
+        }
+        
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        if ([pasteboard hasURLs] == NO) {
+            [self.logger debug:@"LinkMe general board not found"];
+            return;
+        }
+        
+        NSURL *pasteboardUrl = [pasteboard URL];
+        if (pasteboardUrl == nil) {
+            [self.logger debug:@"LinkMe content not found"];
+            return;
+        }
+        
+        NSString *pasteboardUrlString = [pasteboardUrl absoluteString];
+        if (pasteboardUrlString == nil) {
+            [self.logger debug:@"LinkMe content could not be converted to string"];
+            return;
+        }
+        
+        // send sdk_click
+        double now = [NSDate.date timeIntervalSince1970];
+        ADJPackageBuilder *clickBuilder = [[ADJPackageBuilder alloc] initWithPackageParams:selfI.packageParams
+                                                                             activityState:selfI.activityState
+                                                                                    config:selfI.adjustConfig
+                                                                         sessionParameters:selfI.sessionParameters
+                                                                     trackingStatusManager:self.trackingStatusManager
+                                                                                 createdAt:now];
+        clickBuilder.clickTime = [NSDate dateWithTimeIntervalSince1970:now];
+        ADJActivityPackage *clickPackage = [clickBuilder buildClickPackage:@"linkme" linkMeUrl:pasteboardUrlString];
+        [selfI.sdkClickHandler sendSdkClick:clickPackage];
+        
+        [ADJUserDefaults setLinkMeChecked];
+    } else {
+        [self.logger warn:@"LinkMe feature is supported on iOS 15.0 and above"];
+    }
+#endif
 }
 
 #pragma mark - private
@@ -2791,6 +2889,78 @@ sdkClickHandlerOnly:(BOOL)sdkClickHandlerOnly
     [self.trackingStatusManager updateAttStatusFromUserCallback:newAttStatusFromUser];
 }
 
+- (void)processCoppaComplianceI:(ADJActivityHandler *)selfI {
+    if (!selfI.adjustConfig.coppaCompliantEnabled) {
+        [self resetThirdPartySharingCoppaActivityStateI:selfI];
+        return;
+    }
+    
+    [self disableThirdPartySharingForCoppaEnabledI:selfI];
+}
+
+- (void)disableThirdPartySharingForCoppaEnabledI:(ADJActivityHandler *)selfI {
+    if (![selfI shouldDisableThirdPartySharingWhenCoppaEnabled:selfI]) {
+        return;
+    }
+    
+    [ADJUtil launchSynchronisedWithObject:[ADJActivityState class]
+                                    block:^{
+        selfI.activityState.isThirdPartySharingDisabledForCoppa = YES;
+    }];
+    [selfI writeActivityStateI:selfI];
+    
+    ADJThirdPartySharing *thirdPartySharing = [[ADJThirdPartySharing alloc] initWithIsEnabledNumberBool:[NSNumber numberWithBool:NO]];
+    
+    double now = [NSDate.date timeIntervalSince1970];
+    
+    // build package
+    ADJPackageBuilder *tpsBuilder = [[ADJPackageBuilder alloc]
+                                     initWithPackageParams:selfI.packageParams
+                                     activityState:selfI.activityState
+                                     config:selfI.adjustConfig
+                                     sessionParameters:selfI.sessionParameters
+                                     trackingStatusManager:self.trackingStatusManager
+                                     createdAt:now];
+    
+    ADJActivityPackage *dtpsPackage = [tpsBuilder buildThirdPartySharingPackage:thirdPartySharing];
+    
+    [selfI.packageHandler addPackage:dtpsPackage];
+    
+    if (selfI.adjustConfig.eventBufferingEnabled) {
+        [selfI.logger info:@"Buffered event %@", dtpsPackage.suffix];
+    } else {
+        [selfI.packageHandler sendFirstPackage];
+    }
+}
+
+- (void)resetThirdPartySharingCoppaActivityStateI:(ADJActivityHandler *)selfI {
+    if (selfI.activityState == nil) {
+        return;
+    }
+    
+    if(selfI.activityState.isThirdPartySharingDisabledForCoppa) {
+        [ADJUtil launchSynchronisedWithObject:[ADJActivityState class]
+                                        block:^{
+            selfI.activityState.isThirdPartySharingDisabledForCoppa = NO;
+        }];
+        [selfI writeActivityStateI:selfI];
+    }
+}
+
+- (BOOL)shouldDisableThirdPartySharingWhenCoppaEnabled:(ADJActivityHandler *)selfI {
+    if (selfI.activityState == nil) {
+        return NO;
+    }
+    if (![selfI isEnabledI:selfI]) {
+        return NO;
+    }
+    if (selfI.activityState.isGdprForgotten) {
+        return NO;
+    }
+    
+    return !selfI.activityState.isThirdPartySharingDisabledForCoppa;
+}
+
 @end
 
 @interface ADJTrackingStatusManager ()
@@ -2864,4 +3034,5 @@ sdkClickHandlerOnly:(BOOL)sdkClickHandlerOnly
 
     return YES;
 }
+
 @end

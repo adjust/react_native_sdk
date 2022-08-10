@@ -26,6 +26,9 @@ NSString * const ADJAdRevenueSourceMopub = @"mopub";
 NSString * const ADJAdRevenueSourceAdMob = @"admob_sdk";
 NSString * const ADJAdRevenueSourceIronSource = @"ironsource_sdk";
 NSString * const ADJAdRevenueSourceAdMost = @"admost_sdk";
+NSString * const ADJAdRevenueSourceUnity = @"unity_sdk";
+NSString * const ADJAdRevenueSourceHeliumChartboost = @"helium_chartboost_sdk";
+NSString * const ADJAdRevenueSourcePublisher = @"publisher_sdk";
 
 NSString * const ADJUrlStrategyIndia = @"UrlStrategyIndia";
 NSString * const ADJUrlStrategyChina = @"UrlStrategyChina";
@@ -269,6 +272,12 @@ static dispatch_once_t onceToken = 0;
 + (NSString *)adid {
     @synchronized (self) {
         return [[Adjust getInstance] adid];
+    }
+}
+
++ (void)checkForNewAttStatus {
+    @synchronized (self) {
+        [[Adjust getInstance] checkForNewAttStatus];
     }
 }
 
@@ -562,6 +571,14 @@ static dispatch_once_t onceToken = 0;
 
 - (NSString *)sdkVersion {
     return [ADJUtil sdkVersion];
+}
+
+- (void)checkForNewAttStatus {
+    if (![self checkActivityHandler]) {
+        return;
+    }
+    
+    [self.activityHandler checkForNewAttStatus];
 }
 
 - (void)teardown {

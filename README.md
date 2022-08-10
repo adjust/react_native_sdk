@@ -22,6 +22,7 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
    * [AppTrackingTransparency framework](#att-framework)
       * [App-tracking authorisation wrapper](#ata-wrapper)
       * [Get current authorisation status](#ata-getter)
+      * [Check for ATT status change](#att-status-change)
    * [SKAdNetwork framework](#skadn-framework)
       * [Update SKAdNetwork conversion value](#skadn-update-conversion-value)
       * [Conversion value updated callback](#skadn-cv-updated-callback)
@@ -62,6 +63,8 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
       * [Deferred deep linking](#deeplinking-deferred)
       * [Reattribution via deep links](#deeplinking-reattribution)
    * [Data residency](#data-residency)
+   * [COPPA compliance](#coppa-compliance)
+   * [Play Store Kids Apps](#play-store-kids-apps)
 * [License](#license)
 
 ## <a id="example-app"></a>Example app
@@ -147,7 +150,6 @@ The Adjust SDK by default adds two permissions to your app's `AndroidManifest.xm
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
@@ -170,7 +172,7 @@ Since August 1, 2014, apps in the Google Play Store must use the [Google Adverti
 In order to do this, open your app's `build.gradle` file and find the `dependencies` block. Add the following line:
 
 ```gradle
-compile 'com.google.android.gms:play-services-analytics:10.0.1'
+implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
 ```
     
 **Note**: The version of the Google Play Services library that you're using is not relevant to the Adjust SDK, as long as the analytics part of the library is present in your app. In the example above, we just used the most recent version of the library at the time of writing.
@@ -209,7 +211,7 @@ In order to correctly attribute an install of your Android app to its source, Ad
 In order to support this, add the following line to your app's `build.gradle` file:
 
 ```gradle
-compile 'com.android.installreferrer:installreferrer:1.0'
+compile 'com.android.installreferrer:installreferrer:2.2'
 ```
 
 `installreferrer` library is part of Google Maven repository, so in order to be able to build your app, you need to add Google Maven repository to your app's `build.gradle` file if you haven't added it already:
@@ -259,7 +261,6 @@ Select your project in the Project Navigator. In the left hand side of the main 
 * `iAd.framework` - to support Apple Search Ads campaigns
 * `AdServices.framework` - to support Apple Search Ads campaigns
 * `AdSupport.framework` - to read iOS Advertising Id (IDFA) value
-* `CoreTelephony.framework` - to read MCC and MNC information
 * `StoreKit.framework` - to communicate with `SKAdNetwork` framework
 * `AppTrackingTransparency.framework` - to ask for user's consent to be tracked and obtain status of that consent
 
@@ -331,6 +332,16 @@ To get the current app tracking authorization status you can call `getAppTrackin
 * `2`: The user denied access to IDFA
 * `3`: The user authorized access to IDFA
 * `-1`: The status is not available
+
+### <a id="att-status-change"></a>Check for ATT status change
+
+**Note**: This feature exists only in iOS platform.
+
+In cases where you are not using [Adjust app-tracking authorization wrapper](#ata-wrapper), Adjust SDK will not be able to know immediately upon answering the dialog what is the new value of app-tracking status. In situations like this, if you would want Adjust SDK to read the new app-tracking status value and communicate it to our backend, make sure to make a call to this method:
+
+```js
+Adjust.checkForNewAttStatus();
+```
 
 ### <a id="skadn-framework"></a>SKAdNetwork framework
 
@@ -650,6 +661,7 @@ adjustConfig.setAttributionCallbackListener(function(attribution) {
     console.log(attribution.costType);
     console.log(attribution.costAmount);
     console.log(attribution.costCurrency);
+    console.log(attribution.fbInstallReferrer);
 });
 
 Adjust.create(adjustConfig);
@@ -657,17 +669,18 @@ Adjust.create(adjustConfig);
 
 Within the listener function you have access to the `attribution` parameters. Here is a quick summary of its properties:
 
-- `trackerToken`    the tracker token of the current attribution.
-- `trackerName`     the tracker name of the current attribution.
-- `network`         the network grouping level of the current attribution.
-- `campaign`        the campaign grouping level of the current attribution.
-- `adgroup`         the ad group grouping level of the current attribution.
-- `creative`        the creative grouping level of the current attribution.
-- `clickLabel`      the click label of the current attribution.
-- `adid`            the Adjust device identifier.
-- `costType`        the cost type.
-- `costAmount`      the cost amount.
-- `costCurrency`    the cost currency.
+- `trackerToken`        the tracker token of the current attribution.
+- `trackerName`         the tracker name of the current attribution.
+- `network`             the network grouping level of the current attribution.
+- `campaign`            the campaign grouping level of the current attribution.
+- `adgroup`             the ad group grouping level of the current attribution.
+- `creative`            the creative grouping level of the current attribution.
+- `clickLabel`          the click label of the current attribution.
+- `adid`                the Adjust device identifier.
+- `costType`            the cost type.
+- `costAmount`          the cost amount.
+- `costCurrency`        the cost currency.
+- `fbInstallReferrer`   the cost currency (Android only).
 
 Please make sure to consider our [applicable attribution data policies][attribution-data].
 
@@ -861,19 +874,9 @@ Upon receiving this information, Adjust changes sharing the specific user's data
 
 ### <a id="sdk-signature"></a>SDK signature
 
-An account manager must activate the Adjust SDK signature. Contact Adjust support (support@adjust.com) if you are interested in using this feature.
+When you set up the SDK Signature, each SDK communication package is "signed". This lets Adjust’s servers easily detect and reject any install activity that is not legitimate. 
 
-If the SDK signature has already been enabled on your account and you have access to App Secrets in your Adjust Dashboard, please use the method below to integrate the SDK signature into your app.
-
-An App Secret is set by passing all secret parameters (`secretId`, `info1`, `info2`, `info3`, `info4`) to `setAppSecret` method of `AdjustConfig` instance:
-
-```js
-var adjustConfig = new AdjustConfig(appToken, environment);
-
-adjustConfig.setAppSecret(secretId, info1, info2, info3, info4);
-
-Adjust.create(adjustConfig);
-```
+There are just a few steps involved in setting up the SDK Signature. Please contact your Technical Account Manager or support@adjust.com to get started.
 
 ### <a id="background-tracking"></a>Background tracking
 
@@ -1123,6 +1126,26 @@ adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyTR); // for Turkey data re
 adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyUS); // for US data residency region
 ```
 
+### <a id="coppa-compliance"></a>COPPA compliance
+
+By default Adjust SDK doesn't mark app as COPPA compliant. In order to mark your app as COPPA compliant, make sure to call `setCoppaCompliantEnabled` method of `AdjustConfig` instance with parameter `true`:
+
+```js
+adjustConfig.setCoppaCompliantEnabled(true);
+```
+
+**Note:** By enabling this feature, third-party sharing will be automatically disabled for the users. If later during the app lifetime you decide not to mark app as COPPA compliant anymore, third-party sharing **will not be automatically re-enabled**. Instead, next to not marking your app as COPPA compliant anymore, you will need to explicitly re-enable third-party sharing in case you want to do that.
+
+### <a id="play-store-kids-apps"></a>Play Store Kids Apps
+
+**Note**: This feature exists only in Android platform.
+
+By default Adjust SDK doesn't mark Android app as Play Store Kids App. In order to mark your app as the app which is targetting kids in Play Store, make sure to call `setPlayStoreKidsAppEnabled` method of `AdjustConfig` instance with parameter `true`:
+
+```js
+adjustConfig.setPlayStoreKidsAppEnabled(true);
+```
+
 [dashboard]:    http://adjust.com
 [adjust.com]:   http://adjust.com
 
@@ -1153,7 +1176,7 @@ adjustConfig.setUrlStrategy(AdjustConfig.DataResidencyUS); // for US data reside
 
 The Adjust SDK is licensed under the MIT License.
 
-Copyright (c) 2012-2021 Adjust GmbH, http://www.adjust.com
+Copyright (c) 2012-Present Adjust GmbH, http://www.adjust.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

@@ -346,6 +346,18 @@ AdjustCommandExecutor.prototype.config = function(params) {
         adjustConfig.setSendInBackground(sendInBackground);
     }
 
+    if ('playStoreKids' in params) {
+        var playStoreKidsS = getFirstParameterValue(params, 'playStoreKids');
+        var playStoreKids = playStoreKidsS == 'true';
+        adjustConfig.setPlayStoreKidsAppEnabled(playStoreKids);
+    }
+
+    if ('coppaCompliant' in params) {
+        var coppaCompliantS = getFirstParameterValue(params, 'coppaCompliant');
+        var coppaCompliant = coppaCompliantS == 'true';
+        adjustConfig.setCoppaCompliantEnabled(coppaCompliant);
+    }
+
     if ('allowiAdInfoReading' in params) {
         var allowiAdInfoReadingS = getFirstParameterValue(params, 'allowiAdInfoReading');
         var allowiAdInfoReading = allowiAdInfoReadingS == 'true';
@@ -391,6 +403,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
             AdjustSdkTest.addInfoToSend("costType", attribution.costType);
             AdjustSdkTest.addInfoToSend("costAmount", attribution.costAmount.toString());
             AdjustSdkTest.addInfoToSend("costCurrency", attribution.costCurrency);
+            AdjustSdkTest.addInfoToSend("fbInstallReferrer", attribution.fbInstallReferrer);
 
             AdjustSdkTest.sendInfoToServer(_this.basePath);
         });

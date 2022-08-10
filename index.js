@@ -132,7 +132,7 @@ Adjust.getAmazonAdId = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native4.29.6", callback);
+    module_adjust.getSdkVersion("react-native4.31.0", callback);
 };
 
 Adjust.setReferrer = function(referrer) {
@@ -167,6 +167,10 @@ Adjust.trackThirdPartySharing = function(adjustThirdPartySharing) {
 Adjust.trackMeasurementConsent = function(measurementConsent) {
     module_adjust.trackMeasurementConsent(measurementConsent);
 };
+
+Adjust.checkForNewAttStatus = function() {
+    module_adjust.checkForNewAttStatus();
+}
 
 Adjust.componentWillUnmount = function() {
     if (AdjustConfig.AttributionSubscription != null) {
@@ -234,7 +238,7 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native4.29.6";
+    this.sdkPrefix = "react-native4.31.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
@@ -253,16 +257,19 @@ var AdjustConfig = function(appToken, environment) {
     this.info3 = null;
     this.info4 = null;
     this.urlStrategy = null;
+    this.coppaCompliantEnabled = null;
     // Android only
     this.processName = null;
     this.readMobileEquipmentIdentity = null;
     this.preinstallTrackingEnabled = null;
     this.preinstallFilePath = null;
+    this.playStoreKidsAppEnabled = null;
     // iOS only
     this.allowiAdInfoReading = null;
     this.allowAdServicesInfoReading = null;
     this.allowIdfaReading = null;
     this.skAdNetworkHandling = null;
+    this.linkMeEnabled = null;
 };
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
@@ -296,6 +303,7 @@ AdjustConfig.AdRevenueSourceMopub = "mopub";
 AdjustConfig.AdRevenueSourceAdmob = "admob_sdk";
 AdjustConfig.AdRevenueSourceIronSource = "ironsource_sdk";
 AdjustConfig.AdRevenueSourceAdmost = "admost_sdk";
+AdjustConfig.AdRevenueSourcePublisher = "publisher_sdk";
 
 AdjustConfig.prototype.setEventBufferingEnabled = function(isEnabled) {
     this.eventBufferingEnabled = isEnabled;
@@ -363,6 +371,10 @@ AdjustConfig.prototype.setUrlStrategy = function(urlStrategy) {
     this.urlStrategy = urlStrategy;
 };
 
+AdjustConfig.prototype.setCoppaCompliantEnabled = function(coppaCompliantEnabled) {
+    this.coppaCompliantEnabled = coppaCompliantEnabled;
+};
+
 AdjustConfig.prototype.setReadMobileEquipmentIdentity = function(readMobileEquipmentIdentity) {
     // this.readMobileEquipmentIdentity = readMobileEquipmentIdentity;
 };
@@ -373,6 +385,10 @@ AdjustConfig.prototype.setPreinstallTrackingEnabled = function(isEnabled) {
 
 AdjustConfig.prototype.setPreinstallFilePath = function(preinstallFilePath) {
     this.preinstallFilePath = preinstallFilePath;
+};
+
+AdjustConfig.prototype.setPlayStoreKidsAppEnabled = function(isEnabled) {
+    this.playStoreKidsAppEnabled = isEnabled;
 };
 
 AdjustConfig.prototype.setAllowiAdInfoReading = function(allowiAdInfoReading) {
@@ -393,6 +409,10 @@ AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) 
 
 AdjustConfig.prototype.deactivateSKAdNetworkHandling = function() {
     this.skAdNetworkHandling = false;
+};
+
+AdjustConfig.prototype.setLinkMeEnabled = function(linkMeEnabled) {
+    this.linkMeEnabled = linkMeEnabled;
 };
 
 AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {

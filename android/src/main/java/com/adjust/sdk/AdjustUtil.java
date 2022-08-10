@@ -30,6 +30,7 @@ final class AdjustUtil {
     private static final String ATTRIBUTION_COST_TYPE = "costType";
     private static final String ATTRIBUTION_COST_AMOUNT = "costAmount";
     private static final String ATTRIBUTION_COST_CURRENCY = "costCurrency";
+    private static final String ATTRIBUTION_FB_INSTALL_REFERRER = "fbInstallReferrer";
 
     private static final String EVENT_SUCCESS_MESSAGE = "message";
     private static final String EVENT_SUCCESS_TIMESTAMP = "timestamp";
@@ -74,6 +75,7 @@ final class AdjustUtil {
         map.putString(ATTRIBUTION_COST_TYPE, null != attribution.costType ? attribution.costType : "");
         map.putDouble(ATTRIBUTION_COST_AMOUNT, null != attribution.costAmount && !attribution.costAmount.isNaN() ? attribution.costAmount : 0);
         map.putString(ATTRIBUTION_COST_CURRENCY, null != attribution.costCurrency ? attribution.costCurrency : "");
+        map.putString(ATTRIBUTION_FB_INSTALL_REFERRER, null != attribution.fbInstallReferrer ? attribution.fbInstallReferrer : "");
         return map;
     }
 

@@ -15,6 +15,7 @@ declare module 'react-native-adjust' {
     costType: string
     costAmount: number
     costCurrency: string
+    fbInstallReferrer: string
   }
 
   interface AdjustEventTrackingSuccess {
@@ -80,12 +81,15 @@ declare module 'react-native-adjust' {
     public setNeedsCost(needsCost: boolean): void
     public setPreinstallTrackingEnabled(preinstallTrackingEnabled: boolean): void
     public setPreinstallFilePath(preinstallFilePath: string): void
+    public setCoppaCompliantEnabled(coppaCompliantEnabled: boolean): void
+    public setPlayStoreKidsAppEnabled(playStoreKidsAppEnabled: boolean): void
     public setAllowiAdInfoReading(allowiAdInfoReading: boolean): void
     public setAllowAdServicesInfoReading(allowAdServicesInfoReading: boolean): void
     public setAllowIdfaReading(allowIdfaReading: boolean): void
     public setSdkPrefix(sdkPrefix: string): void
     public setShouldLaunchDeeplink(shouldLaunchDeeplink: boolean): void
     public deactivateSKAdNetworkHandling(): void;
+    public setLinkMeEnabled(linkMeEnabled: boolean): void;
 
     public setAttributionCallbackListener(
       callback: (attribution: AdjustAttribution) => void
@@ -211,5 +215,6 @@ declare module 'react-native-adjust' {
     getAppTrackingAuthorizationStatus: (callback: (authorizationStatus: number) => void) => void
     trackThirdPartySharing: (adjustThirdPartySharing: AdjustThirdPartySharing) => void
     trackMeasurementConsent: (measurementConsent: boolean) => void
+    checkForNewAttStatus: () => void
   }
 }

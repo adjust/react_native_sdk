@@ -1,3 +1,21 @@
+### Version 4.31.0 (10th August 2022)
+#### Added
+- Added ability to mark your app as COPPA compliant. You can enable this setting by calling `setCoppaCompliantEnabled` method of `AdjustConfig` instance to `true`.
+- Added ability to mark your Android app as app for the kids in accordance to Google Play Families policies. You can enable this setting by calling `setPlayStoreKidsAppEnabled` method of `AdjustConfig` instance to `true`.
+- Added `checkForNewAttStatus` method to `Adjust` API to allow iOS apps to instruct to SDK to check if `att_status` might have changed in the meantime.
+- Added support for Generic ad revenue tracking.
+- Added support for `LinkMe` feature.
+- Added support to get Facebook install referrer information in attribution callback.
+
+#### Fixed
+- Fixed `react-native` 0.69 autolinking issue (https://github.com/adjust/react_native_sdk/pull/186).
+
+#### Native SDKs
+- [iOS@v4.31.0][ios_sdk_v4.31.0]
+- [Android@v4.31.0][android_sdk_v4.31.0]
+
+---
+
 ### Version 4.29.6 (26th January 2022)
 #### Added
 - Added support to OAID plugin for MSA SDK v1.1.0.
@@ -503,6 +521,7 @@
 [ios_sdk_v4.29.4]: https://github.com/adjust/ios_sdk/tree/v4.29.4
 [ios_sdk_v4.29.5]: https://github.com/adjust/ios_sdk/tree/v4.29.5
 [ios_sdk_v4.29.6]: https://github.com/adjust/ios_sdk/tree/v4.29.6
+[ios_sdk_v4.31.0]: https://github.com/adjust/ios_sdk/tree/v4.31.0
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -532,3 +551,4 @@
 [android_sdk_v4.28.4]: https://github.com/adjust/android_sdk/tree/v4.28.4
 [android_sdk_v4.28.8]: https://github.com/adjust/android_sdk/tree/v4.28.8
 [android_sdk_v4.28.9]: https://github.com/adjust/android_sdk/tree/v4.28.9
+[android_sdk_v4.31.0]: https://github.com/adjust/android_sdk/tree/v4.31.0

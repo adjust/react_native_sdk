@@ -13,11 +13,11 @@ Pod::Spec.new do |s|
   s.source         = { :git => 'git://github.com/adjust/react_native_sdk.git', :tag => s.version }
 
   s.requires_arc   = true
-  s.platform       = :ios, '8.0'
+  s.platform       = :ios, '9.0'
 
   s.preserve_paths = 'LICENSE', 'README.md', 'package.json', 'index.js'
   s.source_files   = 'ios/*.{h,m}'
 
-  s.dependency 'Adjust', '4.29.6'
+  s.dependency 'Adjust', '4.31.0'
   s.dependency 'React'
 end

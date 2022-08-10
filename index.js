@@ -300,6 +300,7 @@ AdjustConfig.AdRevenueSourceMopub = "mopub";
 AdjustConfig.AdRevenueSourceAdmob = "admob_sdk";
 AdjustConfig.AdRevenueSourceIronSource = "ironsource_sdk";
 AdjustConfig.AdRevenueSourceAdmost = "admost_sdk";
+AdjustConfig.AdRevenueSourcePublisher = "publisher_sdk";
 
 AdjustConfig.prototype.setEventBufferingEnabled = function(isEnabled) {
     this.eventBufferingEnabled = isEnabled;

@@ -126,6 +126,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         boolean preinstallTrackingEnabled = false;
         boolean needsCost = false;
         boolean playStoreKidsAppEnabled = false;
+        boolean coppaCompliantEnabled = false;
 
         // Suppress log level.
         if (checkKey(mapConfig, "logLevel")) {

@@ -547,6 +547,7 @@ RCT_EXPORT_METHOD(convertUniversalLink:(NSString *)urlString scheme:(NSString *)
 RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
     NSNumber *isEnabled = dict[@"isEnabled"];
     NSArray *granularOptions = dict[@"granularOptions"];
+    NSArray *partnerSharingSettings = dict[@"partnerSharingSettings"];
 
     if (isEnabled != nil && [isEnabled isKindOfClass:[NSNull class]]) {
         isEnabled = nil;
@@ -560,6 +561,16 @@ RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
             NSString *key = [granularOptions objectAtIndex:i+1];
             NSString *value = [granularOptions objectAtIndex:i+2];
             [adjustThirdPartySharing addGranularOption:partnerName key:key value:value];
+        }
+    }
+
+    // Partner sharing settings.
+    if ([self isFieldValid:partnerSharingSettings]) {
+        for (int i = 0; i < [partnerSharingSettings count]; i += 3) {
+            NSString *partnerName = [partnerSharingSettings objectAtIndex:i];
+            NSString *key = [partnerSharingSettings objectAtIndex:i+1];
+            NSString *value = [partnerSharingSettings objectAtIndex:i+2];
+            [adjustThirdPartySharing addPartnerSharingSetting:partnerName key:key value:[value boolValue]];
         }
     }
 

@@ -593,6 +593,7 @@ AdjustPlayStoreSubscription.prototype.addPartnerParameter = function(key, value)
 var AdjustThirdPartySharing = function(isEnabled) {
     this.isEnabled = isEnabled;
     this.granularOptions = [];
+    this.partnerSharingSettings = [];
 };
 
 AdjustThirdPartySharing.prototype.addGranularOption = function(partnerName, key, value) {
@@ -602,6 +603,15 @@ AdjustThirdPartySharing.prototype.addGranularOption = function(partnerName, key,
     this.granularOptions.push(partnerName);
     this.granularOptions.push(key);
     this.granularOptions.push(value);
+};
+
+AdjustThirdPartySharing.prototype.addPartnerSharingSetting = function(partnerName, key, value) {
+    if (typeof partnerName !== 'string' || typeof key !== 'string' || typeof value !== 'boolean') {
+        return;
+    }
+    this.partnerSharingSettings.push(partnerName);
+    this.partnerSharingSettings.push(key);
+    this.partnerSharingSettings.push(value);
 };
 
 // AdjustAdRevenue

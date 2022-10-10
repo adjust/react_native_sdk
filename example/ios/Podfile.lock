@@ -1,7 +1,7 @@
 PODS:
-  - Adjust (4.32.0):
-    - Adjust/Core (= 4.32.0)
-  - Adjust/Core (4.32.0)
+  - Adjust (4.29.6):
+    - Adjust/Core (= 4.29.6)
+  - Adjust/Core (4.29.6)
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
@@ -287,9 +287,9 @@ PODS:
   - React-jsinspector (0.69.4)
   - React-logger (0.69.4):
     - glog
-  - react-native-adjust (4.32.0):
-    - Adjust (= 4.32.0)
-    - React-Core
+  - react-native-adjust (4.29.6):
+    - Adjust (= 4.29.6)
+    - React
   - React-perflogger (0.69.4)
   - React-RCTActionSheet (0.69.4):
     - React-Core/RCTActionSheetHeaders (= 0.69.4)
@@ -508,7 +508,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adjust: d537f6d943f536d801ff8d07a971461539ce1fc5
+  Adjust: 94f1c99429fb2a7ebe530294fd66a88d63a54922
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -541,7 +541,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: a27badbbdbc0ff781813370736a2d1c7261181d4
   React-jsinspector: 8a3d3f5dcd23a91e8c80b1bf0e96902cd1dca999
   React-logger: 1088859f145b8f6dd0d3ed051a647ef0e3e80fad
-  react-native-adjust: 076901ab7cbdbd9707ecfe5a90365b97afc8643a
+  react-native-adjust: 8152efdf7a2e94a85ce427f2096b4167f2824273
   React-perflogger: cb386fd44c97ec7f8199c04c12b22066b0f2e1e0
   React-RCTActionSheet: f803a85e46cf5b4066c2ac5e122447f918e9c6e5
   React-RCTAnimation: 19c80fa950ccce7f4db76a2a7f2cf79baae07fc7
@@ -560,4 +560,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9e9743fe52beedb026f101e19db1b71cabea428f
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.11.2

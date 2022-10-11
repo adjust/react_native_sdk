@@ -1,3 +1,20 @@
+### Version 4.32.0 (11th October 2022)
+#### Added
+- Added partner sharing settings to the third party sharing feature.
+- Added `getLastDeeplink` getter to `Adjust` API to be able to get last tracked deep link by the SDK (iOS only).
+
+#### Changed
+- Switched to adding permission `com.google.android.gms.permission.AD_ID` in the Android app's manifest by default.
+
+#### Fixed
+- Fixed Xcode 14 build errors by switching to usage of `React-Core` pod (https://github.com/adjust/react_native_sdk/issues/193).
+
+#### Native SDKs
+- [iOS@v4.32.1][ios_sdk_v4.32.1]
+- [Android@v4.32.0][android_sdk_v4.32.0]
+
+---
+
 ### Version 4.31.0 (10th August 2022)
 #### Added
 - Added ability to mark your app as COPPA compliant. You can enable this setting by calling `setCoppaCompliantEnabled` method of `AdjustConfig` instance to `true`.
@@ -522,6 +539,7 @@
 [ios_sdk_v4.29.5]: https://github.com/adjust/ios_sdk/tree/v4.29.5
 [ios_sdk_v4.29.6]: https://github.com/adjust/ios_sdk/tree/v4.29.6
 [ios_sdk_v4.31.0]: https://github.com/adjust/ios_sdk/tree/v4.31.0
+[ios_sdk_v4.32.1]: https://github.com/adjust/ios_sdk/tree/v4.32.1
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -552,3 +570,4 @@
 [android_sdk_v4.28.8]: https://github.com/adjust/android_sdk/tree/v4.28.8
 [android_sdk_v4.28.9]: https://github.com/adjust/android_sdk/tree/v4.28.9
 [android_sdk_v4.31.0]: https://github.com/adjust/android_sdk/tree/v4.31.0
+[android_sdk_v4.32.0]: https://github.com/adjust/android_sdk/tree/v4.32.0

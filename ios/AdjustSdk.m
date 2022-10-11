@@ -530,6 +530,9 @@ RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
     [self addValueOrEmpty:dictionary key:@"adgroup" value:attribution.adgroup];
     [self addValueOrEmpty:dictionary key:@"clickLabel" value:attribution.clickLabel];
     [self addValueOrEmpty:dictionary key:@"adid" value:attribution.adid];
+    [self addValueOrEmpty:dictionary key:@"costType" value:attribution.costType];
+    [self addValueOrEmpty:dictionary key:@"costAmount" value:attribution.costAmount];
+    [self addValueOrEmpty:dictionary key:@"costCurrency" value:attribution.costCurrency];
     callback(@[dictionary]);
 }
 

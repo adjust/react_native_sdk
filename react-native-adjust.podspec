@@ -18,6 +18,6 @@ Pod::Spec.new do |s|
   s.preserve_paths = 'LICENSE', 'README.md', 'package.json', 'index.js'
   s.source_files   = 'ios/*.{h,m}'
 
-  s.dependency 'Adjust', '4.31.0'
-  s.dependency 'React'
+  s.dependency 'Adjust', '4.32.1'
+  s.dependency 'React-Core'
 end

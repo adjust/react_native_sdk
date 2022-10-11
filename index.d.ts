@@ -168,6 +168,7 @@ declare module 'react-native-adjust' {
   export class AdjustThirdPartySharing {
     constructor(isEnabled: boolean)
     public addGranularOption(partnerName: string, key: string, value: string): void
+    public addPartnerSharingSetting(partnerName: string, key: string, value: boolean): void
   }
 
   export class AdjustAdRevenue {
@@ -216,5 +217,6 @@ declare module 'react-native-adjust' {
     trackThirdPartySharing: (adjustThirdPartySharing: AdjustThirdPartySharing) => void
     trackMeasurementConsent: (measurementConsent: boolean) => void
     checkForNewAttStatus: () => void
+    getLastDeeplink: (callback: (lastDeeplink: string) => void) => void
   }
 }

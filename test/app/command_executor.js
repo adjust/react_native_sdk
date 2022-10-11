@@ -133,6 +133,7 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
         case "thirdPartySharing" : this.trackThirdPartySharing(command.params); break;
         case "measurementConsent" : this.trackMeasurementConsent(command.params); break;
         case "trackAdRevenueV2" : this.trackAdRevenueV2(command.params); break;
+        case 'getLastDeeplink' : this.getLastDeeplink(command.params); break;
     }
 
     this.nextToSendCounter++;
@@ -773,6 +774,16 @@ AdjustCommandExecutor.prototype.trackThirdPartySharing = function(params) {
         }
     }
 
+    if ('partnerSharingSettings' in params) {
+        var partnerSharingSettings = getValueFromKey(params, 'partnerSharingSettings');
+        for (var i = 0; i < partnerSharingSettings.length; i += 3) {
+            var partnerName = partnerSharingSettings[i];
+            var key = partnerSharingSettings[i+1];
+            var value = partnerSharingSettings[i+2] === 'true';
+            adjustThirdPartySharing.addPartnerSharingSetting(partnerName, key, value);
+        }
+    }
+
     Adjust.trackThirdPartySharing(adjustThirdPartySharing);
 };
 
@@ -860,6 +871,16 @@ AdjustCommandExecutor.prototype.trackAdRevenueV2 = function(params) {
     }
 
     Adjust.trackAdRevenue(adjustAdRevenue);
+};
+
+AdjustCommandExecutor.prototype.getLastDeeplink = function(params) {
+    if (Platform.OS === "ios") {
+        var _this = this;
+        Adjust.getLastDeeplink(function(lastDeeplink) {
+            AdjustSdkTest.addInfoToSend('last_deeplink', lastDeeplink);
+            AdjustSdkTest.sendInfoToServer(_this.basePath);
+        });
+    }
 };
 
 // Util

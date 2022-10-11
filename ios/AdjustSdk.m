@@ -530,6 +530,9 @@ RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
     [self addValueOrEmpty:dictionary key:@"adgroup" value:attribution.adgroup];
     [self addValueOrEmpty:dictionary key:@"clickLabel" value:attribution.clickLabel];
     [self addValueOrEmpty:dictionary key:@"adid" value:attribution.adid];
+    [self addValueOrEmpty:dictionary key:@"costType" value:attribution.costType];
+    [self addValueOrEmpty:dictionary key:@"costAmount" value:attribution.costAmount];
+    [self addValueOrEmpty:dictionary key:@"costCurrency" value:attribution.costCurrency];
     callback(@[dictionary]);
 }
 
@@ -547,6 +550,7 @@ RCT_EXPORT_METHOD(convertUniversalLink:(NSString *)urlString scheme:(NSString *)
 RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
     NSNumber *isEnabled = dict[@"isEnabled"];
     NSArray *granularOptions = dict[@"granularOptions"];
+    NSArray *partnerSharingSettings = dict[@"partnerSharingSettings"];
 
     if (isEnabled != nil && [isEnabled isKindOfClass:[NSNull class]]) {
         isEnabled = nil;
@@ -563,6 +567,16 @@ RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
         }
     }
 
+    // Partner sharing settings.
+    if ([self isFieldValid:partnerSharingSettings]) {
+        for (int i = 0; i < [partnerSharingSettings count]; i += 3) {
+            NSString *partnerName = [partnerSharingSettings objectAtIndex:i];
+            NSString *key = [partnerSharingSettings objectAtIndex:i+1];
+            NSString *value = [partnerSharingSettings objectAtIndex:i+2];
+            [adjustThirdPartySharing addPartnerSharingSetting:partnerName key:key value:[value boolValue]];
+        }
+    }
+
     // Track third party sharing.
     [Adjust trackThirdPartySharing:adjustThirdPartySharing];
 }
@@ -573,6 +587,15 @@ RCT_EXPORT_METHOD(trackMeasurementConsent:(NSNumber * _Nonnull)measurementConsen
 
 RCT_EXPORT_METHOD(checkForNewAttStatus) {
     [Adjust checkForNewAttStatus];
+}
+
+RCT_EXPORT_METHOD(getLastDeeplink:(RCTResponseSenderBlock)callback) {
+    NSURL *lastDeeplink = [Adjust lastDeeplink];
+    if (nil == lastDeeplink) {
+        callback(@[@""]);
+    } else {
+        callback(@[[lastDeeplink absoluteString]]);
+    }
 }
 
 RCT_EXPORT_METHOD(setAttributionCallbackListener) {

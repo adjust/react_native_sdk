@@ -740,6 +740,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
         Boolean isEnabled = null;
         List<Object> granularOptions = null;
+        List<Object> partnerSharingSettings = null;
 
         // Enabled.
         if (checkKey(mapThirdPartySharing, "isEnabled")) {
@@ -761,6 +762,19 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
+        // Partner sharing settings.
+        if (checkKey(mapThirdPartySharing, "partnerSharingSettings")) {
+            partnerSharingSettings = AdjustUtil.toList(mapThirdPartySharing.getArray("partnerSharingSettings"));
+            if (null != partnerSharingSettings) {
+                for (int i = 0; i < partnerSharingSettings.size(); i += 3) {
+                    thirdPartySharing.addPartnerSharingSetting(
+                        partnerSharingSettings.get(i).toString(),
+                        partnerSharingSettings.get(i+1).toString(),
+                        Boolean.parseBoolean(partnerSharingSettings.get(i+2).toString()));
+                }
+            }
+        }
+
         // Track third party sharing.
         com.adjust.sdk.Adjust.trackThirdPartySharing(thirdPartySharing);
     }
@@ -773,6 +787,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     @ReactMethod
     public void checkForNewAttStatus() {
         // do nothing
+    }
+
+    @ReactMethod
+    public void getLastDeeplink(Callback callback) {
+        callback.invoke("");
     }
 
     @ReactMethod

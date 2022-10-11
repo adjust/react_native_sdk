@@ -8,6 +8,7 @@
 
 #### Fixed
 - Fixed Xcode 14 build errors by switching to usage of `React-Core` pod (https://github.com/adjust/react_native_sdk/issues/193).
+- Added missing cost data info to attribution getter once invoked on iOS platform.
 
 #### Native SDKs
 - [iOS@v4.32.1][ios_sdk_v4.32.1]

@@ -586,6 +586,15 @@ RCT_EXPORT_METHOD(checkForNewAttStatus) {
     [Adjust checkForNewAttStatus];
 }
 
+RCT_EXPORT_METHOD(getLastDeeplink:(RCTResponseSenderBlock)callback) {
+    NSURL *lastDeeplink = [Adjust lastDeeplink];
+    if (nil == lastDeeplink) {
+        callback(@[@""]);
+    } else {
+        callback(@[[lastDeeplink absoluteString]]);
+    }
+}
+
 RCT_EXPORT_METHOD(setAttributionCallbackListener) {
     _isAttributionCallbackImplemented = YES;
 }

@@ -790,6 +790,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
+    public void getLastDeeplink(Callback callback) {
+        callback.invoke("");
+    }
+
+    @ReactMethod
     public void setAttributionCallbackListener() {
         this.attributionCallback = true;
     }

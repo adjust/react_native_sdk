@@ -170,7 +170,11 @@ Adjust.trackMeasurementConsent = function(measurementConsent) {
 
 Adjust.checkForNewAttStatus = function() {
     module_adjust.checkForNewAttStatus();
-}
+};
+
+Adjust.getLastDeeplink = function(callback) {
+    module_adjust.getLastDeeplink(callback);
+};
 
 Adjust.componentWillUnmount = function() {
     if (AdjustConfig.AttributionSubscription != null) {

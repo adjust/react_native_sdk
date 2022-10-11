@@ -217,5 +217,6 @@ declare module 'react-native-adjust' {
     trackThirdPartySharing: (adjustThirdPartySharing: AdjustThirdPartySharing) => void
     trackMeasurementConsent: (measurementConsent: boolean) => void
     checkForNewAttStatus: () => void
+    getLastDeeplink: (callback: (lastDeeplink: string) => void) => void
   }
 }

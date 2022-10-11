@@ -219,7 +219,6 @@ compile 'com.android.installreferrer:installreferrer:2.2'
 ```gradle
 allprojects {
     repositories {
-        jcenter()
         maven {
             url "https://maven.google.com"
         }

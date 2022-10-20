@@ -845,7 +845,7 @@ Upon receiving this information, Adjust will block the sharing of that specific 
 Call the following method to instruct the Adjust SDK to communicate the user's choice to share data or change data sharing, to the Adjust backend:
 
 ```js
-var adjustThirdPartySharing = new AdjustThirdPartySharing(false);
+var adjustThirdPartySharing = new AdjustThirdPartySharing(true);
 Adjust.trackThirdPartySharing(adjustThirdPartySharing);
 ```
 

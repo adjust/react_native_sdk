@@ -1,3 +1,13 @@
+### Version 4.32.1 (14th November 2022)
+#### Fixed
+- Fixed conversion bug which caused `transaction_date` parameter of iOS subscription tracking to be wrongly formatted.
+
+#### Native SDKs
+- [iOS@v4.32.1][ios_sdk_v4.32.1]
+- [Android@v4.32.0][android_sdk_v4.32.0]
+
+---
+
 ### Version 4.32.0 (11th October 2022)
 #### Added
 - Added partner sharing settings to the third party sharing feature.

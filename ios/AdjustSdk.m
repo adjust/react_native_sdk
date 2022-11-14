@@ -387,7 +387,7 @@ RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
 
     // Transaction date.
     if ([self isFieldValid:transactionDate]) {
-        NSTimeInterval transactionDateInterval = [transactionDate doubleValue];
+        NSTimeInterval transactionDateInterval = [transactionDate doubleValue] / 1000.0;
         NSDate *oTransactionDate = [NSDate dateWithTimeIntervalSince1970:transactionDateInterval];
         [subscription setTransactionDate:oTransactionDate];
     }

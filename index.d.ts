@@ -60,6 +60,12 @@ declare module 'react-native-adjust' {
     conversionValue: number
   }
 
+  interface AdjustSkad4Data {
+    fineValue: number
+    coarseValue: string
+    lockWindow: boolean
+  }
+
   export class AdjustConfig {
     constructor(appToken: string, environment: Environment)
     public setLogLevel(level: LogLevel): void
@@ -117,6 +123,10 @@ declare module 'react-native-adjust' {
 
     public setConversionValueUpdatedCallbackListener(
       callback: (conversionValue: AdjustConversionValue) => void
+    ): void
+
+    public setSkad4ConversionValueUpdatedCallbackListener(
+      callback: (skad4Data: AdjustSkad4Data) => void
     ): void
 
     static LogLevelVerbose: LogLevel

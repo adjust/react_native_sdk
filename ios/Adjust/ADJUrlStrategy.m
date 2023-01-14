@@ -16,11 +16,15 @@ static NSString * const subscriptionUrl = @"https://subscription.adjust.com";
 
 static NSString * const baseUrlIndia = @"https://app.adjust.net.in";
 static NSString * const gdprUrlIndia = @"https://gdpr.adjust.net.in";
-static NSString * const subscritionUrlIndia = @"https://subscription.adjust.net.in";
+static NSString * const subscriptionUrlIndia = @"https://subscription.adjust.net.in";
 
 static NSString * const baseUrlChina = @"https://app.adjust.world";
 static NSString * const gdprUrlChina = @"https://gdpr.adjust.world";
-static NSString * const subscritionUrlChina = @"https://subscription.adjust.world";
+static NSString * const subscriptionUrlChina = @"https://subscription.adjust.world";
+
+static NSString * const baseUrlCn = @"https://app.adjust.cn";
+static NSString * const gdprUrlCn = @"https://gdpr.adjust.com";
+static NSString * const subscriptionUrlCn = @"https://subscription.adjust.com";
 
 static NSString * const baseUrlEU = @"https://app.eu.adjust.com";
 static NSString * const gdprUrlEU = @"https://gdpr.eu.adjust.com";
@@ -60,10 +64,10 @@ static NSString * const subscriptionUrlUS = @"https://subscription.us.adjust.com
 
     _extraPath = extraPath ?: @"";
 
-    _baseUrlChoicesArray = [ADJUrlStrategy baseUrlChoicesWithWithUrlStrategyInfo:urlStrategyInfo];
-    _gdprUrlChoicesArray = [ADJUrlStrategy gdprUrlChoicesWithWithUrlStrategyInfo:urlStrategyInfo];
+    _baseUrlChoicesArray = [ADJUrlStrategy baseUrlChoicesWithUrlStrategyInfo:urlStrategyInfo];
+    _gdprUrlChoicesArray = [ADJUrlStrategy gdprUrlChoicesWithUrlStrategyInfo:urlStrategyInfo];
     _subscriptionUrlChoicesArray = [ADJUrlStrategy
-                                    subscriptionUrlChoicesWithWithUrlStrategyInfo:urlStrategyInfo];
+                                    subscriptionUrlChoicesWithUrlStrategyInfo:urlStrategyInfo];
 
     _overridenBaseUrl = [ADJAdjustFactory baseUrl];
     _overridenGdprUrl = [ADJAdjustFactory gdprUrl];
@@ -77,11 +81,13 @@ static NSString * const subscriptionUrlUS = @"https://subscription.us.adjust.com
     return self;
 }
 
-+ (NSArray<NSString *> *)baseUrlChoicesWithWithUrlStrategyInfo:(NSString *)urlStrategyInfo {
++ (NSArray<NSString *> *)baseUrlChoicesWithUrlStrategyInfo:(NSString *)urlStrategyInfo {
     if ([urlStrategyInfo isEqualToString:ADJUrlStrategyIndia]) {
         return @[baseUrlIndia, baseUrl];
     } else if ([urlStrategyInfo isEqualToString:ADJUrlStrategyChina]) {
         return @[baseUrlChina, baseUrl];
+    } else if ([urlStrategyInfo isEqualToString:ADJUrlStrategyCn]) {
+        return @[baseUrlCn, baseUrl];
     } else if ([urlStrategyInfo isEqualToString:ADJDataResidencyEU]) {
         return @[baseUrlEU];
     } else if ([urlStrategyInfo isEqualToString:ADJDataResidencyTR]) {
@@ -93,11 +99,13 @@ static NSString * const subscriptionUrlUS = @"https://subscription.us.adjust.com
     }
 }
 
-+ (NSArray<NSString *> *)gdprUrlChoicesWithWithUrlStrategyInfo:(NSString *)urlStrategyInfo {
++ (NSArray<NSString *> *)gdprUrlChoicesWithUrlStrategyInfo:(NSString *)urlStrategyInfo {
     if ([urlStrategyInfo isEqualToString:ADJUrlStrategyIndia]) {
         return @[gdprUrlIndia, gdprUrl];
     } else if ([urlStrategyInfo isEqualToString:ADJUrlStrategyChina]) {
         return @[gdprUrlChina, gdprUrl];
+    } else if ([urlStrategyInfo isEqualToString:ADJUrlStrategyCn]) {
+        return @[gdprUrlCn, gdprUrl];
     } else if ([urlStrategyInfo isEqualToString:ADJDataResidencyEU]) {
         return @[gdprUrlEU];
     } else if ([urlStrategyInfo isEqualToString:ADJDataResidencyTR]) {
@@ -109,11 +117,13 @@ static NSString * const subscriptionUrlUS = @"https://subscription.us.adjust.com
     }
 }
 
-+ (NSArray<NSString *> *)subscriptionUrlChoicesWithWithUrlStrategyInfo:(NSString *)urlStrategyInfo {
++ (NSArray<NSString *> *)subscriptionUrlChoicesWithUrlStrategyInfo:(NSString *)urlStrategyInfo {
     if ([urlStrategyInfo isEqualToString:ADJUrlStrategyIndia]) {
-        return @[subscritionUrlIndia, subscriptionUrl];
+        return @[subscriptionUrlIndia, subscriptionUrl];
     } else if ([urlStrategyInfo isEqualToString:ADJUrlStrategyChina]) {
-        return @[subscritionUrlChina, subscriptionUrl];
+        return @[subscriptionUrlChina, subscriptionUrl];
+    } else if ([urlStrategyInfo isEqualToString:ADJUrlStrategyCn]) {
+        return @[subscriptionUrlCn, subscriptionUrl];
     } else if ([urlStrategyInfo isEqualToString:ADJDataResidencyEU]) {
         return @[subscriptionUrlEU];
     } else if ([urlStrategyInfo isEqualToString:ADJDataResidencyTR]) {
@@ -121,7 +131,7 @@ static NSString * const subscriptionUrlUS = @"https://subscription.us.adjust.com
     } else if ([urlStrategyInfo isEqualToString:ADJDataResidencyUS]) {
         return @[subscriptionUrlUS];
     } else {
-        return @[subscriptionUrl, subscritionUrlIndia, subscritionUrlChina];
+        return @[subscriptionUrl, subscriptionUrlIndia, subscriptionUrlChina];
     }
 }
 

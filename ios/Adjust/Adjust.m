@@ -12,6 +12,7 @@
 #import "ADJUserDefaults.h"
 #import "ADJAdjustFactory.h"
 #import "ADJActivityHandler.h"
+#import "ADJSKAdNetwork.h"
 
 #if !__has_feature(objc_arc)
 #error Adjust requires ARC
@@ -32,6 +33,7 @@ NSString * const ADJAdRevenueSourcePublisher = @"publisher_sdk";
 
 NSString * const ADJUrlStrategyIndia = @"UrlStrategyIndia";
 NSString * const ADJUrlStrategyChina = @"UrlStrategyChina";
+NSString * const ADJUrlStrategyCn = @"UrlStrategyCn";
 
 NSString * const ADJDataResidencyEU = @"DataResidencyEU";
 NSString * const ADJDataResidencyTR = @"DataResidencyTR";
@@ -254,6 +256,36 @@ static dispatch_once_t onceToken = 0;
 + (void)updateConversionValue:(NSInteger)conversionValue {
     @synchronized (self) {
         [[Adjust getInstance] updateConversionValue:conversionValue];
+    }
+}
+
++ (void)updatePostbackConversionValue:(NSInteger)conversionValue
+                    completionHandler:(void (^_Nullable)(NSError *_Nullable error))completion {
+    @synchronized (self) {
+        [[Adjust getInstance] updatePostbackConversionValue:conversionValue
+                                          completionHandler:completion];
+    }
+}
+
++ (void)updatePostbackConversionValue:(NSInteger)fineValue
+                          coarseValue:(nonnull NSString *)coarseValue
+                    completionHandler:(void (^_Nullable)(NSError *_Nullable error))completion {
+    @synchronized (self) {
+        [[Adjust getInstance] updatePostbackConversionValue:fineValue
+                                                coarseValue:coarseValue
+                                          completionHandler:completion];
+    }
+}
+
++ (void)updatePostbackConversionValue:(NSInteger)fineValue
+                          coarseValue:(nonnull NSString *)coarseValue
+                           lockWindow:(BOOL)lockWindow
+                    completionHandler:(void (^_Nullable)(NSError *_Nullable error))completion {
+    @synchronized (self) {
+        [[Adjust getInstance] updatePostbackConversionValue:fineValue
+                                                coarseValue:coarseValue
+                                                 lockWindow:lockWindow
+                                          completionHandler:completion];
     }
 }
 
@@ -552,7 +584,31 @@ static dispatch_once_t onceToken = 0;
 }
 
 - (void)updateConversionValue:(NSInteger)conversionValue {
-    [ADJUtil updateSkAdNetworkConversionValue:[NSNumber numberWithInteger:conversionValue]];
+    [[ADJSKAdNetwork getInstance] updateConversionValue:conversionValue];
+}
+
+- (void)updatePostbackConversionValue:(NSInteger)conversionValue
+                    completionHandler:(void (^_Nullable)(NSError *_Nullable error))completion {
+    [[ADJSKAdNetwork getInstance] updatePostbackConversionValue:conversionValue
+                                              completionHandler:completion];
+}
+
+- (void)updatePostbackConversionValue:(NSInteger)fineValue
+                          coarseValue:(nonnull NSString *)coarseValue
+                    completionHandler:(void (^_Nullable)(NSError *_Nullable error))completion {
+    [[ADJSKAdNetwork getInstance] updatePostbackConversionValue:fineValue
+                                                    coarseValue:coarseValue
+                                              completionHandler:completion];
+}
+
+- (void)updatePostbackConversionValue:(NSInteger)fineValue
+                          coarseValue:(nonnull NSString *)coarseValue
+                           lockWindow:(BOOL)lockWindow
+                    completionHandler:(void (^_Nullable)(NSError *_Nullable error))completion {
+    [[ADJSKAdNetwork getInstance] updatePostbackConversionValue:fineValue
+                                                    coarseValue:coarseValue
+                                                     lockWindow:lockWindow
+                                              completionHandler:completion];
 }
 
 - (void)trackAdRevenue:(ADJAdRevenue *)adRevenue {

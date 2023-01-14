@@ -39,13 +39,13 @@ static NSRegularExpression *optionalRedirectRegex = nil;
 static NSRegularExpression *shortUniversalLinkRegex = nil;
 static NSRegularExpression *excludedDeeplinkRegex = nil;
 
-static NSString * const kClientSdk                  = @"ios4.32.1";
+static NSString * const kClientSdk                  = @"ios4.33.3";
 static NSString * const kDeeplinkParam              = @"deep_link=";
 static NSString * const kSchemeDelimiter            = @"://";
 static NSString * const kDefaultScheme              = @"AdjustUniversalScheme";
 static NSString * const kUniversalLinkPattern       = @"https://[^.]*\\.ulink\\.adjust\\.com/ulink/?(.*)";
 static NSString * const kOptionalRedirectPattern    = @"adjust_redirect=[^&#]*";
-static NSString * const kShortUniversalLinkPattern  = @"http[s]?://[a-z0-9]{4}\\.adj\\.st/?(.*)";
+static NSString * const kShortUniversalLinkPattern  = @"http[s]?://[a-z0-9]{4}\\.(?:[a-z]{2}\\.)?adj\\.st/?(.*)";
 static NSString * const kExcludedDeeplinksPattern   = @"^(fb|vk)[0-9]{5,}[^:]*://authorize.*access_token=.*";
 static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'Z";
 
@@ -1031,31 +1031,6 @@ static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SS
 
 + (NSString *)sdkVersion {
     return kClientSdk;
-}
-
-+ (void)updateSkAdNetworkConversionValue:(NSNumber *)conversionValue {
-    id<ADJLogger> logger = [ADJAdjustFactory logger];
-    
-    Class skAdNetwork = NSClassFromString(@"SKAdNetwork");
-    if (skAdNetwork == nil) {
-        [logger warn:@"StoreKit framework not found in the app (SKAdNetwork not found)"];
-        return;
-    }
-    
-    SEL updateConversionValueSelector = NSSelectorFromString(@"updateConversionValue:");
-    if ([skAdNetwork respondsToSelector:updateConversionValueSelector]) {
-        NSInteger intValue = [conversionValue integerValue];
-        
-        NSMethodSignature *conversionValueMethodSignature = [skAdNetwork methodSignatureForSelector:updateConversionValueSelector];
-        NSInvocation *conversionInvocation = [NSInvocation invocationWithMethodSignature:conversionValueMethodSignature];
-        [conversionInvocation setSelector:updateConversionValueSelector];
-        [conversionInvocation setTarget:skAdNetwork];
-
-        [conversionInvocation setArgument:&intValue atIndex:2];
-        [conversionInvocation invoke];
-        
-        [logger verbose:@"Call to SKAdNetwork's updateConversionValue: method made with value %d", intValue];
-    }
 }
 
 + (Class)adSupportManager {

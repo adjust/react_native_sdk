@@ -39,6 +39,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
                    conversionValueUpdatedCallback:(BOOL)swizzleConversionValueUpdatedCallback
+              skad4ConversionValueUpdatedCallback:(BOOL)swizzleSkad4ConversionValueUpdatedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
     dispatch_once(&onceToken, ^{
         defaultInstance = [[AdjustSdkDelegate alloc] init];
@@ -71,6 +72,10 @@ static AdjustSdkDelegate *defaultInstance = nil;
         if (swizzleConversionValueUpdatedCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustConversionValueUpdated:)
                                   swizzledSelector:@selector(adjustConversionValueUpdatedWannabe:)];
+        }
+        if (swizzleSkad4ConversionValueUpdatedCallback) {
+            [defaultInstance swizzleCallbackMethod:@selector(adjustConversionValueUpdated:coarseValue:lockWindow:)
+                                  swizzledSelector:@selector(adjustConversionValueUpdatedWannabe:coarseValue:lockWindow:)];
         }
         [defaultInstance setShouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink];
     });
@@ -197,6 +202,17 @@ static AdjustSdkDelegate *defaultInstance = nil;
 - (void)adjustConversionValueUpdatedWannabe:(NSNumber *)conversionValue {
     // NSString *strConversionValue = [conversionValue stringValue];
     [AdjustEventEmitter dispatchEvent:@"adjust_conversionValueUpdated" withDictionary:@{@"conversionValue": conversionValue}];
+}
+
+
+- (void)adjustConversionValueUpdatedWannabe:(nullable NSNumber *)fineValue
+                                coarseValue:(nullable NSString *)coarseValue
+                                 lockWindow:(nullable NSNumber *)lockWindow {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    [self addValueOrEmpty:dictionary key:@"fineValue" value:[fineValue stringValue]];
+    [self addValueOrEmpty:dictionary key:@"coarseValue" value:coarseValue];
+    [self addValueOrEmpty:dictionary key:@"lockWindow" value:[lockWindow stringValue]];
+    [AdjustEventEmitter dispatchEvent:@"adjust_skad4ConversionValueUpdated" withDictionary:dictionary];
 }
 
 - (void)swizzleCallbackMethod:(SEL)originalSelector

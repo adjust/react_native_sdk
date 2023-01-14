@@ -294,6 +294,7 @@ AdjustConfig.SessionTrackingSucceededSubscription = null;
 AdjustConfig.SessionTrackingFailedSubscription = null;
 AdjustConfig.DeferredDeeplinkSubscription = null;
 AdjustConfig.ConversionValueUpdatedSubscription = null;
+AdjustConfig.Skad4ConversionValueUpdatedSubscription = null;
 
 AdjustConfig.UrlStrategyChina = "china";
 AdjustConfig.UrlStrategyIndia = "india";
@@ -480,6 +481,17 @@ AdjustConfig.prototype.setConversionValueUpdatedCallbackListener = function(conv
             module_adjust.setConversionValueUpdatedCallbackListener();
             AdjustConfig.ConversionValueUpdatedSubscription = module_adjust_emitter.addListener(
                 'adjust_conversionValueUpdated', conversionValueUpdatedCallbackListener
+            );
+        }
+    }
+};
+
+AdjustConfig.prototype.setSkad4ConversionValueUpdatedCallbackListener = function(skad4ConversionValueUpdatedCallbackListener) {
+    if (Platform.OS === "ios") {
+        if (null == AdjustConfig.Skad4ConversionValueUpdatedSubscription) {
+            module_adjust.setSkad4ConversionValueUpdatedCallbackListener();
+            AdjustConfig.Skad4ConversionValueUpdatedSubscription = module_adjust_emitter.addListener(
+                'adjust_skad4ConversionValueUpdated', skad4ConversionValueUpdatedCallbackListener
             );
         }
     }

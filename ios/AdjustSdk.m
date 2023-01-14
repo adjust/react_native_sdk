@@ -20,6 +20,7 @@ BOOL _isSessionTrackingSucceededCallbackImplemented;
 BOOL _isSessionTrackingFailedCallbackImplemented;
 BOOL _isDeferredDeeplinkCallbackImplemented;
 BOOL _isConversionValueUpdatedCallbackImplemented;
+BOOL _isSkad4ConversionValueUpdatedCallbackImplemented;
 
 #pragma mark - Public methods
 
@@ -113,7 +114,8 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
         || _isSessionTrackingSucceededCallbackImplemented
         || _isSessionTrackingFailedCallbackImplemented
         || _isDeferredDeeplinkCallbackImplemented
-        || _isConversionValueUpdatedCallbackImplemented) {
+        || _isConversionValueUpdatedCallbackImplemented
+        || _isSkad4ConversionValueUpdatedCallbackImplemented) {
         [adjustConfig setDelegate:
          [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
                                                  eventSucceededCallback:_isEventTrackingSucceededCallbackImplemented
@@ -122,6 +124,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
                                                   sessionFailedCallback:_isSessionTrackingFailedCallbackImplemented
                                                deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
                                          conversionValueUpdatedCallback:_isConversionValueUpdatedCallbackImplemented
+                                    skad4ConversionValueUpdatedCallback:_isSkad4ConversionValueUpdatedCallbackImplemented
                                            shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
     }
 
@@ -628,6 +631,10 @@ RCT_EXPORT_METHOD(setConversionValueUpdatedCallbackListener) {
     _isConversionValueUpdatedCallbackImplemented = YES;
 }
 
+RCT_EXPORT_METHOD(setSkad4ConversionValueUpdatedCallbackListener) {
+    _isSkad4ConversionValueUpdatedCallbackImplemented = YES;
+}
+
 RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
     AdjustTestOptions *testOptions = [[AdjustTestOptions alloc] init];
     if ([dict objectForKey:@"hasContext"]) {
@@ -720,6 +727,7 @@ RCT_EXPORT_METHOD(teardown) {
     _isSessionTrackingFailedCallbackImplemented = NO;
     _isDeferredDeeplinkCallbackImplemented = NO;
     _isConversionValueUpdatedCallbackImplemented = NO;
+    _isSkad4ConversionValueUpdatedCallbackImplemented = NO;
     [AdjustSdkDelegate teardown];
 }
 

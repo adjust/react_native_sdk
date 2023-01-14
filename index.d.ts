@@ -130,6 +130,7 @@ declare module 'react-native-adjust' {
     static EnvironmentProduction: Environment
     static UrlStrategyChina: UrlStrategy
     static UrlStrategyIndia: UrlStrategy
+    static UrlStrategyCn: UrlStrategy
     static DataResidencyEU: UrlStrategy
     static DataResidencyTR: UrlStrategy
     static DataResidencyUS: UrlStrategy

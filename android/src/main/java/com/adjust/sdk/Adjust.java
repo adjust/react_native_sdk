@@ -210,6 +210,8 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_CHINA);
             } else if (urlStrategy.equalsIgnoreCase("india")) {
                 adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_INDIA);
+            } else if (urlStrategy.equalsIgnoreCase("cn")) {
+                adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_CN);
             } else if (urlStrategy.equalsIgnoreCase("data-residency-eu")) {
                 adjustConfig.setUrlStrategy(AdjustConfig.DATA_RESIDENCY_EU);
             } else if (urlStrategy.equalsIgnoreCase("data-residency-us")) {

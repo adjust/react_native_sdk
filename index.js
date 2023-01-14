@@ -156,6 +156,14 @@ Adjust.updateConversionValue = function(conversionValue) {
     module_adjust.updateConversionValue(conversionValue);
 };
 
+Adjust.updateConversionValueWithErrorCallback = function(conversionValue, callback) {
+    module_adjust.updateConversionValueWithErrorCallback(conversionValue, callback);
+};
+
+Adjust.updateConversionValueWithSkad4ErrorCallback = function(conversionValue, coarseValue, lockWindow, callback) {
+    module_adjust.updateConversionValueWithSkad4ErrorCallback(conversionValue, coarseValue, lockWindow, callback);
+};
+
 Adjust.getAppTrackingAuthorizationStatus = function(callback) {
     module_adjust.getAppTrackingAuthorizationStatus(callback);
 };

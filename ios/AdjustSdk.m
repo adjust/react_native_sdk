@@ -476,6 +476,26 @@ RCT_EXPORT_METHOD(updateConversionValue:(NSNumber * _Nonnull)conversionValue) {
     [Adjust updateConversionValue:[conversionValue intValue]];
 }
 
+RCT_EXPORT_METHOD(updateConversionValueWithErrorCallback:(NSNumber * _Nonnull)conversionValue
+                                           errorCallback:(RCTResponseSenderBlock)callback) {
+    [Adjust updatePostbackConversionValue:[conversionValue intValue]
+                        completionHandler:^(NSError * _Nullable error) {
+        callback(@[[error localizedDescription]]);
+    }];
+}
+
+RCT_EXPORT_METHOD(updateConversionValueWithSkad4ErrorCallback:(NSNumber * _Nonnull)conversionValue
+                                                  coarseValue:(NSString * _Nonnull)coarseValue
+                                                   lockWindow:(NSNumber * _Nonnull)lockWindow
+                                                errorCallback:(RCTResponseSenderBlock)callback) {
+    [Adjust updatePostbackConversionValue:[conversionValue intValue]
+                              coarseValue:coarseValue
+                               lockWindow:[lockWindow boolValue]
+                        completionHandler:^(NSError * _Nullable error) {
+        callback(@[[error localizedDescription]]);
+    }];
+}
+
 RCT_EXPORT_METHOD(getAppTrackingAuthorizationStatus:(RCTResponseSenderBlock)callback) {
     callback(@[@([Adjust appTrackingAuthorizationStatus])]);
 }

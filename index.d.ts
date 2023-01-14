@@ -224,6 +224,8 @@ declare module 'react-native-adjust' {
     convertUniversalLink: (url: string, scheme: string, callback: (convertedUrl: string) => void) => void
     requestTrackingAuthorizationWithCompletionHandler: (handler: (status: number) => void) => void
     updateConversionValue: (conversionValue: number) => void
+    updateConversionValueWithErrorCallback: (conversionValue: number, callback: (error: string) => void) => void
+    updateConversionValueWithSkad4ErrorCallback: (conversionValue: number, coarseValue: string, lockWindow: boolean, callback: (error: string) => void) => void
     getAppTrackingAuthorizationStatus: (callback: (authorizationStatus: number) => void) => void
     trackThirdPartySharing: (adjustThirdPartySharing: AdjustThirdPartySharing) => void
     trackMeasurementConsent: (measurementConsent: boolean) => void

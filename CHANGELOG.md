@@ -1,3 +1,15 @@
+### Version 4.33.0 (15th January 2023)
+#### Added
+- Added support for SKAdNetwork 4.0.
+- Added support for setting a new China URL Strategy. You can choose this setting by calling `setUrlStrategy` method of `AdjustConfig` instance with `AdjustConfig.UrlStrategyCn` parameter.
+- Added support to OAID plugin for MSA SDK v2.0.0.
+
+#### Native SDKs
+- [iOS@v4.33.3][ios_sdk_v4.33.3]
+- [Android@v4.33.2][android_sdk_v4.33.2]
+
+---
+
 ### Version 4.32.1 (14th November 2022)
 #### Fixed
 - Fixed conversion bug which caused `transaction_date` parameter of iOS subscription tracking to be wrongly formatted.
@@ -551,6 +563,7 @@
 [ios_sdk_v4.29.6]: https://github.com/adjust/ios_sdk/tree/v4.29.6
 [ios_sdk_v4.31.0]: https://github.com/adjust/ios_sdk/tree/v4.31.0
 [ios_sdk_v4.32.1]: https://github.com/adjust/ios_sdk/tree/v4.32.1
+[ios_sdk_v4.33.3]: https://github.com/adjust/ios_sdk/tree/v4.33.3
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -582,3 +595,4 @@
 [android_sdk_v4.28.9]: https://github.com/adjust/android_sdk/tree/v4.28.9
 [android_sdk_v4.31.0]: https://github.com/adjust/android_sdk/tree/v4.31.0
 [android_sdk_v4.32.0]: https://github.com/adjust/android_sdk/tree/v4.32.0
+[android_sdk_v4.33.2]: https://github.com/adjust/android_sdk/tree/v4.33.2

@@ -20,6 +20,7 @@ BOOL _isSessionTrackingSucceededCallbackImplemented;
 BOOL _isSessionTrackingFailedCallbackImplemented;
 BOOL _isDeferredDeeplinkCallbackImplemented;
 BOOL _isConversionValueUpdatedCallbackImplemented;
+BOOL _isSkad4ConversionValueUpdatedCallbackImplemented;
 
 #pragma mark - Public methods
 
@@ -94,6 +95,8 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
             [adjustConfig setUrlStrategy:ADJUrlStrategyChina];
         } else if ([urlStrategy isEqualToString:@"india"]) {
             [adjustConfig setUrlStrategy:ADJUrlStrategyIndia];
+        } else if ([urlStrategy isEqualToString:@"cn"]) {
+            [adjustConfig setUrlStrategy:ADJUrlStrategyCn];
         } else if ([urlStrategy isEqualToString:@"data-residency-eu"]) {
             [adjustConfig setUrlStrategy:ADJDataResidencyEU];
         } else if ([urlStrategy isEqualToString:@"data-residency-tr"]) {
@@ -111,7 +114,8 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
         || _isSessionTrackingSucceededCallbackImplemented
         || _isSessionTrackingFailedCallbackImplemented
         || _isDeferredDeeplinkCallbackImplemented
-        || _isConversionValueUpdatedCallbackImplemented) {
+        || _isConversionValueUpdatedCallbackImplemented
+        || _isSkad4ConversionValueUpdatedCallbackImplemented) {
         [adjustConfig setDelegate:
          [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
                                                  eventSucceededCallback:_isEventTrackingSucceededCallbackImplemented
@@ -120,6 +124,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
                                                   sessionFailedCallback:_isSessionTrackingFailedCallbackImplemented
                                                deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
                                          conversionValueUpdatedCallback:_isConversionValueUpdatedCallbackImplemented
+                                    skad4ConversionValueUpdatedCallback:_isSkad4ConversionValueUpdatedCallbackImplemented
                                            shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
     }
 
@@ -471,6 +476,26 @@ RCT_EXPORT_METHOD(updateConversionValue:(NSNumber * _Nonnull)conversionValue) {
     [Adjust updateConversionValue:[conversionValue intValue]];
 }
 
+RCT_EXPORT_METHOD(updateConversionValueWithErrorCallback:(NSNumber * _Nonnull)conversionValue
+                                           errorCallback:(RCTResponseSenderBlock)callback) {
+    [Adjust updatePostbackConversionValue:[conversionValue intValue]
+                        completionHandler:^(NSError * _Nullable error) {
+        callback(@[[error localizedDescription]]);
+    }];
+}
+
+RCT_EXPORT_METHOD(updateConversionValueWithSkad4ErrorCallback:(NSNumber * _Nonnull)conversionValue
+                                                  coarseValue:(NSString * _Nonnull)coarseValue
+                                                   lockWindow:(NSNumber * _Nonnull)lockWindow
+                                                errorCallback:(RCTResponseSenderBlock)callback) {
+    [Adjust updatePostbackConversionValue:[conversionValue intValue]
+                              coarseValue:coarseValue
+                               lockWindow:[lockWindow boolValue]
+                        completionHandler:^(NSError * _Nullable error) {
+        callback(@[[error localizedDescription]]);
+    }];
+}
+
 RCT_EXPORT_METHOD(getAppTrackingAuthorizationStatus:(RCTResponseSenderBlock)callback) {
     callback(@[@([Adjust appTrackingAuthorizationStatus])]);
 }
@@ -626,6 +651,10 @@ RCT_EXPORT_METHOD(setConversionValueUpdatedCallbackListener) {
     _isConversionValueUpdatedCallbackImplemented = YES;
 }
 
+RCT_EXPORT_METHOD(setSkad4ConversionValueUpdatedCallbackListener) {
+    _isSkad4ConversionValueUpdatedCallbackImplemented = YES;
+}
+
 RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
     AdjustTestOptions *testOptions = [[AdjustTestOptions alloc] init];
     if ([dict objectForKey:@"hasContext"]) {
@@ -718,6 +747,7 @@ RCT_EXPORT_METHOD(teardown) {
     _isSessionTrackingFailedCallbackImplemented = NO;
     _isDeferredDeeplinkCallbackImplemented = NO;
     _isConversionValueUpdatedCallbackImplemented = NO;
+    _isSkad4ConversionValueUpdatedCallbackImplemented = NO;
     [AdjustSdkDelegate teardown];
 }
 

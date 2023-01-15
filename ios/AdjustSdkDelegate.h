@@ -20,6 +20,7 @@
 						    sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
 					     deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
 				   conversionValueUpdatedCallback:(BOOL)swizzleConversionValueUpdatedCallback
+			  skad4ConversionValueUpdatedCallback:(BOOL)swizzleSkad4ConversionValueUpdatedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink;
 
 + (void)teardown;

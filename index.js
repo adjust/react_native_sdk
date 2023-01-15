@@ -132,7 +132,7 @@ Adjust.getAmazonAdId = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native4.32.1", callback);
+    module_adjust.getSdkVersion("react-native4.33.0", callback);
 };
 
 Adjust.setReferrer = function(referrer) {
@@ -154,6 +154,14 @@ Adjust.requestTrackingAuthorizationWithCompletionHandler = function(callback) {
 
 Adjust.updateConversionValue = function(conversionValue) {
     module_adjust.updateConversionValue(conversionValue);
+};
+
+Adjust.updateConversionValueWithErrorCallback = function(conversionValue, callback) {
+    module_adjust.updateConversionValueWithErrorCallback(conversionValue, callback);
+};
+
+Adjust.updateConversionValueWithSkad4ErrorCallback = function(conversionValue, coarseValue, lockWindow, callback) {
+    module_adjust.updateConversionValueWithSkad4ErrorCallback(conversionValue, coarseValue, lockWindow, callback);
 };
 
 Adjust.getAppTrackingAuthorizationStatus = function(callback) {
@@ -242,7 +250,7 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native4.32.1";
+    this.sdkPrefix = "react-native4.33.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
@@ -294,9 +302,11 @@ AdjustConfig.SessionTrackingSucceededSubscription = null;
 AdjustConfig.SessionTrackingFailedSubscription = null;
 AdjustConfig.DeferredDeeplinkSubscription = null;
 AdjustConfig.ConversionValueUpdatedSubscription = null;
+AdjustConfig.Skad4ConversionValueUpdatedSubscription = null;
 
 AdjustConfig.UrlStrategyChina = "china";
 AdjustConfig.UrlStrategyIndia = "india";
+AdjustConfig.UrlStrategyCn = "cn";
 
 AdjustConfig.DataResidencyEU = "data-residency-eu";
 AdjustConfig.DataResidencyTR = "data-residency-tr";
@@ -479,6 +489,17 @@ AdjustConfig.prototype.setConversionValueUpdatedCallbackListener = function(conv
             module_adjust.setConversionValueUpdatedCallbackListener();
             AdjustConfig.ConversionValueUpdatedSubscription = module_adjust_emitter.addListener(
                 'adjust_conversionValueUpdated', conversionValueUpdatedCallbackListener
+            );
+        }
+    }
+};
+
+AdjustConfig.prototype.setSkad4ConversionValueUpdatedCallbackListener = function(skad4ConversionValueUpdatedCallbackListener) {
+    if (Platform.OS === "ios") {
+        if (null == AdjustConfig.Skad4ConversionValueUpdatedSubscription) {
+            module_adjust.setSkad4ConversionValueUpdatedCallbackListener();
+            AdjustConfig.Skad4ConversionValueUpdatedSubscription = module_adjust_emitter.addListener(
+                'adjust_skad4ConversionValueUpdated', skad4ConversionValueUpdatedCallbackListener
             );
         }
     }

@@ -30,7 +30,8 @@ RCT_EXPORT_MODULE();
              @"adjust_sessionTrackingSucceeded",
              @"adjust_sessionTrackingFailed",
              @"adjust_deferredDeeplink",
-             @"adjust_conversionValueUpdated"];
+             @"adjust_conversionValueUpdated",
+             @"adjust_skad4ConversionValueUpdated"];
 }
 
 - (void)startObserving {

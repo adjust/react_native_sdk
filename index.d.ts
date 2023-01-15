@@ -60,6 +60,12 @@ declare module 'react-native-adjust' {
     conversionValue: number
   }
 
+  interface AdjustSkad4Data {
+    fineValue: number
+    coarseValue: string
+    lockWindow: boolean
+  }
+
   export class AdjustConfig {
     constructor(appToken: string, environment: Environment)
     public setLogLevel(level: LogLevel): void
@@ -119,6 +125,10 @@ declare module 'react-native-adjust' {
       callback: (conversionValue: AdjustConversionValue) => void
     ): void
 
+    public setSkad4ConversionValueUpdatedCallbackListener(
+      callback: (skad4Data: AdjustSkad4Data) => void
+    ): void
+
     static LogLevelVerbose: LogLevel
     static LogLevelDebug: LogLevel
     static LogLevelInfo: LogLevel
@@ -130,6 +140,7 @@ declare module 'react-native-adjust' {
     static EnvironmentProduction: Environment
     static UrlStrategyChina: UrlStrategy
     static UrlStrategyIndia: UrlStrategy
+    static UrlStrategyCn: UrlStrategy
     static DataResidencyEU: UrlStrategy
     static DataResidencyTR: UrlStrategy
     static DataResidencyUS: UrlStrategy
@@ -213,6 +224,8 @@ declare module 'react-native-adjust' {
     convertUniversalLink: (url: string, scheme: string, callback: (convertedUrl: string) => void) => void
     requestTrackingAuthorizationWithCompletionHandler: (handler: (status: number) => void) => void
     updateConversionValue: (conversionValue: number) => void
+    updateConversionValueWithErrorCallback: (conversionValue: number, callback: (error: string) => void) => void
+    updateConversionValueWithSkad4ErrorCallback: (conversionValue: number, coarseValue: string, lockWindow: boolean, callback: (error: string) => void) => void
     getAppTrackingAuthorizationStatus: (callback: (authorizationStatus: number) => void) => void
     trackThirdPartySharing: (adjustThirdPartySharing: AdjustThirdPartySharing) => void
     trackMeasurementConsent: (measurementConsent: boolean) => void

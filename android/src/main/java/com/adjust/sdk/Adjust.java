@@ -127,6 +127,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         boolean needsCost = false;
         boolean playStoreKidsAppEnabled = false;
         boolean coppaCompliantEnabled = false;
+        boolean finalAndroidAttributionEnabled = false;
 
         // Suppress log level.
         if (checkKey(mapConfig, "logLevel")) {
@@ -302,6 +303,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (checkKey(mapConfig, "coppaCompliantEnabled")) {
             coppaCompliantEnabled = mapConfig.getBoolean("coppaCompliantEnabled");
             adjustConfig.setCoppaCompliantEnabled(coppaCompliantEnabled);
+        }
+
+        // Final Android attribution.
+        if (checkKey(mapConfig, "finalAndroidAttributionEnabled")) {
+            finalAndroidAttributionEnabled = mapConfig.getBoolean("finalAndroidAttributionEnabled");
+            adjustConfig.setFinalAttributionEnabled(finalAndroidAttributionEnabled);
         }
 
         // Attribution callback.

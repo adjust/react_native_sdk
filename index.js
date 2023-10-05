@@ -288,6 +288,7 @@ var AdjustConfig = function(appToken, environment) {
     this.preinstallTrackingEnabled = null;
     this.preinstallFilePath = null;
     this.playStoreKidsAppEnabled = null;
+    this.finalAndroidAttributionEnabled = null;
     // iOS only
     this.allowiAdInfoReading = null;
     this.allowAdServicesInfoReading = null;
@@ -416,6 +417,10 @@ AdjustConfig.prototype.setPreinstallFilePath = function(preinstallFilePath) {
 
 AdjustConfig.prototype.setPlayStoreKidsAppEnabled = function(isEnabled) {
     this.playStoreKidsAppEnabled = isEnabled;
+};
+
+AdjustConfig.prototype.setFinalAndroidAttributionEnabled = function(isEnabled) {
+    this.finalAndroidAttributionEnabled = isEnabled;
 };
 
 AdjustConfig.prototype.setAllowiAdInfoReading = function(allowiAdInfoReading) {

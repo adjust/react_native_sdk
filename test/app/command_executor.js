@@ -365,6 +365,12 @@ AdjustCommandExecutor.prototype.config = function(params) {
         adjustConfig.setCoppaCompliantEnabled(coppaCompliant);
     }
 
+    if ('finalAttributionEnabled' in params) {
+        var finalAttributionEnabledS = getFirstParameterValue(params, 'finalAttributionEnabled');
+        var finalAttributionEnabled = finalAttributionEnabledS == 'true';
+        adjustConfig.setFinalAndroidAttributionEnabled(finalAttributionEnabled);
+    }
+
     if ('allowiAdInfoReading' in params) {
         var allowiAdInfoReadingS = getFirstParameterValue(params, 'allowiAdInfoReading');
         var allowiAdInfoReading = allowiAdInfoReadingS == 'true';
@@ -574,6 +580,38 @@ AdjustCommandExecutor.prototype.event = function(params) {
         }
 
         adjustEvent.setCallbackId(callbackId);
+    }
+
+    if ('productId' in params) {
+        var productId = getFirstParameterValue(params, 'productId');
+        if (productId === 'null') {
+            productId = null;
+        }
+        adjustEvent.setProductId(productId);
+    }
+
+    if ('purchaseToken' in params) {
+        var purchaseToken = getFirstParameterValue(params, 'purchaseToken');
+        if (purchaseToken === 'null') {
+            purchaseToken = null;
+        }
+        adjustEvent.setPurchaseToken(purchaseToken);
+    }
+
+    if ('receipt' in params) {
+        var receipt = getFirstParameterValue(params, 'receipt');
+        if (receipt === 'null') {
+            receipt = null;
+        }
+        adjustEvent.setReceipt(receipt);
+    }
+
+    if ('transactionId' in params) {
+        var transactionId = getFirstParameterValue(params, 'transactionId');
+        if (transactionId === 'null') {
+            transactionId = null;
+        }
+        adjustEvent.setTransactionId(transactionId);
     }
 };
 

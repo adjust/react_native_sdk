@@ -64,7 +64,7 @@ const App: () => React$Node = () => {
   }
   var controlUrl = "ws://" + ipAddress + ":1987";
 
-  AdjustSdkTest.addTestDirectory("purchase-verification");
+  // AdjustSdkTest.addTestDirectory("purchase-verification");
   // AdjustSdkTest.addTest("Test_AdRevenue_ad_revenue_v2");
   Adjust.getSdkVersion(function(sdkVersion) {
     AdjustSdkTest.startTestSession(baseUrl, controlUrl, sdkVersion);

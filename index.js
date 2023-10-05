@@ -533,7 +533,10 @@ var AdjustEvent = function(eventToken) {
     this.eventToken = eventToken;
     this.revenue = null;
     this.currency = null;
+    this.receipt = null;
+    this.productId = null;
     this.transactionId = null;
+    this.purchaseToken = null;
     this.callbackId = null;
     this.callbackParameters = {};
     this.partnerParameters = {};
@@ -560,8 +563,20 @@ AdjustEvent.prototype.addPartnerParameter = function(key, value) {
     this.partnerParameters[key] = value;
 };
 
+AdjustEvent.prototype.setReceipt = function(receipt) {
+    this.receipt = receipt;
+};
+
+AdjustEvent.prototype.setProductId = function(productId) {
+    this.productId = productId;
+};
+
 AdjustEvent.prototype.setTransactionId = function(transactionId) {
     this.transactionId = transactionId;
+};
+
+AdjustEvent.prototype.setPurchaseToken = function(purchaseToken) {
+    this.purchaseToken = purchaseToken;
 };
 
 AdjustEvent.prototype.setCallbackId = function(callbackId) {

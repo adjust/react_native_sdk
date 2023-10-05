@@ -50,6 +50,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSNumber *skAdNetworkHandling = dict[@"skAdNetworkHandling"];
     NSNumber *coppaCompliantEnabled = dict[@"coppaCompliantEnabled"];
     NSNumber *linkMeEnabled = dict[@"linkMeEnabled"];
+    NSNumber *attConsentWaitingInterval = dict[@"attConsentWaitingInterval"];
     BOOL allowSuppressLogLevel = NO;
 
     // Suppress log level.
@@ -196,6 +197,11 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     // LinkMe.
     if ([self isFieldValid:linkMeEnabled]) {
         [adjustConfig setLinkMeEnabled:[linkMeEnabled boolValue]];
+    }
+
+    // ATT consent delay.
+    if ([self isFieldValid:attConsentWaitingInterval]) {
+        [adjustConfig setAttConsentWaitingInterval:[attConsentWaitingInterval intValue]];
     }
 
     // Start SDK.

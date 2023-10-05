@@ -184,6 +184,18 @@ Adjust.getLastDeeplink = function(callback) {
     module_adjust.getLastDeeplink(callback);
 };
 
+Adjust.verifyAppStorePurchase = function(purchase, callback) {
+    if (Platform.OS === "ios") {
+        module_adjust.verifyAppStorePurchase(purchase, callback);
+    }
+};
+
+Adjust.verifyPlayStorePurchase = function(purchase, callback) {
+    if (Platform.OS === "android") {
+        module_adjust.verifyPlayStorePurchase(purchase, callback);
+    }
+};
+
 Adjust.componentWillUnmount = function() {
     if (AdjustConfig.AttributionSubscription != null) {
         AdjustConfig.AttributionSubscription.remove();
@@ -690,6 +702,21 @@ AdjustAdRevenue.prototype.addPartnerParameter = function(key, value) {
     this.partnerParameters[key] = value;
 };
 
+// AdjustAppStorePurchase
+
+var AdjustAppStorePurchase = function(receipt, productId, transactionId) {
+    this.receipt = receipt;
+    this.productId = productId;
+    this.transactionId = transactionId;
+};
+
+// AdjustPlayStorePurchase
+
+var AdjustPlayStorePurchase = function(productId, purchaseToken) {
+    this.productId = productId;
+    this.purchaseToken = purchaseToken;
+};
+
 module.exports = {
     Adjust,
     AdjustEvent,
@@ -697,5 +724,7 @@ module.exports = {
     AdjustAppStoreSubscription,
     AdjustPlayStoreSubscription,
     AdjustThirdPartySharing,
-    AdjustAdRevenue
+    AdjustAdRevenue,
+    AdjustAppStorePurchase,
+    AdjustPlayStorePurchase
 }

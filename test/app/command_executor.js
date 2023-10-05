@@ -10,7 +10,9 @@ import {
     AdjustAppStoreSubscription,
     AdjustPlayStoreSubscription,
     AdjustThirdPartySharing,
-    AdjustAdRevenue
+    AdjustAdRevenue,
+    AdjustAppStorePurchase,
+    AdjustPlayStorePurchase
 } from 'react-native-adjust';
 import { AdjustTestOptions } from './test_options.js';
 const AdjustSdkTest = NativeModules.AdjustSdkTest;
@@ -43,8 +45,8 @@ function AdjustCommand(functionName, params, order) {
     this.order = order;
 };
 
-export function CommandExecutor(baseUrl, gdprUrl, subscriptionUrl) {
-    this.adjustCommandExecutor = new AdjustCommandExecutor(baseUrl, gdprUrl, subscriptionUrl);
+export function CommandExecutor(baseUrl, gdprUrl, subscriptionUrl, purchaseVerificationUrl) {
+    this.adjustCommandExecutor = new AdjustCommandExecutor(baseUrl, gdprUrl, subscriptionUrl, purchaseVerificationUrl);
 };
 
 CommandExecutor.prototype.scheduleCommand = function(className, functionName, params, order) {
@@ -56,14 +58,16 @@ CommandExecutor.prototype.scheduleCommand = function(className, functionName, pa
     }
 };
 
-function AdjustCommandExecutor(baseUrl, gdprUrl, subscriptionUrl) {
+function AdjustCommandExecutor(baseUrl, gdprUrl, subscriptionUrl, purchaseVerificationUrl) {
     this.baseUrl = baseUrl;
     this.gdprUrl = gdprUrl;
     this.subscriptionUrl = subscriptionUrl;
+    this.purchaseVerificationUrl = purchaseVerificationUrl;
     this.extraPath = null;
     this.basePath = null;
     this.gdprPath = null;
     this.subscriptionPath = null;
+    this.purchaseVerificationPath = null;
     this.savedEvents = {};
     this.savedConfigs = {};
     this.savedCommands = [];
@@ -134,6 +138,7 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
         case "measurementConsent" : this.trackMeasurementConsent(command.params); break;
         case "trackAdRevenueV2" : this.trackAdRevenueV2(command.params); break;
         case 'getLastDeeplink' : this.getLastDeeplink(command.params); break;
+        case 'verifyPurchase' : this.verifyPurchase(command.params); break;
     }
 
     this.nextToSendCounter++;
@@ -152,12 +157,14 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
     testOptions.baseUrl = this.baseUrl;
     testOptions.gdprUrl = this.gdprUrl;
     testOptions.subscriptionUrl = this.subscriptionUrl;
+    testOptions.purchaseVerificationUrl = this.purchaseVerificationUrl;
     
     if ('basePath' in params) {
         this.extraPath = getFirstParameterValue(params, 'basePath');
         this.basePath = getFirstParameterValue(params, 'basePath');
         this.gdprPath = getFirstParameterValue(params, 'basePath');
         this.subscriptionPath = getFirstParameterValue(params, 'basePath');
+        this.purchaseVerificationPath = getFirstParameterValue(params, 'basePath');
     }
     if ('timerInterval' in params) {
         testOptions.timerIntervalInMilliseconds = getFirstParameterValue(params, 'timerInterval').toString();
@@ -174,9 +181,6 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
     if ('noBackoffWait' in params) {
         testOptions.noBackoffWait = getFirstParameterValue(params, 'noBackoffWait').toString() === 'true';
     }
-    if ('iAdFrameworkEnabled' in params) {
-        testOptions.iAdFrameworkEnabled = getFirstParameterValue(params, 'iAdFrameworkEnabled').toString() === 'true';
-    }
     if ('adServicesFrameworkEnabled' in params) {
         testOptions.adServicesFrameworkEnabled = getFirstParameterValue(params, 'adServicesFrameworkEnabled').toString() === 'true';
     }
@@ -192,6 +196,7 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
                 testOptions.basePath = this.basePath;
                 testOptions.gdprPath = this.gdprPath;
                 testOptions.subscriptionPath = this.subscriptionPath;
+                testOptions.purchaseVerificationPath = this.purchaseVerificationPath;
                 testOptions.useTestConnectionOptions = true;
                 useTestConnectionOptions = true;
                 Adjust.teardown('test');
@@ -215,6 +220,7 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
                 testOptions.basePath = null;
                 testOptions.gdprPath = null;
                 testOptions.subscriptionPath = null;
+                testOptions.purchaseVerificationPath = null;
                 testOptions.useTestConnectionOptions = false;
                 Adjust.teardown('test');
             }
@@ -878,6 +884,33 @@ AdjustCommandExecutor.prototype.getLastDeeplink = function(params) {
         var _this = this;
         Adjust.getLastDeeplink(function(lastDeeplink) {
             AdjustSdkTest.addInfoToSend('last_deeplink', lastDeeplink);
+            AdjustSdkTest.sendInfoToServer(_this.basePath);
+        });
+    }
+};
+
+AdjustCommandExecutor.prototype.verifyPurchase = function(params) {
+    if (Platform.OS === "ios") {
+        var receipt = getFirstParameterValue(params, 'receipt');
+        var productId = getFirstParameterValue(params, 'productId');
+        var transactionId = getFirstParameterValue(params, 'transactionId');
+        var purchase = new AdjustAppStorePurchase(receipt, productId, transactionId);
+        var _this = this;
+        Adjust.verifyAppStorePurchase(purchase, function(verificationInfo) {
+            AdjustSdkTest.addInfoToSend('verification_status', verificationInfo.verificationStatus);
+            AdjustSdkTest.addInfoToSend('code', verificationInfo.code);
+            AdjustSdkTest.addInfoToSend('message', verificationInfo.message);
+            AdjustSdkTest.sendInfoToServer(_this.basePath);
+        });
+    } else if (Platform.OS === "android") {
+        var productId = getFirstParameterValue(params, 'productId');
+        var purchaseToken = getFirstParameterValue(params, 'purchaseToken');
+        var purchase = new AdjustPlayStorePurchase(productId, purchaseToken);
+        var _this = this;
+        Adjust.verifyPlayStorePurchase(purchase, function(verificationInfo) {
+            AdjustSdkTest.addInfoToSend('verification_status', verificationInfo.verificationStatus);
+            AdjustSdkTest.addInfoToSend('code', verificationInfo.code);
+            AdjustSdkTest.addInfoToSend('message', verificationInfo.message);
             AdjustSdkTest.sendInfoToServer(_this.basePath);
         });
     }

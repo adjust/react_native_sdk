@@ -539,6 +539,11 @@ RCT_EXPORT_METHOD(setReferrer:(NSString *)referrer) {}
 
 RCT_EXPORT_METHOD(trackPlayStoreSubscription:(NSDictionary *)dict) {}
 
+RCT_EXPORT_METHOD(verifyPlayStorePurchase:(NSDictionary *)dict callback:(RCTResponseSenderBlock)callback) {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    callback(@[dictionary]);
+}
+
 RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
     ADJAttribution *attribution = [Adjust attribution];
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
@@ -623,6 +628,39 @@ RCT_EXPORT_METHOD(getLastDeeplink:(RCTResponseSenderBlock)callback) {
     }
 }
 
+RCT_EXPORT_METHOD(verifyAppStorePurchase:(NSDictionary *)dict callback:(RCTResponseSenderBlock)callback) {
+    NSString *receipt = dict[@"receipt"];
+    NSString *productId = dict[@"productId"];
+    NSString *transactionId = dict[@"transactionId"];
+
+    // Receipt.
+    NSData *receiptValue;
+    if ([self isFieldValid:receipt]) {
+        receiptValue = [receipt dataUsingEncoding:NSUTF8StringEncoding];
+    }
+
+    // Create purchase instance.
+    ADJPurchase *purchase = [[ADJPurchase alloc] initWithTransactionId:transactionId
+                                                             productId:productId
+                                                            andReceipt:receiptValue];
+
+    // Verify purchase.
+    [Adjust verifyPurchase:purchase 
+         completionHandler:^(ADJPurchaseVerificationResult * _Nonnull verificationResult) {
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+        if (verificationResult == nil) {
+            callback(@[dictionary]);
+            return;
+        }
+
+        [self addValueOrEmpty:dictionary key:@"verificationStatus" value:verificationResult.verificationStatus];
+        [self addValueOrEmpty:dictionary key:@"code" value:[NSString stringWithFormat:@"%d", verificationResult.code]];
+        [self addValueOrEmpty:dictionary key:@"message" value:verificationResult.message];
+
+        callback(@[dictionary]);
+    }];
+}
+
 RCT_EXPORT_METHOD(setAttributionCallbackListener) {
     _isAttributionCallbackImplemented = YES;
 }
@@ -681,6 +719,12 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
             testOptions.subscriptionUrl = value;
         }
     }
+    if ([dict objectForKey:@"purchaseVerificationUrl"]) {
+        NSString *value = dict[@"purchaseVerificationUrl"];
+        if ([self isFieldValid:value]) {
+            testOptions.purchaseVerificationUrl = value;
+        }
+    }
     if ([dict objectForKey:@"extraPath"]) {
         NSString *value = dict[@"extraPath"];
         if ([self isFieldValid:value]) {
@@ -721,12 +765,6 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
         NSString *value = dict[@"noBackoffWait"];
         if ([self isFieldValid:value]) {
             testOptions.noBackoffWait = [value boolValue];
-        }
-    }
-    if ([dict objectForKey:@"iAdFrameworkEnabled"]) {
-        NSString *value = dict[@"iAdFrameworkEnabled"];
-        if ([self isFieldValid:value]) {
-            testOptions.iAdFrameworkEnabled = [value boolValue];
         }
     }
     if ([dict objectForKey:@"adServicesFrameworkEnabled"]) {

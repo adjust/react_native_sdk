@@ -58,6 +58,10 @@ final class AdjustUtil {
     private static final String SESSION_FAILED_WILL_RETRY = "willRetry";
     private static final String SESSION_FAILED_JSON_RESPONSE = "jsonResponse";
 
+    private static final String PURCHAE_VERIFICATION_STATUS = "verificationStatus";
+    private static final String PURCHAE_VERIFICATION_CODE = "code";
+    private static final String PURCHAE_VERIFICATION_MESSAGE = "message";
+
     public static WritableMap attributionToMap(AdjustAttribution attribution) {
         WritableMap map = Arguments.createMap();
         if (null == attribution) {

@@ -787,6 +787,47 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
+    public void verifyPlayStorePurchase(ReadableMap mapEvent, Callback callback) {
+        if (mapEvent == null) {
+            return;
+        }
+
+        String productId = null;
+        String purchaseToken = null;
+
+        // Product ID.
+        if (checkKey(mapEvent, "productId")) {
+            productId = mapEvent.getString("productId");
+        }
+
+        // Purchase token.
+        if (checkKey(mapEvent, "purchaseToken")) {
+            purchaseToken = mapEvent.getString("purchaseToken");
+        }
+
+        // Create purchase instance.
+        final AdjustPurchase purchase = new AdjustPurchase(productId, purchaseToken);
+
+        // Verify purchase.
+        com.adjust.sdk.Adjust.verifyPurchase(purchase, new OnPurchaseVerificationFinishedListener() {
+            @Override
+            public void onVerificationFinished(AdjustPurchaseVerificationResult verificationResult) {
+                if (callback != null) {
+                    WritableMap map = Arguments.createMap();
+                    if (null == verificationResult) {
+                        callback.invoke(map);
+                        return;
+                    }
+                    map.putString("verificationStatus", null != verificationResult.getVerificationStatus() ? verificationResult.getVerificationStatus() : "");
+                    map.putString("code", String.valueOf(verificationResult.getCode()));
+                    map.putString("message", null != verificationResult.getMessage() ? verificationResult.getMessage() : "");
+                    callback.invoke(map);
+                }
+            }
+        });
+    }
+
+    @ReactMethod
     public void checkForNewAttStatus() {
         // do nothing
     }
@@ -861,6 +902,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             String value = mapTest.getString("subscriptionUrl");
             testOptions.subscriptionUrl = value;
         }
+        if (checkKey(mapTest, "purchaseVerificationUrl")) {
+            String value = mapTest.getString("purchaseVerificationUrl");
+            testOptions.purchaseVerificationUrl = value;
+        }
         if (checkKey(mapTest, "basePath")) {
             String value = mapTest.getString("basePath");
             testOptions.basePath = value;
@@ -872,6 +917,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (checkKey(mapTest, "subscriptionPath")) {
             String value = mapTest.getString("subscriptionPath");
             testOptions.subscriptionPath = value;
+        }
+        if (checkKey(mapTest, "purchaseVerificationPath")) {
+            String value = mapTest.getString("purchaseVerificationPath");
+            testOptions.purchaseVerificationPath = value;
         }
         // if (checkKey(mapTest, "useTestConnectionOptions")) {
         //     boolean value = mapTest.getBoolean("useTestConnectionOptions");

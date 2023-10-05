@@ -2,7 +2,7 @@
 //  Adjust.h
 //  Adjust SDK
 //
-//  V4.33.3
+//  V4.35.1
 //  Created by Christian Wellenbrock (@wellle) on 23rd July 2013.
 //  Copyright (c) 2012-2021 Adjust GmbH. All rights reserved.
 //
@@ -14,12 +14,15 @@
 #import "ADJThirdPartySharing.h"
 #import "ADJAdRevenue.h"
 #import "ADJLinkResolution.h"
+#import "ADJPurchase.h"
+#import "ADJPurchaseVerificationResult.h"
 
 @interface AdjustTestOptions : NSObject
 
 @property (nonatomic, copy, nullable) NSString *baseUrl;
 @property (nonatomic, copy, nullable) NSString *gdprUrl;
 @property (nonatomic, copy, nullable) NSString *subscriptionUrl;
+@property (nonatomic, copy, nullable) NSString *purchaseVerificationUrl;
 @property (nonatomic, copy, nullable) NSString *extraPath;
 @property (nonatomic, copy, nullable) NSNumber *timerIntervalInMilliseconds;
 @property (nonatomic, copy, nullable) NSNumber *timerStartInMilliseconds;
@@ -28,7 +31,6 @@
 @property (nonatomic, assign) BOOL teardown;
 @property (nonatomic, assign) BOOL deleteState;
 @property (nonatomic, assign) BOOL noBackoffWait;
-@property (nonatomic, assign) BOOL iAdFrameworkEnabled;
 @property (nonatomic, assign) BOOL adServicesFrameworkEnabled;
 @property (nonatomic, assign) BOOL enableSigning;
 @property (nonatomic, assign) BOOL disableSigning;
@@ -366,6 +368,15 @@ extern NSString * __nonnull const ADJDataResidencyUS;
 + (nullable NSURL *)lastDeeplink;
 
 /**
+ * @brief Verify in-app-purchase.
+ *
+ * @param purchase          Purchase object.
+ * @param completionHandler Callback where verification result will be repoted.
+ */
++ (void)verifyPurchase:(nonnull ADJPurchase *)purchase
+     completionHandler:(void (^_Nonnull)(ADJPurchaseVerificationResult * _Nonnull verificationResult))completionHandler;
+
+/**
  * @brief Method used for internal testing only. Don't use it in production.
  */
 + (void)setTestOptions:(nullable AdjustTestOptions *)testOptions;
@@ -454,5 +465,8 @@ extern NSString * __nonnull const ADJDataResidencyUS;
 - (void)checkForNewAttStatus;
 
 - (nullable NSURL *)lastDeeplink;
+
+- (void)verifyPurchase:(nonnull ADJPurchase *)purchase
+     completionHandler:(void (^_Nonnull)(ADJPurchaseVerificationResult * _Nonnull verificationResult))completionHandler;
 
 @end

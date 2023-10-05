@@ -69,8 +69,7 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     sessionPackage.activityKind = ADJActivityKindSession;
     sessionPackage.suffix = @"";
     sessionPackage.parameters = parameters;
-
-    [self signWithSigV2Plugin:sessionPackage];
+    sessionPackage.parameters = [ADJUtil deepCopyOfDictionary:sessionPackage.parameters];
 
     return sessionPackage;
 }
@@ -83,28 +82,23 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     eventPackage.activityKind = ADJActivityKindEvent;
     eventPackage.suffix = [self eventSuffix:event];
     eventPackage.parameters = parameters;
-
     if (isInDelay) {
-        eventPackage.callbackParameters = event.callbackParameters;
-        eventPackage.partnerParameters = event.partnerParameters;
+        eventPackage.callbackParameters = [ADJUtil deepCopyOfDictionary:event.callbackParameters];
+        eventPackage.partnerParameters = [ADJUtil deepCopyOfDictionary:event.partnerParameters];
     }
-
-    [self signWithSigV2Plugin:eventPackage];
+    eventPackage.parameters = [ADJUtil deepCopyOfDictionary:eventPackage.parameters];
 
     return eventPackage;
 }
 
-- (ADJActivityPackage *)buildInfoPackage:(NSString *)infoSource
-{
+- (ADJActivityPackage *)buildInfoPackage:(NSString *)infoSource {
     NSMutableDictionary *parameters = [self getInfoParameters:infoSource];
-
     ADJActivityPackage *infoPackage = [self defaultActivityPackage];
     infoPackage.path = @"/sdk_info";
     infoPackage.activityKind = ADJActivityKindInfo;
     infoPackage.suffix = @"";
     infoPackage.parameters = parameters;
-
-    [self signWithSigV2Plugin:infoPackage];
+    infoPackage.parameters = [ADJUtil deepCopyOfDictionary:infoPackage.parameters];
 
     return infoPackage;
 }
@@ -116,8 +110,7 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     adRevenuePackage.activityKind = ADJActivityKindAdRevenue;
     adRevenuePackage.suffix = @"";
     adRevenuePackage.parameters = parameters;
-
-    [self signWithSigV2Plugin:adRevenuePackage];
+    adRevenuePackage.parameters = [ADJUtil deepCopyOfDictionary:adRevenuePackage.parameters];
 
     return adRevenuePackage;
 }
@@ -129,48 +122,13 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     adRevenuePackage.activityKind = ADJActivityKindAdRevenue;
     adRevenuePackage.suffix = @"";
     adRevenuePackage.parameters = parameters;
-
-    [self signWithSigV2Plugin:adRevenuePackage];
+    if (isInDelay) {
+        adRevenuePackage.callbackParameters = [ADJUtil deepCopyOfDictionary:adRevenue.callbackParameters];
+        adRevenuePackage.partnerParameters = [ADJUtil deepCopyOfDictionary:adRevenue.partnerParameters];
+    }
+    adRevenuePackage.parameters = [ADJUtil deepCopyOfDictionary:adRevenuePackage.parameters];
 
     return adRevenuePackage;
-}
-
-- (ADJActivityPackage *)buildClickPackage:(NSString *)clickSource {
-    return [self buildClickPackage:clickSource extraParameters:nil];
-}
-
-- (ADJActivityPackage *)buildClickPackage:(NSString *)clickSource
-                                    token:(NSString *)token
-                          errorCodeNumber:(NSNumber *)errorCodeNumber {
-
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    
-    if (token != nil) {
-        [ADJPackageBuilder parameters:parameters
-                            setString:token
-                               forKey:ADJAttributionTokenParameter];
-    }
-    if (errorCodeNumber != nil) {
-        [ADJPackageBuilder parameters:parameters
-                               setInt:errorCodeNumber.intValue
-                               forKey:@"error_code"];
-    }
-    
-    return [self buildClickPackage:clickSource extraParameters:parameters];
-}
-
-- (ADJActivityPackage *)buildClickPackage:(NSString *)clickSource
-                                linkMeUrl:(NSString * _Nullable)linkMeUrl {
-
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    
-    if (linkMeUrl != nil) {
-        [ADJPackageBuilder parameters:parameters
-                            setString:linkMeUrl
-                               forKey:@"content"];
-    }
-
-    return [self buildClickPackage:clickSource extraParameters:parameters];
 }
 
 - (ADJActivityPackage *)buildClickPackage:(NSString *)clickSource extraParameters:(NSDictionary *)extraParameters {
@@ -179,23 +137,12 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
         [parameters addEntriesFromDictionary:extraParameters];
     }
     
-    if ([clickSource isEqualToString:ADJiAdPackageKey]) {
-        // send iAd errors in the parameters
-        NSDictionary<NSString *, NSNumber *> *iAdErrors = [ADJUserDefaults getiAdErrors];
-        if (iAdErrors) {
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:iAdErrors options:0 error:nil];
-            NSString *jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            parameters[@"iad_errors"] = jsonStr;
-        }
-    }
-    
     ADJActivityPackage *clickPackage = [self defaultActivityPackage];
     clickPackage.path = @"/sdk_click";
     clickPackage.activityKind = ADJActivityKindClick;
     clickPackage.suffix = @"";
     clickPackage.parameters = parameters;
-
-    [self signWithSigV2Plugin:clickPackage];
+    clickPackage.parameters = [ADJUtil deepCopyOfDictionary:clickPackage.parameters];
 
     return clickPackage;
 }
@@ -207,8 +154,7 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     attributionPackage.activityKind = ADJActivityKindAttribution;
     attributionPackage.suffix = @"";
     attributionPackage.parameters = parameters;
-
-    [self signWithSigV2Plugin:attributionPackage];
+    attributionPackage.parameters = [ADJUtil deepCopyOfDictionary:attributionPackage.parameters];
 
     return attributionPackage;
 }
@@ -220,8 +166,7 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     gdprPackage.activityKind = ADJActivityKindGdpr;
     gdprPackage.suffix = @"";
     gdprPackage.parameters = parameters;
-
-    [self signWithSigV2Plugin:gdprPackage];
+    gdprPackage.parameters = [ADJUtil deepCopyOfDictionary:gdprPackage.parameters];
 
     return gdprPackage;
 }
@@ -233,8 +178,7 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     dtpsPackage.activityKind = ADJActivityKindDisableThirdPartySharing;
     dtpsPackage.suffix = @"";
     dtpsPackage.parameters = parameters;
-
-    [self signWithSigV2Plugin:dtpsPackage];
+    dtpsPackage.parameters = [ADJUtil deepCopyOfDictionary:dtpsPackage.parameters];
 
     return dtpsPackage;
 }
@@ -247,8 +191,7 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     tpsPackage.activityKind = ADJActivityKindThirdPartySharing;
     tpsPackage.suffix = @"";
     tpsPackage.parameters = parameters;
-
-    [self signWithSigV2Plugin:tpsPackage];
+    tpsPackage.parameters = [ADJUtil deepCopyOfDictionary:tpsPackage.parameters];
 
     return tpsPackage;
 }
@@ -260,8 +203,7 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     mcPackage.activityKind = ADJActivityKindMeasurementConsent;
     mcPackage.suffix = @"";
     mcPackage.parameters = parameters;
-
-    [self signWithSigV2Plugin:mcPackage];
+    mcPackage.parameters = [ADJUtil deepCopyOfDictionary:mcPackage.parameters];
 
     return mcPackage;
 }
@@ -274,15 +216,88 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     subscriptionPackage.activityKind = ADJActivityKindSubscription;
     subscriptionPackage.suffix = @"";
     subscriptionPackage.parameters = parameters;
-
     if (isInDelay) {
-        subscriptionPackage.callbackParameters = subscription.callbackParameters;
-        subscriptionPackage.partnerParameters = subscription.partnerParameters;
+        subscriptionPackage.callbackParameters = [ADJUtil deepCopyOfDictionary:subscription.callbackParameters];
+        subscriptionPackage.partnerParameters = [ADJUtil deepCopyOfDictionary:subscription.partnerParameters];
     }
-
-    [self signWithSigV2Plugin:subscriptionPackage];
+    subscriptionPackage.parameters = [ADJUtil deepCopyOfDictionary:subscriptionPackage.parameters];
 
     return subscriptionPackage;
+}
+
+- (ADJActivityPackage *)buildPurchaseVerificationPackageWithExtraParams:(NSDictionary *)extraParameters {
+    NSMutableDictionary *parameters = [self getPurchaseVerificationParameters];
+    if (extraParameters != nil) {
+        [parameters addEntriesFromDictionary:extraParameters];
+    }
+
+    ADJActivityPackage *purchaseVerificationPackage = [self defaultActivityPackage];
+    purchaseVerificationPackage.path = @"/verify";
+    purchaseVerificationPackage.activityKind = ADJActivityKindPurchaseVerification;
+    purchaseVerificationPackage.suffix = @"";
+    purchaseVerificationPackage.parameters = parameters;
+    purchaseVerificationPackage.parameters = [ADJUtil deepCopyOfDictionary:purchaseVerificationPackage.parameters];
+
+    return purchaseVerificationPackage;
+}
+
+- (ADJActivityPackage *)buildClickPackage:(NSString *)clickSource {
+    return [self buildClickPackage:clickSource extraParameters:nil];
+}
+
+- (ADJActivityPackage *)buildClickPackage:(NSString *)clickSource
+                                    token:(NSString *)token
+                          errorCodeNumber:(NSNumber *)errorCodeNumber {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+
+    if (token != nil) {
+        [ADJPackageBuilder parameters:parameters
+                            setString:token
+                               forKey:ADJAttributionTokenParameter];
+    }
+    if (errorCodeNumber != nil) {
+        [ADJPackageBuilder parameters:parameters
+                               setInt:errorCodeNumber.intValue
+                               forKey:@"error_code"];
+    }
+
+    return [self buildClickPackage:clickSource extraParameters:parameters];
+}
+
+- (ADJActivityPackage *)buildClickPackage:(NSString *)clickSource
+                                linkMeUrl:(NSString * _Nullable)linkMeUrl {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+
+    if (linkMeUrl != nil) {
+        [ADJPackageBuilder parameters:parameters
+                            setString:linkMeUrl
+                               forKey:@"content"];
+    }
+
+    return [self buildClickPackage:clickSource extraParameters:parameters];
+}
+
+- (ADJActivityPackage * _Nullable)buildPurchaseVerificationPackage:(ADJPurchase * _Nullable)purchase {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+
+    if (purchase.receipt != nil) {
+        NSString *receiptBase64 = [purchase.receipt adjEncodeBase64];
+        [ADJPackageBuilder parameters:parameters
+                            setString:receiptBase64
+                               forKey:@"receipt"];
+    }
+    if (purchase.transactionId != nil) {
+        [ADJPackageBuilder parameters:parameters
+                            setString:purchase.transactionId
+                               forKey:@"transaction_id"];
+    }
+    if (purchase.productId != nil) {
+        [ADJPackageBuilder parameters:parameters
+                            setString:purchase.productId
+                               forKey:@"product_id"];
+    }
+
+    return [self buildPurchaseVerificationPackageWithExtraParams:parameters];
 }
 
 + (void)parameters:(NSMutableDictionary *)parameters setDictionary:(NSDictionary *)dictionary forKey:(NSString *)key {
@@ -305,71 +320,6 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
 }
 
 #pragma mark - Private & helper methods
-
-- (void)signWithSigV2Plugin:(ADJActivityPackage *)activityPackage {
-    Class signerClass = NSClassFromString(@"ADJSigner");
-    if (signerClass == nil) {
-        return;
-    }
-    SEL signSEL = NSSelectorFromString(@"sign:withActivityKind:withSdkVersion:");
-    if (![signerClass respondsToSelector:signSEL]) {
-        return;
-    }
-
-    NSMutableDictionary *parameters = activityPackage.parameters;
-    const char *activityKindChar = [[ADJActivityKindUtil activityKindToString:activityPackage.activityKind] UTF8String];
-    const char *sdkVersionChar = [activityPackage.clientSdk UTF8String];
-
-    // Stack allocated strings to ensure their lifetime stays until the next iteration
-    static char activityKind[64], sdkVersion[64];
-    strncpy(activityKind, activityKindChar, strlen(activityKindChar) + 1);
-    strncpy(sdkVersion, sdkVersionChar, strlen(sdkVersionChar) + 1);
-
-    // NSInvocation setArgument requires lvalue references with exact matching types to the executed function signature.
-    // With this usage we ensure that the lifetime of the object remains until the next iteration, as it points to the
-    // stack allocated string where we copied the buffer.
-    const char *lvalActivityKind = activityKind;
-    const char *lvalSdkVersion = sdkVersion;
-
-    /*
-     [ADJSigner sign:parameters
-    withActivityKind:activityKindChar
-      withSdkVersion:sdkVersionChar];
-     */
-
-    NSMethodSignature *signMethodSignature = [signerClass methodSignatureForSelector:signSEL];
-    NSInvocation *signInvocation = [NSInvocation invocationWithMethodSignature:signMethodSignature];
-    [signInvocation setSelector:signSEL];
-    [signInvocation setTarget:signerClass];
-
-    [signInvocation setArgument:&parameters atIndex:2];
-    [signInvocation setArgument:&lvalActivityKind atIndex:3];
-    [signInvocation setArgument:&lvalSdkVersion atIndex:4];
-
-    [signInvocation invoke];
-
-    SEL getVersionSEL = NSSelectorFromString(@"getVersion");
-    if (![signerClass respondsToSelector:getVersionSEL]) {
-        return;
-    }
-    /*
-     NSString *signerVersion = [ADJSigner getVersion];
-     */
-    IMP getVersionIMP = [signerClass methodForSelector:getVersionSEL];
-    if (!getVersionIMP) {
-        return;
-    }
-    id (*getVersionFunc)(id, SEL) = (void *)getVersionIMP;
-    id signerVersion = getVersionFunc(signerClass, getVersionSEL);
-    if (![signerVersion isKindOfClass:[NSString class]]) {
-        return;
-    }
-
-    NSString *signerVersionString = (NSString *)signerVersion;
-    [ADJPackageBuilder parameters:parameters
-                           setString:signerVersionString
-                           forKey:@"native_version"];
-}
 
 - (NSMutableDictionary *)getSessionParameters:(BOOL)isInDelay {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -464,10 +414,25 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     [ADJPackageBuilder parameters:parameters setString:self.adjustConfig.secretId forKey:@"secret_id"];
     [ADJPackageBuilder parameters:parameters setDate:[ADJUserDefaults getSkadRegisterCallTimestamp] forKey:@"skadn_registered_at"];
     [ADJPackageBuilder parameters:parameters setDate1970:(double)self.packageParams.startedAt forKey:@"started_at"];
-    
-    if (event.transactionId) {
-        [ADJPackageBuilder parameters:parameters setString:event.transactionId forKey:@"deduplication_id"];
-    }
+
+    // FYI: long time ago deprecated way of purchase verification, to be removed
+    // if (event.emptyReceipt) {
+    //     NSString *emptyReceipt = @"empty";
+    //     [ADJPackageBuilder parameters:parameters setString:emptyReceipt forKey:@"receipt"];
+    //     [ADJPackageBuilder parameters:parameters setString:event.transactionId forKey:@"transaction_id"];
+    // } else if (event.receipt != nil) {
+    //     NSString *receiptBase64 = [event.receipt adjEncodeBase64];
+    //     [ADJPackageBuilder parameters:parameters setString:receiptBase64 forKey:@"receipt"];
+    //     [ADJPackageBuilder parameters:parameters setString:event.transactionId forKey:@"transaction_id"];
+    // }
+    // FYI: event.transactionId being historically used for deduplication + for IAP verification
+    // if (event.transactionId) {
+    //     [ADJPackageBuilder parameters:parameters setString:event.transactionId forKey:@"deduplication_id"];
+    // }
+    [ADJPackageBuilder parameters:parameters setString:event.transactionId forKey:@"transaction_id"];
+    [ADJPackageBuilder parameters:parameters setString:event.transactionId forKey:@"deduplication_id"];
+    [ADJPackageBuilder parameters:parameters setString:event.productId forKey:@"product_id"];
+    [ADJPackageBuilder parameters:parameters setString:[event.receipt adjEncodeBase64] forKey:@"receipt"];
     
     if ([self.trackingStatusManager canGetAttStatus]) {
         [ADJPackageBuilder parameters:parameters setInt:self.trackingStatusManager.attStatus
@@ -508,16 +473,6 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
 
         [ADJPackageBuilder parameters:parameters setDictionary:mergedCallbackParameters forKey:@"callback_params"];
         [ADJPackageBuilder parameters:parameters setDictionary:mergedPartnerParameters forKey:@"partner_params"];
-    }
-
-    if (event.emptyReceipt) {
-        NSString *emptyReceipt = @"empty";
-        [ADJPackageBuilder parameters:parameters setString:emptyReceipt forKey:@"receipt"];
-        [ADJPackageBuilder parameters:parameters setString:event.transactionId forKey:@"transaction_id"];
-    } else if (event.receipt != nil) {
-        NSString *receiptBase64 = [event.receipt adjEncodeBase64];
-        [ADJPackageBuilder parameters:parameters setString:receiptBase64 forKey:@"receipt"];
-        [ADJPackageBuilder parameters:parameters setString:event.transactionId forKey:@"transaction_id"];
     }
 
     [self injectFeatureFlagsWithParameters:parameters];
@@ -1217,28 +1172,73 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     return parameters;
 }
 
+- (NSMutableDictionary *)getPurchaseVerificationParameters {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+
+    [ADJPackageBuilder parameters:parameters setString:self.adjustConfig.appSecret forKey:@"app_secret"];
+    [ADJPackageBuilder parameters:parameters setString:self.adjustConfig.appToken forKey:@"app_token"];
+    [ADJPackageBuilder parameters:parameters setString:self.packageParams.buildNumber forKey:@"app_version"];
+    [ADJPackageBuilder parameters:parameters setString:self.packageParams.versionNumber forKey:@"app_version_short"];
+    [ADJPackageBuilder parameters:parameters setBool:YES forKey:@"attribution_deeplink"];
+    [ADJPackageBuilder parameters:parameters setString:self.packageParams.bundleIdentifier forKey:@"bundle_id"];
+    [ADJPackageBuilder parameters:parameters setDictionary:[self.sessionParameters.callbackParameters copy] forKey:@"callback_params"];
+    [ADJPackageBuilder parameters:parameters setDate1970:self.createdAt forKey:@"created_at"];
+    [ADJPackageBuilder parameters:parameters setString:self.adjustConfig.defaultTracker forKey:@"default_tracker"];
+    [ADJPackageBuilder parameters:parameters setDictionary:self.attributionDetails forKey:@"details"];
+    [ADJPackageBuilder parameters:parameters setString:self.packageParams.deviceName forKey:@"device_name"];
+    [ADJPackageBuilder parameters:parameters setString:self.packageParams.deviceType forKey:@"device_type"];
+    [ADJPackageBuilder parameters:parameters setString:self.adjustConfig.environment forKey:@"environment"];
+    [ADJPackageBuilder parameters:parameters setString:self.adjustConfig.externalDeviceId forKey:@"external_device_id"];
+    [ADJPackageBuilder parameters:parameters setString:self.packageParams.fbAnonymousId forKey:@"fb_anon_id"];
+    [self addIdfaIfPossibleToParameters:parameters];
+    [self addIdfvIfPossibleToParameters:parameters];
+    [ADJPackageBuilder parameters:parameters setString:self.packageParams.installedAt forKey:@"installed_at"];
+    [ADJPackageBuilder parameters:parameters setBool:YES forKey:@"needs_response_details"];
+    [ADJPackageBuilder parameters:parameters setString:self.packageParams.osName forKey:@"os_name"];
+    [ADJPackageBuilder parameters:parameters setString:self.packageParams.osVersion forKey:@"os_version"];
+    [ADJPackageBuilder parameters:parameters setDictionary:[self.sessionParameters.partnerParameters copy] forKey:@"partner_params"];
+    [ADJPackageBuilder parameters:parameters setString:self.adjustConfig.secretId forKey:@"secret_id"];
+    [ADJPackageBuilder parameters:parameters setDate:[ADJUserDefaults getSkadRegisterCallTimestamp] forKey:@"skadn_registered_at"];
+    [ADJPackageBuilder parameters:parameters setDate1970:(double)self.packageParams.startedAt forKey:@"started_at"];
+
+    if ([self.trackingStatusManager canGetAttStatus]) {
+        [ADJPackageBuilder parameters:parameters setInt:self.trackingStatusManager.attStatus
+                               forKey:@"att_status"];
+    } else {
+        [ADJPackageBuilder parameters:parameters setInt:self.trackingStatusManager.trackingEnabled
+                               forKey:@"tracking_enabled"];
+    }
+
+    if (self.adjustConfig.isDeviceKnown) {
+        [ADJPackageBuilder parameters:parameters setBool:self.adjustConfig.isDeviceKnown forKey:@"device_known"];
+    }
+    if (self.adjustConfig.needsCost) {
+        [ADJPackageBuilder parameters:parameters setBool:self.adjustConfig.needsCost forKey:@"needs_cost"];
+    }
+
+    if (self.activityState != nil) {
+        [ADJPackageBuilder parameters:parameters setDuration:self.activityState.lastInterval forKey:@"last_interval"];
+        [ADJPackageBuilder parameters:parameters setString:self.activityState.deviceToken forKey:@"push_token"];
+        [ADJPackageBuilder parameters:parameters setInt:self.activityState.sessionCount forKey:@"session_count"];
+        [ADJPackageBuilder parameters:parameters setDuration:self.activityState.sessionLength forKey:@"session_length"];
+        [ADJPackageBuilder parameters:parameters setInt:self.activityState.subsessionCount forKey:@"subsession_count"];
+        [ADJPackageBuilder parameters:parameters setDuration:self.activityState.timeSpent forKey:@"time_spent"];
+        if (self.activityState.isPersisted) {
+            [ADJPackageBuilder parameters:parameters setString:self.activityState.dedupeToken forKey:@"primary_dedupe_token"];
+        } else {
+            [ADJPackageBuilder parameters:parameters setString:self.activityState.dedupeToken forKey:@"secondary_dedupe_token"];
+        }
+    }
+
+    [self injectFeatureFlagsWithParameters:parameters];
+
+    return parameters;
+}
+
 - (void)addIdfaIfPossibleToParameters:(NSMutableDictionary *)parameters {
-    id<ADJLogger> logger = [ADJAdjustFactory logger];
-
-    if (! self.adjustConfig.allowIdfaReading) {
-        return;
-    }
-    
-    if (self.adjustConfig.coppaCompliantEnabled) {
-        [logger info:@"Cannot read IDFA with COPPA enabled"];
-        return;
-    }
-    
-    NSString *idfa = [ADJUtil idfa];
-
-    if (idfa == nil
-        || idfa.length == 0
-        || [idfa isEqualToString:@"00000000-0000-0000-0000-000000000000"])
-    {
-        return;
-    }
-
-    [ADJPackageBuilder parameters:parameters setString:idfa forKey:@"idfa"];
+    [ADJPackageBuilder addIdfaToParameters:parameters
+                                withConfig:self.adjustConfig
+                                    logger:[ADJAdjustFactory logger]];
 }
 
 - (void)addIdfvIfPossibleToParameters:(NSMutableDictionary *)parameters {
@@ -1262,9 +1262,6 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
     }
     if (self.adjustConfig.allowIdfaReading == NO) {
         [ADJPackageBuilder parameters:parameters setBool:YES forKey:@"ff_idfa_disabled"];
-    }
-    if (self.adjustConfig.allowiAdInfoReading == NO) {
-        [ADJPackageBuilder parameters:parameters setBool:YES forKey:@"ff_iad_disabled"];
     }
     if (self.adjustConfig.allowAdServicesInfoReading == NO) {
         [ADJPackageBuilder parameters:parameters setBool:YES forKey:@"ff_adserv_disabled"];
@@ -1373,6 +1370,30 @@ NSString * const ADJAttributionTokenParameter = @"attribution_token";
 + (BOOL)isAdServicesPackage:(ADJActivityPackage *)activityPackage {
     NSString *source = activityPackage.parameters[@"source"];
     return ([ADJUtil isNotNull:source] && [source isEqualToString:ADJAdServicesPackageKey]);
+}
+
++ (void)addIdfaToParameters:(NSMutableDictionary * _Nullable)parameters
+                 withConfig:(ADJConfig * _Nullable)adjConfig
+                     logger:(id<ADJLogger> _Nullable)logger {
+
+    if (! adjConfig.allowIdfaReading) {
+        return;
+    }
+
+    if (adjConfig.coppaCompliantEnabled) {
+        [logger info:@"Cannot read IDFA with COPPA enabled"];
+        return;
+    }
+
+    NSString *idfa = [ADJUtil idfa];
+    if (idfa == nil
+        || idfa.length == 0
+        || [idfa isEqualToString:@"00000000-0000-0000-0000-000000000000"])
+    {
+        return;
+    }
+
+    [ADJPackageBuilder parameters:parameters setString:idfa forKey:@"idfa"];
 }
 
 @end

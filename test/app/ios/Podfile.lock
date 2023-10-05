@@ -1,7 +1,7 @@
 PODS:
-  - Adjust (4.33.3):
-    - Adjust/Core (= 4.33.3)
-  - Adjust/Core (4.33.3)
+  - Adjust (4.35.1):
+    - Adjust/Core (= 4.35.1)
+  - Adjust/Core (4.35.1)
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
@@ -287,10 +287,10 @@ PODS:
   - React-jsinspector (0.69.4)
   - React-logger (0.69.4):
     - glog
-  - react-native-adjust (4.33.0):
-    - Adjust (= 4.33.3)
+  - react-native-adjust (4.35.0):
+    - Adjust (= 4.35.1)
     - React-Core
-  - react-native-adjust-test (4.33.0):
+  - react-native-adjust-test (4.35.0):
     - React
   - React-perflogger (0.69.4)
   - React-RCTActionSheet (0.69.4):
@@ -358,7 +358,7 @@ PODS:
     - React-jsi (= 0.69.4)
     - React-logger (= 0.69.4)
     - React-perflogger (= 0.69.4)
-  - SocketRocket (0.6.0)
+  - SocketRocket (0.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -513,7 +513,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adjust: 41d0d5c031409aebe7fb1f5703ff0d3306133439
+  Adjust: 63c56c81b420738f927fbc19e5cf4f34fd39d572
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -546,8 +546,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: a27badbbdbc0ff781813370736a2d1c7261181d4
   React-jsinspector: 8a3d3f5dcd23a91e8c80b1bf0e96902cd1dca999
   React-logger: 1088859f145b8f6dd0d3ed051a647ef0e3e80fad
-  react-native-adjust: 5f5966b51459bf8cb074bf8ebc1307a2bfb7b1da
-  react-native-adjust-test: 10554cbc720c50b1ef5eb582ecf580bd5ad3f7fc
+  react-native-adjust: 9812c952950dd8dc8eff4f5b42fe1a7d659683c9
+  react-native-adjust-test: 1a06f4606ae0851b3c4447f9f70852439bbd9b4f
   React-perflogger: cb386fd44c97ec7f8199c04c12b22066b0f2e1e0
   React-RCTActionSheet: f803a85e46cf5b4066c2ac5e122447f918e9c6e5
   React-RCTAnimation: 19c80fa950ccce7f4db76a2a7f2cf79baae07fc7
@@ -560,10 +560,10 @@ SPEC CHECKSUMS:
   React-RCTVibration: 9adb4a3cbb598d1bbd46a05256f445e4b8c70603
   React-runtimeexecutor: 61ee22a8cdf8b6bb2a7fb7b4ba2cc763e5285196
   ReactCommon: 8f67bd7e0a6afade0f20718f859dc8c2275f2e83
-  SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: ff994563b2fd98c982ca58e8cd9db2cdaf4dda74
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: e91a2cad873e0e69d8ca9d9e46f6e753196e2e40
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

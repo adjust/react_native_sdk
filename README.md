@@ -153,7 +153,7 @@ The Adjust SDK by default adds two permissions to your app's `AndroidManifest.xm
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
-The `INTERNET` permission might be needed by our SDK at any point in time. The `ACCESS_WIFI_STATE` permission is needed by the Adjust SDK if your app is not targeting the Google Play Store and doesn't use Google Play Services. If you are targeting the Google Play Store and you are using Google Play Services, the Adjust SDK doesn't need this permission and, if you don't need it anywhere else in your app, you can remove it.
+The `INTERNET` permission might be needed by our SDK at any point in time. The `ACCESS_NETWORK_STATE` permission is needed for reading type of network device is connected to.
 
 #### <a id="gps-adid-permission"></a>Add permission to gather Google advertising ID
 

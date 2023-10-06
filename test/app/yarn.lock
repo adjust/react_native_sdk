@@ -5768,6 +5768,12 @@ react-is@^17.0.1:
 react-native-adjust-oaid@../../plugins/oaid:
   version "4.35.0"
 
+react-native-adjust-test@../lib:
+  version "4.35.0"
+
+react-native-adjust@../../temp:
+  version "4.35.0"
+
 react-native-codegen@^0.69.1:
   version "0.69.2"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.69.2.tgz#e33ac3b1486de59ddae687b731ddbfcef8af0e4e"

@@ -157,13 +157,19 @@ The `INTERNET` permission might be needed by our SDK at any point in time. The `
 
 #### <a id="gps-adid-permission"></a>Add permission to gather Google advertising ID
 
-If you are targeting Android 12 and above (API level 31), you need to add the `com.google.android.gms.AD_ID` permission to read the device's advertising ID. Add the following line to your `AndroidManifest.xml` to enable the permission.
+If you are targeting Android 12 and above (API level 31), you need to add the `com.google.android.gms.AD_ID` permission to read the device's advertising ID. This will be done automatically by the Adjust SDK for you:
 
 ```xml
 <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 ```
 
 For more information, see [Google's `AdvertisingIdClient.Info` documentation](https://developers.google.com/android/reference/com/google/android/gms/ads/identifier/AdvertisingIdClient.Info#public-string-getid).
+
+In case you don't want this permission to be part of your app, you can remove it by adding following line to your `AndroidManifest.xml` file:
+
+```xml
+<uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+```
 
 ### <a id="android-gps"></a>Google Play Services
 

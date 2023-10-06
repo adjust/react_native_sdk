@@ -166,7 +166,7 @@
 /**
  * @brief Enables/disables reading of iAd framework data needed for ASA tracking.
  */
-@property (nonatomic, assign) BOOL allowiAdInfoReading;
+@property (nonatomic, assign) BOOL allowiAdInfoReading DEPRECATED_MSG_ATTRIBUTE("Apple Search Ads attribution with usage of iAd.framework has been sunset by Apple as of February 7th 2023");
 
 /**
  * @brief Enables/disables reading of AdServices framework data needed for attribution.
@@ -182,6 +182,11 @@
  * @brief Enables delayed start of the SDK.
  */
 @property (nonatomic, assign) double delayStart;
+
+/**
+ * @brief Define how many seconds to wait for ATT status before sending the first data.
+ */
+@property (nonatomic, assign) NSUInteger attConsentWaitingInterval;
 
 /**
  * @brief User agent for the requests.

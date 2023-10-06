@@ -22,12 +22,12 @@ static ADJBackoffStrategy * sdkClickHandlerBackoffStrategy = nil;
 static ADJBackoffStrategy * installSessionBackoffStrategy = nil;
 static BOOL internalTesting = NO;
 static NSTimeInterval internalMaxDelayStart = -1;
-static BOOL internaliAdFrameworkEnabled = YES;
 static BOOL internalAdServicesFrameworkEnabled = YES;
 
 static NSString * internalBaseUrl = nil;
 static NSString * internalGdprUrl = nil;
 static NSString * internalSubscriptionUrl = nil;
+static NSString * internalPurchaseVerificationUrl = nil;
 
 @implementation ADJAdjustFactory
 
@@ -99,10 +99,6 @@ static NSString * internalSubscriptionUrl = nil;
     return internalTesting;
 }
 
-+ (BOOL)iAdFrameworkEnabled {
-    return internaliAdFrameworkEnabled;
-}
-
 + (BOOL)adServicesFrameworkEnabled {
     return internalAdServicesFrameworkEnabled;
 }
@@ -124,6 +120,10 @@ static NSString * internalSubscriptionUrl = nil;
 
 + (NSString *)subscriptionUrl {
     return internalSubscriptionUrl;
+}
+
++ (NSString *)purchaseVerificationUrl {
+    return internalPurchaseVerificationUrl;
 }
 
 + (void)setLogger:(id<ADJLogger>)logger {
@@ -162,10 +162,6 @@ static NSString * internalSubscriptionUrl = nil;
     internalTesting = testing;
 }
 
-+ (void)setiAdFrameworkEnabled:(BOOL)iAdFrameworkEnabled {
-    internaliAdFrameworkEnabled = iAdFrameworkEnabled;
-}
-
 + (void)setAdServicesFrameworkEnabled:(BOOL)adServicesFrameworkEnabled {
     internalAdServicesFrameworkEnabled = adServicesFrameworkEnabled;
 }
@@ -184,6 +180,10 @@ static NSString * internalSubscriptionUrl = nil;
 
 + (void)setSubscriptionUrl:(NSString *)subscriptionUrl {
     internalSubscriptionUrl = subscriptionUrl;
+}
+
++ (void)setPurchaseVerificationUrl:(NSString *)purchaseVerificationUrl {
+    internalPurchaseVerificationUrl = purchaseVerificationUrl;
 }
 
 + (void)enableSigning {
@@ -248,7 +248,7 @@ static NSString * internalSubscriptionUrl = nil;
     internalBaseUrl = nil;
     internalGdprUrl = nil;
     internalSubscriptionUrl = nil;
-    internaliAdFrameworkEnabled = YES;
+    internalPurchaseVerificationUrl = nil;
     internalAdServicesFrameworkEnabled = YES;
 }
 @end

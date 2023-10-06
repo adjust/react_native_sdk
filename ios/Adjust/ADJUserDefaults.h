@@ -47,12 +47,6 @@
 
 + (void)clearAdjustStuff;
 
-+ (void)saveiAdErrorKey:(NSString *)key;
-
-+ (NSDictionary<NSString *, NSNumber *> *)getiAdErrors;
-
-+ (void)cleariAdErrors;
-
 + (void)setAdServicesTracked;
 
 + (BOOL)getAdServicesTracked;
@@ -68,5 +62,14 @@
 + (void)cacheDeeplinkUrl:(NSURL *)deeplink;
 
 + (NSURL *)getCachedDeeplinkUrl;
+
++ (BOOL)attWaitingRemainingSecondsKeyExists;
+
++ (void)setAttWaitingRemainingSeconds:(NSUInteger)seconds;
+
++ (NSUInteger)getAttWaitingRemainingSeconds;
+
++ (void)removeAttWaitingRemainingSeconds;
+
 
 @end

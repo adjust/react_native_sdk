@@ -153,17 +153,23 @@ The Adjust SDK by default adds two permissions to your app's `AndroidManifest.xm
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
-The `INTERNET` permission might be needed by our SDK at any point in time. The `ACCESS_WIFI_STATE` permission is needed by the Adjust SDK if your app is not targeting the Google Play Store and doesn't use Google Play Services. If you are targeting the Google Play Store and you are using Google Play Services, the Adjust SDK doesn't need this permission and, if you don't need it anywhere else in your app, you can remove it.
+The `INTERNET` permission might be needed by our SDK at any point in time. The `ACCESS_NETWORK_STATE` permission is needed for reading type of network device is connected to.
 
 #### <a id="gps-adid-permission"></a>Add permission to gather Google advertising ID
 
-If you are targeting Android 12 and above (API level 31), you need to add the `com.google.android.gms.AD_ID` permission to read the device's advertising ID. Add the following line to your `AndroidManifest.xml` to enable the permission.
+If you are targeting Android 12 and above (API level 31), you need to add the `com.google.android.gms.AD_ID` permission to read the device's advertising ID. This will be done automatically by the Adjust SDK for you:
 
 ```xml
 <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 ```
 
 For more information, see [Google's `AdvertisingIdClient.Info` documentation](https://developers.google.com/android/reference/com/google/android/gms/ads/identifier/AdvertisingIdClient.Info#public-string-getid).
+
+In case you don't want this permission to be part of your app, you can remove it by adding following line to your `AndroidManifest.xml` file:
+
+```xml
+<uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+```
 
 ### <a id="android-gps"></a>Google Play Services
 

@@ -43,7 +43,9 @@ const App: () => React$Node = () => {
   // adjustConfig.setUserAgent("Custom Adjust User Agent");
   // adjustConfig.setUrlStrategy(AdjustConfig.UrlStrategyChina);
   // adjustConfig.deactivateSKAdNetworkHandling();
-  adjustConfig.setNeedsCost(true);
+  // adjustConfig.setNeedsCost(true);
+  // adjustConfig.setAttConsentWaitingInterval(16);
+  // adjustConfig.setFinalAndroidAttributionEnabled(true);
 
   adjustConfig.setAttributionCallbackListener(function(attribution) {
     console.log("Attribution callback received");

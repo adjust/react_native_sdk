@@ -50,25 +50,27 @@ const App: () => React$Node = () => {
   var baseUrl = "";
   var gdprUrl = "";
   var subscriptionUrl = "";
-  var ipAddress = "192.168.86.111";
+  var ipAddress = "192.168.86.40";
   if (Platform.OS === "android") {
     baseUrl = "https://" + ipAddress + ":8443";
     gdprUrl = "https://" + ipAddress + ":8443";
     subscriptionUrl = "https://" + ipAddress + ":8443";
+    purchaseVerificationUrl = "https://" + ipAddress + ":8443";
   } else if (Platform.OS === "ios") {
     baseUrl = "http://" + ipAddress + ":8080";
     gdprUrl = "http://" + ipAddress + ":8080";
     subscriptionUrl = "http://" + ipAddress + ":8080";
+    purchaseVerificationUrl = "http://" + ipAddress + ":8080";
   }
   var controlUrl = "ws://" + ipAddress + ":1987";
 
-  // AdjustSdkTest.addTestDirectory("current/appSecret/");
+  // AdjustSdkTest.addTestDirectory("purchase-verification");
   // AdjustSdkTest.addTest("Test_AdRevenue_ad_revenue_v2");
   Adjust.getSdkVersion(function(sdkVersion) {
     AdjustSdkTest.startTestSession(baseUrl, controlUrl, sdkVersion);
   });
 
-  const commandExecutor = new CommandExecutor(baseUrl, gdprUrl, subscriptionUrl);
+  const commandExecutor = new CommandExecutor(baseUrl, gdprUrl, subscriptionUrl, purchaseVerificationUrl);
   emitterSubscription = AdjustSdkTestEmitter.addListener('command', (json) => {
     const className = json["className"];
     const functionName = json["functionName"];

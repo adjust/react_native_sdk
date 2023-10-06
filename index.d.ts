@@ -66,6 +66,12 @@ declare module 'react-native-adjust' {
     lockWindow: boolean
   }
 
+  interface AdjustPurchaseVerificationInfo {
+    verificationStatus: string
+    code: number
+    message: string
+  }
+
   export class AdjustConfig {
     constructor(appToken: string, environment: Environment)
     public setLogLevel(level: LogLevel): void
@@ -94,8 +100,10 @@ declare module 'react-native-adjust' {
     public setAllowIdfaReading(allowIdfaReading: boolean): void
     public setSdkPrefix(sdkPrefix: string): void
     public setShouldLaunchDeeplink(shouldLaunchDeeplink: boolean): void
-    public deactivateSKAdNetworkHandling(): void;
-    public setLinkMeEnabled(linkMeEnabled: boolean): void;
+    public deactivateSKAdNetworkHandling(): void
+    public setLinkMeEnabled(linkMeEnabled: boolean): void
+    public setFinalAndroidAttributionEnabled(finalAndroidAttributionEnabled: boolean): void
+    public setAttConsentWaitingInterval(attConsentWaitingInterval: number): void
 
     public setAttributionCallbackListener(
       callback: (attribution: AdjustAttribution) => void
@@ -153,6 +161,9 @@ declare module 'react-native-adjust' {
     public addPartnerParameter(key: string, value: string): void
     public setTransactionId(transactionId: string): void
     public setCallbackId(callbackId: string): void
+    public setReceipt(receipt: string): void
+    public setProductId(productId: string): void
+    public setPurchaseToken(purchaseToken: string): void
   }
 
   export class AdjustAppStoreSubscription {
@@ -193,6 +204,14 @@ declare module 'react-native-adjust' {
     public addPartnerParameter(key: string, value: string): void
   }
 
+  export class AdjustAppStorePurchase {
+    constructor(receipt: string, productId: string, transactionId: string)
+  }
+
+  export class AdjustPlayStorePurchase {
+    constructor(productId: string, purchaseToken: string)
+  }
+
   export const Adjust: {
     componentWillUnmount: () => void
     create: (adjustConfig: AdjustConfig) => void
@@ -231,5 +250,8 @@ declare module 'react-native-adjust' {
     trackMeasurementConsent: (measurementConsent: boolean) => void
     checkForNewAttStatus: () => void
     getLastDeeplink: (callback: (lastDeeplink: string) => void) => void
+    verifyAppStorePurchase: (purchase: AdjustAppStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
+    verifyPlayStorePurchase: (purchase: AdjustPlayStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
+
   }
 }

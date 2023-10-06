@@ -132,7 +132,7 @@ Adjust.getAmazonAdId = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native4.33.0", callback);
+    module_adjust.getSdkVersion("react-native4.35.0", callback);
 };
 
 Adjust.setReferrer = function(referrer) {
@@ -182,6 +182,18 @@ Adjust.checkForNewAttStatus = function() {
 
 Adjust.getLastDeeplink = function(callback) {
     module_adjust.getLastDeeplink(callback);
+};
+
+Adjust.verifyAppStorePurchase = function(purchase, callback) {
+    if (Platform.OS === "ios") {
+        module_adjust.verifyAppStorePurchase(purchase, callback);
+    }
+};
+
+Adjust.verifyPlayStorePurchase = function(purchase, callback) {
+    if (Platform.OS === "android") {
+        module_adjust.verifyPlayStorePurchase(purchase, callback);
+    }
 };
 
 Adjust.componentWillUnmount = function() {
@@ -250,7 +262,7 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native4.33.0";
+    this.sdkPrefix = "react-native4.35.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
@@ -276,12 +288,14 @@ var AdjustConfig = function(appToken, environment) {
     this.preinstallTrackingEnabled = null;
     this.preinstallFilePath = null;
     this.playStoreKidsAppEnabled = null;
+    this.finalAndroidAttributionEnabled = null;
     // iOS only
     this.allowiAdInfoReading = null;
     this.allowAdServicesInfoReading = null;
     this.allowIdfaReading = null;
     this.skAdNetworkHandling = null;
     this.linkMeEnabled = null;
+    this.attConsentWaitingInterval = null;
 };
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
@@ -405,6 +419,10 @@ AdjustConfig.prototype.setPlayStoreKidsAppEnabled = function(isEnabled) {
     this.playStoreKidsAppEnabled = isEnabled;
 };
 
+AdjustConfig.prototype.setFinalAndroidAttributionEnabled = function(isEnabled) {
+    this.finalAndroidAttributionEnabled = isEnabled;
+};
+
 AdjustConfig.prototype.setAllowiAdInfoReading = function(allowiAdInfoReading) {
     this.allowiAdInfoReading = allowiAdInfoReading;
 };
@@ -427,6 +445,10 @@ AdjustConfig.prototype.deactivateSKAdNetworkHandling = function() {
 
 AdjustConfig.prototype.setLinkMeEnabled = function(linkMeEnabled) {
     this.linkMeEnabled = linkMeEnabled;
+};
+
+AdjustConfig.prototype.setAttConsentWaitingInterval = function(attConsentWaitingInterval) {
+    this.attConsentWaitingInterval = attConsentWaitingInterval;
 };
 
 AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {
@@ -511,7 +533,10 @@ var AdjustEvent = function(eventToken) {
     this.eventToken = eventToken;
     this.revenue = null;
     this.currency = null;
+    this.receipt = null;
+    this.productId = null;
     this.transactionId = null;
+    this.purchaseToken = null;
     this.callbackId = null;
     this.callbackParameters = {};
     this.partnerParameters = {};
@@ -538,8 +563,20 @@ AdjustEvent.prototype.addPartnerParameter = function(key, value) {
     this.partnerParameters[key] = value;
 };
 
+AdjustEvent.prototype.setReceipt = function(receipt) {
+    this.receipt = receipt;
+};
+
+AdjustEvent.prototype.setProductId = function(productId) {
+    this.productId = productId;
+};
+
 AdjustEvent.prototype.setTransactionId = function(transactionId) {
     this.transactionId = transactionId;
+};
+
+AdjustEvent.prototype.setPurchaseToken = function(purchaseToken) {
+    this.purchaseToken = purchaseToken;
 };
 
 AdjustEvent.prototype.setCallbackId = function(callbackId) {
@@ -690,6 +727,21 @@ AdjustAdRevenue.prototype.addPartnerParameter = function(key, value) {
     this.partnerParameters[key] = value;
 };
 
+// AdjustAppStorePurchase
+
+var AdjustAppStorePurchase = function(receipt, productId, transactionId) {
+    this.receipt = receipt;
+    this.productId = productId;
+    this.transactionId = transactionId;
+};
+
+// AdjustPlayStorePurchase
+
+var AdjustPlayStorePurchase = function(productId, purchaseToken) {
+    this.productId = productId;
+    this.purchaseToken = purchaseToken;
+};
+
 module.exports = {
     Adjust,
     AdjustEvent,
@@ -697,5 +749,7 @@ module.exports = {
     AdjustAppStoreSubscription,
     AdjustPlayStoreSubscription,
     AdjustThirdPartySharing,
-    AdjustAdRevenue
+    AdjustAdRevenue,
+    AdjustAppStorePurchase,
+    AdjustPlayStorePurchase
 }

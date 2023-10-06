@@ -28,10 +28,6 @@
 #import <AdSupport/ASIdentifierManager.h>
 #endif
 
-#if !ADJUST_NO_IAD && !TARGET_OS_TV
-#import <iAd/iAd.h>
-#endif
-
 static NSString *userAgent = nil;
 static NSRegularExpression *universalLinkRegex = nil;
 static NSNumberFormatter *secondsNumberFormatter = nil;
@@ -39,7 +35,7 @@ static NSRegularExpression *optionalRedirectRegex = nil;
 static NSRegularExpression *shortUniversalLinkRegex = nil;
 static NSRegularExpression *excludedDeeplinkRegex = nil;
 
-static NSString * const kClientSdk                  = @"ios4.33.3";
+static NSString * const kClientSdk                  = @"ios4.35.1";
 static NSString * const kDeeplinkParam              = @"deep_link=";
 static NSString * const kSchemeDelimiter            = @"://";
 static NSString * const kDefaultScheme              = @"AdjustUniversalScheme";
@@ -681,15 +677,8 @@ static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SS
 }
 
 + (double)randomInRange:(double)minRange maxRange:(double)maxRange {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        srand48(arc4random());
-    });
-    double random = drand48();
     double range = maxRange - minRange;
-    double scaled = random  * range;
-    double shifted = scaled + minRange;
-    return shifted;
+    return minRange + (range * arc4random_uniform(100)*1.0/100);
 }
 
 + (NSTimeInterval)waitingTime:(NSInteger)retries
@@ -957,44 +946,6 @@ static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SS
     return [hexString copy];
 }
 
-+ (BOOL)checkAttributionDetails:(NSDictionary *)attributionDetails {
-    if ([ADJUtil isNull:attributionDetails]) {
-        return NO;
-    }
-
-    NSDictionary *details = [attributionDetails objectForKey:@"Version3.1"];
-    if ([ADJUtil isNull:details]) {
-        return YES;
-    }
-
-    // Common fields for both iAd3 and Apple Search Ads
-    if (![ADJUtil contains:details key:@"iad-org-name" value:@"OrgName"] ||
-        ![ADJUtil contains:details key:@"iad-campaign-id" value:@"1234567890"] ||
-        ![ADJUtil contains:details key:@"iad-campaign-name" value:@"CampaignName"] ||
-        ![ADJUtil contains:details key:@"iad-lineitem-id" value:@"1234567890"] ||
-        ![ADJUtil contains:details key:@"iad-lineitem-name" value:@"LineName"]) {
-        [ADJAdjustFactory.logger debug:@"iAd attribution details has dummy common fields for both iAd3 and Apple Search Ads"];
-        return YES;
-    }
-    // Apple Search Ads fields
-    if ([ADJUtil contains:details key:@"iad-adgroup-id" value:@"1234567890"] &&
-        [ADJUtil contains:details key:@"iad-keyword" value:@"Keyword"] && (
-            [ADJUtil contains:details key:@"iad-adgroup-name" value:@"AdgroupName"] ||
-            [ADJUtil contains:details key:@"iad-adgroup-name" value:@"AdGroupName"]
-        )) {
-        [ADJAdjustFactory.logger debug:@"iAd attribution details has dummy Apple Search Ads fields"];
-        return NO;
-    }
-    // iAd3 fields
-    if ([ADJUtil contains:details key:@"iad-adgroup-id" value:@"1234567890"] &&
-        [ADJUtil contains:details key:@"iad-creative-name" value:@"CreativeName"]) {
-        [ADJAdjustFactory.logger debug:@"iAd attribution details has dummy iAd3 fields"];
-        return NO;
-    }
-
-    return YES;
-}
-
 + (BOOL)contains:(NSDictionary *)dictionary
         key:(NSString *)key
         value:(NSString *)value {
@@ -1240,7 +1191,7 @@ static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SS
             NSMethodSignature *msAuthorization = [appTrackingClass methodSignatureForSelector:selAuthorization];
             NSInvocation *invAuthorization = [NSInvocation invocationWithMethodSignature:msAuthorization];
             [invAuthorization setSelector:selAuthorization];
-            [invAuthorization invokeWithTarget:appTrackingClass];
+            [invAuthorization setTarget:appTrackingClass];
             [invAuthorization invoke];
             NSUInteger status;
             [invAuthorization getReturnValue:&status];
@@ -1298,89 +1249,6 @@ static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SS
     [tokenInvocation getReturnValue:&tmpToken];
     NSString *token = tmpToken;
     return token;
-}
-
-+ (void)checkForiAd:(ADJActivityHandler *)activityHandler queue:(dispatch_queue_t)queue {
-    // if no tries for iAd v3 left, stop trying
-    id<ADJLogger> logger = [ADJAdjustFactory logger];
-
-#if ADJUST_NO_IAD || TARGET_OS_TV
-    [logger debug:@"ADJUST_NO_IAD or TARGET_OS_TV set"];
-    return;
-#else
-    [logger debug:@"ADJUST_NO_IAD or TARGET_OS_TV not set"];
-
-    // [[ADClient sharedClient] ...]
-    Class ADClientClass = NSClassFromString(@"ADClient");
-    if (ADClientClass == nil) {
-        [logger warn:@"iAd framework not found in the app (ADClientClass not found)"];
-        return;
-    }
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    SEL sharedClientSelector = NSSelectorFromString(@"sharedClient");
-    if (![ADClientClass respondsToSelector:sharedClientSelector]) {
-        [logger warn:@"iAd framework not found in the app (sharedClient method not found)"];
-        return;
-    }
-    id ADClientSharedClientInstance = [ADClientClass performSelector:sharedClientSelector];
-    if (ADClientSharedClientInstance == nil) {
-        [logger warn:@"iAd framework not found in the app (ADClientSharedClientInstance is nil)"];
-        return;
-    }
-    [logger debug:@"iAd framework successfully found in the app"];
-    BOOL iAdInformationAvailable = [ADJUtil setiAdWithDetails:activityHandler
-                                       adClientSharedInstance:ADClientSharedClientInstance
-                                                        queue:queue];
-    if (!iAdInformationAvailable) {
-        [logger warn:@"iAd information not available"];
-        return;
-    }
-#pragma clang diagnostic pop
-#endif
-}
-
-+ (BOOL)setiAdWithDetails:(ADJActivityHandler *)activityHandler
-   adClientSharedInstance:(id)ADClientSharedClientInstance
-                    queue:(dispatch_queue_t)queue {
-    SEL iAdDetailsSelector = NSSelectorFromString(@"requestAttributionDetailsWithBlock:");
-    if (![ADClientSharedClientInstance respondsToSelector:iAdDetailsSelector]) {
-        return NO;
-    }
-
-    __block Class lock = [ADJActivityHandler class];
-    __block BOOL completed = NO;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    [ADClientSharedClientInstance performSelector:iAdDetailsSelector
-                                       withObject:^(NSDictionary *attributionDetails, NSError *error) {
-        @synchronized (lock) {
-            if (completed) {
-                return;
-            } else {
-                completed = YES;
-            }
-        }
-        [activityHandler setAttributionDetails:attributionDetails
-                                         error:error];
-    }];
-#pragma clang diagnostic pop
-
-    // 5 seconds of timeout
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), queue, ^{
-        @synchronized (lock) {
-            if (completed) {
-                return;
-            } else {
-                completed = YES;
-            }
-        }
-        [activityHandler setAttributionDetails:nil
-                                         error:[NSError errorWithDomain:@"com.adjust.sdk.iAd"
-                                                                   code:100
-                                                               userInfo:@{@"Error reason": @"iAd request timed out"}]];
-    });
-    return YES;
 }
 
 + (void)requestTrackingAuthorizationWithCompletionHandler:(void (^)(NSUInteger status))completion {
@@ -1556,6 +1424,18 @@ static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SS
             return NO;
         }
     }
+}
+
++ (NSMutableDictionary *)deepCopyOfDictionary:(NSMutableDictionary *)dictionary {
+    if (dictionary == nil) {
+        return nil;
+    }
+
+    NSMutableDictionary *deepCopy =
+    (NSMutableDictionary *)CFBridgingRelease(CFPropertyListCreateDeepCopy(kCFAllocatorDefault,
+                                                                          (CFDictionaryRef)dictionary,
+                                                                          kCFPropertyListMutableContainersAndLeaves));
+    return deepCopy;
 }
 
 @end

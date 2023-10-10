@@ -1,3 +1,12 @@
+### Version 4.35.1 (10th October 2023)
+#### Added
+- Added sending of `event_callback_id` parameter (if set) with the event payload.
+
+#### Native SDKs
+- [iOS@v4.35.2][ios_sdk_v4.35.2]
+- [Android@v4.35.1][android_sdk_v4.35.1]
+---
+
 ### Version 4.35.0 (6th October 2023)
 #### Added
 - Added ability to read App Set ID on Android platform in case you opt in by adding the `com.google.android.gms:play-services-appset` dependency to your Android app.
@@ -579,6 +588,7 @@
 [ios_sdk_v4.32.1]: https://github.com/adjust/ios_sdk/tree/v4.32.1
 [ios_sdk_v4.33.3]: https://github.com/adjust/ios_sdk/tree/v4.33.3
 [ios_sdk_v4.35.1]: https://github.com/adjust/ios_sdk/tree/v4.35.1
+[ios_sdk_v4.35.2]: https://github.com/adjust/ios_sdk/tree/v4.35.2
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -612,3 +622,4 @@
 [android_sdk_v4.32.0]: https://github.com/adjust/android_sdk/tree/v4.32.0
 [android_sdk_v4.33.2]: https://github.com/adjust/android_sdk/tree/v4.33.2
 [android_sdk_v4.35.0]: https://github.com/adjust/android_sdk/tree/v4.35.0
+[android_sdk_v4.35.1]: https://github.com/adjust/android_sdk/tree/v4.35.1

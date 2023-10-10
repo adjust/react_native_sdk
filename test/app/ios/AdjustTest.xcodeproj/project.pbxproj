@@ -15,7 +15,6 @@
 		7699B88040F8A987B510C191 /* libPods-AdjustTest-AdjustTestTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-AdjustTest-AdjustTestTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9D325AEC28A3CD1C000883A2 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D325AEB28A3CD1C000883A2 /* AdSupport.framework */; };
-		9D325AEE28A3CD20000883A2 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D325AED28A3CD20000883A2 /* iAd.framework */; };
 		9D325AF028A3CD24000883A2 /* AdServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D325AEF28A3CD24000883A2 /* AdServices.framework */; };
 		9D325AF228A3CD51000883A2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D325AF128A3CD51000883A2 /* StoreKit.framework */; };
 		9D325AF428A3CD57000883A2 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D325AF328A3CD57000883A2 /* AppTrackingTransparency.framework */; };
@@ -69,7 +68,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D325AEE28A3CD20000883A2 /* iAd.framework in Frameworks */,
 				9D325AF028A3CD24000883A2 /* AdServices.framework in Frameworks */,
 				9D325AF228A3CD51000883A2 /* StoreKit.framework in Frameworks */,
 				9D325AF428A3CD57000883A2 /* AppTrackingTransparency.framework in Frameworks */,

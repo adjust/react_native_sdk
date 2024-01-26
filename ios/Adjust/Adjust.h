@@ -2,7 +2,7 @@
 //  Adjust.h
 //  Adjust SDK
 //
-//  V4.35.2
+//  V4.37.0
 //  Created by Christian Wellenbrock (@wellle) on 23rd July 2013.
 //  Copyright (c) 2012-2021 Adjust GmbH. All rights reserved.
 //
@@ -16,6 +16,8 @@
 #import "ADJLinkResolution.h"
 #import "ADJPurchase.h"
 #import "ADJPurchaseVerificationResult.h"
+
+typedef void(^AdjustResolvedDeeplinkBlock)(NSString * _Nonnull resolvedLink);
 
 @interface AdjustTestOptions : NSObject
 
@@ -54,6 +56,8 @@ extern NSString * __nonnull const ADJAdRevenueSourceAdMost;
 extern NSString * __nonnull const ADJAdRevenueSourceUnity;
 extern NSString * __nonnull const ADJAdRevenueSourceHeliumChartboost;
 extern NSString * __nonnull const ADJAdRevenueSourcePublisher;
+extern NSString * __nonnull const ADJAdRevenueSourceTopOn;
+extern NSString * __nonnull const ADJAdRevenueSourceADX;
 
 /**
  * Constants for country app's URL strategies.
@@ -61,6 +65,7 @@ extern NSString * __nonnull const ADJAdRevenueSourcePublisher;
 extern NSString * __nonnull const ADJUrlStrategyIndia;
 extern NSString * __nonnull const ADJUrlStrategyChina;
 extern NSString * __nonnull const ADJUrlStrategyCn;
+extern NSString * __nonnull const ADJUrlStrategyCnOnly;
 extern NSString * __nonnull const ADJDataResidencyEU;
 extern NSString * __nonnull const ADJDataResidencyTR;
 extern NSString * __nonnull const ADJDataResidencyUS;
@@ -135,6 +140,15 @@ extern NSString * __nonnull const ADJDataResidencyUS;
 + (void)appWillOpenUrl:(nonnull NSURL *)url;
 
 /**
+ * @brief Process the deep link that has opened an app and potentially get a resolved link.
+ *
+ * @param deeplink URL object which contains info about adjust deep link.
+ * @param completionHandler Completion handler where either resolved or echoed deep link will be sent.
+ */
++ (void)processDeeplink:(nonnull NSURL *)deeplink
+      completionHandler:(void (^_Nonnull)(NSString * _Nonnull resolvedLink))completionHandler;
+
+/**
  * @brief Set the device token used by push notifications.
  *
  * @param deviceToken Apple push notification token for iOS device as NSData.
@@ -163,6 +177,14 @@ extern NSString * __nonnull const ADJDataResidencyUS;
  * @return Device IDFA value.
  */
 + (nullable NSString *)idfa;
+
+/**
+ * @brief Retrieve iOS device IDFV value.
+ *
+ * @return Device IDFV value.
+ */
++ (nullable NSString *)idfv;
+
 
 /**
  * @brief Get current adjust identifier for the user.
@@ -395,6 +417,9 @@ extern NSString * __nonnull const ADJDataResidencyUS;
 - (void)teardown;
 
 - (void)appWillOpenUrl:(nonnull NSURL *)url;
+
+- (void)processDeeplink:(nonnull NSURL *)deeplink
+      completionHandler:(void (^_Nonnull)(NSString * _Nonnull resolvedLink))completionHandler;
 
 - (void)setOfflineMode:(BOOL)enabled;
 

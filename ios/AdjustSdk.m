@@ -51,6 +51,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSNumber *coppaCompliantEnabled = dict[@"coppaCompliantEnabled"];
     NSNumber *linkMeEnabled = dict[@"linkMeEnabled"];
     NSNumber *attConsentWaitingInterval = dict[@"attConsentWaitingInterval"];
+    NSNumber *readDeviceInfoOnceEnabled = dict[@"readDeviceInfoOnceEnabled"];
     BOOL allowSuppressLogLevel = NO;
 
     // Suppress log level.
@@ -204,6 +205,11 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     // ATT consent delay.
     if ([self isFieldValid:attConsentWaitingInterval]) {
         [adjustConfig setAttConsentWaitingInterval:[attConsentWaitingInterval intValue]];
+    }
+
+    // Read device info just once.
+    if ([self isFieldValid:readDeviceInfoOnceEnabled]) {
+        [adjustConfig setReadDeviceInfoOnceEnabled:[readDeviceInfoOnceEnabled boolValue]];
     }
 
     // Start SDK.

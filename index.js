@@ -200,6 +200,10 @@ Adjust.verifyPlayStorePurchase = function(purchase, callback) {
     }
 };
 
+Adjust.processDeeplink = function(deeplink, callback) {
+    module_adjust.processDeeplink(deeplink, callback);
+};
+
 Adjust.componentWillUnmount = function() {
     if (AdjustConfig.AttributionSubscription != null) {
         AdjustConfig.AttributionSubscription.remove();

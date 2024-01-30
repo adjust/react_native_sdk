@@ -701,6 +701,31 @@ RCT_EXPORT_METHOD(verifyAppStorePurchase:(NSDictionary *)dict callback:(RCTRespo
     }];
 }
 
+RCT_EXPORT_METHOD(processDeeplink:(NSString *)urlStr callback:(RCTResponseSenderBlock)callback) {
+    if (urlStr == nil) {
+        return;
+    }
+
+    NSURL *url;
+    if ([NSString instancesRespondToSelector:@selector(stringByAddingPercentEncodingWithAllowedCharacters:)]) {
+        url = [NSURL URLWithString:[urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
+    } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    }
+#pragma clang diagnostic pop
+
+    // Process deeplink.
+    [Adjust processDeeplink:url completionHandler:^(NSString * _Nonnull resolvedLink) {
+        if (resolvedLink == nil) {
+            callback([@""]);
+        } else {
+            callback(@[resolvedLink]);
+        }
+    }];
+}
+
 RCT_EXPORT_METHOD(setAttributionCallbackListener) {
     _isAttributionCallbackImplemented = YES;
 }

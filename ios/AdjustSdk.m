@@ -719,7 +719,7 @@ RCT_EXPORT_METHOD(processDeeplink:(NSString *)urlStr callback:(RCTResponseSender
     // Process deeplink.
     [Adjust processDeeplink:url completionHandler:^(NSString * _Nonnull resolvedLink) {
         if (resolvedLink == nil) {
-            callback([@""]);
+            callback(@[@""]);
         } else {
             callback(@[resolvedLink]);
         }

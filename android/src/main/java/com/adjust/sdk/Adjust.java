@@ -874,11 +874,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void processDeeplink(string strUri, Callback callback) {
+    public void processDeeplink(String strUri, Callback callback) {
         final Uri uri = Uri.parse(strUri);
 
         // Process deeplink.
-        com.adjust.sdk.Adjust.processDeeplink(uri, this.cordova.getActivity().getApplicationContext(), new OnDeeplinkResolvedListener() {
+        com.adjust.sdk.Adjust.processDeeplink(uri, getReactApplicationContext(), new OnDeeplinkResolvedListener() {
             @Override
             public void onDeeplinkResolved(String resolvedLink) {
                 callback.invoke(resolvedLink);

@@ -111,6 +111,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         String externalDeviceId = null;
         String urlStrategy = null;
         String preinstallFilePath = null;
+        String fbAppId = null;
         long secretId  = 0L;
         long info1 = 0L;
         long info2 = 0L;
@@ -128,6 +129,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         boolean playStoreKidsAppEnabled = false;
         boolean coppaCompliantEnabled = false;
         boolean finalAndroidAttributionEnabled = false;
+        boolean readDeviceInfoOnceEnabled = false;
 
         // Suppress log level.
         if (checkKey(mapConfig, "logLevel")) {
@@ -213,6 +215,8 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_INDIA);
             } else if (urlStrategy.equalsIgnoreCase("cn")) {
                 adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_CN);
+            } else if (urlStrategy.equalsIgnoreCase("cn-only")) {
+                adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_CN_ONLY);
             } else if (urlStrategy.equalsIgnoreCase("data-residency-eu")) {
                 adjustConfig.setUrlStrategy(AdjustConfig.DATA_RESIDENCY_EU);
             } else if (urlStrategy.equalsIgnoreCase("data-residency-us")) {
@@ -232,6 +236,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (checkKey(mapConfig, "preinstallFilePath")) {
             preinstallFilePath = mapConfig.getString("preinstallFilePath");
             adjustConfig.setPreinstallFilePath(preinstallFilePath);
+        }
+
+        // FB app ID (meta install referrer).
+        if (checkKey(mapConfig, "fbAppId")) {
+            fbAppId = mapConfig.getString("fbAppId");
+            adjustConfig.setFbAppId(fbAppId);
         }
 
         // App secret.
@@ -309,6 +319,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (checkKey(mapConfig, "finalAndroidAttributionEnabled")) {
             finalAndroidAttributionEnabled = mapConfig.getBoolean("finalAndroidAttributionEnabled");
             adjustConfig.setFinalAttributionEnabled(finalAndroidAttributionEnabled);
+        }
+
+        // Read device info only once.
+        if (checkKey(mapConfig, "readDeviceInfoOnceEnabled")) {
+            readDeviceInfoOnceEnabled = mapConfig.getBoolean("readDeviceInfoOnceEnabled");
+            adjustConfig.setReadDeviceInfoOnceEnabled(readDeviceInfoOnceEnabled);
         }
 
         // Attribution callback.
@@ -705,6 +721,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
+    public void getIdfv(Callback callback) {
+        callback.invoke("");
+    }
+
+    @ReactMethod
     public void getGoogleAdId(final Callback callback) {
         com.adjust.sdk.Adjust.getGoogleAdId(getReactApplicationContext(), new com.adjust.sdk.OnDeviceIdsRead() {
             @Override
@@ -848,6 +869,19 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                     map.putString("message", null != verificationResult.getMessage() ? verificationResult.getMessage() : "");
                     callback.invoke(map);
                 }
+            }
+        });
+    }
+
+    @ReactMethod
+    public void processDeeplink(String strUri, Callback callback) {
+        final Uri uri = Uri.parse(strUri);
+
+        // Process deeplink.
+        com.adjust.sdk.Adjust.processDeeplink(uri, getReactApplicationContext(), new OnDeeplinkResolvedListener() {
+            @Override
+            public void onDeeplinkResolved(String resolvedLink) {
+                callback.invoke(resolvedLink);
             }
         });
     }

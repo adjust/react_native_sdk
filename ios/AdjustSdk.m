@@ -51,6 +51,7 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     NSNumber *coppaCompliantEnabled = dict[@"coppaCompliantEnabled"];
     NSNumber *linkMeEnabled = dict[@"linkMeEnabled"];
     NSNumber *attConsentWaitingInterval = dict[@"attConsentWaitingInterval"];
+    NSNumber *readDeviceInfoOnceEnabled = dict[@"readDeviceInfoOnceEnabled"];
     BOOL allowSuppressLogLevel = NO;
 
     // Suppress log level.
@@ -98,6 +99,8 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
             [adjustConfig setUrlStrategy:ADJUrlStrategyIndia];
         } else if ([urlStrategy isEqualToString:@"cn"]) {
             [adjustConfig setUrlStrategy:ADJUrlStrategyCn];
+        } else if ([urlStrategy isEqualToString:@"cn-only"]) {
+            [adjustConfig setUrlStrategy:ADJUrlStrategyCnOnly];
         } else if ([urlStrategy isEqualToString:@"data-residency-eu"]) {
             [adjustConfig setUrlStrategy:ADJDataResidencyEU];
         } else if ([urlStrategy isEqualToString:@"data-residency-tr"]) {
@@ -202,6 +205,11 @@ RCT_EXPORT_METHOD(create:(NSDictionary *)dict) {
     // ATT consent delay.
     if ([self isFieldValid:attConsentWaitingInterval]) {
         [adjustConfig setAttConsentWaitingInterval:[attConsentWaitingInterval intValue]];
+    }
+
+    // Read device info just once.
+    if ([self isFieldValid:readDeviceInfoOnceEnabled]) {
+        [adjustConfig setReadDeviceInfoOnceEnabled:[readDeviceInfoOnceEnabled boolValue]];
     }
 
     // Start SDK.
@@ -532,6 +540,15 @@ RCT_EXPORT_METHOD(getIdfa:(RCTResponseSenderBlock)callback) {
     }
 }
 
+RCT_EXPORT_METHOD(getIdfv:(RCTResponseSenderBlock)callback) {
+    NSString *idfv = [Adjust idfv];
+    if (nil == idfv) {
+        callback(@[@""]);
+    } else {
+        callback(@[idfv]);
+    }
+}
+
 RCT_EXPORT_METHOD(getGoogleAdId:(RCTResponseSenderBlock)callback) {
     callback(@[@""]);
 }
@@ -681,6 +698,31 @@ RCT_EXPORT_METHOD(verifyAppStorePurchase:(NSDictionary *)dict callback:(RCTRespo
         [self addValueOrEmpty:dictionary key:@"message" value:verificationResult.message];
 
         callback(@[dictionary]);
+    }];
+}
+
+RCT_EXPORT_METHOD(processDeeplink:(NSString *)urlStr callback:(RCTResponseSenderBlock)callback) {
+    if (urlStr == nil) {
+        return;
+    }
+
+    NSURL *url;
+    if ([NSString instancesRespondToSelector:@selector(stringByAddingPercentEncodingWithAllowedCharacters:)]) {
+        url = [NSURL URLWithString:[urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
+    } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    }
+#pragma clang diagnostic pop
+
+    // Process deeplink.
+    [Adjust processDeeplink:url completionHandler:^(NSString * _Nonnull resolvedLink) {
+        if (resolvedLink == nil) {
+            callback(@[@""]);
+        } else {
+            callback(@[resolvedLink]);
+        }
     }];
 }
 

@@ -104,6 +104,8 @@ declare module 'react-native-adjust' {
     public setLinkMeEnabled(linkMeEnabled: boolean): void
     public setFinalAndroidAttributionEnabled(finalAndroidAttributionEnabled: boolean): void
     public setAttConsentWaitingInterval(attConsentWaitingInterval: number): void
+    public setReadDeviceInfoOnceEnabled(readDeviceInfoOnceEnabled: boolean): void
+    public setFbAppId(fbAppId: string): void
 
     public setAttributionCallbackListener(
       callback: (attribution: AdjustAttribution) => void
@@ -149,9 +151,18 @@ declare module 'react-native-adjust' {
     static UrlStrategyChina: UrlStrategy
     static UrlStrategyIndia: UrlStrategy
     static UrlStrategyCn: UrlStrategy
+    static UrlStrategyCnOnly: UrlStrategy
     static DataResidencyEU: UrlStrategy
     static DataResidencyTR: UrlStrategy
     static DataResidencyUS: UrlStrategy
+    static AdRevenueSourceAppLovinMAX: string
+    static AdRevenueSourceMopub: string
+    static AdRevenueSourceAdmob: string
+    static AdRevenueSourceIronSource: string
+    static AdRevenueSourceAdmost: string
+    static AdRevenueSourcePublisher: string
+    static AdRevenueSourceTopOn: string
+    static AdRevenueSourceAdx: string
   }
 
   export class AdjustEvent {
@@ -234,6 +245,7 @@ declare module 'react-native-adjust' {
     gdprForgetMe: () => void
     disableThirdPartySharing: () => void
     getIdfa: (callback: (idfa: string) => void) => void
+    getIdfv: (callback: (idfv: string) => void) => void
     getGoogleAdId: (callback: (adid: string) => void) => void
     getAdid: (callback: (adid: string) => void) => void
     getAttribution: (callback: (attribution: AdjustAttribution) => void) => void
@@ -252,6 +264,6 @@ declare module 'react-native-adjust' {
     getLastDeeplink: (callback: (lastDeeplink: string) => void) => void
     verifyAppStorePurchase: (purchase: AdjustAppStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
     verifyPlayStorePurchase: (purchase: AdjustPlayStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
-
+    processDeeplink: (deeplink: string, callback: (resolvedLink: string) => void) => void
   }
 }

@@ -1,3 +1,19 @@
+### Version 4.37.0 (30th January 2024)
+#### Added
+- Added ability to process shortened deep links and provide the unshortened link back as a response. You can achieve this by invoking `processDeeplink` method of the `Adjust` instance.
+- Added support for Meta install referrer.
+- Added getter for obtaining IDFV value of the iOS device. You can obtain IDFV value by calling `getIdfv` method of the `Adjust` instance.
+- Added support for Google Play Games on PC.
+- Added support for `TopOn` and `AD(X)` ad revenue tracking.
+- Added a new type of URL strategy called `AdjustConfig.AdjustUrlStrategyCnOnly`. This URL strategy represents `AdjustConfig.AdjustUrlStrategyCn` strategy, but without fallback domains.
+- Added ability to indicate if the device IDs should be read just once per SDK initialization via calling `setReadDeviceInfoOnceEnabled` method of the `AdjustConfig` instance.
+
+#### Native SDKs
+- [iOS@v4.37.0][ios_sdk_v4.37.0]
+- [Android@v4.38.1][android_sdk_v4.38.1]
+
+---
+
 ### Version 4.35.1 (10th October 2023)
 #### Added
 - Added sending of `event_callback_id` parameter (if set) with the event payload.
@@ -5,6 +21,7 @@
 #### Native SDKs
 - [iOS@v4.35.2][ios_sdk_v4.35.2]
 - [Android@v4.35.1][android_sdk_v4.35.1]
+
 ---
 
 ### Version 4.35.0 (6th October 2023)
@@ -589,6 +606,7 @@
 [ios_sdk_v4.33.3]: https://github.com/adjust/ios_sdk/tree/v4.33.3
 [ios_sdk_v4.35.1]: https://github.com/adjust/ios_sdk/tree/v4.35.1
 [ios_sdk_v4.35.2]: https://github.com/adjust/ios_sdk/tree/v4.35.2
+[ios_sdk_v4.37.0]: https://github.com/adjust/ios_sdk/tree/v4.37.0
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -623,3 +641,4 @@
 [android_sdk_v4.33.2]: https://github.com/adjust/android_sdk/tree/v4.33.2
 [android_sdk_v4.35.0]: https://github.com/adjust/android_sdk/tree/v4.35.0
 [android_sdk_v4.35.1]: https://github.com/adjust/android_sdk/tree/v4.35.1
+[android_sdk_v4.38.1]: https://github.com/adjust/android_sdk/tree/v4.38.1

@@ -115,6 +115,10 @@ Adjust.getIdfa = function(callback) {
     module_adjust.getIdfa(callback);
 };
 
+Adjust.getIdfv = function(callback) {
+    module_adjust.getIdfv(callback);
+};
+
 Adjust.getGoogleAdId = function(callback) {
     module_adjust.getGoogleAdId(callback);
 };
@@ -132,7 +136,7 @@ Adjust.getAmazonAdId = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native4.35.1", callback);
+    module_adjust.getSdkVersion("react-native4.37.0", callback);
 };
 
 Adjust.setReferrer = function(referrer) {
@@ -196,6 +200,10 @@ Adjust.verifyPlayStorePurchase = function(purchase, callback) {
     }
 };
 
+Adjust.processDeeplink = function(deeplink, callback) {
+    module_adjust.processDeeplink(deeplink, callback);
+};
+
 Adjust.componentWillUnmount = function() {
     if (AdjustConfig.AttributionSubscription != null) {
         AdjustConfig.AttributionSubscription.remove();
@@ -225,6 +233,16 @@ Adjust.componentWillUnmount = function() {
     if (AdjustConfig.DeferredDeeplinkSubscription != null) {
         AdjustConfig.DeferredDeeplinkSubscription.remove();
         AdjustConfig.DeferredDeeplinkSubscription = null;
+    }
+
+    if (AdjustConfig.ConversionValueUpdatedSubscription != null) {
+        AdjustConfig.ConversionValueUpdatedSubscription.remove();
+        AdjustConfig.ConversionValueUpdatedSubscription = null;
+    }
+
+    if (AdjustConfig.Skad4ConversionValueUpdatedSubscription != null) {
+        AdjustConfig.Skad4ConversionValueUpdatedSubscription.remove();
+        AdjustConfig.Skad4ConversionValueUpdatedSubscription = null;
     }
 };
 
@@ -262,7 +280,7 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native4.35.1";
+    this.sdkPrefix = "react-native4.37.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
@@ -282,6 +300,7 @@ var AdjustConfig = function(appToken, environment) {
     this.info4 = null;
     this.urlStrategy = null;
     this.coppaCompliantEnabled = null;
+    this.readDeviceInfoOnceEnabled = null;
     // Android only
     this.processName = null;
     this.readMobileEquipmentIdentity = null;
@@ -289,6 +308,7 @@ var AdjustConfig = function(appToken, environment) {
     this.preinstallFilePath = null;
     this.playStoreKidsAppEnabled = null;
     this.finalAndroidAttributionEnabled = null;
+    this.fbAppId;
     // iOS only
     this.allowiAdInfoReading = null;
     this.allowAdServicesInfoReading = null;
@@ -321,6 +341,7 @@ AdjustConfig.Skad4ConversionValueUpdatedSubscription = null;
 AdjustConfig.UrlStrategyChina = "china";
 AdjustConfig.UrlStrategyIndia = "india";
 AdjustConfig.UrlStrategyCn = "cn";
+AdjustConfig.UrlStrategyCnOnly = "cn-only";
 
 AdjustConfig.DataResidencyEU = "data-residency-eu";
 AdjustConfig.DataResidencyTR = "data-residency-tr";
@@ -332,6 +353,8 @@ AdjustConfig.AdRevenueSourceAdmob = "admob_sdk";
 AdjustConfig.AdRevenueSourceIronSource = "ironsource_sdk";
 AdjustConfig.AdRevenueSourceAdmost = "admost_sdk";
 AdjustConfig.AdRevenueSourcePublisher = "publisher_sdk";
+AdjustConfig.AdRevenueSourceTopOn = "topon_sdk";
+AdjustConfig.AdRevenueSourceAdx = "adx_sdk";
 
 AdjustConfig.prototype.setEventBufferingEnabled = function(isEnabled) {
     this.eventBufferingEnabled = isEnabled;
@@ -403,6 +426,10 @@ AdjustConfig.prototype.setCoppaCompliantEnabled = function(coppaCompliantEnabled
     this.coppaCompliantEnabled = coppaCompliantEnabled;
 };
 
+AdjustConfig.prototype.setReadDeviceInfoOnceEnabled = function(readDeviceInfoOnceEnabled) {
+    this.readDeviceInfoOnceEnabled = readDeviceInfoOnceEnabled;
+};
+
 AdjustConfig.prototype.setReadMobileEquipmentIdentity = function(readMobileEquipmentIdentity) {
     // this.readMobileEquipmentIdentity = readMobileEquipmentIdentity;
 };
@@ -421,6 +448,10 @@ AdjustConfig.prototype.setPlayStoreKidsAppEnabled = function(isEnabled) {
 
 AdjustConfig.prototype.setFinalAndroidAttributionEnabled = function(isEnabled) {
     this.finalAndroidAttributionEnabled = isEnabled;
+};
+
+AdjustConfig.prototype.setFbAppId = function(fbAppId) {
+    this.fbAppId = fbAppId;
 };
 
 AdjustConfig.prototype.setAllowiAdInfoReading = function(allowiAdInfoReading) {

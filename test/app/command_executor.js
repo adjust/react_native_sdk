@@ -139,6 +139,7 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
         case "trackAdRevenueV2" : this.trackAdRevenueV2(command.params); break;
         case 'getLastDeeplink' : this.getLastDeeplink(command.params); break;
         case 'verifyPurchase' : this.verifyPurchase(command.params); break;
+        case 'processDeeplink' : this.processDeeplink(command.params); break;
     }
 
     this.nextToSendCounter++;
@@ -952,6 +953,15 @@ AdjustCommandExecutor.prototype.verifyPurchase = function(params) {
             AdjustSdkTest.sendInfoToServer(_this.basePath);
         });
     }
+};
+
+AdjustCommandExecutor.prototype.processDeeplink = function(params) {
+    var deeplink = getFirstParameterValue(params, "deeplink");
+    var _this = this;
+    Adjust.processDeeplink(deeplink, function(resolvedLink) {
+        AdjustSdkTest.addInfoToSend('resolved_link', resolvedLink);
+        AdjustSdkTest.sendInfoToServer(_this.basePath);
+    });
 };
 
 // Util

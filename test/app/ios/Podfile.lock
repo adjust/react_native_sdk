@@ -287,10 +287,10 @@ PODS:
   - React-jsinspector (0.69.4)
   - React-logger (0.69.4):
     - glog
-  - react-native-adjust (4.37.0):
+  - react-native-adjust (4.37.1):
     - Adjust (= 4.37.0)
     - React-Core
-  - react-native-adjust-test (4.37.0):
+  - react-native-adjust-test (4.37.1):
     - React
   - React-perflogger (0.69.4)
   - React-RCTActionSheet (0.69.4):
@@ -546,8 +546,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: a27badbbdbc0ff781813370736a2d1c7261181d4
   React-jsinspector: 8a3d3f5dcd23a91e8c80b1bf0e96902cd1dca999
   React-logger: 1088859f145b8f6dd0d3ed051a647ef0e3e80fad
-  react-native-adjust: 667739bee69c6878375b0d09bc0f35934fb72ed3
-  react-native-adjust-test: 3ba1a27229c67afa14fca7eedd71fbab3220d0ea
+  react-native-adjust: 0463129823eabe31ff28262295be713ba5f99d2c
+  react-native-adjust-test: 8a3a43bbe0e7a59a8312a22f4af4e2034d223e7e
   React-perflogger: cb386fd44c97ec7f8199c04c12b22066b0f2e1e0
   React-RCTActionSheet: f803a85e46cf5b4066c2ac5e122447f918e9c6e5
   React-RCTAnimation: 19c80fa950ccce7f4db76a2a7f2cf79baae07fc7

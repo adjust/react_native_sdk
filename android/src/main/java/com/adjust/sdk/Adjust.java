@@ -96,7 +96,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void create(ReadableMap mapConfig) {
+    public void create(final ReadableMap mapConfig) {
         if (mapConfig == null) {
             return;
         }
@@ -363,7 +363,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void trackEvent(ReadableMap mapEvent) {
+    public void trackEvent(final ReadableMap mapEvent) {
         if (mapEvent == null) {
             return;
         }
@@ -454,32 +454,32 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(final Boolean enabled) {
         com.adjust.sdk.Adjust.setEnabled(enabled);
     }
 
     @ReactMethod
-    public void isEnabled(Callback callback) {
+    public void isEnabled(final Callback callback) {
         callback.invoke(com.adjust.sdk.Adjust.isEnabled());
     }
 
     @ReactMethod
-    public void setReferrer(String referrer) {
+    public void setReferrer(final String referrer) {
         com.adjust.sdk.Adjust.setReferrer(referrer, getReactApplicationContext());
     }
 
     @ReactMethod
-    public void setOfflineMode(Boolean enabled) {
+    public void setOfflineMode(final Boolean enabled) {
         com.adjust.sdk.Adjust.setOfflineMode(enabled);
     }
 
     @ReactMethod
-    public void setPushToken(String token) {
+    public void setPushToken(final String token) {
         com.adjust.sdk.Adjust.setPushToken(token, getReactApplicationContext());
     }
 
     @ReactMethod
-    public void appWillOpenUrl(String strUri) {
+    public void appWillOpenUrl(final String strUri) {
         final Uri uri = Uri.parse(strUri);
         com.adjust.sdk.Adjust.appWillOpenUrl(uri, getReactApplicationContext());
     }
@@ -490,7 +490,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void trackAdRevenue(String source, String payload) {
+    public void trackAdRevenue(final String source, final String payload) {
         try {
             JSONObject jsonPayload = new JSONObject(payload);
             com.adjust.sdk.Adjust.trackAdRevenue(source, jsonPayload);
@@ -500,7 +500,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void trackAdRevenueNew(ReadableMap mapAdRevenue) {
+    public void trackAdRevenueNew(final ReadableMap mapAdRevenue) {
         if (mapAdRevenue == null) {
             return;
         }
@@ -588,7 +588,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void trackPlayStoreSubscription(ReadableMap mapEvent) {
+    public void trackPlayStoreSubscription(final ReadableMap mapEvent) {
         if (mapEvent == null) {
             return;
         }
@@ -676,22 +676,22 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void addSessionCallbackParameter(String key, String value) {
+    public void addSessionCallbackParameter(final String key, final String value) {
         com.adjust.sdk.Adjust.addSessionCallbackParameter(key, value);
     }
 
     @ReactMethod
-    public void addSessionPartnerParameter(String key, String value) {
+    public void addSessionPartnerParameter(final String key, final String value) {
         com.adjust.sdk.Adjust.addSessionPartnerParameter(key, value);
     }
 
     @ReactMethod
-    public void removeSessionCallbackParameter(String key) {
+    public void removeSessionCallbackParameter(final String key) {
         com.adjust.sdk.Adjust.removeSessionCallbackParameter(key);
     }
 
     @ReactMethod
-    public void removeSessionPartnerParameter(String key) {
+    public void removeSessionPartnerParameter(final String key) {
         com.adjust.sdk.Adjust.removeSessionPartnerParameter(key);
     }
 
@@ -716,12 +716,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void getIdfa(Callback callback) {
+    public void getIdfa(final Callback callback) {
         callback.invoke("");
     }
 
     @ReactMethod
-    public void getIdfv(Callback callback) {
+    public void getIdfv(final Callback callback) {
         callback.invoke("");
     }
 
@@ -736,22 +736,22 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void getAdid(Callback callback) {
+    public void getAdid(final Callback callback) {
         callback.invoke(com.adjust.sdk.Adjust.getAdid());
     }
 
     @ReactMethod
-    public void getAmazonAdId(Callback callback) {
+    public void getAmazonAdId(final Callback callback) {
         callback.invoke(com.adjust.sdk.Adjust.getAmazonAdId(getReactApplicationContext()));
     }
 
     @ReactMethod
-    public void getAttribution(Callback callback) {
+    public void getAttribution(final Callback callback) {
         callback.invoke(AdjustUtil.attributionToMap(com.adjust.sdk.Adjust.getAttribution()));
     }
 
     @ReactMethod
-    public void getSdkVersion(String sdkPrefix, Callback callback) {
+    public void getSdkVersion(final String sdkPrefix, final Callback callback) {
         String sdkVersion = com.adjust.sdk.Adjust.getSdkVersion();
         if (sdkVersion == null) {
             callback.invoke("");
@@ -766,22 +766,22 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void requestTrackingAuthorizationWithCompletionHandler(Callback callback) {
+    public void requestTrackingAuthorizationWithCompletionHandler(final Callback callback) {
         callback.invoke("");
     }
 
     @ReactMethod
-    public void updateConversionValue(int conversionValue) {
+    public void updateConversionValue(final int conversionValue) {
         // do nothing
     }
 
     @ReactMethod
-    public void getAppTrackingAuthorizationStatus(Callback callback) {
+    public void getAppTrackingAuthorizationStatus(final Callback callback) {
         callback.invoke(-1);
     }
 
     @ReactMethod
-    public void trackThirdPartySharing(ReadableMap mapThirdPartySharing) {
+    public void trackThirdPartySharing(final ReadableMap mapThirdPartySharing) {
         if (mapThirdPartySharing == null) {
             return;
         }
@@ -828,12 +828,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void trackMeasurementConsent(boolean measurementConsent) {
+    public void trackMeasurementConsent(final boolean measurementConsent) {
         com.adjust.sdk.Adjust.trackMeasurementConsent(measurementConsent);
     }
 
     @ReactMethod
-    public void verifyPlayStorePurchase(ReadableMap mapEvent, Callback callback) {
+    public void verifyPlayStorePurchase(final ReadableMap mapEvent, final Callback callback) {
         if (mapEvent == null) {
             return;
         }
@@ -874,7 +874,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void processDeeplink(String strUri, Callback callback) {
+    public void processDeeplink(final String strUri, final Callback callback) {
         final Uri uri = Uri.parse(strUri);
 
         // Process deeplink.
@@ -892,7 +892,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void getLastDeeplink(Callback callback) {
+    public void getLastDeeplink(final Callback callback) {
         callback.invoke("");
     }
 
@@ -937,7 +937,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void setTestOptions(ReadableMap mapTest) {
+    public void setTestOptions(final ReadableMap mapTest) {
         if (mapTest == null) {
             return;
         }
@@ -1043,13 +1043,13 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         com.adjust.sdk.Adjust.onPause();
     }
 
-    private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
+    private void sendEvent(final ReactContext reactContext, final String eventName, final @Nullable WritableMap params) {
         reactContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(eventName, params);
     }
 
-    private boolean checkKey(ReadableMap map, String key) {
+    private boolean checkKey(final ReadableMap map, final String key) {
         return map.hasKey(key) && !map.isNull(key);
     }
 

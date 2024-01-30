@@ -111,6 +111,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         String externalDeviceId = null;
         String urlStrategy = null;
         String preinstallFilePath = null;
+        String fbAppId = null;
         long secretId  = 0L;
         long info1 = 0L;
         long info2 = 0L;
@@ -234,6 +235,12 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         if (checkKey(mapConfig, "preinstallFilePath")) {
             preinstallFilePath = mapConfig.getString("preinstallFilePath");
             adjustConfig.setPreinstallFilePath(preinstallFilePath);
+        }
+
+        // FB app ID (meta install referrer).
+        if (checkKey(mapConfig, "fbAppId")) {
+            fbAppId = mapConfig.getString("fbAppId");
+            adjustConfig.setFbAppId(fbAppId);
         }
 
         // App secret.

@@ -299,6 +299,7 @@ var AdjustConfig = function(appToken, environment) {
     this.preinstallFilePath = null;
     this.playStoreKidsAppEnabled = null;
     this.finalAndroidAttributionEnabled = null;
+    this.fbAppId;
     // iOS only
     this.allowiAdInfoReading = null;
     this.allowAdServicesInfoReading = null;
@@ -434,6 +435,10 @@ AdjustConfig.prototype.setPlayStoreKidsAppEnabled = function(isEnabled) {
 
 AdjustConfig.prototype.setFinalAndroidAttributionEnabled = function(isEnabled) {
     this.finalAndroidAttributionEnabled = isEnabled;
+};
+
+AdjustConfig.prototype.setFbAppId = function(fbAppId) {
+    this.fbAppId = fbAppId;
 };
 
 AdjustConfig.prototype.setAllowiAdInfoReading = function(allowiAdInfoReading) {

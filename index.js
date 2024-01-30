@@ -115,6 +115,10 @@ Adjust.getIdfa = function(callback) {
     module_adjust.getIdfa(callback);
 };
 
+Adjust.getIdfv = function(callback) {
+    module_adjust.getIdfv(callback);
+};
+
 Adjust.getGoogleAdId = function(callback) {
     module_adjust.getGoogleAdId(callback);
 };

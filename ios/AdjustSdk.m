@@ -540,6 +540,15 @@ RCT_EXPORT_METHOD(getIdfa:(RCTResponseSenderBlock)callback) {
     }
 }
 
+RCT_EXPORT_METHOD(getIdfv:(RCTResponseSenderBlock)callback) {
+    NSString *idfv = [Adjust idfv];
+    if (nil == idfv) {
+        callback(@[@""]);
+    } else {
+        callback(@[idfv]);
+    }
+}
+
 RCT_EXPORT_METHOD(getGoogleAdId:(RCTResponseSenderBlock)callback) {
     callback(@[@""]);
 }

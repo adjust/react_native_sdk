@@ -226,6 +226,16 @@ Adjust.componentWillUnmount = function() {
         AdjustConfig.DeferredDeeplinkSubscription.remove();
         AdjustConfig.DeferredDeeplinkSubscription = null;
     }
+
+    if (AdjustConfig.ConversionValueUpdatedSubscription != null) {
+        AdjustConfig.ConversionValueUpdatedSubscription.remove();
+        AdjustConfig.ConversionValueUpdatedSubscription = null;
+    }
+
+    if (AdjustConfig.Skad4ConversionValueUpdatedSubscription != null) {
+        AdjustConfig.Skad4ConversionValueUpdatedSubscription.remove();
+        AdjustConfig.Skad4ConversionValueUpdatedSubscription = null;
+    }
 };
 
 // =========================================== //

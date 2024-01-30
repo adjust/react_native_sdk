@@ -5750,10 +5750,10 @@ react-is@^17.0.1:
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
 react-native-adjust-oaid@../plugins/oaid:
-  version "4.37.0"
+  version "4.37.1"
 
 react-native-adjust@../temp:
-  version "4.37.0"
+  version "4.37.1"
 
 react-native-codegen@^0.69.1:
   version "0.69.2"

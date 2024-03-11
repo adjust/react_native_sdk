@@ -1,3 +1,11 @@
+### Version 4.37.2 (11th March 2024)
+#### Fixed
+- Fixed occasional crashes caused by not synchronized access to cached IDFA value (https://github.com/adjust/ios_sdk/issues/696).
+
+#### Native SDKs
+- [iOS@v4.37.2][ios_sdk_v4.37.2]
+- [Android@v4.38.1][android_sdk_v4.38.1]
+
 ### Version 4.37.1 (30th January 2024)
 #### Fixed
 - Marked all Android method parameters as `final` to address compilation errors when trying to access a callback inside of the inner class (https://github.com/adjust/react_native_sdk/issues/226).
@@ -617,6 +625,7 @@
 [ios_sdk_v4.35.1]: https://github.com/adjust/ios_sdk/tree/v4.35.1
 [ios_sdk_v4.35.2]: https://github.com/adjust/ios_sdk/tree/v4.35.2
 [ios_sdk_v4.37.0]: https://github.com/adjust/ios_sdk/tree/v4.37.0
+[ios_sdk_v4.37.2]: https://github.com/adjust/ios_sdk/tree/v4.37.2
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0

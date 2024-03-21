@@ -136,7 +136,7 @@ Adjust.getAmazonAdId = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native4.37.1", callback);
+    module_adjust.getSdkVersion("react-native4.37.2", callback);
 };
 
 Adjust.setReferrer = function(referrer) {
@@ -280,7 +280,7 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native4.37.1";
+    this.sdkPrefix = "react-native4.37.2";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;

@@ -666,3 +666,4 @@
 [android_sdk_v4.35.0]: https://github.com/adjust/android_sdk/tree/v4.35.0
 [android_sdk_v4.35.1]: https://github.com/adjust/android_sdk/tree/v4.35.1
 [android_sdk_v4.38.1]: https://github.com/adjust/android_sdk/tree/v4.38.1
+[android_sdk_v4.38.2]: https://github.com/adjust/android_sdk/tree/v4.38.2

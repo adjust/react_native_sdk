@@ -1,3 +1,16 @@
+### Version 4.38.0 (27th March 2024)
+#### Added
+- Added iOS Privacy Manifest for the Adjust SDK.
+- Added new domains and corresponding payload restrictions for the Adjust SDK to direct the iOS traffic to:
+    - https://consent.adjust.com - for consented users
+    - https://analytics.adjust.com - for non-consented users
+
+#### Native SDKs
+- [iOS@v4.38.0][ios_sdk_v4.38.0]
+- [Android@v4.38.3][android_sdk_v4.38.3]
+
+---
+
 ### Version 4.37.2 (21st March 2024)
 #### Fixed
 - Fixed occasional crashes caused by not synchronized access to cached IDFA value (https://github.com/adjust/ios_sdk/issues/696).
@@ -631,6 +644,7 @@
 [ios_sdk_v4.35.2]: https://github.com/adjust/ios_sdk/tree/v4.35.2
 [ios_sdk_v4.37.0]: https://github.com/adjust/ios_sdk/tree/v4.37.0
 [ios_sdk_v4.37.2]: https://github.com/adjust/ios_sdk/tree/v4.37.2
+[ios_sdk_v4.38.0]: https://github.com/adjust/ios_sdk/tree/v4.38.0
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -667,3 +681,4 @@
 [android_sdk_v4.35.1]: https://github.com/adjust/android_sdk/tree/v4.35.1
 [android_sdk_v4.38.1]: https://github.com/adjust/android_sdk/tree/v4.38.1
 [android_sdk_v4.38.2]: https://github.com/adjust/android_sdk/tree/v4.38.2
+[android_sdk_v4.38.3]: https://github.com/adjust/android_sdk/tree/v4.38.3

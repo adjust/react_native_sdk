@@ -47,30 +47,22 @@ const App: () => React$Node = () => {
     AdjustSdkTestEmitter = new NativeEventEmitter(NativeModules.ASTEventEmitter);
   }
 
-  var baseUrl = "";
-  var gdprUrl = "";
-  var subscriptionUrl = "";
-  var ipAddress = "192.168.8.64";
+  var urlOverwrite = "";
+  var ipAddress = "192.168.86.53";
   if (Platform.OS === "android") {
-    baseUrl = "https://" + ipAddress + ":8443";
-    gdprUrl = "https://" + ipAddress + ":8443";
-    subscriptionUrl = "https://" + ipAddress + ":8443";
-    purchaseVerificationUrl = "https://" + ipAddress + ":8443";
+    urlOverwrite = "https://" + ipAddress + ":8443";
   } else if (Platform.OS === "ios") {
-    baseUrl = "http://" + ipAddress + ":8080";
-    gdprUrl = "http://" + ipAddress + ":8080";
-    subscriptionUrl = "http://" + ipAddress + ":8080";
-    purchaseVerificationUrl = "http://" + ipAddress + ":8080";
+    urlOverwrite = "http://" + ipAddress + ":8080";
   }
   var controlUrl = "ws://" + ipAddress + ":1987";
 
   // AdjustSdkTest.addTestDirectory("purchase-verification");
   // AdjustSdkTest.addTest("Test_AdRevenue_ad_revenue_v2");
   Adjust.getSdkVersion(function(sdkVersion) {
-    AdjustSdkTest.startTestSession(baseUrl, controlUrl, sdkVersion);
+    AdjustSdkTest.startTestSession(urlOverwrite, controlUrl, sdkVersion);
   });
 
-  const commandExecutor = new CommandExecutor(baseUrl, gdprUrl, subscriptionUrl, purchaseVerificationUrl);
+  const commandExecutor = new CommandExecutor(urlOverwrite);
   emitterSubscription = AdjustSdkTestEmitter.addListener('command', (json) => {
     const className = json["className"];
     const functionName = json["functionName"];

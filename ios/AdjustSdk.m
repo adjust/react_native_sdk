@@ -766,28 +766,10 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
             testOptions.deleteState = [value boolValue];
         }
     }
-    if ([dict objectForKey:@"baseUrl"]) {
-        NSString *value = dict[@"baseUrl"];
+    if ([dict objectForKey:@"urlOverwrite"]) {
+        NSString *value = dict[@"urlOverwrite"];
         if ([self isFieldValid:value]) {
-            testOptions.baseUrl = value;
-        }
-    }
-    if ([dict objectForKey:@"gdprUrl"]) {
-        NSString *value = dict[@"gdprUrl"];
-        if ([self isFieldValid:value]) {
-            testOptions.gdprUrl = value;
-        }
-    }
-    if ([dict objectForKey:@"subscriptionUrl"]) {
-        NSString *value = dict[@"subscriptionUrl"];
-        if ([self isFieldValid:value]) {
-            testOptions.subscriptionUrl = value;
-        }
-    }
-    if ([dict objectForKey:@"purchaseVerificationUrl"]) {
-        NSString *value = dict[@"purchaseVerificationUrl"];
-        if ([self isFieldValid:value]) {
-            testOptions.purchaseVerificationUrl = value;
+            testOptions.urlOverwrite = value;
         }
     }
     if ([dict objectForKey:@"extraPath"]) {
@@ -836,6 +818,18 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
         NSString *value = dict[@"adServicesFrameworkEnabled"];
         if ([self isFieldValid:value]) {
             testOptions.adServicesFrameworkEnabled = [value boolValue];
+        }
+    }
+    if ([dict objectForKey:@"attStatus"]) {
+        NSString *value = dict[@"attStatus"];
+        if ([self isFieldValid:value]) {
+            testOptions.attStatusInt = [NSNumber numberWithInt:[value intValue]];
+        }
+    }
+    if ([dict objectForKey:@"idfa"]) {
+        NSString *value = dict[@"idfa"];
+        if ([self isFieldValid:value]) {
+            testOptions.idfa = value;
         }
     }
 

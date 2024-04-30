@@ -60,7 +60,15 @@ CommandExecutor.prototype.scheduleCommand = function(className, functionName, pa
 
 function AdjustCommandExecutor(urlOverwrite) {
     this.urlOverwrite = urlOverwrite;
+    this.baseUrl = urlOverwrite;
+    this.gdprUrl = urlOverwrite;
+    this.subscriptionUrl = urlOverwrite;
+    this.purchaseVerificationUrl = urlOverwrite;
     this.extraPath = null;
+    this.basePath = null;
+    this.gdprPath = null;
+    this.subscriptionPath = null;
+    this.purchaseVerificationPath = null;
     this.savedEvents = {};
     this.savedConfigs = {};
     this.savedCommands = [];
@@ -149,9 +157,17 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
 AdjustCommandExecutor.prototype.testOptions = function(params) {
     var testOptions = new AdjustTestOptions();
     testOptions.urlOverwrite = this.urlOverwrite;
+    testOptions.baseUrl = this.urlOverwrite;
+    testOptions.gdprUrl = this.urlOverwrite;
+    testOptions.subscriptionUrl = this.urlOverwrite;
+    testOptions.purchaseVerificationUrl = this.urlOverwrite;
     
     if ('basePath' in params) {
         this.extraPath = getFirstParameterValue(params, 'basePath');
+        this.basePath = getFirstParameterValue(params, 'basePath');
+        this.gdprPath = getFirstParameterValue(params, 'basePath');
+        this.subscriptionPath = getFirstParameterValue(params, 'basePath');
+        this.purchaseVerificationPath = getFirstParameterValue(params, 'basePath');
     }
     if ('timerInterval' in params) {
         testOptions.timerIntervalInMilliseconds = getFirstParameterValue(params, 'timerInterval').toString();
@@ -186,6 +202,10 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
             if ('resetSdk' === option) {
                 testOptions.teardown = true;
                 testOptions.extraPath = this.extraPath;
+                testOptions.basePath = this.extraPath;
+                testOptions.gdprPath = this.extraPath;
+                testOptions.subscriptionPath = this.extraPath;
+                testOptions.purchaseVerificationPath = this.extraPath;
                 testOptions.useTestConnectionOptions = true;
                 useTestConnectionOptions = true;
                 Adjust.teardown('test');
@@ -206,6 +226,10 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
             if ('sdk' === option) {
                 testOptions.teardown = true;
                 testOptions.extraPath = null;
+                testOptions.basePath = null;
+                testOptions.gdprPath = null;
+                testOptions.subscriptionPath = null;
+                testOptions.purchaseVerificationPath = null;
                 testOptions.useTestConnectionOptions = false;
                 Adjust.teardown('test');
             }

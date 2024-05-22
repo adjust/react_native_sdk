@@ -12,7 +12,6 @@ This is the React Native SDK of Adjust™. You can read more about Adjust™ at 
    * [Adjust project settings](#adjust-project-settings)
       * [Android permissions](#android-permissions)
       * [Google Play Services](#android-gps)
-      * [Proguard settings](#android-proguard)
       * [Install referrer](#android-referrer)
          * [Google Play Referrer API](#android-referrer-gpr-api)
          * [Google Play Store intent](#android-referrer-gps-intent)
@@ -187,25 +186,6 @@ To check whether the analytics part of the Google Play Services library has been
 
 In case you encounter any issue with attempts to read Google Advertising Identifier, feel free to open an issue in our Github repository or write an email to support@adjust.com.
 
-### <a id="android-proguard"></a>Proguard settings
-
-If you are using Proguard, add these lines to your Proguard file:
-
-```
--keep class com.adjust.sdk.** { *; }
--keep class com.google.android.gms.common.ConnectionResult {
-    int SUCCESS;
-}
--keep class com.google.android.gms.ads.identifier.AdvertisingIdClient {
-    com.google.android.gms.ads.identifier.AdvertisingIdClient$Info getAdvertisingIdInfo(android.content.Context);
-}
--keep class com.google.android.gms.ads.identifier.AdvertisingIdClient$Info {
-    java.lang.String getId();
-    boolean isLimitAdTrackingEnabled();
-}
--keep public class com.android.installreferrer.** { *; }
-```
-
 ### <a id="android-referrer"></a>Install referrer
 
 In order to correctly attribute an install of your Android app to its source, Adjust needs information about the **install referrer**. This can be obtained by using the **Google Play Referrer API** or by catching the **Google Play Store intent** with a broadcast receiver.
@@ -230,12 +210,6 @@ allprojects {
         }
     }
 }
-```
-
-Also, make sure that you have paid attention to the [Proguard settings](#android-proguard) chapter and that you have added all the rules mentioned in it, especially the one needed for this feature:
-
-```
--keep public class com.android.installreferrer.** { *; }
 ```
 
 This feature is supported if you are using the **Adjust SDK v4.12.0 or above**.

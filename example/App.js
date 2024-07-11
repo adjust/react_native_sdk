@@ -38,10 +38,6 @@ const App: () => React$Node = () => {
 
   const adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
   adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
-  // adjustConfig.setDelayStart(6.0);
-  // adjustConfig.setEventBufferingEnabled(true);
-  // adjustConfig.setUserAgent("Custom Adjust User Agent");
-  // adjustConfig.setUrlStrategy(AdjustConfig.UrlStrategyChina);
   // adjustConfig.deactivateSKAdNetworkHandling();
   // adjustConfig.setNeedsCost(true);
   // adjustConfig.setAttConsentWaitingInterval(16);
@@ -56,7 +52,6 @@ const App: () => React$Node = () => {
     console.log("Adgroup = " + attribution.adgroup);
     console.log("Creative = " + attribution.creative);
     console.log("Click label = " + attribution.clickLabel);
-    console.log("Adid = " + attribution.adid);
     console.log("Cost type = " + attribution.costType);
     console.log("Cost amount = " + attribution.costAmount);
     console.log("Cost currency = " + attribution.costCurrency);
@@ -105,24 +100,24 @@ const App: () => React$Node = () => {
     console.log("URL: " + uri.uri);
   });
 
-  adjustConfig.setConversionValueUpdatedCallbackListener(function(conversionValue) {
+  adjustConfig.setSkadConversionValueUpdatedCallbackListener(function(conversionValue) {
     console.log("Conversion value updated callback recveived");
     console.log("Conversion value: " + conversionValue.conversionValue);
   });
 
-  Adjust.addSessionCallbackParameter("scpk1", "scpv1");
-  Adjust.addSessionCallbackParameter("scpk2", "scpv2");
+  Adjust.addGlobalCallbackParameter("scpk1", "scpv1");
+  Adjust.addGlobalCallbackParameter("scpk2", "scpv2");
 
-  Adjust.addSessionPartnerParameter("sppk1", "sppv1");
-  Adjust.addSessionPartnerParameter("sppk2", "sppv2");
+  Adjust.addGlobalPartnerParameter("sppk1", "sppv1");
+  Adjust.addGlobalPartnerParameter("sppk2", "sppv2");
 
-  Adjust.removeSessionCallbackParameter("scpk1");
-  Adjust.removeSessionPartnerParameter("sppk2");
+  Adjust.removeGlobalCallbackParameter("scpk1");
+  Adjust.removeGlobalPartnerParameter("sppk2");
 
-  // Adjust.resetSessionCallbackParameters();
-  // Adjust.resetSessionPartnerParameters();
+  // Adjust.removeGlobalCallbackParameters();
+  // Adjust.removeGlobalPartnerParameters();
 
-  Adjust.requestTrackingAuthorizationWithCompletionHandler(function(status) {
+  Adjust.requestAppTrackingAuthorizationWithCompletionHandler(function(status) {
     console.log("Authorization status update");
     switch (status) {
         case 0:
@@ -147,7 +142,7 @@ const App: () => React$Node = () => {
   if (Platform.OS === "android") {
     AdjustOaid.readOaid();
   }
-  Adjust.create(adjustConfig);
+  Adjust.initSdk(adjustConfig);
 
   function componentDidMount() {
     Linking.addEventListener('url', this.handleDeepLink);
@@ -164,7 +159,7 @@ const App: () => React$Node = () => {
   }
 
   function handleDeepLink(e) {
-    Adjust.appWillOpenUrl(e.url);
+    Adjust.processDeeplink(e.url);
   }
 
   function _onPress_trackSimpleEvent() {
@@ -198,19 +193,19 @@ const App: () => React$Node = () => {
   }
 
   function _onPress_enableOfflineMode() {
-    Adjust.setOfflineMode(true);
+    Adjust.switchToOfflineMode();
   }
 
   function _onPress_disableOfflineMode() {
-    Adjust.setOfflineMode(false);
+    Adjust.switchBackToOnlineMode();
   }
 
   function _onPress_enableSdk() {
-    Adjust.setEnabled(true);
+    Adjust.enable();
   }
 
   function _onPress_disableSdk() {
-    Adjust.setEnabled(false);
+    Adjust.disable();
   }
 
   function _onPress_getIds() {
@@ -220,6 +215,10 @@ const App: () => React$Node = () => {
 
     Adjust.getIdfa((idfa) => {
       console.log("IDFA = " + idfa);
+    });
+
+    Adjust.getIdfv((idfv) => {
+      console.log("IDFV = " + idfv);
     });
 
     Adjust.getGoogleAdId((googleAdId) => {

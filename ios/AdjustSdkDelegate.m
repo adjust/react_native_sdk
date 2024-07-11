@@ -38,8 +38,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
                          sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
-                   conversionValueUpdatedCallback:(BOOL)swizzleConversionValueUpdatedCallback
-              skad4ConversionValueUpdatedCallback:(BOOL)swizzleSkad4ConversionValueUpdatedCallback
+               skadConversionValueUpdatedCallback:(BOOL)swizzleSkadConversionValueUpdatedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
     dispatch_once(&onceToken, ^{
         defaultInstance = [[AdjustSdkDelegate alloc] init];
@@ -66,16 +65,12 @@ static AdjustSdkDelegate *defaultInstance = nil;
                                   swizzledSelector:@selector(adjustSessionTrackingFailedWananbe:)];
         }
         if (swizzleDeferredDeeplinkCallback) {
-            [defaultInstance swizzleCallbackMethod:@selector(adjustDeeplinkResponse:)
-                                  swizzledSelector:@selector(adjustDeeplinkResponseWannabe:)];
+            [defaultInstance swizzleCallbackMethod:@selector(adjustDeferredDeeplinkReceived:)
+                                  swizzledSelector:@selector(adjustDeferredDeeplinkReceivedWannabe:)];
         }
-        if (swizzleConversionValueUpdatedCallback) {
-            [defaultInstance swizzleCallbackMethod:@selector(adjustConversionValueUpdated:)
-                                  swizzledSelector:@selector(adjustConversionValueUpdatedWannabe:)];
-        }
-        if (swizzleSkad4ConversionValueUpdatedCallback) {
-            [defaultInstance swizzleCallbackMethod:@selector(adjustConversionValueUpdated:coarseValue:lockWindow:)
-                                  swizzledSelector:@selector(adjustConversionValueUpdatedWannabe:coarseValue:lockWindow:)];
+        if (swizzleSkadConversionValueUpdatedCallback) {
+            [defaultInstance swizzleCallbackMethod:@selector(adjustSkanUpdatedWithConversionData:)
+                                  swizzledSelector:@selector(adjustSkanUpdatedWithConversionDataWannabe:coarseValue:lockWindow:)];
         }
         [defaultInstance setShouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink];
     });
@@ -103,7 +98,6 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"creative" value:attribution.creative];
     [self addValueOrEmpty:dictionary key:@"adgroup" value:attribution.adgroup];
     [self addValueOrEmpty:dictionary key:@"clickLabel" value:attribution.clickLabel];
-    [self addValueOrEmpty:dictionary key:@"adid" value:attribution.adid];
     [self addValueOrEmpty:dictionary key:@"costType" value:attribution.costType];
     [self addValueOrEmpty:dictionary key:@"costAmount" value:attribution.costAmount];
     [self addValueOrEmpty:dictionary key:@"costCurrency" value:attribution.costCurrency];
@@ -193,26 +187,20 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [AdjustEventEmitter dispatchEvent:@"adjust_sessionTrackingFailed" withDictionary:dictionary];
 }
 
-- (BOOL)adjustDeeplinkResponseWannabe:(NSURL *)deeplink {
+- (BOOL)adjustDeferredDeeplinkReceivedWannabe:(NSURL *)deeplink {
     NSString *path = [deeplink absoluteString];
     [AdjustEventEmitter dispatchEvent:@"adjust_deferredDeeplink" withDictionary:@{@"uri": path}];
     return _shouldLaunchDeferredDeeplink;
 }
 
-- (void)adjustConversionValueUpdatedWannabe:(NSNumber *)conversionValue {
-    // NSString *strConversionValue = [conversionValue stringValue];
-    [AdjustEventEmitter dispatchEvent:@"adjust_conversionValueUpdated" withDictionary:@{@"conversionValue": conversionValue}];
-}
-
-
-- (void)adjustConversionValueUpdatedWannabe:(nullable NSNumber *)fineValue
+- (void)adjustSkanUpdatedWithConversionDataWannabe:(nullable NSNumber *)fineValue
                                 coarseValue:(nullable NSString *)coarseValue
                                  lockWindow:(nullable NSNumber *)lockWindow {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [self addValueOrEmpty:dictionary key:@"fineValue" value:[fineValue stringValue]];
     [self addValueOrEmpty:dictionary key:@"coarseValue" value:coarseValue];
     [self addValueOrEmpty:dictionary key:@"lockWindow" value:[lockWindow stringValue]];
-    [AdjustEventEmitter dispatchEvent:@"adjust_skad4ConversionValueUpdated" withDictionary:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_skadConversionValueUpdated" withDictionary:dictionary];
 }
 
 - (void)swizzleCallbackMethod:(SEL)originalSelector

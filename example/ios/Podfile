@@ -23,7 +23,7 @@ target 'AdjustExample' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
   
-#  pod 'Adjust', :git => 'https://github.com/adjust/ios_sdk.git', :branch => 'v5'
+  pod 'Adjust', :git => 'https://github.com/adjust/ios_sdk.git', :branch => 'v5'
 
   target 'AdjustExampleTests' do
     inherit! :complete

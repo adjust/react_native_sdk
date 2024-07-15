@@ -24,7 +24,6 @@ BOOL _isSkadConversionValueUpdatedCallbackImplemented;
 #pragma mark - Public methods
 
 RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
-
     NSString *appToken = [dict objectForKey:@"appToken"];
     NSString *environment = [dict objectForKey:@"environment"];
     NSString *allowSuppressLogLevel = [dict objectForKey:@"allowSuppressLogLevel"];
@@ -250,7 +249,7 @@ RCT_EXPORT_METHOD(switchToOfflineMode) {
     [Adjust switchToOfflineMode];
 }
 
-RCT_EXPORT_METHOD(switchToOnlineMode) {
+RCT_EXPORT_METHOD(switchBackToOnlineMode) {
     [Adjust switchBackToOnlineMode];
 }
 

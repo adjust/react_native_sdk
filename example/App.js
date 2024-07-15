@@ -38,7 +38,7 @@ const App: () => React$Node = () => {
 
   const adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
   adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
-  // adjustConfig.setSkanAttributionHandlingEnabled();
+  // adjustConfig.setSkanAttributionHandlingEnabled(true);
   // adjustConfig.setCostDataInAttributionEnabled(true);
   // adjustConfig.setAttConsentWaitingSeconds(16);
   // adjustConfig.setFinalAndroidAttributionEnabled(true);
@@ -64,7 +64,7 @@ const App: () => React$Node = () => {
     console.log("Adid: " + eventSuccess.adid);
     console.log("Event token: " + eventSuccess.eventToken);
     console.log("Callback Id: " + eventSuccess.callbackId);
-    console.log("JSON response: " + eventSuccess.jsonResponse );
+    console.log("JSON response: " + eventSuccess.jsonResponse);
   });
 
   adjustConfig.setEventTrackingFailedCallbackListener(function(eventFailed) {
@@ -120,22 +120,22 @@ const App: () => React$Node = () => {
   Adjust.requestAppTrackingAuthorizationWithCompletionHandler(function(status) {
     console.log("Authorization status update");
     switch (status) {
-        case 0:
-            // ATTrackingManagerAuthorizationStatusNotDetermined case
-            console.log("Authorization status: ATTrackingManagerAuthorizationStatusNotDetermined");
-            break;
-        case 1:
-            // ATTrackingManagerAuthorizationStatusRestricted case
-            console.log("Authorization status: ATTrackingManagerAuthorizationStatusRestricted");
-            break;
-        case 2:
-            // ATTrackingManagerAuthorizationStatusDenied case
-            console.log("Authorization status: ATTrackingManagerAuthorizationStatusDenied");
-            break;
-        case 3:
-            // ATTrackingManagerAuthorizationStatusAuthorized case
-            console.log("Authorization status: ATTrackingManagerAuthorizationStatusAuthorized");
-            break;
+      case 0:
+        // ATTrackingManagerAuthorizationStatusNotDetermined case
+        console.log("Authorization status: ATTrackingManagerAuthorizationStatusNotDetermined");
+        break;
+      case 1:
+        // ATTrackingManagerAuthorizationStatusRestricted case
+        console.log("Authorization status: ATTrackingManagerAuthorizationStatusRestricted");
+        break;
+      case 2:
+        // ATTrackingManagerAuthorizationStatusDenied case
+        console.log("Authorization status: ATTrackingManagerAuthorizationStatusDenied");
+        break;
+      case 3:
+        // ATTrackingManagerAuthorizationStatusAuthorized case
+        console.log("Authorization status: ATTrackingManagerAuthorizationStatusAuthorized");
+        break;
     }
   });
 
@@ -240,8 +240,16 @@ const App: () => React$Node = () => {
     });
   }
 
+  function _onPress_enableCoppaCompliance() {
+    Adjust.enableCoppaCompliance();
+  }
+
+  function _onPress_disableCoppaCompliance() {
+    Adjust.disableCoppaCompliance();
+  }
+
   function _onPress_isSdkEnabled() {
-    Adjust.isEnabled( (isEnabled) => {
+    Adjust.isEnabled((isEnabled) => {
       if (isEnabled) {
         console.log("SDK is enabled");
       } else {
@@ -297,6 +305,16 @@ const App: () => React$Node = () => {
           style={styles.button}
           onPress={_onPress_getIds}>
           <Text>Get Ids</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={_onPress_enableCoppaCompliance}>
+          <Text>Enable Coppa Compliance</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={_onPress_disableCoppaCompliance}>
+          <Text>Disable Coppa Compliance</Text>
         </TouchableHighlight>
         <TouchableHighlight
           style={styles.button}

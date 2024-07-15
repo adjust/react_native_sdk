@@ -196,6 +196,8 @@ declare module 'react-native-adjust' {
     trackEvent: (adjustEvent: AdjustEvent) => void
     enable: () => void
     disable: () => void
+    enableCoppaCompliance: () => void
+    disableCoppaCompliance: () => void
     isEnabled: (callback: (enabled: boolean) => void) => void
     switchToOfflineMode: () => void
     switchBackToOnlineMode: () => void

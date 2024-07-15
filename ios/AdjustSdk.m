@@ -1,9 +1,9 @@
 //
 //  AdjustSdk.h
-//  Adjust SDK
+//  AdjustSdk
 //
-//  Created by Abdullah Obaied (@obaied) on 25th October 2016.
-//  Copyright © 2016-2021 Adjust GmbH. All rights reserved.
+//  Created by Aditi Agrawal on 15/07/24.
+//  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
 #import "AdjustSdk.h"
@@ -827,6 +827,5 @@ RCT_EXPORT_METHOD(onPause) {
 }
 
 @end
-
 
 

@@ -47,6 +47,14 @@ Adjust.switchBackToOnlineMode = function() {
     module_adjust.switchBackToOnlineMode();
 };
 
+Adjust.enableCoppaCompliance = function() {
+    module_adjust.enableCoppaCompliance();
+};
+
+Adjust.disableCoppaCompliance = function() {
+    module_adjust.disableCoppaCompliance();
+};
+
 Adjust.setPushToken = function(token) {
     module_adjust.setPushToken(token);
 };
@@ -150,8 +158,8 @@ Adjust.requestAppTrackingAuthorizationWithCompletionHandler = function(callback)
     module_adjust.requestAppTrackingAuthorizationWithCompletionHandler(callback);
 };
 
-Adjust.updateSkanConversionValue = function(conversionValue, coarseValue, lockWindow, callback) {
-    module_adjust.updateConversionValueWithSkadErrorCallback(conversionValue, coarseValue, lockWindow, callback);
+Adjust.updateSkanConversionValueWithErrorCallback = function(conversionValue, coarseValue, lockWindow, callback) {
+    module_adjust.updateSkanConversionValueWithErrorCallback(conversionValue, coarseValue, lockWindow, callback);
 };
 
 Adjust.getAppTrackingAuthorizationStatus = function(callback) {

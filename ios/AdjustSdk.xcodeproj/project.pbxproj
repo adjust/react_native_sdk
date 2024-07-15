@@ -10,15 +10,6 @@
 		13BE3DEE1AC21097009241FE /* AdjustSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* AdjustSdk.m */; };
 		20804D801FF5461F003FF483 /* AdjustEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 20804D7F1FF5461F003FF483 /* AdjustEventEmitter.m */; };
 		9D6A23761DE87EAF002D401C /* AdjustSdkDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D6A23751DE87EAF002D401C /* AdjustSdkDelegate.m */; };
-		9D9741BC1E49E2DF0016F8D4 /* ADJAttribution.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741861E49E2DF0016F8D4 /* ADJAttribution.m */; };
-		9D9741BF1E49E2DF0016F8D4 /* ADJConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D97418C1E49E2DF0016F8D4 /* ADJConfig.m */; };
-		9D9741C11E49E2DF0016F8D4 /* ADJEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741901E49E2DF0016F8D4 /* ADJEvent.m */; };
-		9D9741C21E49E2DF0016F8D4 /* ADJEventFailure.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741921E49E2DF0016F8D4 /* ADJEventFailure.m */; };
-		9D9741C31E49E2DF0016F8D4 /* ADJEventSuccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741941E49E2DF0016F8D4 /* ADJEventSuccess.m */; };
-		9D9741C51E49E2DF0016F8D4 /* ADJLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741981E49E2DF0016F8D4 /* ADJLogger.m */; };
-		9D9741CB1E49E2DF0016F8D4 /* ADJSessionFailure.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741A41E49E2DF0016F8D4 /* ADJSessionFailure.m */; };
-		9D9741CD1E49E2DF0016F8D4 /* ADJSessionSuccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741A81E49E2DF0016F8D4 /* ADJSessionSuccess.m */; };
-		9D9741D11E49E2DF0016F8D4 /* Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9741B01E49E2DF0016F8D4 /* Adjust.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,25 +32,6 @@
 		20804D7F1FF5461F003FF483 /* AdjustEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustEventEmitter.m; sourceTree = "<group>"; };
 		9D6A23741DE87EAF002D401C /* AdjustSdkDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustSdkDelegate.h; sourceTree = "<group>"; };
 		9D6A23751DE87EAF002D401C /* AdjustSdkDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustSdkDelegate.m; sourceTree = "<group>"; };
-		9D9741851E49E2DF0016F8D4 /* ADJAttribution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJAttribution.h; sourceTree = "<group>"; };
-		9D9741861E49E2DF0016F8D4 /* ADJAttribution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJAttribution.m; sourceTree = "<group>"; };
-		9D97418B1E49E2DF0016F8D4 /* ADJConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJConfig.h; sourceTree = "<group>"; };
-		9D97418C1E49E2DF0016F8D4 /* ADJConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJConfig.m; sourceTree = "<group>"; };
-		9D97418F1E49E2DF0016F8D4 /* ADJEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJEvent.h; sourceTree = "<group>"; };
-		9D9741901E49E2DF0016F8D4 /* ADJEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJEvent.m; sourceTree = "<group>"; };
-		9D9741911E49E2DF0016F8D4 /* ADJEventFailure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJEventFailure.h; sourceTree = "<group>"; };
-		9D9741921E49E2DF0016F8D4 /* ADJEventFailure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJEventFailure.m; sourceTree = "<group>"; };
-		9D9741931E49E2DF0016F8D4 /* ADJEventSuccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJEventSuccess.h; sourceTree = "<group>"; };
-		9D9741941E49E2DF0016F8D4 /* ADJEventSuccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJEventSuccess.m; sourceTree = "<group>"; };
-		9D9741971E49E2DF0016F8D4 /* ADJLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJLogger.h; sourceTree = "<group>"; };
-		9D9741981E49E2DF0016F8D4 /* ADJLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJLogger.m; sourceTree = "<group>"; };
-		9D9741A31E49E2DF0016F8D4 /* ADJSessionFailure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJSessionFailure.h; sourceTree = "<group>"; };
-		9D9741A41E49E2DF0016F8D4 /* ADJSessionFailure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJSessionFailure.m; sourceTree = "<group>"; };
-		9D9741A71E49E2DF0016F8D4 /* ADJSessionSuccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADJSessionSuccess.h; sourceTree = "<group>"; };
-		9D9741A81E49E2DF0016F8D4 /* ADJSessionSuccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADJSessionSuccess.m; sourceTree = "<group>"; };
-		9D9741AF1E49E2DF0016F8D4 /* Adjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Adjust.h; sourceTree = "<group>"; };
-		9D9741B01E49E2DF0016F8D4 /* Adjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Adjust.m; sourceTree = "<group>"; };
-		9D9741B31E49E2DF0016F8D4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,36 +69,9 @@
 				9D6A23751DE87EAF002D401C /* AdjustSdkDelegate.m */,
 				20804D7E1FF5461F003FF483 /* AdjustEventEmitter.h */,
 				20804D7F1FF5461F003FF483 /* AdjustEventEmitter.m */,
-				9D9741731E49E2DF0016F8D4 /* Adjust */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				200D309B1DC0DB5F0029DABA /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		9D9741731E49E2DF0016F8D4 /* Adjust */ = {
-			isa = PBXGroup;
-			children = (
-				9D9741851E49E2DF0016F8D4 /* ADJAttribution.h */,
-				9D9741861E49E2DF0016F8D4 /* ADJAttribution.m */,
-				9D97418B1E49E2DF0016F8D4 /* ADJConfig.h */,
-				9D97418C1E49E2DF0016F8D4 /* ADJConfig.m */,
-				9D97418F1E49E2DF0016F8D4 /* ADJEvent.h */,
-				9D9741901E49E2DF0016F8D4 /* ADJEvent.m */,
-				9D9741911E49E2DF0016F8D4 /* ADJEventFailure.h */,
-				9D9741921E49E2DF0016F8D4 /* ADJEventFailure.m */,
-				9D9741931E49E2DF0016F8D4 /* ADJEventSuccess.h */,
-				9D9741941E49E2DF0016F8D4 /* ADJEventSuccess.m */,
-				9D9741971E49E2DF0016F8D4 /* ADJLogger.h */,
-				9D9741981E49E2DF0016F8D4 /* ADJLogger.m */,
-				9D9741A31E49E2DF0016F8D4 /* ADJSessionFailure.h */,
-				9D9741A41E49E2DF0016F8D4 /* ADJSessionFailure.m */,
-				9D9741A71E49E2DF0016F8D4 /* ADJSessionSuccess.h */,
-				9D9741A81E49E2DF0016F8D4 /* ADJSessionSuccess.m */,
-				9D9741AF1E49E2DF0016F8D4 /* Adjust.h */,
-				9D9741B01E49E2DF0016F8D4 /* Adjust.m */,
-				9D9741B31E49E2DF0016F8D4 /* Info.plist */,
-			);
-			path = Adjust;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,18 +131,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D9741CB1E49E2DF0016F8D4 /* ADJSessionFailure.m in Sources */,
 				9D6A23761DE87EAF002D401C /* AdjustSdkDelegate.m in Sources */,
-				9D9741BC1E49E2DF0016F8D4 /* ADJAttribution.m in Sources */,
-				9D9741C11E49E2DF0016F8D4 /* ADJEvent.m in Sources */,
-				9D9741C31E49E2DF0016F8D4 /* ADJEventSuccess.m in Sources */,
-				9D9741D11E49E2DF0016F8D4 /* Adjust.m in Sources */,
-				9D9741C51E49E2DF0016F8D4 /* ADJLogger.m in Sources */,
 				20804D801FF5461F003FF483 /* AdjustEventEmitter.m in Sources */,
-				9D9741C21E49E2DF0016F8D4 /* ADJEventFailure.m in Sources */,
-				9D9741BF1E49E2DF0016F8D4 /* ADJConfig.m in Sources */,
 				13BE3DEE1AC21097009241FE /* AdjustSdk.m in Sources */,
-				9D9741CD1E49E2DF0016F8D4 /* ADJSessionSuccess.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

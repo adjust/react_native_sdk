@@ -338,8 +338,8 @@ AdjustConfig.prototype.setExternalDeviceId = function(externalDeviceId) {
     this.externalDeviceId = externalDeviceId;
 };
 
-AdjustConfig.prototype.setReadDeviceInfoOnceEnabled = function(readDeviceInfoOnceEnabled) {
-    this.readDeviceInfoOnceEnabled = readDeviceInfoOnceEnabled;
+AdjustConfig.prototype.setShouldReadDeviceInfoOnce = function(shouldReadDeviceInfoOnce) {
+    this.shouldReadDeviceInfoOnce = shouldReadDeviceInfoOnce;
 };
 
 AdjustConfig.prototype.setPreinstallTrackingEnabled = function(isEnabled) {

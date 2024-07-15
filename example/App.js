@@ -38,9 +38,9 @@ const App: () => React$Node = () => {
 
   const adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
   adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
-  // adjustConfig.deactivateSKAdNetworkHandling();
-  // adjustConfig.setNeedsCost(true);
-  // adjustConfig.setAttConsentWaitingInterval(16);
+  // adjustConfig.setSkanAttributionHandlingEnabled();
+  // adjustConfig.setCostDataInAttributionEnabled(true);
+  // adjustConfig.setAttConsentWaitingSeconds(16);
   // adjustConfig.setFinalAndroidAttributionEnabled(true);
 
   adjustConfig.setAttributionCallbackListener(function(attribution) {
@@ -165,7 +165,6 @@ const App: () => React$Node = () => {
   function _onPress_trackSimpleEvent() {
     var adjustEvent = new AdjustEvent("g3mfiw");
     Adjust.trackEvent(adjustEvent);
-    Adjust.updateConversionValue(6);
     Adjust.getAppTrackingAuthorizationStatus(function(status) {
       console.log("Authorization status = " + status);
     });
@@ -238,7 +237,6 @@ const App: () => React$Node = () => {
       console.log("Adgroup = " + attribution.adgroup);
       console.log("Creative = " + attribution.creative);
       console.log("Click label = " + attribution.clickLabel);
-      console.log("Adid = " + attribution.adid);
     });
   }
 

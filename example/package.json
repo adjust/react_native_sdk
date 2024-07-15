@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "18.0.0",
     "react-native": "0.69.4",
-    "react-native-adjust": "github:adjust/react_native_sdk_dev#v500",
+    "react-native-adjust": "github:adjust/react_native_sdk_dev#v500_ios_migration",
     "react-native-adjust-oaid": "4.38.1"
   },
   "devDependencies": {

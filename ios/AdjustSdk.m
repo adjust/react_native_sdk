@@ -713,19 +713,18 @@ RCT_EXPORT_METHOD(setSkadConversionValueUpdatedCallbackListener) {
 }
 
 RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
-    
-    NSString *urlOverwrite = [data objectForKey:@"urlOverwrite"];
-    NSString *extraPath = [data objectForKey:@"extraPath"];
-    NSNumber *timerIntervalInMilliseconds = [data objectForKey:@"timerIntervalInMilliseconds"];
-    NSNumber *timerStartInMilliseconds = [data objectForKey:@"timerStartInMilliseconds"];
-    NSNumber *sessionIntervalInMilliseconds = [data objectForKey:@"sessionIntervalInMilliseconds"];
-    NSNumber *subsessionIntervalInMilliseconds = [data objectForKey:@"subsessionIntervalInMilliseconds"];
-    NSNumber *teardown = [data objectForKey:@"teardown"];
-    NSNumber *deleteState = [data objectForKey:@"deleteState"];
-    NSNumber *noBackoffWait = [data objectForKey:@"noBackoffWait"];
-    NSNumber *adServicesFrameworkEnabled = [data objectForKey:@"adServicesFrameworkEnabled"];
-    NSNumber *attStatus = [data objectForKey:@"attStatus"];
-    NSString *idfa = [data objectForKey:@"idfa"];
+
+    NSString *urlOverwrite = [dict objectForKey:@"urlOverwrite"];
+    NSString *extraPath = [dict objectForKey:@"extraPath"];
+    NSNumber *timerIntervalInMilliseconds = [dict objectForKey:@"timerIntervalInMilliseconds"];
+    NSNumber *timerStartInMilliseconds = [dict objectForKey:@"timerStartInMilliseconds"];
+    NSNumber *sessionIntervalInMilliseconds = [dict objectForKey:@"sessionIntervalInMilliseconds"];
+    NSNumber *subsessionIntervalInMilliseconds = [dict objectForKey:@"subsessionIntervalInMilliseconds"];
+    NSNumber *deleteState = [dict objectForKey:@"deleteState"];
+    NSNumber *noBackoffWait = [dict objectForKey:@"noBackoffWait"];
+    NSNumber *adServicesFrameworkEnabled = [dict objectForKey:@"adServicesFrameworkEnabled"];
+    NSNumber *attStatus = [dict objectForKey:@"attStatus"];
+    NSString *idfa = [dict objectForKey:@"idfa"];
 
     NSMutableDictionary *testOptions = [NSMutableDictionary dictionary];
 
@@ -752,12 +751,6 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
     }
     if ([self isFieldValid:idfa]) {
         [testOptions setObject:idfa forKey:@"idfa"];
-    }
-    if ([self isFieldValid:teardown]) {
-        [testOptions setObject:teardown forKey:@"teardown"];
-        if ([teardown boolValue] == YES) {
-            [self resetAdjustBridge];
-        }
     }
     if ([self isFieldValid:deleteState]) {
         [testOptions setObject:deleteState forKey:@"deleteState"];

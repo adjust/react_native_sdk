@@ -23,10 +23,6 @@ Adjust.initSdk = function(adjustConfig) {
     module_adjust.initSdk(adjustConfig)
 };
 
-Adjust.trackEvent = function(adjustEvent) {
-    module_adjust.trackEvent(adjustEvent);
-};
-
 Adjust.enable = function() {
     module_adjust.enable();
 };
@@ -55,16 +51,20 @@ Adjust.disableCoppaCompliance = function() {
     module_adjust.disableCoppaCompliance();
 };
 
+Adjust.trackEvent = function(adjustEvent) {
+    module_adjust.trackEvent(adjustEvent);
+};
+
+Adjust.trackAdRevenue = function(adjustAdrevenue) {
+    module_adjust.trackAdRevenue(adjustAdrevenue);
+};
+
 Adjust.setPushToken = function(token) {
     module_adjust.setPushToken(token);
 };
 
 Adjust.processDeeplink = function(deeplink) {
     module_adjust.processDeeplink(deeplink);
-};
-
-Adjust.trackAdRevenue = function(adjustAdrevenue) {
-    module_adjust.trackAdRevenue(adjustAdrevenue);
 };
 
 Adjust.trackAppStoreSubscription = function(subscription) {
@@ -269,7 +269,7 @@ var AdjustConfig = function(appToken, environment) {
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
-    this.shouldLaunchDeeplink = null;
+    this.isDeferredDeeplinkOpeningEnabled = null;
     this.sendInBackground = null;
     this.isCostDataInAttributionEnabled = null;
     this.defaultTracker = null;
@@ -318,8 +318,8 @@ AdjustConfig.prototype.setLogLevel = function(logLevel) {
     this.logLevel = logLevel;
 };
 
-AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) {
-    this.shouldLaunchDeeplink = shouldLaunchDeeplink;
+AdjustConfig.prototype.setDeferredDeeplinkOpeningEnabled = function(isDeferredDeeplinkOpeningEnabled) {
+    this.isDeferredDeeplinkOpeningEnabled = isDeferredDeeplinkOpeningEnabled;
 };
 
 AdjustConfig.prototype.setSendInBackground = function(sendInBackground) {
@@ -662,12 +662,12 @@ var AdjustPlayStorePurchase = function(productId, purchaseToken) {
 
 module.exports = {
     Adjust,
-    AdjustEvent,
     AdjustConfig,
+    AdjustEvent,
+    AdjustAdRevenue,
+    AdjustThirdPartySharing,
     AdjustAppStoreSubscription,
     AdjustPlayStoreSubscription,
-    AdjustThirdPartySharing,
-    AdjustAdRevenue,
     AdjustAppStorePurchase,
     AdjustPlayStorePurchase
 }

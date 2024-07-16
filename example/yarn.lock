@@ -5944,9 +5944,9 @@ react-native-adjust-oaid@4.38.1:
   resolved "https://registry.npmjs.org/react-native-adjust-oaid/-/react-native-adjust-oaid-4.38.1.tgz"
   integrity sha512-I45rY/ZqkuwFgHe27yCgTJXB7DuXt4MrI4l4sF1EOFx64BKYYKsOGXxXkK+6GgXEjlsrDrnJ4h38EyzoIkfGBw==
 
-"react-native-adjust@github:adjust/react_native_sdk_dev#v500":
+"react-native-adjust@github:adjust/react_native_sdk_dev#v500_ios_migration":
   version "4.38.1"
-  resolved "git+ssh://git@github.com/adjust/react_native_sdk_dev.git#38fa6cfc6ba5bc8c769b16f0784c61e9e7e810a8"
+  resolved "git+ssh://git@github.com/adjust/react_native_sdk_dev.git#714d5eefd805198357a425935198dc0a4dfe0e70"
 
 react-native-codegen@^0.69.1:
   version "0.69.2"

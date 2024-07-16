@@ -76,7 +76,7 @@ declare module 'react-native-adjust' {
 
     public setSdkPrefix(sdkPrefix: string): void
     public setLogLevel(level: LogLevel): void
-    public setShouldLaunchDeeplink(shouldLaunchDeeplink: boolean): void
+    public setDeferredDeeplinkOpeningEnabled(isDeferredDeeplinkOpeningEnabled: boolean): void
     public setSendInBackground(sendInBackground: boolean): void
     public setCostDataInAttributionEnabled(isCostDataInAttributionEnabled: boolean): void
     public setDefaultTracker(defaultTracked: string): void

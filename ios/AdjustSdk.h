@@ -2,11 +2,10 @@
 //  AdjustSdk.h
 //  AdjustSdk
 //
-//  Created by Aditi Agrawal on 15/07/24.
+//  Created by Abdullah Obaied (@obaied) on 25th October 2016.
 //  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
-#import "Adjust.h"
 
 #if __has_include(<React/RCTBridgeModule.h>)
 #import <React/RCTBridgeModule.h>

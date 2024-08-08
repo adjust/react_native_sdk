@@ -2,14 +2,14 @@
 //  AdjustSdkDelegate.h
 //  AdjustSdk
 //
-//  Created by Aditi Agrawal on 15/07/24.
+//  Created by Abdullah Obaied (@obaied) on 17th November 2016.
 //  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
-#import "AdjustSdk.h"
+#import <AdjustSdk/Adjust.h>
 #import "AdjustEventEmitter.h"
 
-@interface AdjustSdkDelegate : NSObject<AdjustDelegate>
+@interface AdjustSdkDelegate : NSObject
 
 @property (nonatomic) BOOL shouldLaunchDeferredDeeplink;
 

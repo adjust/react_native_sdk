@@ -2,12 +2,13 @@
 //  AdjustSdkDelegate.m
 //  AdjustSdk
 //
-//  Created by Aditi Agrawal on 15/07/24.
+//  Created by Abdullah Obaied (@obaied) on 17th November 2016.
 //  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
 #import <objc/runtime.h>
 #import "AdjustSdkDelegate.h"
+#import <AdjustSdk/AdjustSdk.h>
 
 #if __has_include(<React/RCTAssert.h>)
 #import <React/RCTEventDispatcher.h>
@@ -111,7 +112,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [self addValueOrEmpty:dictionary key:@"message" value:eventSuccessResponseData.message];
-    [self addValueOrEmpty:dictionary key:@"timestamp" value:eventSuccessResponseData.timeStamp];
+    [self addValueOrEmpty:dictionary key:@"timestamp" value:eventSuccessResponseData.timestamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:eventSuccessResponseData.adid];
     [self addValueOrEmpty:dictionary key:@"eventToken" value:eventSuccessResponseData.eventToken];
     [self addValueOrEmpty:dictionary key:@"callbackId" value:eventSuccessResponseData.callbackId];
@@ -132,7 +133,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [self addValueOrEmpty:dictionary key:@"message" value:eventFailureResponseData.message];
-    [self addValueOrEmpty:dictionary key:@"timestamp" value:eventFailureResponseData.timeStamp];
+    [self addValueOrEmpty:dictionary key:@"timestamp" value:eventFailureResponseData.timestamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:eventFailureResponseData.adid];
     [self addValueOrEmpty:dictionary key:@"eventToken" value:eventFailureResponseData.eventToken];
     [self addValueOrEmpty:dictionary key:@"callbackId" value:eventFailureResponseData.callbackId];
@@ -155,7 +156,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [self addValueOrEmpty:dictionary key:@"message" value:sessionSuccessResponseData.message];
-    [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionSuccessResponseData.timeStamp];
+    [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionSuccessResponseData.timestamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:sessionSuccessResponseData.adid];
     if (sessionSuccessResponseData.jsonResponse != nil) {
         NSData *dataJsonResponse = [NSJSONSerialization dataWithJSONObject:sessionSuccessResponseData.jsonResponse options:0 error:nil];
@@ -174,7 +175,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [self addValueOrEmpty:dictionary key:@"message" value:sessionFailureResponseData.message];
-    [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionFailureResponseData.timeStamp];
+    [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionFailureResponseData.timestamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:sessionFailureResponseData.adid];
     [dictionary setObject:(sessionFailureResponseData.willRetry ? @"true" : @"false") forKey:@"willRetry"];
     if (sessionFailureResponseData.jsonResponse != nil) {

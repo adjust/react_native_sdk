@@ -2,11 +2,12 @@
 //  AdjustSdk.h
 //  AdjustSdk
 //
-//  Created by Aditi Agrawal on 15/07/24.
+//  Created by Abdullah Obaied (@obaied) on 25th October 2016.
 //  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
 #import "AdjustSdk.h"
+#import <AdjustSdk/AdjustSdk.h>
 #import "AdjustSdkDelegate.h"
 
 @implementation AdjustSdk
@@ -49,10 +50,10 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     if ([self isFieldValid:allowSuppressLogLevel]) {
         adjustConfig = [[ADJConfig alloc] initWithAppToken:appToken
                                                environment:environment
-                                       andSuppressLogLevel:[allowSuppressLogLevel boolValue]];
+                                       suppressLogLevel:[allowSuppressLogLevel boolValue]];
     } else {
         adjustConfig = [[ADJConfig alloc] initWithAppToken:appToken
-                                            andEnvironment:environment];
+                                            environment:environment];
     }
 
     if (![adjustConfig isValid]) {
@@ -90,8 +91,8 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     }
     if ([self isFieldValid:useSubdomains] && [self isFieldValid:isDataResidency]) {
         [adjustConfig setUrlStrategy:(NSArray *)urlStrategyDomainsArray
-                      withSubdomains:[useSubdomains boolValue]
-                    andDataResidency:[isDataResidency boolValue]];
+                       useSubdomains:[useSubdomains boolValue]
+                     isDataResidency:[isDataResidency boolValue]];
     }
 
     // Send in background
@@ -226,11 +227,6 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
         [adjustEvent setCallbackId:callbackId];
     }
 
-    // Receipt
-    if ([self isFieldValid:receipt]) {
-        [adjustEvent setReceipt:[receipt dataUsingEncoding:NSUTF8StringEncoding]];
-    }
-
     // Product ID
     if ([self isFieldValid:productId]) {
         [adjustEvent setProductId:productId];
@@ -262,11 +258,11 @@ RCT_EXPORT_METHOD(disable) {
 }
 
 RCT_EXPORT_METHOD(enableCoppaCompliance) {
-    [Adjust enableCoppaCompliance];
+//    [Adjust enableCoppaCompliance];
 }
 
 RCT_EXPORT_METHOD(disableCoppaCompliance) {
-    [Adjust disableCoppaCompliance];
+//    [Adjust disableCoppaCompliance];
 }
 
 RCT_EXPORT_METHOD(isEnabled:(RCTResponseSenderBlock)callback) {
@@ -388,8 +384,7 @@ RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
     ADJAppStoreSubscription *subscription = [[ADJAppStoreSubscription alloc]
                                              initWithPrice:priceValue
                                              currency:currency
-                                             transactionId:transactionId
-                                             andReceipt:receiptValue];
+                                             transactionId:transactionId];
 
     // Transaction date
     if ([self isFieldValid:transactionDate]) {
@@ -639,8 +634,7 @@ RCT_EXPORT_METHOD(verifyAppStorePurchase:(NSDictionary *)dict callback:(RCTRespo
 
     // Create purchase instance
     ADJAppStorePurchase *purchase = [[ADJAppStorePurchase alloc] initWithTransactionId:transactionId
-                                                                             productId:productId
-                                                                            andReceipt:receiptValue];
+                                                                             productId:productId];
 
     // Verify purchase
     [Adjust verifyAppStorePurchase:purchase

@@ -45,6 +45,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     id urlStrategyDomains = [dict objectForKey:@"urlStrategyDomains"];
     NSNumber *useSubdomains = [dict objectForKey:@"useSubdomains"];
     NSNumber *isDataResidency = [dict objectForKey:@"isDataResidency"];
+    NSNumber *isCoppaComplianceEnabled = [dict objectForKey:@"isCoppaComplianceEnabled"];
 
     ADJConfig *adjustConfig;
     if ([self isFieldValid:allowSuppressLogLevel]) {
@@ -154,6 +155,13 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         [adjustConfig setEventDeduplicationIdsMaxSize:[eventDeduplicationIdsMaxSize integerValue]];
     }
 
+    // Set Coppa compliance
+    if ([self isFieldValid:isCoppaComplianceEnabled]) {
+        if ([isCoppaComplianceEnabled boolValue] == YES) {
+            [adjustConfig enableCoppaCompliance];
+        }
+    }
+
     // Attribution delegate & other delegates
     BOOL shouldLaunchDeferredDeeplink = [self isFieldValid:isDeferredDeeplinkOpeningEnabled] ? [isDeferredDeeplinkOpeningEnabled boolValue] : YES;
     if (_isAttributionCallbackImplemented
@@ -255,14 +263,6 @@ RCT_EXPORT_METHOD(enable) {
 
 RCT_EXPORT_METHOD(disable) {
     [Adjust disable];
-}
-
-RCT_EXPORT_METHOD(enableCoppaCompliance) {
-//    [Adjust enableCoppaCompliance];
-}
-
-RCT_EXPORT_METHOD(disableCoppaCompliance) {
-//    [Adjust disableCoppaCompliance];
 }
 
 RCT_EXPORT_METHOD(isEnabled:(RCTResponseSenderBlock)callback) {

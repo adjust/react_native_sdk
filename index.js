@@ -43,14 +43,6 @@ Adjust.switchBackToOnlineMode = function() {
     module_adjust.switchBackToOnlineMode();
 };
 
-Adjust.enableCoppaCompliance = function() {
-    module_adjust.enableCoppaCompliance();
-};
-
-Adjust.disableCoppaCompliance = function() {
-    module_adjust.disableCoppaCompliance();
-};
-
 Adjust.trackEvent = function(adjustEvent) {
     module_adjust.trackEvent(adjustEvent);
 };
@@ -275,6 +267,8 @@ var AdjustConfig = function(appToken, environment) {
     this.defaultTracker = null;
     this.externalDeviceId = null;
     this.shouldReadDeviceInfoOnce = null;
+    this.isCoppaComplianceEnabled = null;
+
     // Android only
     this.processName = null;
     this.readMobileEquipmentIdentity = null;
@@ -340,6 +334,10 @@ AdjustConfig.prototype.setExternalDeviceId = function(externalDeviceId) {
 
 AdjustConfig.prototype.setShouldReadDeviceInfoOnce = function(shouldReadDeviceInfoOnce) {
     this.shouldReadDeviceInfoOnce = shouldReadDeviceInfoOnce;
+};
+
+AdjustConfig.prototype.enableCoppaCompliance = function() {
+    this.isCoppaComplianceEnabled = true;
 };
 
 AdjustConfig.prototype.setPreinstallTrackingEnabled = function(isEnabled) {

@@ -101,3 +101,6 @@ ios/Index/
 
 # Just in case
 temp/
+
+#example
+example/.yarn

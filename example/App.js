@@ -240,14 +240,6 @@ const App: () => React$Node = () => {
     });
   }
 
-  function _onPress_enableCoppaCompliance() {
-    Adjust.enableCoppaCompliance();
-  }
-
-  function _onPress_disableCoppaCompliance() {
-    Adjust.disableCoppaCompliance();
-  }
-
   function _onPress_isSdkEnabled() {
     Adjust.isEnabled((isEnabled) => {
       if (isEnabled) {
@@ -305,16 +297,6 @@ const App: () => React$Node = () => {
           style={styles.button}
           onPress={_onPress_getIds}>
           <Text>Get Ids</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          style={styles.button}
-          onPress={_onPress_enableCoppaCompliance}>
-          <Text>Enable Coppa Compliance</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          style={styles.button}
-          onPress={_onPress_disableCoppaCompliance}>
-          <Text>Disable Coppa Compliance</Text>
         </TouchableHighlight>
         <TouchableHighlight
           style={styles.button}

@@ -104,3 +104,6 @@ temp/
 
 #example
 example/.yarn
+
+#test
+Test/app/.yarn

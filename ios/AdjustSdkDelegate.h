@@ -14,14 +14,15 @@
 @property (nonatomic) BOOL shouldLaunchDeferredDeeplink;
 
 + (id)getInstanceWithSwizzleOfAttributionCallback:(BOOL)swizzleAttributionCallback
-						   eventSucceededCallback:(BOOL)swizzleEventSucceededCallback
-							  eventFailedCallback:(BOOL)swizzleEventFailedCallback
-						 sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
-						    sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
-					     deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
-			  skadConversionValueUpdatedCallback:(BOOL)swizzleSkad4ConversionValueUpdatedCallback
+                           eventSucceededCallback:(BOOL)swizzleEventSucceededCallback
+                              eventFailedCallback:(BOOL)swizzleEventFailedCallback
+                         sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
+                            sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
+                         deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
+                skadConversionDataUpdatedCallback:(BOOL)swizzleSkad4ConversionValueUpdatedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink;
 
 + (void)teardown;
 
 @end
+

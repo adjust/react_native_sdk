@@ -20,7 +20,7 @@ BOOL _isEventTrackingFailedCallbackImplemented;
 BOOL _isSessionTrackingSucceededCallbackImplemented;
 BOOL _isSessionTrackingFailedCallbackImplemented;
 BOOL _isDeferredDeeplinkCallbackImplemented;
-BOOL _isSkadConversionValueUpdatedCallbackImplemented;
+BOOL _isSkadConversionDataUpdatedCallbackImplemented;
 
 #pragma mark - Public methods
 
@@ -40,7 +40,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSNumber *isSkanAttributionHandlingEnabled = [dict objectForKey:@"isSkanAttributionHandlingEnabled"];
     NSNumber *isDeferredDeeplinkOpeningEnabled = [dict objectForKey:@"isDeferredDeeplinkOpeningEnabled"];
     NSNumber *shouldReadDeviceInfoOnce = [dict objectForKey:@"shouldReadDeviceInfoOnce"];
-    NSNumber *attConsentWaitingSeconds = [dict objectForKey:@"attConsentWaitingSeconds"];
+    NSNumber *attConsentWaitingInterval = [dict objectForKey:@"attConsentWaitingInterval"];
     NSNumber *eventDeduplicationIdsMaxSize = [dict objectForKey:@"eventDeduplicationIdsMaxSize"];
     id urlStrategyDomains = [dict objectForKey:@"urlStrategyDomains"];
     NSNumber *useSubdomains = [dict objectForKey:@"useSubdomains"];
@@ -51,10 +51,10 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     if ([self isFieldValid:allowSuppressLogLevel]) {
         adjustConfig = [[ADJConfig alloc] initWithAppToken:appToken
                                                environment:environment
-                                       suppressLogLevel:[allowSuppressLogLevel boolValue]];
+                                          suppressLogLevel:[allowSuppressLogLevel boolValue]];
     } else {
         adjustConfig = [[ADJConfig alloc] initWithAppToken:appToken
-                                            environment:environment];
+                                               environment:environment];
     }
 
     if (![adjustConfig isValid]) {
@@ -139,8 +139,8 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     }
 
     // ATT consent delay
-    if ([self isFieldValid:attConsentWaitingSeconds]) {
-        [adjustConfig setAttConsentWaitingInterval:[attConsentWaitingSeconds intValue]];
+    if ([self isFieldValid:attConsentWaitingInterval]) {
+        [adjustConfig setAttConsentWaitingInterval:[attConsentWaitingInterval intValue]];
     }
 
     // Read device info just once
@@ -170,7 +170,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         || _isSessionTrackingSucceededCallbackImplemented
         || _isSessionTrackingFailedCallbackImplemented
         || _isDeferredDeeplinkCallbackImplemented
-        || _isSkadConversionValueUpdatedCallbackImplemented) {
+        || _isSkadConversionDataUpdatedCallbackImplemented) {
         [adjustConfig setDelegate:
          [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
                                                  eventSucceededCallback:_isEventTrackingSucceededCallbackImplemented
@@ -178,7 +178,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
                                                sessionSucceededCallback:_isSessionTrackingSucceededCallbackImplemented
                                                   sessionFailedCallback:_isSessionTrackingFailedCallbackImplemented
                                                deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
-                                     skadConversionValueUpdatedCallback:_isSkadConversionValueUpdatedCallbackImplemented
+                                      skadConversionDataUpdatedCallback:_isSkadConversionDataUpdatedCallbackImplemented
                                            shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
     }
 
@@ -191,9 +191,9 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
     NSString *eventToken = dict[@"eventToken"];
     NSString *revenue = dict[@"revenue"];
     NSString *currency = dict[@"currency"];
-    NSString *receipt = dict[@"receipt"];
     NSString *productId = dict[@"productId"];
     NSString *transactionId = dict[@"transactionId"];
+    NSString *deduplicationId = dict[@"deduplicationId"];
     NSString *callbackId = dict[@"callbackId"];
     NSDictionary *callbackParameters = dict[@"callbackParameters"];
     NSDictionary *partnerParameters = dict[@"partnerParameters"];
@@ -245,6 +245,11 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
         [adjustEvent setTransactionId:transactionId];
     }
 
+    // DeduplicationId ID
+    if ([self isFieldValid:deduplicationId]) {
+        [adjustEvent setDeduplicationId:deduplicationId];
+    }
+
     // Track event
     [Adjust trackEvent:adjustEvent];
 }
@@ -293,7 +298,7 @@ RCT_EXPORT_METHOD(processDeeplink:(NSString *)urlStr) {
         url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     }
 #pragma clang diagnostic pop
-    [Adjust processDeeplink:url];
+    [Adjust processDeeplink:[[ADJDeeplink alloc] initWithDeeplink:url]];
 }
 
 RCT_EXPORT_METHOD(trackAdRevenue:(NSDictionary *)dict) {
@@ -363,7 +368,6 @@ RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
     NSString *price = dict[@"price"];
     NSString *currency = dict[@"currency"];
     NSString *transactionId = dict[@"transactionId"];
-    NSString *receipt = dict[@"receipt"];
     NSString *transactionDate = dict[@"transactionDate"];
     NSString *salesRegion = dict[@"salesRegion"];
     NSDictionary *callbackParameters = dict[@"callbackParameters"];
@@ -373,12 +377,6 @@ RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
     NSDecimalNumber *priceValue;
     if ([self isFieldValid:price]) {
         priceValue = [NSDecimalNumber decimalNumberWithString:price];
-    }
-
-    // Receipt
-    NSData *receiptValue;
-    if ([self isFieldValid:receipt]) {
-        receiptValue = [receipt dataUsingEncoding:NSUTF8StringEncoding];
     }
 
     ADJAppStoreSubscription *subscription = [[ADJAppStoreSubscription alloc]
@@ -622,15 +620,8 @@ RCT_EXPORT_METHOD(getLastDeeplink:(RCTResponseSenderBlock)callback) {
 }
 
 RCT_EXPORT_METHOD(verifyAppStorePurchase:(NSDictionary *)dict callback:(RCTResponseSenderBlock)callback) {
-    NSString *receipt = dict[@"receipt"];
     NSString *productId = dict[@"productId"];
     NSString *transactionId = dict[@"transactionId"];
-
-    // Receipt.
-    NSData *receiptValue;
-    if ([self isFieldValid:receipt]) {
-        receiptValue = [receipt dataUsingEncoding:NSUTF8StringEncoding];
-    }
 
     // Create purchase instance
     ADJAppStorePurchase *purchase = [[ADJAppStorePurchase alloc] initWithTransactionId:transactionId
@@ -653,6 +644,88 @@ RCT_EXPORT_METHOD(verifyAppStorePurchase:(NSDictionary *)dict callback:(RCTRespo
     }];
 }
 
+RCT_EXPORT_METHOD(verifyAndTrackAppStorePurchase:(NSDictionary *)dict callback:(RCTResponseSenderBlock)callback) {
+    NSString *eventToken = dict[@"eventToken"];
+    NSString *revenue = dict[@"revenue"];
+    NSString *currency = dict[@"currency"];
+    NSString *productId = dict[@"productId"];
+    NSString *transactionId = dict[@"transactionId"];
+    NSString *deduplicationId = dict[@"deduplicationId"];
+    NSString *callbackId = dict[@"callbackId"];
+    NSDictionary *callbackParameters = dict[@"callbackParameters"];
+    NSDictionary *partnerParameters = dict[@"partnerParameters"];
+
+    ADJEvent *adjustEvent = [[ADJEvent alloc] initWithEventToken:eventToken];
+    if (![adjustEvent isValid]) {
+        return;
+    }
+
+    // Revenue
+    if ([self isFieldValid:revenue]) {
+        double revenueValue = [revenue doubleValue];
+        [adjustEvent setRevenue:revenueValue currency:currency];
+    }
+
+    // Callback parameters
+    if ([self isFieldValid:callbackParameters]) {
+        for (NSString *key in callbackParameters) {
+            NSString *value = [callbackParameters objectForKey:key];
+            [adjustEvent addCallbackParameter:key value:value];
+        }
+    }
+
+    // Partner parameters
+    if ([self isFieldValid:partnerParameters]) {
+        for (NSString *key in partnerParameters) {
+            NSString *value = [partnerParameters objectForKey:key];
+            [adjustEvent addPartnerParameter:key value:value];
+        }
+    }
+
+    // Transaction ID
+    if ([self isFieldValid:transactionId]) {
+        [adjustEvent setTransactionId:transactionId];
+    }
+
+    // Callback ID
+    if ([self isFieldValid:callbackId]) {
+        [adjustEvent setCallbackId:callbackId];
+    }
+
+    // Product ID
+    if ([self isFieldValid:productId]) {
+        [adjustEvent setProductId:productId];
+    }
+
+    // Transaction ID
+    if ([self isFieldValid:transactionId]) {
+        [adjustEvent setTransactionId:transactionId];
+    }
+
+    // DeduplicationId ID
+    if ([self isFieldValid:deduplicationId]) {
+        [adjustEvent setDeduplicationId:deduplicationId];
+    }
+
+    if (adjustEvent == nil) {
+        return;
+    }
+
+    [Adjust verifyAndTrackAppStorePurchase:adjustEvent
+                     withCompletionHandler:^(ADJPurchaseVerificationResult * _Nonnull verificationResult) {
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+        if (verificationResult == nil) {
+            callback(@[dictionary]);
+            return;
+        }
+
+        [self addValueOrEmpty:dictionary key:@"verificationStatus" value:verificationResult.verificationStatus];
+        [self addValueOrEmpty:dictionary key:@"code" value:[NSString stringWithFormat:@"%d", verificationResult.code]];
+        [self addValueOrEmpty:dictionary key:@"message" value:verificationResult.message];
+        callback(@[dictionary]);
+    }];
+}
+
 RCT_EXPORT_METHOD(processAndResolveDeeplink:(NSString *)urlStr callback:(RCTResponseSenderBlock)callback) {
     if (urlStr == nil) {
         return;
@@ -669,7 +742,7 @@ RCT_EXPORT_METHOD(processAndResolveDeeplink:(NSString *)urlStr callback:(RCTResp
 #pragma clang diagnostic pop
 
     // Process deeplink
-    [Adjust processAndResolveDeeplink:url withCompletionHandler:^(NSString * _Nonnull resolvedLink) {
+    [Adjust processAndResolveDeeplink:[[ADJDeeplink alloc] initWithDeeplink:url] withCompletionHandler:^(NSString * _Nonnull resolvedLink) {
         if (resolvedLink == nil) {
             callback(@[@""]);
         } else {
@@ -702,14 +775,14 @@ RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener) {
     _isDeferredDeeplinkCallbackImplemented = YES;
 }
 
-RCT_EXPORT_METHOD(setSkadConversionValueUpdatedCallbackListener) {
-    _isSkadConversionValueUpdatedCallbackImplemented = YES;
+RCT_EXPORT_METHOD(setSkadConversionDataUpdatedCallbackListener) {
+    _isSkadConversionDataUpdatedCallbackImplemented = YES;
 }
 
 RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
-
-    NSString *urlOverwrite = [dict objectForKey:@"urlOverwrite"];
+    NSString *urlOverwrite = [dict objectForKey:@"testUrlOverwrite"];
     NSString *extraPath = [dict objectForKey:@"extraPath"];
+    NSNumber *teardown = [dict objectForKey:@"teardown"];
     NSNumber *timerIntervalInMilliseconds = [dict objectForKey:@"timerIntervalInMilliseconds"];
     NSNumber *timerStartInMilliseconds = [dict objectForKey:@"timerStartInMilliseconds"];
     NSNumber *sessionIntervalInMilliseconds = [dict objectForKey:@"sessionIntervalInMilliseconds"];
@@ -746,6 +819,9 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
     if ([self isFieldValid:idfa]) {
         [testOptions setObject:idfa forKey:@"idfa"];
     }
+    if ([self isFieldValid:teardown]) {
+        [testOptions setObject:teardown forKey:@"teardown"];
+    }
     if ([self isFieldValid:deleteState]) {
         [testOptions setObject:deleteState forKey:@"deleteState"];
     }
@@ -755,7 +831,6 @@ RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
     if ([self isFieldValid:adServicesFrameworkEnabled]) {
         [testOptions setObject:adServicesFrameworkEnabled forKey:@"adServicesFrameworkEnabled"];
     }
-
 
     [Adjust setTestOptions:testOptions];
 }
@@ -767,7 +842,7 @@ RCT_EXPORT_METHOD(teardown) {
     _isSessionTrackingSucceededCallbackImplemented = NO;
     _isSessionTrackingFailedCallbackImplemented = NO;
     _isDeferredDeeplinkCallbackImplemented = NO;
-    _isSkadConversionValueUpdatedCallbackImplemented = NO;
+    _isSkadConversionDataUpdatedCallbackImplemented = NO;
     [AdjustSdkDelegate teardown];
 }
 

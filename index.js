@@ -176,6 +176,12 @@ Adjust.verifyAppStorePurchase = function(purchase, callback) {
     }
 };
 
+Adjust.verifyAndTrackAppStorePurchase = function(adjustEvent, callback) {
+     if (Platform.OS === "ios") {
+        module_adjust.verifyAndTrackAppStorePurchase(adjustEvent, callback);
+    }
+};
+
 Adjust.verifyPlayStorePurchase = function(purchase, callback) {
     if (Platform.OS === "android") {
         module_adjust.verifyPlayStorePurchase(purchase, callback);
@@ -217,9 +223,9 @@ Adjust.componentWillUnmount = function() {
         AdjustConfig.DeferredDeeplinkSubscription = null;
     }
 
-    if (AdjustConfig.SkadConversionValueUpdatedSubscription != null) {
-        AdjustConfig.SkadConversionValueUpdatedSubscription.remove();
-        AdjustConfig.SkadConversionValueUpdatedSubscription = null;
+    if (AdjustConfig.SkadConversionDataUpdatedSubscription != null) {
+        AdjustConfig.SkadConversionDataUpdatedSubscription.remove();
+        AdjustConfig.SkadConversionDataUpdatedSubscription = null;
     }
 };
 
@@ -281,8 +287,7 @@ var AdjustConfig = function(appToken, environment) {
     this.isAdServicesEnabled = null;
     this.isIdfaReadingAllowed = null;
     this.isSkanAttributionHandlingEnabled = null;
-    this.isLinkMeEnabled = null;
-    this.attConsentWaitingSeconds = null;
+    this.attConsentWaitingInterval = null;
 };
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
@@ -302,7 +307,7 @@ AdjustConfig.EventTrackingFailedSubscription = null;
 AdjustConfig.SessionTrackingSucceededSubscription = null;
 AdjustConfig.SessionTrackingFailedSubscription = null;
 AdjustConfig.DeferredDeeplinkSubscription = null;
-AdjustConfig.SkadConversionValueUpdatedSubscription = null
+AdjustConfig.SkadConversionDataUpdatedSubscription = null
 
 AdjustConfig.prototype.setSdkPrefix = function(sdkPrefix) {
     this.sdkPrefix = sdkPrefix;
@@ -316,12 +321,8 @@ AdjustConfig.prototype.setDeferredDeeplinkOpeningEnabled = function(isDeferredDe
     this.isDeferredDeeplinkOpeningEnabled = isDeferredDeeplinkOpeningEnabled;
 };
 
-AdjustConfig.prototype.setSendInBackground = function(sendInBackground) {
-    this.sendInBackground = sendInBackground;
-};
-
-AdjustConfig.prototype.setCostDataInAttributionEnabled = function(isCostDataInAttributionEnabled) {
-    this.isCostDataInAttributionEnabled = isCostDataInAttributionEnabled;
+AdjustConfig.prototype.enableSendingInBackground = function() {
+    this.sendInBackground = true;
 };
 
 AdjustConfig.prototype.setDefaultTracker= function(defaultTracker) {
@@ -332,12 +333,16 @@ AdjustConfig.prototype.setExternalDeviceId = function(externalDeviceId) {
     this.externalDeviceId = externalDeviceId;
 };
 
-AdjustConfig.prototype.setShouldReadDeviceInfoOnce = function(shouldReadDeviceInfoOnce) {
-    this.shouldReadDeviceInfoOnce = shouldReadDeviceInfoOnce;
+AdjustConfig.prototype.readDeviceInfoOnce = function() {
+    this.shouldReadDeviceInfoOnce = true;
 };
 
 AdjustConfig.prototype.enableCoppaCompliance = function() {
     this.isCoppaComplianceEnabled = true;
+};
+
+AdjustConfig.prototype.enableCostDataInAttribution = function() {
+    this.isCostDataInAttributionEnabled = true;
 };
 
 AdjustConfig.prototype.setPreinstallTrackingEnabled = function(isEnabled) {
@@ -360,24 +365,20 @@ AdjustConfig.prototype.setFbAppId = function(fbAppId) {
     this.fbAppId = fbAppId;
 };
 
-AdjustConfig.prototype.setAdServicesEnabled = function(isAdServicesEnabled) {
-    this.isAdServicesEnabled = isAdServicesEnabled;
+AdjustConfig.prototype.disableAdServices = function() {
+    this.isAdServicesEnabled = false;
 };
 
-AdjustConfig.prototype.setIdfaReadingAllowed = function(isIdfaReadingAllowed) {
-    this.isIdfaReadingAllowed = isIdfaReadingAllowed;
+AdjustConfig.prototype.disableIdfaReading = function() {
+    this.isIdfaReadingAllowed = false;
 };
 
-AdjustConfig.prototype.setSkanAttributionHandlingEnabled = function(isSkanAttributionHandlingEnabled) {
-    this.isSkanAttributionHandlingEnabled = isSkanAttributionHandlingEnabled;
+AdjustConfig.prototype.disableSkanAttribution = function() {
+    this.isSkanAttributionHandlingEnabled = false;
 };
 
-AdjustConfig.prototype.setLinkMeEnabled = function(isLinkMeEnabled) {
-    this.isLinkMeEnabled = isLinkMeEnabled;
-};
-
-AdjustConfig.prototype.setAttConsentWaitingSeconds = function(attConsentWaitingSeconds) {
-    this.attConsentWaitingSeconds = attConsentWaitingSeconds;
+AdjustConfig.prototype.setAttConsentWaitingInterval = function(attConsentWaitingInterval) {
+    this.attConsentWaitingInterval = attConsentWaitingInterval;
 };
 
 AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {
@@ -434,12 +435,12 @@ AdjustConfig.prototype.setDeferredDeeplinkCallbackListener = function(deferredDe
     }
 };
 
-AdjustConfig.prototype.setSkadConversionValueUpdatedCallbackListener = function(skadConversionValueUpdatedCallbackListener) {
+AdjustConfig.prototype.setSkadConversionDataUpdatedCallbackListener = function(skadConversionDataUpdatedCallbackListener) {
     if (Platform.OS === "ios") {
-        if (null == AdjustConfig.SkadConversionValueUpdatedSubscription) {
-            module_adjust.setSkadConversionValueUpdatedCallbackListener();
-            AdjustConfig.SkadConversionValueUpdatedSubscription = module_adjust_emitter.addListener(
-                'adjust_skadConversionValueUpdated', skadConversionValueUpdatedCallbackListener
+        if (null == AdjustConfig.SkadConversionDataUpdatedSubscription) {
+            module_adjust.setSkadConversionDataUpdatedCallbackListener();
+            AdjustConfig.SkadConversionDataUpdatedSubscription = module_adjust_emitter.addListener(
+                'adjust_skadConversionDataUpdated', skadConversionDataUpdatedCallbackListener
             );
         }
     }
@@ -452,7 +453,6 @@ var AdjustEvent = function(eventToken) {
     this.revenue = null;
     this.currency = null;
     this.deduplicationId = null;
-    this.receipt = null;
     this.productId = null;
     this.transactionId = null;
     this.callbackId = null;
@@ -481,10 +481,6 @@ AdjustEvent.prototype.addPartnerParameter = function(key, value) {
     this.partnerParameters[key] = value;
 };
 
-AdjustEvent.prototype.setReceipt = function(receipt) {
-    this.receipt = receipt;
-};
-
 AdjustEvent.prototype.setProductId = function(productId) {
     this.productId = productId;
 };
@@ -503,11 +499,10 @@ AdjustEvent.prototype.setCallbackId = function(callbackId) {
 
 // AdjustAppStoreSubscription
 
-var AdjustAppStoreSubscription = function(price, currency, transactionId, receipt) {
+var AdjustAppStoreSubscription = function(price, currency, transactionId) {
     this.price = price;
     this.currency = currency;
     this.transactionId = transactionId;
-    this.receipt = receipt;
     this.transactionDate = null;
     this.salesRegion = null;
     this.callbackParameters = {};
@@ -645,8 +640,7 @@ AdjustAdRevenue.prototype.addPartnerParameter = function(key, value) {
 
 // AdjustAppStorePurchase
 
-var AdjustAppStorePurchase = function(receipt, productId, transactionId) {
-    this.receipt = receipt;
+var AdjustAppStorePurchase = function(productId, transactionId) {
     this.productId = productId;
     this.transactionId = transactionId;
 };

@@ -55,14 +55,11 @@ declare module 'react-native-adjust' {
     uri: string
   }
 
-  interface AdjustConversionValue {
-    conversionValue: number
-  }
-
   interface AdjustSkadData {
-    fineValue: number
+    conversionValue: number
     coarseValue: string
     lockWindow: boolean
+    error: string
   }
 
   interface AdjustPurchaseVerificationInfo {
@@ -77,21 +74,21 @@ declare module 'react-native-adjust' {
     public setSdkPrefix(sdkPrefix: string): void
     public setLogLevel(level: LogLevel): void
     public setDeferredDeeplinkOpeningEnabled(isDeferredDeeplinkOpeningEnabled: boolean): void
-    public setSendInBackground(sendInBackground: boolean): void
-    public setCostDataInAttributionEnabled(isCostDataInAttributionEnabled: boolean): void
     public setDefaultTracker(defaultTracked: string): void
     public setExternalDeviceId(externalDeviceId: string): void
-    public setShouldReadDeviceInfoOnce(shouldReadDeviceInfoOnce: boolean): void
+    public readDeviceInfoOnce(): void
+    public enableCoppaCompliance(): void
+    public enableSendingInBackground(): void
+    public enableCostDataInAttribution(): void
     public setPreinstallTrackingEnabled(preinstallTrackingEnabled: boolean): void
     public setPreinstallFilePath(preinstallFilePath: string): void
     public setPlayStoreKidsAppEnabled(playStoreKidsAppEnabled: boolean): void
     public setFinalAndroidAttributionEnabled(finalAndroidAttributionEnabled: boolean): void
     public setFbAppId(fbAppId: string): void
-    public setAdServicesEnabled(isAdServicesEnabled: boolean): void
-    public setIdfaReadingAllowed(isIdfaReadingAllowed: boolean): void
-    public setSkanAttributionHandlingEnabled(isSkanAttributionHandlingEnabled: boolean): void
-    public setLinkMeEnabled(linkMeEnabled: boolean): void
-    public setAttConsentWaitingSeconds(attConsentWaitingSeconds: number): void
+    public disableAdServices(): void
+    public disableIdfaReading(): void
+    public disableSkanAttribution(): void
+    public attConsentWaitingInterval(attConsentWaitingInterval: number): void
 
     public setAttributionCallbackListener(
       callback: (attribution: AdjustAttribution) => void
@@ -117,8 +114,8 @@ declare module 'react-native-adjust' {
       callback: (uri: AdjustUri) => void
     ): void
 
-    public setSkadConversionValueUpdatedCallbackListener(
-      callback: (skad4Data: AdjustSkadData) => void
+    public setSkadConversionDataUpdatedCallbackListener(
+      callback: (skadData: AdjustSkadData) => void
     ): void
 
     static LogLevelVerbose: LogLevel
@@ -139,13 +136,12 @@ declare module 'react-native-adjust' {
     public addPartnerParameter(key: string, value: string): void
     public setTransactionId(transactionId: string): void
     public setCallbackId(callbackId: string): void
-    public setReceipt(receipt: string): void
     public setProductId(productId: string): void
-    public setPurchaseToken(purchaseToken: string): void
+    public setDeduplicationId(deduplicationId: string): void
   }
 
   export class AdjustAppStoreSubscription {
-    constructor(price: string, currency: string, transactionId: string, receipt: string)
+    constructor(price: string, currency: string, transactionId: string)
     public setTransactionDate(transactionDate: string): void
     public setSalesRegion(salesRegion: string): void
     public addCallbackParameter(key: string, value: string): void
@@ -183,7 +179,7 @@ declare module 'react-native-adjust' {
   }
 
   export class AdjustAppStorePurchase {
-    constructor(receipt: string, productId: string, transactionId: string)
+    constructor(productId: string, transactionId: string)
   }
 
   export class AdjustPlayStorePurchase {
@@ -196,8 +192,6 @@ declare module 'react-native-adjust' {
     trackEvent: (adjustEvent: AdjustEvent) => void
     enable: () => void
     disable: () => void
-    enableCoppaCompliance: () => void
-    disableCoppaCompliance: () => void
     isEnabled: (callback: (enabled: boolean) => void) => void
     switchToOfflineMode: () => void
     switchBackToOnlineMode: () => void
@@ -229,6 +223,7 @@ declare module 'react-native-adjust' {
     trackMeasurementConsent: (measurementConsent: boolean) => void
     getLastDeeplink: (callback: (lastDeeplink: string) => void) => void
     verifyAppStorePurchase: (purchase: AdjustAppStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
+    verifyAndTrackAppStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
     verifyPlayStorePurchase: (purchase: AdjustPlayStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
     processAndResolveDeeplink: (deeplink: string, callback: (resolvedLink: string) => void) => void
   }

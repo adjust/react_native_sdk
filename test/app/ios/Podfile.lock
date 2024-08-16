@@ -1,7 +1,9 @@
 PODS:
-  - Adjust (4.38.2):
-    - Adjust/Core (= 4.38.2)
-  - Adjust/Core (4.38.2)
+  - Adjust (5.0.0):
+    - Adjust/Adjust (= 5.0.0)
+  - Adjust/Adjust (5.0.0):
+    - AdjustSignature (~> 3.18)
+  - AdjustSignature (3.20.1)
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
@@ -287,10 +289,10 @@ PODS:
   - React-jsinspector (0.69.4)
   - React-logger (0.69.4):
     - glog
-  - react-native-adjust (4.38.1):
-    - Adjust (= 4.38.2)
+  - react-native-adjust (5.0.0):
+    - Adjust (= 5.0.0)
     - React-Core
-  - react-native-adjust-test (4.38.1):
+  - react-native-adjust-test (5.0.0):
     - React
   - React-perflogger (0.69.4)
   - React-RCTActionSheet (0.69.4):
@@ -426,6 +428,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Adjust
+    - AdjustSignature
     - CocoaAsyncSocket
     - Flipper
     - Flipper-Boost-iOSX
@@ -513,7 +516,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adjust: 5a0f813fe079212bed61404d1f635cc330068b4a
+  Adjust: a1421f630c529258d7e170a8a76647f9721f7fbd
+  AdjustSignature: cd0263e5672da024e8671888ea164c9c7496fe3b
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -546,8 +550,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: a27badbbdbc0ff781813370736a2d1c7261181d4
   React-jsinspector: 8a3d3f5dcd23a91e8c80b1bf0e96902cd1dca999
   React-logger: 1088859f145b8f6dd0d3ed051a647ef0e3e80fad
-  react-native-adjust: 83114d391a4a7a438e2c4d8e8137bc7810e7076f
-  react-native-adjust-test: 4fcd5e53a207b750c5c1909221dc0b7060f26508
+  react-native-adjust: 10a4f635c00e69a34105c2cbaa8d8b7558a187ce
+  react-native-adjust-test: 89393be526433fc275e03f1ccf32caed936b428f
   React-perflogger: cb386fd44c97ec7f8199c04c12b22066b0f2e1e0
   React-RCTActionSheet: f803a85e46cf5b4066c2ac5e122447f918e9c6e5
   React-RCTAnimation: 19c80fa950ccce7f4db76a2a7f2cf79baae07fc7
@@ -564,6 +568,6 @@ SPEC CHECKSUMS:
   Yoga: ff994563b2fd98c982ca58e8cd9db2cdaf4dda74
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 5e5b0b22c60b655e3ff6fdcc4431a1604bdd28ff
+PODFILE CHECKSUM: ab23208183eb13f3b416c1948d30191b9374a800
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2

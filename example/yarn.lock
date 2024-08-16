@@ -8173,8 +8173,8 @@ __metadata:
 
 "react-native-adjust@file:../temp::locator=adjustexample%40workspace%3A.":
   version: 5.0.0
-  resolution: "react-native-adjust@file:../temp#../temp::hash=eb2bb9&locator=adjustexample%40workspace%3A."
-  checksum: f62fcf772de641dac3df87822a7716e9aa94ee8a8e52c81556b7671157a5bfbca4fa109d34f22ff750ba4ae61881fb91f3b53450fcd3453d4ff34d0efae41d98
+  resolution: "react-native-adjust@file:../temp#../temp::hash=384c91&locator=adjustexample%40workspace%3A."
+  checksum: fc6d731ddf13038bda0a53c055fc2dcb392cb7eef4279482e185bc65ea1732ba2e849faaa61238eb5191903a9ff76f366df7550388de289d0b075c0029011ec6
   languageName: node
   linkType: hard
 

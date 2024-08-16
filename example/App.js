@@ -38,9 +38,9 @@ const App: () => React$Node = () => {
 
   const adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
   adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
-  // adjustConfig.setSkanAttributionHandlingEnabled(true);
-  // adjustConfig.setCostDataInAttributionEnabled(true);
-  // adjustConfig.setAttConsentWaitingSeconds(16);
+  // adjustConfig.disableSkanAttribution();
+  // adjustConfig.enableCoppaCompliance(true);
+  // adjustConfig.setAttConsentWaitingInterval(16);
   // adjustConfig.setFinalAndroidAttributionEnabled(true);
 
   adjustConfig.setAttributionCallbackListener(function(attribution) {
@@ -100,9 +100,9 @@ const App: () => React$Node = () => {
     console.log("URL: " + uri.uri);
   });
 
-  adjustConfig.setSkadConversionValueUpdatedCallbackListener(function(conversionValue) {
-    console.log("Conversion value updated callback recveived");
-    console.log("Conversion value: " + conversionValue.conversionValue);
+  adjustConfig.setSkadConversionDataUpdatedCallbackListener(function(conversionData) {
+    console.log("Conversion Data updated callback recveived");
+    console.log("Conversion Data: " + conversionData);
   });
 
   Adjust.addGlobalCallbackParameter("scpk1", "scpv1");

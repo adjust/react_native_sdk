@@ -1,6 +1,6 @@
 'use strict';
 
-import { 
+import {
     NativeEventEmitter,
     NativeModules,
     Platform,
@@ -151,7 +151,7 @@ Adjust.requestAppTrackingAuthorizationWithCompletionHandler = function(callback)
 };
 
 Adjust.updateSkanConversionValueWithErrorCallback = function(conversionValue, coarseValue, lockWindow, callback) {
-    module_adjust.updateSkanConversionValueWithErrorCallback(conversionValue, coarseValue, lockWindow, callback);
+    module_adjust.updateSkanConversionValue(conversionValue, coarseValue, lockWindow, callback);
 };
 
 Adjust.getAppTrackingAuthorizationStatus = function(callback) {
@@ -177,7 +177,7 @@ Adjust.verifyAppStorePurchase = function(purchase, callback) {
 };
 
 Adjust.verifyAndTrackAppStorePurchase = function(adjustEvent, callback) {
-     if (Platform.OS === "ios") {
+    if (Platform.OS === "ios") {
         module_adjust.verifyAndTrackAppStorePurchase(adjustEvent, callback);
     }
 };
@@ -325,7 +325,7 @@ AdjustConfig.prototype.enableSendingInBackground = function() {
     this.sendInBackground = true;
 };
 
-AdjustConfig.prototype.setDefaultTracker= function(defaultTracker) {
+AdjustConfig.prototype.setDefaultTracker = function(defaultTracker) {
     this.defaultTracker = defaultTracker;
 };
 

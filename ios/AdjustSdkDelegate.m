@@ -8,7 +8,6 @@
 
 #import <objc/runtime.h>
 #import "AdjustSdkDelegate.h"
-#import <AdjustSdk/AdjustSdk.h>
 
 #if __has_include(<React/RCTAssert.h>)
 #import <React/RCTEventDispatcher.h>

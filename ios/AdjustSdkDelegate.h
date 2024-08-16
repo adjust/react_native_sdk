@@ -6,10 +6,10 @@
 //  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
-#import <AdjustSdk/Adjust.h>
+#import <AdjustSdk/AdjustSdk.h>
 #import "AdjustEventEmitter.h"
 
-@interface AdjustSdkDelegate : NSObject
+@interface AdjustSdkDelegate : NSObject<AdjustDelegate>
 
 @property (nonatomic) BOOL shouldLaunchDeferredDeeplink;
 

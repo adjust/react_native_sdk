@@ -83,7 +83,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
 
     NSMutableArray *urlStrategyDomainsArray;
     // URL strategy
-    if (urlStrategyDomains != nil && [urlStrategyDomains count] > 0) {
+    if ([self isFieldValid:urlStrategyDomains] && [urlStrategyDomains count] > 0) {
         urlStrategyDomainsArray = [[NSMutableArray alloc] initWithCapacity:[urlStrategyDomains count]];
         for (int i = 0; i < [urlStrategyDomains count]; i += 1) {
             NSString *domain = [[urlStrategyDomains objectAtIndex:i] description];

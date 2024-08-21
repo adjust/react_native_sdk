@@ -324,7 +324,7 @@ AdjustConfig.prototype.setLogLevel = function(logLevel) {
     this.logLevel = logLevel;
 };
 
-AdjustConfig.prototype.allowSuppressLogLevel = function() {
+AdjustConfig.prototype.setAllowSuppressLogLevel = function() {
     this.allowSuppressLogLevel = true;
 };
 
@@ -394,6 +394,10 @@ AdjustConfig.prototype.enableLinkMe = function() {
 
 AdjustConfig.prototype.setAttConsentWaitingInterval = function(attConsentWaitingInterval) {
     this.attConsentWaitingInterval = attConsentWaitingInterval;
+};
+
+AdjustConfig.prototype.setEventDeduplicationIdsMaxSize = function(eventDeduplicationIdsMaxSize) {
+    this.eventDeduplicationIdsMaxSize = eventDeduplicationIdsMaxSize;
 };
 
 AdjustConfig.prototype.setUrlStrategy = function(urlStrategyDomains, useSubdomains, isDataResidency) {

@@ -33,19 +33,19 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSString *externalDeviceId = [dict objectForKey:@"externalDeviceId"];
     NSString *logLevel = [dict objectForKey:@"logLevel"];
     NSNumber *sendInBackground = [dict objectForKey:@"sendInBackground"];
-    NSNumber *isLinkMeEnabled = [dict objectForKey:@"linkMeEnabled"];
+    NSNumber *isLinkMeEnabled = [dict objectForKey:@"isLinkMeEnabled"];
     NSNumber *isCostDataInAttributionEnabled = [dict objectForKey:@"isCostDataInAttributionEnabled"];
     NSNumber *isAdServicesEnabled = [dict objectForKey:@"isAdServicesEnabled"];
     NSNumber *isIdfaReadingAllowed = [dict objectForKey:@"isIdfaReadingAllowed"];
     NSNumber *isSkanAttributionHandlingEnabled = [dict objectForKey:@"isSkanAttributionHandlingEnabled"];
     NSNumber *isDeferredDeeplinkOpeningEnabled = [dict objectForKey:@"isDeferredDeeplinkOpeningEnabled"];
-    NSNumber *shouldReadDeviceInfoOnce = [dict objectForKey:@"shouldReadDeviceInfoOnce"];
+    NSNumber *isDeviceIdsReadingOnceEnabled = [dict objectForKey:@"isDeviceIdsReadingOnceEnabled"];
     NSNumber *attConsentWaitingInterval = [dict objectForKey:@"attConsentWaitingInterval"];
     NSNumber *eventDeduplicationIdsMaxSize = [dict objectForKey:@"eventDeduplicationIdsMaxSize"];
+    NSNumber *isCoppaComplianceEnabled = [dict objectForKey:@"isCoppaComplianceEnabled"];
     id urlStrategyDomains = [dict objectForKey:@"urlStrategyDomains"];
     NSNumber *useSubdomains = [dict objectForKey:@"useSubdomains"];
     NSNumber *isDataResidency = [dict objectForKey:@"isDataResidency"];
-    NSNumber *isCoppaComplianceEnabled = [dict objectForKey:@"isCoppaComplianceEnabled"];
 
     ADJConfig *adjustConfig;
     if ([self isFieldValid:allowSuppressLogLevel]) {
@@ -144,8 +144,8 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     }
 
     // Read device info just once
-    if ([self isFieldValid:shouldReadDeviceInfoOnce]) {
-        if ([shouldReadDeviceInfoOnce boolValue] == YES) {
+    if ([self isFieldValid:isDeviceIdsReadingOnceEnabled]) {
+        if ([isDeviceIdsReadingOnceEnabled boolValue] == YES) {
             [adjustConfig enableDeviceIdsReadingOnce];
         }
     }

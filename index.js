@@ -272,8 +272,13 @@ var AdjustConfig = function(appToken, environment) {
     this.isCostDataInAttributionEnabled = null;
     this.defaultTracker = null;
     this.externalDeviceId = null;
-    this.shouldReadDeviceInfoOnce = null;
+    this.isDeviceIdsReadingOnceEnabled = null;
     this.isCoppaComplianceEnabled = null;
+    this.allowSuppressLogLevel = null;
+    this.eventDeduplicationIdsMaxSize = null;
+    this.isDataResidency = null;
+    this.urlStrategyDomains = null;
+    this.useSubdomains = null;
 
     // Android only
     this.processName = null;
@@ -283,11 +288,13 @@ var AdjustConfig = function(appToken, environment) {
     this.playStoreKidsAppEnabled = null;
     this.finalAndroidAttributionEnabled = null;
     this.fbAppId;
+
     // iOS only
     this.isAdServicesEnabled = null;
     this.isIdfaReadingAllowed = null;
     this.isSkanAttributionHandlingEnabled = null;
     this.attConsentWaitingInterval = null;
+    this.isLinkMeEnabled = null;
 };
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
@@ -317,6 +324,10 @@ AdjustConfig.prototype.setLogLevel = function(logLevel) {
     this.logLevel = logLevel;
 };
 
+AdjustConfig.prototype.allowSuppressLogLevel = function() {
+    this.allowSuppressLogLevel = true;
+};
+
 AdjustConfig.prototype.setDeferredDeeplinkOpeningEnabled = function(isDeferredDeeplinkOpeningEnabled) {
     this.isDeferredDeeplinkOpeningEnabled = isDeferredDeeplinkOpeningEnabled;
 };
@@ -333,8 +344,8 @@ AdjustConfig.prototype.setExternalDeviceId = function(externalDeviceId) {
     this.externalDeviceId = externalDeviceId;
 };
 
-AdjustConfig.prototype.readDeviceInfoOnce = function() {
-    this.shouldReadDeviceInfoOnce = true;
+AdjustConfig.prototype.enableDeviceIdsReadingOnce = function() {
+    this.isDeviceIdsReadingOnceEnabled = true;
 };
 
 AdjustConfig.prototype.enableCoppaCompliance = function() {
@@ -377,8 +388,18 @@ AdjustConfig.prototype.disableSkanAttribution = function() {
     this.isSkanAttributionHandlingEnabled = false;
 };
 
+AdjustConfig.prototype.enableLinkMe = function() {
+    this.isLinkMeEnabled = true;
+};
+
 AdjustConfig.prototype.setAttConsentWaitingInterval = function(attConsentWaitingInterval) {
     this.attConsentWaitingInterval = attConsentWaitingInterval;
+};
+
+AdjustConfig.prototype.setUrlStrategy = function(urlStrategyDomains, useSubdomains, isDataResidency) {
+    this.urlStrategyDomains = urlStrategyDomains;
+    this.useSubdomains = useSubdomains;
+    this.isDataResidency = isDataResidency;
 };
 
 AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {

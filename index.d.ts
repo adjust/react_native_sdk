@@ -73,13 +73,15 @@ declare module 'react-native-adjust' {
 
     public setSdkPrefix(sdkPrefix: string): void
     public setLogLevel(level: LogLevel): void
+    public setAllowSuppressLogLevel(): void
     public setDeferredDeeplinkOpeningEnabled(isDeferredDeeplinkOpeningEnabled: boolean): void
     public setDefaultTracker(defaultTracked: string): void
     public setExternalDeviceId(externalDeviceId: string): void
-    public readDeviceInfoOnce(): void
+    public enableDeviceIdsReadingOnce(): void
     public enableCoppaCompliance(): void
     public enableSendingInBackground(): void
     public enableCostDataInAttribution(): void
+    public enableLinkMe(): void
     public setPreinstallTrackingEnabled(preinstallTrackingEnabled: boolean): void
     public setPreinstallFilePath(preinstallFilePath: string): void
     public setPlayStoreKidsAppEnabled(playStoreKidsAppEnabled: boolean): void
@@ -88,7 +90,9 @@ declare module 'react-native-adjust' {
     public disableAdServices(): void
     public disableIdfaReading(): void
     public disableSkanAttribution(): void
+    public setEventDeduplicationIdsMaxSize(eventDeduplicationIdsMaxSize: number): void
     public attConsentWaitingInterval(attConsentWaitingInterval: number): void
+    public setUrlStrategy(urlStrategyDomains: any, useSubdomains: boolean, isDataResidency: boolean): void
 
     public setAttributionCallbackListener(
       callback: (attribution: AdjustAttribution) => void

@@ -403,7 +403,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
 
     if ('skanCallback' in params) {
         var _this = this;
-        adjustConfig.setSkadConversionDataUpdatedCallbackListener(function(data) {
+        adjustConfig.setSkanUpdatedCallbackListener(function(data) {
             var jsonObject = JSON.parse(JSON.stringify(data));
             for (let [key, value] of Object.entries(jsonObject)) {
                 AdjustSdkTest.addInfoToSend(key, value);

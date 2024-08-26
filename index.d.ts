@@ -73,19 +73,17 @@ declare module 'react-native-adjust' {
 
     public setSdkPrefix(sdkPrefix: string): void
     public setLogLevel(level: LogLevel): void
-    public setAllowSuppressLogLevel(): void
-    public setDeferredDeeplinkOpeningEnabled(isDeferredDeeplinkOpeningEnabled: boolean): void
+    public disableDeferredDeeplinkOpening(): void
     public setDefaultTracker(defaultTracked: string): void
     public setExternalDeviceId(externalDeviceId: string): void
     public enableDeviceIdsReadingOnce(): void
     public enableCoppaCompliance(): void
     public enableSendingInBackground(): void
     public enableCostDataInAttribution(): void
+    public enablePlayStoreKidsCompliance(): void
     public enableLinkMe(): void
     public setPreinstallTrackingEnabled(preinstallTrackingEnabled: boolean): void
     public setPreinstallFilePath(preinstallFilePath: string): void
-    public setPlayStoreKidsAppEnabled(playStoreKidsAppEnabled: boolean): void
-    public setFinalAndroidAttributionEnabled(finalAndroidAttributionEnabled: boolean): void
     public setFbAppId(fbAppId: string): void
     public disableAdServices(): void
     public disableIdfaReading(): void
@@ -118,7 +116,7 @@ declare module 'react-native-adjust' {
       callback: (uri: AdjustUri) => void
     ): void
 
-    public setSkadConversionDataUpdatedCallbackListener(
+    public setSkanUpdatedCallbackListener(
       callback: (skadData: AdjustSkadData) => void
     ): void
 
@@ -218,10 +216,8 @@ declare module 'react-native-adjust' {
     getAttribution: (callback: (attribution: AdjustAttribution) => void) => void
     getAmazonAdId: (callback: (adid: string) => void) => void
     getSdkVersion: (callback: (sdkVersion: string) => void) => void
-    setReferrer: (referrer: string) => void
-    convertUniversalLink: (url: string, scheme: string, callback: (convertedUrl: string) => void) => void
-    requestAppTrackingAuthorizationWithCompletionHandler: (handler: (status: number) => void) => void
-    updateSkanConversionValueWithErrorCallback: (conversionValue: number, coarseValue: string, lockWindow: boolean, callback: (error: string) => void) => void
+    requestAppTrackingAuthorization: (handler: (status: number) => void) => void
+    updateSkanConversionValue: (conversionValue: number, coarseValue: string, lockWindow: boolean, callback: (error: string) => void) => void
     getAppTrackingAuthorizationStatus: (callback: (authorizationStatus: number) => void) => void
     trackThirdPartySharing: (adjustThirdPartySharing: AdjustThirdPartySharing) => void
     trackMeasurementConsent: (measurementConsent: boolean) => void

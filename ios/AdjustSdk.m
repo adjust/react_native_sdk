@@ -20,24 +20,23 @@ BOOL _isEventTrackingFailedCallbackImplemented;
 BOOL _isSessionTrackingSucceededCallbackImplemented;
 BOOL _isSessionTrackingFailedCallbackImplemented;
 BOOL _isDeferredDeeplinkCallbackImplemented;
-BOOL _isSkadConversionDataUpdatedCallbackImplemented;
+BOOL _isSkanUpdatedCallbackImplemented;
 
 #pragma mark - Public methods
 
 RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSString *appToken = [dict objectForKey:@"appToken"];
     NSString *environment = [dict objectForKey:@"environment"];
-    NSString *isLogLevelSuppress = [dict objectForKey:@"isLogLevelSuppress"];
     NSString *sdkPrefix = [dict objectForKey:@"sdkPrefix"];
     NSString *defaultTracker = [dict objectForKey:@"defaultTracker"];
     NSString *externalDeviceId = [dict objectForKey:@"externalDeviceId"];
     NSString *logLevel = [dict objectForKey:@"logLevel"];
-    NSNumber *sendInBackground = [dict objectForKey:@"sendInBackground"];
+    NSNumber *isSendingInBackgroundEnabled = [dict objectForKey:@"isSendingInBackgroundEnabled"];
     NSNumber *isLinkMeEnabled = [dict objectForKey:@"isLinkMeEnabled"];
     NSNumber *isCostDataInAttributionEnabled = [dict objectForKey:@"isCostDataInAttributionEnabled"];
     NSNumber *isAdServicesEnabled = [dict objectForKey:@"isAdServicesEnabled"];
     NSNumber *isIdfaReadingAllowed = [dict objectForKey:@"isIdfaReadingAllowed"];
-    NSNumber *isSkanAttributionHandlingEnabled = [dict objectForKey:@"isSkanAttributionHandlingEnabled"];
+    NSNumber *isSkanAttributionEnabled = [dict objectForKey:@"isSkanAttributionEnabled"];
     NSNumber *isDeferredDeeplinkOpeningEnabled = [dict objectForKey:@"isDeferredDeeplinkOpeningEnabled"];
     NSNumber *isDeviceIdsReadingOnceEnabled = [dict objectForKey:@"isDeviceIdsReadingOnceEnabled"];
     NSNumber *attConsentWaitingInterval = [dict objectForKey:@"attConsentWaitingInterval"];
@@ -46,16 +45,18 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     id urlStrategyDomains = [dict objectForKey:@"urlStrategyDomains"];
     NSNumber *useSubdomains = [dict objectForKey:@"useSubdomains"];
     NSNumber *isDataResidency = [dict objectForKey:@"isDataResidency"];
+    BOOL isLogLevelSuppress = NO;
 
-    ADJConfig *adjustConfig;
-    if ([self isFieldValid:isLogLevelSuppress]) {
-        adjustConfig = [[ADJConfig alloc] initWithAppToken:appToken
-                                               environment:environment
-                                          suppressLogLevel:[isLogLevelSuppress boolValue]];
-    } else {
-        adjustConfig = [[ADJConfig alloc] initWithAppToken:appToken
-                                               environment:environment];
+    // Suppress log level
+    if ([self isFieldValid:logLevel]) {
+        if ([logLevel isEqualToString:@"SUPPRESS"]) {
+            isLogLevelSuppress = YES;
+        }
     }
+
+    ADJConfig *adjustConfig = [[ADJConfig alloc] initWithAppToken:appToken
+                                                      environment:environment
+                                                      suppressLogLevel:isLogLevelSuppress];
 
     if (![adjustConfig isValid]) {
         return;
@@ -97,8 +98,8 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     }
 
     // Send in background
-    if ([self isFieldValid:sendInBackground]) {
-        if ([sendInBackground boolValue] == YES) {
+    if ([self isFieldValid:isSendingInBackgroundEnabled]) {
+        if ([isSendingInBackgroundEnabled boolValue] == YES) {
             [adjustConfig enableSendingInBackground];
         }
     }
@@ -125,8 +126,8 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     }
 
     // SKAdNetwork handling
-    if ([self isFieldValid:isSkanAttributionHandlingEnabled]) {
-        if ([isSkanAttributionHandlingEnabled boolValue] == NO) {
+    if ([self isFieldValid:isSkanAttributionEnabled]) {
+        if ([isSkanAttributionEnabled boolValue] == NO) {
             [adjustConfig disableSkanAttribution];
         }
     }
@@ -170,7 +171,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         || _isSessionTrackingSucceededCallbackImplemented
         || _isSessionTrackingFailedCallbackImplemented
         || _isDeferredDeeplinkCallbackImplemented
-        || _isSkadConversionDataUpdatedCallbackImplemented) {
+        || _isSkanUpdatedCallbackImplemented) {
         [adjustConfig setDelegate:
          [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
                                                  eventSucceededCallback:_isEventTrackingSucceededCallbackImplemented
@@ -178,7 +179,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
                                                sessionSucceededCallback:_isSessionTrackingSucceededCallbackImplemented
                                                   sessionFailedCallback:_isSessionTrackingFailedCallbackImplemented
                                                deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
-                                      skadConversionDataUpdatedCallback:_isSkadConversionDataUpdatedCallbackImplemented
+                                      skanUpdatedCallback:_isSkanUpdatedCallbackImplemented
                                            shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
     }
 
@@ -456,7 +457,7 @@ RCT_EXPORT_METHOD(gdprForgetMe) {
     [Adjust gdprForgetMe];
 }
 
-RCT_EXPORT_METHOD(requestAppTrackingAuthorizationWithCompletionHandler:(RCTResponseSenderBlock)callback) {
+RCT_EXPORT_METHOD(requestAppTrackingAuthorization:(RCTResponseSenderBlock)callback) {
     [Adjust requestAppTrackingAuthorizationWithCompletionHandler:^(NSUInteger status) {
         callback(@[@(status)]);
     }];
@@ -556,17 +557,6 @@ RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
         [self addValueOrEmpty:dictionary key:@"costCurrency" value:attribution.costCurrency];
         callback(@[dictionary]);
     }];
-}
-
-RCT_EXPORT_METHOD(convertUniversalLink:(NSString *)urlString withScheme:(NSString *)scheme callback:(RCTResponseSenderBlock)callback) {
-    NSURL *url = [[NSURL alloc] initWithString:urlString];
-    NSURL *converted = [Adjust convertUniversalLink:url withScheme:scheme];
-
-    if (converted != nil && converted.absoluteString != nil && converted.absoluteString.length > 0) {
-        callback(@[converted.absoluteString]);
-    } else {
-        callback(nil);
-    }
 }
 
 RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
@@ -775,8 +765,8 @@ RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener) {
     _isDeferredDeeplinkCallbackImplemented = YES;
 }
 
-RCT_EXPORT_METHOD(setSkadConversionDataUpdatedCallbackListener) {
-    _isSkadConversionDataUpdatedCallbackImplemented = YES;
+RCT_EXPORT_METHOD(setSkanUpdatedCallbackListener) {
+    _isSkanUpdatedCallbackImplemented = YES;
 }
 
 RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
@@ -842,7 +832,7 @@ RCT_EXPORT_METHOD(teardown) {
     _isSessionTrackingSucceededCallbackImplemented = NO;
     _isSessionTrackingFailedCallbackImplemented = NO;
     _isDeferredDeeplinkCallbackImplemented = NO;
-    _isSkadConversionDataUpdatedCallbackImplemented = NO;
+    _isSkanUpdatedCallbackImplemented = NO;
     [AdjustSdkDelegate teardown];
 }
 

@@ -117,7 +117,7 @@
    // Adjust.removeGlobalCallbackParameters();
    // Adjust.removeGlobalPartnerParameters();
  
-   Adjust.requestAppTrackingAuthorizationWithCompletionHandler(function(status) {
+   Adjust.requestAppTrackingAuthorization(function(status) {
      console.log("Authorization status update");
      switch (status) {
        case 0:

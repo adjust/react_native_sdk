@@ -100,7 +100,7 @@
      console.log("URL: " + uri.uri);
    });
  
-   adjustConfig.setSkadConversionDataUpdatedCallbackListener(function(conversionData) {
+   adjustConfig.setSkanUpdatedCallbackListener(function(conversionData) {
      console.log("Conversion Data updated callback recveived");
      console.log("Conversion Data: " + conversionData);
    });

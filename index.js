@@ -274,7 +274,7 @@ var AdjustConfig = function(appToken, environment) {
     this.externalDeviceId = null;
     this.isDeviceIdsReadingOnceEnabled = null;
     this.isCoppaComplianceEnabled = null;
-    this.allowSuppressLogLevel = null;
+    this.isLogLevelSuppress = null;
     this.eventDeduplicationIdsMaxSize = null;
     this.isDataResidency = null;
     this.urlStrategyDomains = null;
@@ -322,10 +322,9 @@ AdjustConfig.prototype.setSdkPrefix = function(sdkPrefix) {
 
 AdjustConfig.prototype.setLogLevel = function(logLevel) {
     this.logLevel = logLevel;
-};
-
-AdjustConfig.prototype.setAllowSuppressLogLevel = function() {
-    this.allowSuppressLogLevel = true;
+    if (logLevel == "SUPPRESS") {
+        isLogLevelSuppress = true;
+    } 
 };
 
 AdjustConfig.prototype.setDeferredDeeplinkOpeningEnabled = function(isDeferredDeeplinkOpeningEnabled) {

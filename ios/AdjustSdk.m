@@ -27,7 +27,7 @@ BOOL _isSkadConversionDataUpdatedCallbackImplemented;
 RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSString *appToken = [dict objectForKey:@"appToken"];
     NSString *environment = [dict objectForKey:@"environment"];
-    NSString *allowSuppressLogLevel = [dict objectForKey:@"allowSuppressLogLevel"];
+    NSString *isLogLevelSuppress = [dict objectForKey:@"isLogLevelSuppress"];
     NSString *sdkPrefix = [dict objectForKey:@"sdkPrefix"];
     NSString *defaultTracker = [dict objectForKey:@"defaultTracker"];
     NSString *externalDeviceId = [dict objectForKey:@"externalDeviceId"];
@@ -48,10 +48,10 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSNumber *isDataResidency = [dict objectForKey:@"isDataResidency"];
 
     ADJConfig *adjustConfig;
-    if ([self isFieldValid:allowSuppressLogLevel]) {
+    if ([self isFieldValid:isLogLevelSuppress]) {
         adjustConfig = [[ADJConfig alloc] initWithAppToken:appToken
                                                environment:environment
-                                          suppressLogLevel:[allowSuppressLogLevel boolValue]];
+                                          suppressLogLevel:[isLogLevelSuppress boolValue]];
     } else {
         adjustConfig = [[ADJConfig alloc] initWithAppToken:appToken
                                                environment:environment];

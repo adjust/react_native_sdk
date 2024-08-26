@@ -36,6 +36,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSNumber *isCostDataInAttributionEnabled = [dict objectForKey:@"isCostDataInAttributionEnabled"];
     NSNumber *isAdServicesEnabled = [dict objectForKey:@"isAdServicesEnabled"];
     NSNumber *isIdfaReadingAllowed = [dict objectForKey:@"isIdfaReadingAllowed"];
+    NSNumber *isIdfvReadingAllowed = [dict objectForKey:@"isIdfvReadingAllowed"];
     NSNumber *isSkanAttributionEnabled = [dict objectForKey:@"isSkanAttributionEnabled"];
     NSNumber *isDeferredDeeplinkOpeningEnabled = [dict objectForKey:@"isDeferredDeeplinkOpeningEnabled"];
     NSNumber *isDeviceIdsReadingOnceEnabled = [dict objectForKey:@"isDeviceIdsReadingOnceEnabled"];
@@ -122,6 +123,13 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     if ([self isFieldValid:isIdfaReadingAllowed]) {
         if ([isIdfaReadingAllowed boolValue] == NO) {
             [adjustConfig disableIdfaReading];
+        }
+    }
+
+    // IDFV reading
+    if ([self isFieldValid:isIdfvReadingAllowed]) {
+        if ([isIdfvReadingAllowed boolValue] == NO) {
+            [adjustConfig disableIdfvReading];
         }
     }
 

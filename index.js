@@ -276,6 +276,7 @@ var AdjustConfig = function(appToken, environment) {
     // iOS only
     this.isAdServicesEnabled = null;
     this.isIdfaReadingAllowed = null;
+    this.isIdfvReadingAllowed = null;
     this.isSkanAttributionEnabled = null;
     this.attConsentWaitingInterval = null;
     this.isLinkMeEnabled = null;
@@ -336,7 +337,7 @@ AdjustConfig.prototype.enableCostDataInAttribution = function() {
     this.isCostDataInAttributionEnabled = true;
 };
 
-AdjustConfig.prototype.setPreinstallTrackingEnabled = function() {
+AdjustConfig.prototype.enablePreinstallTracking = function() {
     this.isPreinstallTrackingEnabled = true;
 };
 
@@ -358,6 +359,10 @@ AdjustConfig.prototype.disableAdServices = function() {
 
 AdjustConfig.prototype.disableIdfaReading = function() {
     this.isIdfaReadingAllowed = false;
+};
+
+AdjustConfig.prototype.disableIdfvReading = function() {
+    this.isIdfvReadingAllowed = false;
 };
 
 AdjustConfig.prototype.disableSkanAttribution = function() {

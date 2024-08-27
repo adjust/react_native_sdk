@@ -110,7 +110,6 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
         case 'resume': this.resume(command.params); break;
         case 'pause': this.pause(command.params); break;
         case 'setEnabled': this.setEnabled(command.params); break;
-        case 'setReferrer': this.setReferrer(command.params); break;
         case 'setOfflineMode': this.setOfflineMode(command.params); break;
         case 'addGlobalCallbackParameter': this.addGlobalCallbackParameter(command.params); break;
         case 'addGlobalPartnerParameter': this.addGlobalPartnerParameter(command.params); break;
@@ -395,7 +394,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
         var launchDeferredDeeplink = launchDeferredDeeplinkS === 'true';
         console.log(`[*] Launch deferred deeplink set to: ${launchDeferredDeeplink}`);
         adjustConfig.setShouldLaunchDeeplink(launchDeferredDeeplink);
-        adjustConfig.setDeferredDeeplinkReceivedCallbackListener(function(uri) {
+        adjustConfig.setDeferredDeeplinkCallbackListener(function(uri) {
             AdjustSdkTest.addInfoToSend('deeplink', uri);
             AdjustSdkTest.sendInfoToServer(_this.extraPath);
         });
@@ -434,13 +433,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
     if ('playStoreKids' in params) {
         var playStoreKidsEnabledS = getFirstParameterValue(params, 'playStoreKids');
         var playStoreKidsEnabled = playStoreKidsEnabledS == 'true';
-        adjustConfig.setPlayStoreKidsAppEnabled(playStoreKidsEnabled);
-    }
-
-    if ('finalAttributionEnabled' in params) {
-        var finalAttributionEnabledS = getFirstParameterValue(params, 'finalAttributionEnabled');
-        var finalAttributionEnabled = finalAttributionEnabledS == 'true';
-        adjustConfig.setFinalAndroidAttributionEnabled(finalAttributionEnabled);
+        adjustConfig.enablePlayStoreKidsCompliance();
     }
 };
 
@@ -864,18 +857,33 @@ AdjustCommandExecutor.prototype.verifyTrack = function(params) {
     var _this = this;
     this.event(params);
     var eventNumber = 0;
-    if ('eventName' in params) {
-        var eventName = getFirstParameterValue(params, 'eventName');
-        eventNumber = parseInt(eventName.substr(eventName.length - 1))
-    }
-    var adjustEvent = this.savedEvents[eventNumber];
-    Adjust.verifyAndTrackAppStorePurchase(adjustEvent, function(verificationResult) {
-        AdjustSdkTest.addInfoToSend('verification_status', verificationResult.verificationStatus);
-        AdjustSdkTest.addInfoToSend('code', verificationResult.code);
-        AdjustSdkTest.addInfoToSend('message', verificationResult.message);
-        AdjustSdkTest.sendInfoToServer(_this.extraPath);
-    });
+    if (Platform.OS === 'ios') {
+        if ('eventName' in params) {
+            var eventName = getFirstParameterValue(params, 'eventName');
+            eventNumber = parseInt(eventName.substr(eventName.length - 1))
+        }
+        var adjustEvent = this.savedEvents[eventNumber];
+        Adjust.verifyAndTrackAppStorePurchase(adjustEvent, function(verificationResult) {
+            AdjustSdkTest.addInfoToSend('verification_status', verificationResult.verificationStatus);
+            AdjustSdkTest.addInfoToSend('code', verificationResult.code);
+            AdjustSdkTest.addInfoToSend('message', verificationResult.message);
+            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+        });
 
+    } else if (Platform.OS === 'android') {
+        if ('eventName' in params) {
+            var eventName = getFirstParameterValue(params, 'eventName');
+            eventNumber = parseInt(eventName.substr(eventName.length - 1))
+        }
+        var adjustEvent = this.savedEvents[eventNumber];
+        Adjust.verifyAndTrackPlayStorePurchase(adjustEvent, function(verificationResult) {
+            AdjustSdkTest.addInfoToSend('verification_status', verificationResult.verificationStatus);
+            AdjustSdkTest.addInfoToSend('code', verificationResult.code);
+            AdjustSdkTest.addInfoToSend('message', verificationResult.message);
+            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+        });
+    }
+   
     delete this.savedEvents[0];
 };
 

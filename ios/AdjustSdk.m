@@ -475,12 +475,15 @@ RCT_EXPORT_METHOD(updateSkanConversionValue:(NSNumber * _Nonnull)conversionValue
                   coarseValue:(NSString * _Nonnull)coarseValue
                   lockWindow:(NSNumber * _Nonnull)lockWindow
                   errorCallback:(RCTResponseSenderBlock)callback) {
-
     [Adjust updateSkanConversionValue:[conversionValue intValue]
                           coarseValue:coarseValue
                            lockWindow:lockWindow
                 withCompletionHandler:^(NSError * _Nullable error) {
-        callback(@[[error localizedDescription]]);
+        if (nil == error) {
+            callback(@[@""]);
+        } else {
+            callback(@[[error localizedDescription]]);
+        }
     }];
 }
 

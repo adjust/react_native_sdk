@@ -21,7 +21,7 @@ import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
 import com.adjust.sdk.*;
 
-public class Adjust extends ReactContextBaseJavaModule implements LifecycleEventListener,
+public class Adjust extends ReactContextBaseJavaModule implements
                 OnAttributionChangedListener,
                 OnEventTrackingSucceededListener,
                 OnEventTrackingFailedListener,
@@ -45,24 +45,6 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     public String getName() {
         return "Adjust";
     }
-
-    @Override
-    public void initialize() {
-        getReactApplicationContext().addLifecycleEventListener(this);
-    }
-
-    @Override
-    public void onHostPause() {
-        com.adjust.sdk.Adjust.onPause();
-    }
-
-    @Override
-    public void onHostResume() {
-        com.adjust.sdk.Adjust.onResume();
-    }
-
-    @Override
-    public void onHostDestroy() {}
 
     @Override
     public void onAttributionChanged(AdjustAttribution attribution) {
@@ -949,6 +931,16 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         }
 
         com.adjust.sdk.Adjust.setTestOptions(testOptions);
+    }
+
+    @ReactMethod
+    public void onResume() {
+        com.adjust.sdk.Adjust.onResume();
+    }
+
+    @ReactMethod
+    public void onPause() {
+        com.adjust.sdk.Adjust.onPause();
     }
 
     private void sendEvent(final ReactContext reactContext, final String eventName, final @Nullable WritableMap params) {

@@ -195,9 +195,9 @@ static AdjustSdkDelegate *defaultInstance = nil;
 
 - (void)adjustSkanUpdatedWithConversionDataWannabe:(nonnull NSDictionary<NSString *, NSString *> *)data {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-    [self addValueOrEmpty:dictionary key:@"conversion_value" value:data[@"conversion_value"]];
-    [self addValueOrEmpty:dictionary key:@"coarse_value" value:data[@"coarse_value"]];
-    [self addValueOrEmpty:dictionary key:@"lock_window" value:data[@"lock_window"]];
+    [self addValueOrEmpty:dictionary key:@"conversionValue" value:data[@"conversion_value"]];
+    [self addValueOrEmpty:dictionary key:@"coarseValue" value:data[@"coarse_value"]];
+    [self addValueOrEmpty:dictionary key:@"lockWindow" value:data[@"lock_window"]];
     [self addValueOrEmpty:dictionary key:@"error" value:data[@"error"]];
     [AdjustEventEmitter dispatchEvent:@"adjust_skadConversionDataUpdated" withDictionary:dictionary];
 }

@@ -1,5 +1,5 @@
 {
-  "name": "AdjustTest",
+  "name": "com.adjust.examples",
   "version": "0.0.1",
   "private": true,
   "scripts": {

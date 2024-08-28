@@ -13,4 +13,5 @@ export function AdjustTestOptions() {
     this.teardown = null;
     this.extraPath = null;
     this.deleteState = false;
+    this.ignoreSystemLifecycleBootstrap = null;
 };

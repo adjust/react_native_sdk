@@ -26,7 +26,6 @@ final class AdjustUtil {
     private static final String ATTRIBUTION_ADGROUP = "adgroup";
     private static final String ATTRIBUTION_CREATIVE = "creative";
     private static final String ATTRIBUTION_CLICK_LABEL = "clickLabel";
-    private static final String ATTRIBUTION_ADID = "adid";
     private static final String ATTRIBUTION_COST_TYPE = "costType";
     private static final String ATTRIBUTION_COST_AMOUNT = "costAmount";
     private static final String ATTRIBUTION_COST_CURRENCY = "costCurrency";

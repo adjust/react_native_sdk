@@ -190,11 +190,18 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
     if ('idfa' in params) {
         testOptions.idfa = getFirstParameterValue(params, 'idfa').toString();
     }
+    if ('doNotIgnoreSystemLifecycleBootstrap' in params) {
+        var doNotIgnoreSystemLifecycleBootstrap = getFirstParameterValue(params, 'doNotIgnoreSystemLifecycleBootstrap').toString() === 'true';
+        if (doNotIgnoreSystemLifecycleBootstrap) {
+            testOptions.ignoreSystemLifecycleBootstrap = false;
+        }
+    }
     var useTestConnectionOptions = false;
     if ('teardown' in params) {
         var teardownOptions = getValueFromKey(params, 'teardown');
         for (var i = 0; i < teardownOptions.length; i++) {
             var option = teardownOptions[i];
+
             if ('resetSdk' === option) {
                 testOptions.teardown = true;
                 testOptions.extraPath = this.extraPath;
@@ -206,9 +213,11 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
                 useTestConnectionOptions = true;
                 Adjust.teardown('test');
             }
+
             if ('deleteState' === option) {
                 testOptions.deleteState = true;
             }
+
             if ('resetTest' === option) {
                 this.savedEvents = {};
                 this.savedConfigs = {};
@@ -225,7 +234,6 @@ AdjustCommandExecutor.prototype.testOptions = function(params) {
                 testOptions.subscriptionPath = null;
                 testOptions.purchaseVerificationPath = null;
                 testOptions.useTestConnectionOptions = false;
-                useTestConnectionOptions = false;
                 Adjust.teardown('test');
             }
             if ('test' === option) {
@@ -351,11 +359,10 @@ AdjustCommandExecutor.prototype.config = function(params) {
             AdjustSdkTest.addInfoToSend('adgroup', attribution.adgroup);
             AdjustSdkTest.addInfoToSend('creative', attribution.creative);
             AdjustSdkTest.addInfoToSend('click_label', attribution.clickLabel);
-            AdjustSdkTest.addInfoToSend('adid', attribution.adid);
             AdjustSdkTest.addInfoToSend('cost_type', attribution.costType);
             AdjustSdkTest.addInfoToSend('cost_amount', attribution.costAmount.toString());
             AdjustSdkTest.addInfoToSend('cost_currency', attribution.costCurrency);
-            AdjustSdkTest.addInfoToSend('fbInstallReferrer', attribution.fbInstallReferrer);
+            AdjustSdkTest.addInfoToSend('fb_install_referrer', attribution.fbInstallReferrer);
             AdjustSdkTest.sendInfoToServer(_this.extraPath);
         });
     }
@@ -737,6 +744,7 @@ AdjustCommandExecutor.prototype.trackAppStoreSubscription = function(params) {
         var price = getFirstParameterValue(params, 'revenue');
         var currency = getFirstParameterValue(params, 'currency');
         var sku = getFirstParameterValue(params, 'productId');
+        var signature = getFirstParameterValue(params, 'receipt');
         var purchaseToken = getFirstParameterValue(params, 'purchaseToken');
         var orderId = getFirstParameterValue(params, 'transactionId');
         var purchaseTime = getFirstParameterValue(params, 'transactionDate');
@@ -938,9 +946,9 @@ AdjustCommandExecutor.prototype.attributionGetter = function(params) {
         AdjustSdkTest.addInfoToSend('creative', attribution.creative);
         AdjustSdkTest.addInfoToSend('click_label', attribution.clickLabel);
         AdjustSdkTest.addInfoToSend('cost_type', attribution.costType);
-        AdjustSdkTest.addInfoToSend('cost_amount', attribution.costAmount);
+        AdjustSdkTest.addInfoToSend('cost_amount', attribution.costAmount.toString());
         AdjustSdkTest.addInfoToSend('cost_currency', attribution.costCurrency);
-        AdjustSdkTest.addInfoToSend('fbInstallReferrer', attribution.fbInstallReferrer);
+        AdjustSdkTest.addInfoToSend('fb_install_referrer', attribution.fbInstallReferrer);
         AdjustSdkTest.sendInfoToServer(_this.extraPath);
     });
 };

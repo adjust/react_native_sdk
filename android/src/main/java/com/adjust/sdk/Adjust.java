@@ -307,7 +307,12 @@ public class Adjust extends ReactContextBaseJavaModule implements
             try {
                 revenue = Double.parseDouble(mapEvent.getString("revenue"));
             } catch (NumberFormatException ignore) {}
-            currency = mapEvent.getString("currency");
+            // temporary patch, needs to be made more generic
+            // undefined from JS potentially ending as "null" value?
+            // TODO: if needed, add more generic check
+            if (mapEvent.getString("currency") != null && !mapEvent.getString("currency").equals("null")) {
+                currency = mapEvent.getString("currency");
+            }
             event.setRevenue(revenue, currency);
         }
 
@@ -800,6 +805,127 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
+    public void verifyAndTrackPlayStorePurchase(final ReadableMap mapEvent, final Callback callback) {
+        if (mapEvent == null) {
+            return;
+        }
+
+        double revenue = -1.0;
+        String eventToken = null;
+        String currency = null;
+        String transactionId = null;
+        String productId = null;
+        String purchaseToken = null;
+        String callbackId = null;
+        String deduplicationId = null;
+
+        Map<String, Object> callbackParameters = null;
+        Map<String, Object> partnerParameters = null;
+
+        // Event token
+        if (checkKey(mapEvent, "eventToken")) {
+            eventToken = mapEvent.getString("eventToken");
+        }
+
+        final AdjustEvent event = new AdjustEvent(eventToken);
+        if (!event.isValid()) {
+            return;
+        }
+
+        // Revenue
+        if (checkKey(mapEvent, "revenue") || checkKey(mapEvent, "currency")) {
+            try {
+                revenue = Double.parseDouble(mapEvent.getString("revenue"));
+            } catch (NumberFormatException ignore) {}
+            // temporary patch, needs to be made more generic
+            // undefined from JS potentially ending as "null" value?
+            // TODO: if needed, add more generic check
+            if (mapEvent.getString("currency") != null && !mapEvent.getString("currency").equals("null")) {
+                currency = mapEvent.getString("currency");
+            }
+            event.setRevenue(revenue, currency);
+        }
+
+        // Callback parameters
+        if (checkKey(mapEvent, "callbackParameters")) {
+            callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
+            if (null != callbackParameters) {
+                for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
+                    event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
+                }
+            }
+        }
+
+        // Partner parameters
+        if (checkKey(mapEvent, "partnerParameters")) {
+            partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
+            if (null != partnerParameters) {
+                for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
+                    event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+                }
+            }
+        }
+
+        // Revenue deduplication
+        if (checkKey(mapEvent, "transactionId")) {
+            transactionId = mapEvent.getString("transactionId");
+            if (null != transactionId) {
+                event.setOrderId(transactionId);
+            }
+        }
+
+        // Callback ID
+        if (checkKey(mapEvent, "callbackId")) {
+            callbackId = mapEvent.getString("callbackId");
+            if (null != callbackId) {
+                event.setCallbackId(callbackId);
+            }
+        }
+
+        // Product ID
+        if (checkKey(mapEvent, "productId")) {
+            productId = mapEvent.getString("productId");
+            if (null != productId) {
+                event.setProductId(productId);
+            }
+        }
+
+        // Purchase token
+        if (checkKey(mapEvent, "purchaseToken")) {
+            purchaseToken = mapEvent.getString("purchaseToken");
+            if (null != purchaseToken) {
+                event.setPurchaseToken(purchaseToken);
+            }
+        }
+
+         // Deduplication ID
+        if (checkKey(mapEvent, "deduplicationId")) {
+            deduplicationId = mapEvent.getString("deduplicationId");
+            if (null != deduplicationId) {
+                event.setDeduplicationId(deduplicationId);
+            }
+        }
+
+        // Verify and track purrchase
+        com.adjust.sdk.Adjust.verifyAndTrackPlayStorePurchase(event, new OnPurchaseVerificationFinishedListener() {
+            @Override
+            public void onVerificationFinished(AdjustPurchaseVerificationResult verificationResult) {
+                if (callback != null) {
+                    WritableMap map = Arguments.createMap();
+                    if (null == verificationResult) {
+                        callback.invoke(map);
+                        return;
+                    }
+                    map.putString("verificationStatus", null != verificationResult.getVerificationStatus() ? verificationResult.getVerificationStatus() : "");
+                    map.putString("code", String.valueOf(verificationResult.getCode()));
+                    map.putString("message", null != verificationResult.getMessage() ? verificationResult.getMessage() : "");
+                    callback.invoke(map);
+                }
+            }
+        });
+    }
+
+    @ReactMethod
     public void processAndResolveDeeplink(final String strUri, final Callback callback) {
         final Uri uri = Uri.parse(strUri);
         // Process and resolve deeplink
@@ -944,7 +1070,10 @@ public class Adjust extends ReactContextBaseJavaModule implements
             testOptions.teardown = value;
         }
         if (checkKey(mapTest, "deleteState")) {
-            testOptions.context = getReactApplicationContext();
+            boolean value = mapTest.getBoolean("deleteState");
+            if (value == true) {
+                testOptions.context = getReactApplicationContext();
+            }
         }
         if (checkKey(mapTest, "ignoreSystemLifecycleBootstrap")) {
             boolean value = mapTest.getBoolean("ignoreSystemLifecycleBootstrap");

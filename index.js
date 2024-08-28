@@ -175,6 +175,12 @@ Adjust.verifyPlayStorePurchase = function(purchase, callback) {
     }
 };
 
+Adjust.verifyAndTrackPlayStorePurchase = function(adjustEvent, callback) {
+    if (Platform.OS === "android") {
+        module_adjust.verifyAndTrackPlayStorePurchase(adjustEvent, callback);
+    }
+};
+
 Adjust.processAndResolveDeeplink = function(deeplink, callback) {
     module_adjust.processAndResolveDeeplink(deeplink, callback);
 };
@@ -346,7 +352,7 @@ AdjustConfig.prototype.setPreinstallFilePath = function(preinstallFilePath) {
 };
 
 AdjustConfig.prototype.enablePlayStoreKidsCompliance = function() {
-    this.IsPlayStoreKidsComplianceEnabled = true;
+    this.isPlayStoreKidsComplianceEnabled = true;
 };
 
 AdjustConfig.prototype.setFbAppId = function(fbAppId) {
@@ -461,6 +467,7 @@ var AdjustEvent = function(eventToken) {
     this.deduplicationId = null;
     this.productId = null;
     this.transactionId = null;
+    this.purchaseToken = null;
     this.callbackId = null;
     this.callbackParameters = {};
     this.partnerParameters = {};
@@ -493,6 +500,10 @@ AdjustEvent.prototype.setProductId = function(productId) {
 
 AdjustEvent.prototype.setTransactionId = function(transactionId) {
     this.transactionId = transactionId;
+};
+
+AdjustEvent.prototype.setPurchaseToken = function(purchaseToken) {
+    this.purchaseToken = purchaseToken;
 };
 
 AdjustEvent.prototype.setDeduplicationId = function(deduplicationId) {

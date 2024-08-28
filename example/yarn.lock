@@ -7944,8 +7944,8 @@ __metadata:
 
 "react-native-adjust-oaid@file:../plugins/oaid::locator=AdjustExample%40workspace%3A.":
   version: 4.38.1
-  resolution: "react-native-adjust-oaid@file:../plugins/oaid#../plugins/oaid::hash=756475&locator=AdjustExample%40workspace%3A."
-  checksum: d981dcaa1c069a66cae1261717b4302d1e04711ea1732dfc42319cbba17e353c391947518af9e0169626f8f627d8a4912ee04df55720d3bd5db9d18549d421b5
+  resolution: "react-native-adjust-oaid@file:../plugins/oaid#../plugins/oaid::hash=9d0a47&locator=AdjustExample%40workspace%3A."
+  checksum: 700facd224f386f99477cbd46799a2f4fb1a3356da3d4ace53c3b7de82bfd6db67a775bcaffe26a7424c885d2c5be02a354bc81b3730ce0df5fa73a2f1195900
   languageName: node
   linkType: hard
 

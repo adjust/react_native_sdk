@@ -41,7 +41,6 @@
    // adjustConfig.disableSkanAttribution();
    // adjustConfig.enableCoppaCompliance(true);
    // adjustConfig.setAttConsentWaitingInterval(16);
-   // adjustConfig.setFinalAndroidAttributionEnabled(true);
  
    adjustConfig.setAttributionCallbackListener(function(attribution) {
      console.log("Attribution callback received");

@@ -75,7 +75,6 @@ final class AdjustUtil {
         map.putString(ATTRIBUTION_ADGROUP, null != attribution.adgroup ? attribution.adgroup : "");
         map.putString(ATTRIBUTION_CREATIVE, null != attribution.creative ? attribution.creative : "");
         map.putString(ATTRIBUTION_CLICK_LABEL, null != attribution.clickLabel ? attribution.clickLabel : "");
-        map.putString(ATTRIBUTION_ADID, null != attribution.adid ? attribution.adid : "");
         map.putString(ATTRIBUTION_COST_TYPE, null != attribution.costType ? attribution.costType : "");
         map.putDouble(ATTRIBUTION_COST_AMOUNT, null != attribution.costAmount && !attribution.costAmount.isNaN() ? attribution.costAmount : 0);
         map.putString(ATTRIBUTION_COST_CURRENCY, null != attribution.costCurrency ? attribution.costCurrency : "");

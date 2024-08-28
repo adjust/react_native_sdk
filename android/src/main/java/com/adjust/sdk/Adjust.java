@@ -863,15 +863,25 @@ public class Adjust extends ReactContextBaseJavaModule implements
         }
 
         final AdjustTestOptions testOptions = new AdjustTestOptions();
-        if (checkKey(mapTest, "hasContext")) {
-            boolean value = mapTest.getBoolean("hasContext");
-            if (value) {
-                testOptions.context = getReactApplicationContext();
-            }
-        }
         if (checkKey(mapTest, "baseUrl")) {
             String value = mapTest.getString("baseUrl");
             testOptions.baseUrl = value;
+        }
+        if (checkKey(mapTest, "gdprUrl")) {
+            String value = mapTest.getString("gdprUrl");
+            testOptions.gdprUrl = value;
+        }
+        if (checkKey(mapTest, "subscriptionUrl")) {
+            String value = mapTest.getString("subscriptionUrl");
+            testOptions.subscriptionUrl = value;
+        }
+        if (checkKey(mapTest, "purchaseVerificationUrl")) {
+            String value = mapTest.getString("purchaseVerificationUrl");
+            testOptions.purchaseVerificationUrl = value;
+        }
+        if (checkKey(mapTest, "basePath")) {
+            String value = mapTest.getString("basePath");
+            testOptions.basePath = value;
         }
         if (checkKey(mapTest, "gdprPath")) {
             String value = mapTest.getString("gdprPath");
@@ -885,6 +895,10 @@ public class Adjust extends ReactContextBaseJavaModule implements
             String value = mapTest.getString("purchaseVerificationPath");
             testOptions.purchaseVerificationPath = value;
         }
+        // if (checkKey(mapTest, "useTestConnectionOptions")) {
+        //     boolean value = mapTest.getBoolean("useTestConnectionOptions");
+        //     testOptions.useTestConnectionOptions = value;
+        // }
         if (checkKey(mapTest, "timerIntervalInMilliseconds")) {
             try {
                 Long value = Long.parseLong(mapTest.getString("timerIntervalInMilliseconds"));
@@ -928,6 +942,13 @@ public class Adjust extends ReactContextBaseJavaModule implements
         if (checkKey(mapTest, "teardown")) {
             boolean value = mapTest.getBoolean("teardown");
             testOptions.teardown = value;
+        }
+        if (checkKey(mapTest, "deleteState")) {
+            testOptions.context = getReactApplicationContext();
+        }
+        if (checkKey(mapTest, "ignoreSystemLifecycleBootstrap")) {
+            boolean value = mapTest.getBoolean("ignoreSystemLifecycleBootstrap");
+            testOptions.ignoreSystemLifecycleBootstrap = value;
         }
 
         com.adjust.sdk.Adjust.setTestOptions(testOptions);

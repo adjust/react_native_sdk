@@ -12,7 +12,8 @@ import {
     AdjustThirdPartySharing,
     AdjustAdRevenue,
     AdjustAppStorePurchase,
-    AdjustPlayStorePurchase
+    AdjustPlayStorePurchase,
+    AdjustDeeplink
 } from 'react-native-adjust';
 import { AdjustTestOptions } from './test_options.js';
 const AdjustSdkTest = NativeModules.AdjustSdkTest;
@@ -661,7 +662,7 @@ AdjustCommandExecutor.prototype.setPushToken = function(params) {
 
 AdjustCommandExecutor.prototype.openDeeplink = function(params) {
     var deeplink = getFirstParameterValue(params, 'deeplink');
-    Adjust.processDeeplink(deeplink);
+    Adjust.processDeeplink(new AdjustDeeplink(deeplink));
 };
 
 AdjustCommandExecutor.prototype.gdprForgetMe = function(params) {
@@ -929,7 +930,7 @@ AdjustCommandExecutor.prototype.verifyTrack = function(params) {
 AdjustCommandExecutor.prototype.processDeeplink = function(params) {
     var deeplink = getFirstParameterValue(params, 'deeplink');
     var _this = this;
-    Adjust.processAndResolveDeeplink(deeplink, function(resolvedLink) {
+    Adjust.processAndResolveDeeplink(new AdjustDeeplink(deeplink), function(resolvedLink) {
         AdjustSdkTest.addInfoToSend('resolved_link', resolvedLink);
         AdjustSdkTest.sendInfoToServer(_this.extraPath);
     });

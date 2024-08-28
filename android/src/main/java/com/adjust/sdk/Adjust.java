@@ -406,7 +406,17 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
-    public void processDeeplink(final String deeplink) {
+    public void processDeeplink(final ReadableMap mapDeeplink) {
+        if (mapDeeplink == null) {
+            return;
+        }
+
+        String deeplink = null;
+
+        if (checkKey(mapDeeplink, "deeplink")) {
+            deeplink = mapDeeplink.getString("deeplink");
+        }
+
         final Uri uri = Uri.parse(deeplink);
         com.adjust.sdk.Adjust.processDeeplink(new AdjustDeeplink(uri), getReactApplicationContext());
     }
@@ -926,8 +936,18 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
-    public void processAndResolveDeeplink(final String strUri, final Callback callback) {
-        final Uri uri = Uri.parse(strUri);
+    public void processAndResolveDeeplink(final ReadableMap mapDeeplink, final Callback callback) {
+        if (mapDeeplink == null) {
+            return;
+        }
+
+        String deeplink = null;
+
+        if (checkKey(mapDeeplink, "deeplink")) {
+            deeplink = mapDeeplink.getString("deeplink");
+        }
+
+        final Uri uri = Uri.parse(deeplink);
         // Process and resolve deeplink
         com.adjust.sdk.Adjust.processAndResolveDeeplink(new AdjustDeeplink(uri), getReactApplicationContext(), new OnDeeplinkResolvedListener() {
             @Override

@@ -43,7 +43,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSNumber *attConsentWaitingInterval = [dict objectForKey:@"attConsentWaitingInterval"];
     NSNumber *eventDeduplicationIdsMaxSize = [dict objectForKey:@"eventDeduplicationIdsMaxSize"];
     NSNumber *isCoppaComplianceEnabled = [dict objectForKey:@"isCoppaComplianceEnabled"];
-    id urlStrategyDomains = [dict objectForKey:@"urlStrategyDomains"];
+    id strUrlategyDomains = [dict objectForKey:@"strUrlategyDomains"];
     NSNumber *useSubdomains = [dict objectForKey:@"useSubdomains"];
     NSNumber *isDataResidency = [dict objectForKey:@"isDataResidency"];
     BOOL isLogLevelSuppress = NO;
@@ -83,17 +83,17 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         [adjustConfig setExternalDeviceId:externalDeviceId];
     }
 
-    NSMutableArray *urlStrategyDomainsArray;
+    NSMutableArray *strUrlategyDomainsArray;
     // URL strategy
-    if ([self isFieldValid:urlStrategyDomains] && [urlStrategyDomains count] > 0) {
-        urlStrategyDomainsArray = [[NSMutableArray alloc] initWithCapacity:[urlStrategyDomains count]];
-        for (int i = 0; i < [urlStrategyDomains count]; i += 1) {
-            NSString *domain = [[urlStrategyDomains objectAtIndex:i] description];
-            [urlStrategyDomainsArray addObject:domain];
+    if ([self isFieldValid:strUrlategyDomains] && [strUrlategyDomains count] > 0) {
+        strUrlategyDomainsArray = [[NSMutableArray alloc] initWithCapacity:[strUrlategyDomains count]];
+        for (int i = 0; i < [strUrlategyDomains count]; i += 1) {
+            NSString *domain = [[strUrlategyDomains objectAtIndex:i] description];
+            [strUrlategyDomainsArray addObject:domain];
         }
     }
     if ([self isFieldValid:useSubdomains] && [self isFieldValid:isDataResidency]) {
-        [adjustConfig setUrlStrategy:(NSArray *)urlStrategyDomainsArray
+        [adjustConfig setUrlStrategy:(NSArray *)strUrlategyDomainsArray
                        useSubdomains:[useSubdomains boolValue]
                      isDataResidency:[isDataResidency boolValue]];
     }
@@ -293,18 +293,19 @@ RCT_EXPORT_METHOD(setPushToken:(NSString *)token) {
     [Adjust setPushTokenAsString:token];
 }
 
-RCT_EXPORT_METHOD(processDeeplink:(NSString *)urlStr) {
-    if (urlStr == nil) {
+RCT_EXPORT_METHOD(processDeeplink:(NSDictionary *)dict) {
+    NSString *strUrl = dict[@"deeplink"];
+    if (strUrl == nil) {
         return;
     }
 
     NSURL *url;
     if ([NSString instancesRespondToSelector:@selector(stringByAddingPercentEncodingWithAllowedCharacters:)]) {
-        url = [NSURL URLWithString:[urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
+        url = [NSURL URLWithString:[strUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     } else {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        url = [NSURL URLWithString:[strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     }
 #pragma clang diagnostic pop
     [Adjust processDeeplink:[[ADJDeeplink alloc] initWithDeeplink:url]];
@@ -727,18 +728,19 @@ RCT_EXPORT_METHOD(verifyAndTrackAppStorePurchase:(NSDictionary *)dict callback:(
     }];
 }
 
-RCT_EXPORT_METHOD(processAndResolveDeeplink:(NSString *)urlStr callback:(RCTResponseSenderBlock)callback) {
-    if (urlStr == nil) {
+RCT_EXPORT_METHOD(processAndResolveDeeplink:(NSDictionary *)dict callback:(RCTResponseSenderBlock)callback) {
+    NSString *strUrl = dict[@"deeplink"];
+    if (strUrl == nil) {
         return;
     }
 
     NSURL *url;
     if ([NSString instancesRespondToSelector:@selector(stringByAddingPercentEncodingWithAllowedCharacters:)]) {
-        url = [NSURL URLWithString:[urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
+        url = [NSURL URLWithString:[strUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     } else {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        url = [NSURL URLWithString:[strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     }
 #pragma clang diagnostic pop
 

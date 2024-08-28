@@ -55,8 +55,8 @@ Adjust.setPushToken = function(token) {
     module_adjust.setPushToken(token);
 };
 
-Adjust.processDeeplink = function(deeplink) {
-    module_adjust.processDeeplink(deeplink);
+Adjust.processDeeplink = function(adjustDeeplink) {
+    module_adjust.processDeeplink(adjustDeeplink);
 };
 
 Adjust.trackAppStoreSubscription = function(subscription) {
@@ -181,8 +181,8 @@ Adjust.verifyAndTrackPlayStorePurchase = function(adjustEvent, callback) {
     }
 };
 
-Adjust.processAndResolveDeeplink = function(deeplink, callback) {
-    module_adjust.processAndResolveDeeplink(deeplink, callback);
+Adjust.processAndResolveDeeplink = function(adjustDeeplink, callback) {
+    module_adjust.processAndResolveDeeplink(adjustDeeplink, callback);
 };
 
 Adjust.componentWillUnmount = function() {
@@ -669,6 +669,12 @@ var AdjustPlayStorePurchase = function(productId, purchaseToken) {
     this.purchaseToken = purchaseToken;
 };
 
+// AdjustDeeplink
+
+var AdjustDeeplink = function(deeplink) {
+    this.deeplink = deeplink;
+};
+
 module.exports = {
     Adjust,
     AdjustConfig,
@@ -678,5 +684,6 @@ module.exports = {
     AdjustAppStoreSubscription,
     AdjustPlayStoreSubscription,
     AdjustAppStorePurchase,
-    AdjustPlayStorePurchase
+    AdjustPlayStorePurchase,
+    AdjustDeeplink
 }

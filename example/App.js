@@ -39,7 +39,7 @@
    const adjustConfig = new AdjustConfig("2fm9gkqubvpc", AdjustConfig.EnvironmentSandbox);
    adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
    // adjustConfig.disableSkanAttribution();
-   // adjustConfig.enableCoppaCompliance(true);
+   // adjustConfig.enableCoppaCompliance();
    // adjustConfig.setAttConsentWaitingInterval(16);
  
    adjustConfig.setAttributionCallbackListener(function(attribution) {

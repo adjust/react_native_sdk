@@ -7944,15 +7944,15 @@ __metadata:
 
 "react-native-adjust-oaid@file:../plugins/oaid::locator=AdjustExample%40workspace%3A.":
   version: 4.38.1
-  resolution: "react-native-adjust-oaid@file:../plugins/oaid#../plugins/oaid::hash=ee48bc&locator=AdjustExample%40workspace%3A."
-  checksum: acdd8ecc5ee8bad55d9049d47794a665a746dde638e31b44127c78c73384043cc8c8c2fbd0a2787c7dd44e8df3b37d412d79a14b69a4da73e9b86c6a99f2512e
+  resolution: "react-native-adjust-oaid@file:../plugins/oaid#../plugins/oaid::hash=ba2364&locator=AdjustExample%40workspace%3A."
+  checksum: 43e5b38bc6d53c2d35a9d2c40e1a5d6b4557e9974e5f91c60a7ed47485291f50d75637beb2e128ce8142cf37b04a5c8d27c47113b8faf1eaaa20a499302ad267
   languageName: node
   linkType: hard
 
 "react-native-adjust@file:../temp::locator=AdjustExample%40workspace%3A.":
   version: 5.0.0
-  resolution: "react-native-adjust@file:../temp#../temp::hash=e328d4&locator=AdjustExample%40workspace%3A."
-  checksum: 29f3a574d0f17cff373f5e6acf06cb1ecc8720d2019eaed03126b0ae56171d5ef7cb45638d1cc35ec3ebafb83435eb7668b14d9f1eb7e8ffd9a49c5b1fef5fd6
+  resolution: "react-native-adjust@file:../temp#../temp::hash=a25e6f&locator=AdjustExample%40workspace%3A."
+  checksum: 0b9794cf9ef15bb115bd312e94f37ed9497212a39a17b8dbe2d80901f6671c4297377f8aa637d77b06dbb642e544fc5017cf946f3256e9a2586f0fc8523e7e7a
   languageName: node
   linkType: hard
 

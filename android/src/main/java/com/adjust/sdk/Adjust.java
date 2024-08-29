@@ -90,7 +90,6 @@ public class Adjust extends ReactContextBaseJavaModule implements
         String processName = null;
         String defaultTracker = null;
         String externalDeviceId = null;
-        String urlStrategy = null;
         String preinstallFilePath = null;
         String fbAppId = null;
         Integer eventDeduplicationIdsMaxSize = -1;
@@ -102,6 +101,9 @@ public class Adjust extends ReactContextBaseJavaModule implements
         boolean isPlayStoreKidsComplianceEnabled = false;
         boolean isCoppaComplianceEnabled = false;
         boolean isDeviceIdsReadingOnceEnabled = false;
+        List<String> urlStrategyDomains = null;
+        boolean useSubdomains = false;
+        boolean isDataResidency = false;
 
         // Suppress log level
         if (checkKey(mapConfig, "logLevel")) {
@@ -172,7 +174,15 @@ public class Adjust extends ReactContextBaseJavaModule implements
             adjustConfig.setExternalDeviceId(externalDeviceId);
         }
 
-        // URL strategy.
+         // URL strategy
+        if (checkKey(mapConfig, "urlStrategyDomains")
+            && checkKey(mapConfig, "useSubdomains") 
+            && checkKey(mapConfig, "isDataResidency")) {
+            urlStrategyDomains = AdjustUtil.toListString(mapConfig.getArray("urlStrategyDomains"));
+            useSubdomains = mapConfig.getBoolean("useSubdomains");
+            isDataResidency = mapConfig.getBoolean("isDataResidency");
+            adjustConfig.setUrlStrategy(urlStrategyDomains, useSubdomains, isDataResidency);
+        }
        
         // Preinstall file path
         if (checkKey(mapConfig, "preinstallFilePath")) {

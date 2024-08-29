@@ -43,7 +43,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSNumber *attConsentWaitingInterval = [dict objectForKey:@"attConsentWaitingInterval"];
     NSNumber *eventDeduplicationIdsMaxSize = [dict objectForKey:@"eventDeduplicationIdsMaxSize"];
     NSNumber *isCoppaComplianceEnabled = [dict objectForKey:@"isCoppaComplianceEnabled"];
-    id strUrlategyDomains = [dict objectForKey:@"strUrlategyDomains"];
+    id urlStrategyDomains = [dict objectForKey:@"urlStrategyDomains"];
     NSNumber *useSubdomains = [dict objectForKey:@"useSubdomains"];
     NSNumber *isDataResidency = [dict objectForKey:@"isDataResidency"];
     BOOL isLogLevelSuppress = NO;
@@ -83,17 +83,17 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         [adjustConfig setExternalDeviceId:externalDeviceId];
     }
 
-    NSMutableArray *strUrlategyDomainsArray;
+    NSMutableArray *urlStrategyDomainsArray;
     // URL strategy
-    if ([self isFieldValid:strUrlategyDomains] && [strUrlategyDomains count] > 0) {
-        strUrlategyDomainsArray = [[NSMutableArray alloc] initWithCapacity:[strUrlategyDomains count]];
-        for (int i = 0; i < [strUrlategyDomains count]; i += 1) {
-            NSString *domain = [[strUrlategyDomains objectAtIndex:i] description];
-            [strUrlategyDomainsArray addObject:domain];
+    if ([self isFieldValid:urlStrategyDomains] && [urlStrategyDomains count] > 0) {
+        urlStrategyDomainsArray = [[NSMutableArray alloc] initWithCapacity:[urlStrategyDomains count]];
+        for (int i = 0; i < [urlStrategyDomains count]; i += 1) {
+            NSString *domain = [[urlStrategyDomains objectAtIndex:i] description];
+            [urlStrategyDomainsArray addObject:domain];
         }
     }
     if ([self isFieldValid:useSubdomains] && [self isFieldValid:isDataResidency]) {
-        [adjustConfig setUrlStrategy:(NSArray *)strUrlategyDomainsArray
+        [adjustConfig setUrlStrategy:(NSArray *)urlStrategyDomainsArray
                        useSubdomains:[useSubdomains boolValue]
                      isDataResidency:[isDataResidency boolValue]];
     }

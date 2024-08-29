@@ -182,7 +182,7 @@ final class AdjustUtil {
     /** 
      * toList converts a {@link ReadableArray} into an ArrayList. 
      * 
-     * @param readableArray The ReadableArray to be conveted. 
+     * @param readableArray The ReadableArray to be converted. 
      * @return An ArrayList containing the data that was in the ReadableArray. 
      */ 
     public static List<Object> toList(@Nullable ReadableArray readableArray) {
@@ -216,6 +216,34 @@ final class AdjustUtil {
                     break; 
                 case Array: 
                     result = toList(readableArray.getArray(index));
+                    break; 
+                default: 
+                    AdjustFactory.getLogger().error("Could not convert object with index: " + index + ".");
+            } 
+        } 
+
+        return result;
+    } 
+
+    /** 
+     * toListString converts a {@link ReadableArray} into an String ArrayList. 
+     * 
+     * @param readableArray The ReadableArray to be converted. 
+     * @return An ArrayList containing the data that was in the ReadableArray. 
+     */ 
+    public static List<String> toListString(@Nullable ReadableArray readableArray) {
+        if (readableArray == null) {
+            return null; 
+        }
+
+        List<String> result = new ArrayList<>(readableArray.size());
+        for (int index = 0; index < readableArray.size(); index++) {
+            ReadableType readableType = readableArray.getType(index);
+            switch (readableType) {
+                case Null: 
+                    break; 
+                case String: 
+                    result.add(readableArray.getString(index));
                     break; 
                 default: 
                     AdjustFactory.getLogger().error("Could not convert object with index: " + index + ".");

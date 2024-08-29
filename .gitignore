@@ -107,3 +107,5 @@ example/.yarn
 
 #test
 Test/app/.yarn
+test/app/ios/.xcode.env
+test/app/ios/.xcode.env.local

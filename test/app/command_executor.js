@@ -440,11 +440,10 @@ AdjustCommandExecutor.prototype.config = function(params) {
 
     if ('skanCallback' in params) {
         var _this = this;
-        adjustConfig.setSkanUpdatedCallbackListener(function(data) {
-            var jsonObject = JSON.parse(JSON.stringify(data));
-            for (let [key, value] of Object.entries(jsonObject)) {
-                AdjustSdkTest.addInfoToSend(key, value);
-            }
+        adjustConfig.setSkanUpdatedCallbackListener(function(skanData) {
+            AdjustSdkTest.addInfoToSend('conversion_value', skanData.conversionValue);
+            AdjustSdkTest.addInfoToSend('coarse_value', skanData.coarseValue);
+            AdjustSdkTest.addInfoToSend('lock_window', skanData.lockWindow);
             AdjustSdkTest.sendInfoToServer(_this.extraPath);
         });
     }

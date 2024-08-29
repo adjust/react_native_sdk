@@ -684,12 +684,19 @@ public class Adjust extends ReactContextBaseJavaModule implements
 
     @ReactMethod
     public void isEnabled(final Callback callback) {
-        // com.adjust.sdk.Adjust.isEnabled(new com.adjust.sdk.OnIsEnabledListener() {
+        // com.adjust.sdk.Adjust.isEnabled(getReactApplicationContext(), new com.adjust.sdk.OnIsEnabledListener() {
         //     @Override
         //     public void OnIsEnabledRead(Boolean isEnabled) {
         //         callback.invoke(isEnabled);
         //     }
         // });
+
+        com.adjust.sdk.Adjust.isEnabled(getReactApplicationContext(), new com.adjust.sdk.OnIsEnabledListener() {
+            @Override
+            public void onIsEnabledRead(boolean isEnabled) {
+                callback.invoke(isEnabled);
+            }
+        });
     }
 
     @ReactMethod

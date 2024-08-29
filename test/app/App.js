@@ -57,7 +57,7 @@ const App: () => React$Node = () => {
   var controlUrl = "ws://" + ipAddress + ":1987";
 
   // AdjustSdkTest.addTestDirectory("tracking-domain");
-  AdjustSdkTest.addTest("Test_Skan_all_packages");
+  // AdjustSdkTest.addTest("Test_Skan_all_packages");
   Adjust.getSdkVersion(function (sdkVersion) {
     AdjustSdkTest.startTestSession(urlOverwrite, controlUrl, sdkVersion);
   });

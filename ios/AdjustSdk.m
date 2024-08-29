@@ -474,11 +474,11 @@ RCT_EXPORT_METHOD(requestAppTrackingAuthorization:(RCTResponseSenderBlock)callba
 
 RCT_EXPORT_METHOD(updateSkanConversionValue:(NSNumber * _Nonnull)conversionValue
                   coarseValue:(NSString * _Nonnull)coarseValue
-                  lockWindow:(BOOL)lockWindow
+                  lockWindow:(NSString * _Nullable)lockWindow
                   errorCallback:(RCTResponseSenderBlock)callback) {
     [Adjust updateSkanConversionValue:[conversionValue intValue]
                           coarseValue:coarseValue
-                           lockWindow:[NSNumber numberWithBool:lockWindow]
+                           lockWindow:(lockWindow == nil) ? nil : [NSNumber numberWithBool:[lockWindow boolValue]]
                 withCompletionHandler:^(NSError * _Nullable error) {
         if (nil == error) {
             callback(@[@""]);

@@ -712,7 +712,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
-    public void updateSkanConversionValue(final int conversionValue, final String coarseValue, final boolean lockWindow, final Callback callback) {
+    public void updateSkanConversionValue(final int conversionValue, final String coarseValue, final String lockWindow, final Callback callback) {
         callback.invoke("");
     }
 

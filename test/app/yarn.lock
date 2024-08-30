@@ -7869,22 +7869,22 @@ __metadata:
 
 "react-native-adjust-oaid@file:../../plugins/oaid::locator=com.adjust.examples%40workspace%3A.":
   version: 4.38.1
-  resolution: "react-native-adjust-oaid@file:../../plugins/oaid#../../plugins/oaid::hash=6f8170&locator=com.adjust.examples%40workspace%3A."
-  checksum: 7946bc9102b11ca54e5303cdbe5efaac1f8faf8b0d67c348a8f77383638ecc3d2fe23c075f4b278a16699046b89c5004e008f51fd89a74d401ef627d37cb6645
+  resolution: "react-native-adjust-oaid@file:../../plugins/oaid#../../plugins/oaid::hash=36b610&locator=com.adjust.examples%40workspace%3A."
+  checksum: 3b033369924c9adf5e644048ed702609602ae6012837a670b2014bcb201e1ebd6da4fb2193ac8d861739674806954b0518d839bf503e544822868aecaca8530e
   languageName: node
   linkType: hard
 
 "react-native-adjust-test@file:../lib::locator=com.adjust.examples%40workspace%3A.":
   version: 5.0.0
-  resolution: "react-native-adjust-test@file:../lib#../lib::hash=2bc607&locator=com.adjust.examples%40workspace%3A."
-  checksum: d97f0fc27111c4c407e8d5ad7473858ff990b114bf142040a505aebf2c4e56b2c31bf5c9a074db6d45ff07d84bbbb659fb193e67472569fee1351ceb55356a76
+  resolution: "react-native-adjust-test@file:../lib#../lib::hash=34b1c0&locator=com.adjust.examples%40workspace%3A."
+  checksum: f1c16d98014bc9b7ea4620dc8c0c71ea5d7fb9d23b94d1d1f85d38b6347114cbd69cfa9a46396ff568272c7916a591b3449c0940ac047102f2545e0b21897595
   languageName: node
   linkType: hard
 
 "react-native-adjust@file:../../temp::locator=com.adjust.examples%40workspace%3A.":
   version: 5.0.0
-  resolution: "react-native-adjust@file:../../temp#../../temp::hash=6e47db&locator=com.adjust.examples%40workspace%3A."
-  checksum: b6ec8adb58753112468f40639e1a897cb93efa97f7b20d09a84f21461b32c8792a15e0687814013d05b91be4fbe5623d6a0c23e9861d84c0969243ce35828d0b
+  resolution: "react-native-adjust@file:../../temp#../../temp::hash=824d73&locator=com.adjust.examples%40workspace%3A."
+  checksum: 663073030126c7c9a9f8f93f9e45562fe9d13bfc0444109484bd65b9cdd23fab3d25cbe9723aa699416320f06ccf32ce006dbe3ac66eff4fb8b8f46a9e3dabfd
   languageName: node
   linkType: hard
 

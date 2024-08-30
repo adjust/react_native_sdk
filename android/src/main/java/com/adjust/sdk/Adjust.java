@@ -299,8 +299,8 @@ public class Adjust extends ReactContextBaseJavaModule implements
         String callbackId = null;
         String deduplicationId = null;
 
-        Map<String, Object> callbackParameters = null;
-        Map<String, Object> partnerParameters = null;
+        List<Object> callbackParameters = null;
+        List<Object> partnerParameters = null;
 
         // Event token
         if (checkKey(mapEvent, "eventToken")) {
@@ -328,20 +328,22 @@ public class Adjust extends ReactContextBaseJavaModule implements
 
         // Callback parameters
         if (checkKey(mapEvent, "callbackParameters")) {
-            callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
+            callbackParameters = AdjustUtil.toList(mapEvent.getArray("callbackParameters"));
             if (null != callbackParameters) {
-                for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
-                    event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < callbackParameters.size(); i += 2) {
+                        event.addCallbackParameter(callbackParameters.get(i).toString(),
+                        callbackParameters.get(i+1).toString());
                 }
             }
         }
 
         // Partner parameters
         if (checkKey(mapEvent, "partnerParameters")) {
-            partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
+            partnerParameters = AdjustUtil.toList(mapEvent.getArray("partnerParameters"));
             if (null != partnerParameters) {
-                for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
-                    event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < partnerParameters.size(); i += 2) {
+                        event.addPartnerParameter(partnerParameters.get(i).toString(),
+                        partnerParameters.get(i+1).toString());
                 }
             }
         }
@@ -444,8 +446,8 @@ public class Adjust extends ReactContextBaseJavaModule implements
         String adRevenueNetwork = null;
         String adRevenueUnit = null;
         String adRevenuePlacement = null;
-        Map<String, Object> callbackParameters = null;
-        Map<String, Object> partnerParameters = null;
+        List<Object> callbackParameters = null;
+        List<Object> partnerParameters = null;
 
         // Source
         if (checkKey(mapAdRevenue, "source")) {
@@ -497,20 +499,22 @@ public class Adjust extends ReactContextBaseJavaModule implements
 
         // Callback parameters
         if (checkKey(mapAdRevenue, "callbackParameters")) {
-            callbackParameters = AdjustUtil.toMap(mapAdRevenue.getMap("callbackParameters"));
+            callbackParameters = AdjustUtil.toList(mapAdRevenue.getArray("callbackParameters"));
             if (null != callbackParameters) {
-                for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
-                    adRevenue.addCallbackParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < callbackParameters.size(); i += 2) {
+                        adRevenue.addCallbackParameter(callbackParameters.get(i).toString(),
+                        callbackParameters.get(i+1).toString());
                 }
             }
         }
 
         // Partner parameters
         if (checkKey(mapAdRevenue, "partnerParameters")) {
-            partnerParameters = AdjustUtil.toMap(mapAdRevenue.getMap("partnerParameters"));
+            partnerParameters = AdjustUtil.toList(mapAdRevenue.getArray("partnerParameters"));
             if (null != partnerParameters) {
-                for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
-                    adRevenue.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < partnerParameters.size(); i += 2) {
+                        adRevenue.addPartnerParameter(partnerParameters.get(i).toString(),
+                        partnerParameters.get(i+1).toString());
                 }
             }
         }
@@ -532,8 +536,8 @@ public class Adjust extends ReactContextBaseJavaModule implements
         String signature = null;
         String purchaseToken = null;
         long purchaseTime = -1;
-        Map<String, Object> callbackParameters = null;
-        Map<String, Object> partnerParameters = null;
+        List<Object> callbackParameters = null;
+        List<Object> partnerParameters = null;
 
         // Price
         if (checkKey(mapEvent, "price")) {
@@ -585,20 +589,22 @@ public class Adjust extends ReactContextBaseJavaModule implements
 
         // Callback parameters
         if (checkKey(mapEvent, "callbackParameters")) {
-            callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
+            callbackParameters = AdjustUtil.toList(mapEvent.getArray("callbackParameters"));
             if (null != callbackParameters) {
-                for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
-                    subscription.addCallbackParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < callbackParameters.size(); i += 2) {
+                        subscription.addCallbackParameter(callbackParameters.get(i).toString(),
+                        callbackParameters.get(i+1).toString());
                 }
             }
         }
 
         // Partner parameters
         if (checkKey(mapEvent, "partnerParameters")) {
-            partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
+            partnerParameters = AdjustUtil.toList(mapEvent.getArray("partnerParameters"));
             if (null != partnerParameters) {
-                for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
-                    subscription.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < partnerParameters.size(); i += 2) {
+                        subscription.addPartnerParameter(partnerParameters.get(i).toString(),
+                        partnerParameters.get(i+1).toString());
                 }
             }
         }
@@ -839,8 +845,8 @@ public class Adjust extends ReactContextBaseJavaModule implements
         String callbackId = null;
         String deduplicationId = null;
 
-        Map<String, Object> callbackParameters = null;
-        Map<String, Object> partnerParameters = null;
+        List<Object> callbackParameters = null;
+        List<Object> partnerParameters = null;
 
         // Event token
         if (checkKey(mapEvent, "eventToken")) {
@@ -868,20 +874,22 @@ public class Adjust extends ReactContextBaseJavaModule implements
 
         // Callback parameters
         if (checkKey(mapEvent, "callbackParameters")) {
-            callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
+            callbackParameters = AdjustUtil.toList(mapEvent.getArray("callbackParameters"));
             if (null != callbackParameters) {
-                for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
-                    event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < callbackParameters.size(); i += 2) {
+                        event.addCallbackParameter(callbackParameters.get(i).toString(),
+                        callbackParameters.get(i+1).toString());
                 }
             }
         }
 
         // Partner parameters
         if (checkKey(mapEvent, "partnerParameters")) {
-            partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
+            partnerParameters = AdjustUtil.toList(mapEvent.getArray("partnerParameters"));
             if (null != partnerParameters) {
-                for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
-                    event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < partnerParameters.size(); i += 2) {
+                        event.addPartnerParameter(partnerParameters.get(i).toString(),
+                        partnerParameters.get(i+1).toString());
                 }
             }
         }

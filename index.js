@@ -469,8 +469,8 @@ var AdjustEvent = function(eventToken) {
     this.transactionId = null;
     this.purchaseToken = null;
     this.callbackId = null;
-    this.callbackParameters = {};
-    this.partnerParameters = {};
+    this.callbackParameters = [];
+    this.partnerParameters = [];
 };
 
 AdjustEvent.prototype.setRevenue = function(revenue, currency) {
@@ -484,14 +484,16 @@ AdjustEvent.prototype.addCallbackParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
         return;
     }
-    this.callbackParameters[key] = value;
+    this.callbackParameters.push(key);
+    this.callbackParameters.push(value);
 };
 
 AdjustEvent.prototype.addPartnerParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
         return;
     }
-    this.partnerParameters[key] = value;
+    this.partnerParameters.push(key);
+    this.partnerParameters.push(value);
 };
 
 AdjustEvent.prototype.setProductId = function(productId) {
@@ -522,8 +524,8 @@ var AdjustAppStoreSubscription = function(price, currency, transactionId) {
     this.transactionId = transactionId;
     this.transactionDate = null;
     this.salesRegion = null;
-    this.callbackParameters = {};
-    this.partnerParameters = {};
+    this.callbackParameters = [];
+    this.partnerParameters = [];
 };
 
 AdjustAppStoreSubscription.prototype.setTransactionDate = function(transactionDate) {
@@ -538,14 +540,16 @@ AdjustAppStoreSubscription.prototype.addCallbackParameter = function(key, value)
     if (typeof key !== 'string' || typeof value !== 'string') {
         return;
     }
-    this.callbackParameters[key] = value;
+    this.callbackParameters.push(key);
+    this.callbackParameters.push(value);
 };
 
 AdjustAppStoreSubscription.prototype.addPartnerParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
         return;
     }
-    this.partnerParameters[key] = value;
+    this.partnerParameters.push(key);
+    this.partnerParameters.push(value);
 };
 
 // AdjustPlayStoreSubscription
@@ -558,8 +562,8 @@ var AdjustPlayStoreSubscription = function(price, currency, sku, orderId, signat
     this.signature = signature;
     this.purchaseToken = purchaseToken;
     this.purchaseTime = null;
-    this.callbackParameters = {};
-    this.partnerParameters = {};
+    this.callbackParameters = [];
+    this.partnerParameters = [];
 };
 
 AdjustPlayStoreSubscription.prototype.setPurchaseTime = function(purchaseTime) {
@@ -570,14 +574,16 @@ AdjustPlayStoreSubscription.prototype.addCallbackParameter = function(key, value
     if (typeof key !== 'string' || typeof value !== 'string') {
         return;
     }
-    this.callbackParameters[key] = value;
+    this.callbackParameters.push(key);
+    this.callbackParameters.push(value);
 };
 
 AdjustPlayStoreSubscription.prototype.addPartnerParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
         return;
     }
-    this.partnerParameters[key] = value;
+    this.partnerParameters.push(key);
+    this.partnerParameters.push(value);
 };
 
 var AdjustThirdPartySharing = function(isEnabled) {
@@ -614,8 +620,8 @@ var AdjustAdRevenue = function(source) {
     this.adRevenueNetwork = null;
     this.adRevenueUnit = null;
     this.adRevenuePlacement = null;
-    this.callbackParameters = {};
-    this.partnerParameters = {};
+    this.callbackParameters = [];
+    this.partnerParameters = [];
 };
 
 AdjustAdRevenue.prototype.setRevenue = function(revenue, currency) {
@@ -645,14 +651,16 @@ AdjustAdRevenue.prototype.addCallbackParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
         return;
     }
-    this.callbackParameters[key] = value;
+    this.callbackParameters.push(key);
+    this.callbackParameters.push(value);
 };
 
 AdjustAdRevenue.prototype.addPartnerParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
         return;
     }
-    this.partnerParameters[key] = value;
+    this.partnerParameters.push(key);
+    this.partnerParameters.push(value);
 };
 
 // AdjustAppStorePurchase

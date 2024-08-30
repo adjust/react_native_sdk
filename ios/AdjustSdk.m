@@ -204,8 +204,8 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
     NSString *transactionId = dict[@"transactionId"];
     NSString *deduplicationId = dict[@"deduplicationId"];
     NSString *callbackId = dict[@"callbackId"];
-    NSDictionary *callbackParameters = dict[@"callbackParameters"];
-    NSDictionary *partnerParameters = dict[@"partnerParameters"];
+    NSArray *callbackParameters = dict[@"callbackParameters"];
+    NSArray *partnerParameters = dict[@"partnerParameters"];
 
     ADJEvent *adjustEvent = [[ADJEvent alloc] initWithEventToken:eventToken];
     if (![adjustEvent isValid]) {
@@ -220,16 +220,18 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
 
     // Callback parameters
     if ([self isFieldValid:callbackParameters]) {
-        for (NSString *key in callbackParameters) {
-            NSString *value = [callbackParameters objectForKey:key];
+        for (int i = 0; i < [callbackParameters count]; i += 2) {
+            NSString *key = [callbackParameters objectAtIndex:i];
+            NSString *value = [callbackParameters objectAtIndex:i+1];
             [adjustEvent addCallbackParameter:key value:value];
         }
     }
 
     // Partner parameters
     if ([self isFieldValid:partnerParameters]) {
-        for (NSString *key in partnerParameters) {
-            NSString *value = [partnerParameters objectForKey:key];
+        for (int i = 0; i < [partnerParameters count]; i += 2) {
+            NSString *key = [partnerParameters objectAtIndex:i];
+            NSString *value = [partnerParameters objectAtIndex:i+1];
             [adjustEvent addPartnerParameter:key value:value];
         }
     }
@@ -319,8 +321,8 @@ RCT_EXPORT_METHOD(trackAdRevenue:(NSDictionary *)dict) {
     NSString *adRevenueNetwork = dict[@"adRevenueNetwork"];
     NSString *adRevenueUnit = dict[@"adRevenueUnit"];
     NSString *adRevenuePlacement = dict[@"adRevenuePlacement"];
-    NSDictionary *callbackParameters = dict[@"callbackParameters"];
-    NSDictionary *partnerParameters = dict[@"partnerParameters"];
+    NSArray *callbackParameters = dict[@"callbackParameters"];
+    NSArray *partnerParameters = dict[@"partnerParameters"];
 
     if ([source isKindOfClass:[NSNull class]]) {
         return;
@@ -356,16 +358,18 @@ RCT_EXPORT_METHOD(trackAdRevenue:(NSDictionary *)dict) {
 
     // Callback parameters
     if ([self isFieldValid:callbackParameters]) {
-        for (NSString *key in callbackParameters) {
-            NSString *value = [callbackParameters objectForKey:key];
+        for (int i = 0; i < [callbackParameters count]; i += 2) {
+            NSString *key = [callbackParameters objectAtIndex:i];
+            NSString *value = [callbackParameters objectAtIndex:i+1];
             [adjustAdRevenue addCallbackParameter:key value:value];
         }
     }
 
     // Partner parameters
     if ([self isFieldValid:partnerParameters]) {
-        for (NSString *key in partnerParameters) {
-            NSString *value = [partnerParameters objectForKey:key];
+        for (int i = 0; i < [partnerParameters count]; i += 2) {
+            NSString *key = [partnerParameters objectAtIndex:i];
+            NSString *value = [partnerParameters objectAtIndex:i+1];
             [adjustAdRevenue addPartnerParameter:key value:value];
         }
     }
@@ -380,8 +384,8 @@ RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
     NSString *transactionId = dict[@"transactionId"];
     NSString *transactionDate = dict[@"transactionDate"];
     NSString *salesRegion = dict[@"salesRegion"];
-    NSDictionary *callbackParameters = dict[@"callbackParameters"];
-    NSDictionary *partnerParameters = dict[@"partnerParameters"];
+    NSArray *callbackParameters = dict[@"callbackParameters"];
+    NSArray *partnerParameters = dict[@"partnerParameters"];
 
     // Price
     NSDecimalNumber *priceValue;
@@ -408,16 +412,18 @@ RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
 
     // Callback parameters
     if ([self isFieldValid:callbackParameters]) {
-        for (NSString *key in callbackParameters) {
-            NSString *value = [callbackParameters objectForKey:key];
+        for (int i = 0; i < [callbackParameters count]; i += 2) {
+            NSString *key = [callbackParameters objectAtIndex:i];
+            NSString *value = [callbackParameters objectAtIndex:i+1];
             [subscription addCallbackParameter:key value:value];
         }
     }
 
     // Partner parameters
     if ([self isFieldValid:partnerParameters]) {
-        for (NSString *key in partnerParameters) {
-            NSString *value = [partnerParameters objectForKey:key];
+        for (int i = 0; i < [partnerParameters count]; i += 2) {
+            NSString *key = [partnerParameters objectAtIndex:i];
+            NSString *value = [partnerParameters objectAtIndex:i+1];
             [subscription addPartnerParameter:key value:value];
         }
     }
@@ -654,8 +660,8 @@ RCT_EXPORT_METHOD(verifyAndTrackAppStorePurchase:(NSDictionary *)dict callback:(
     NSString *transactionId = dict[@"transactionId"];
     NSString *deduplicationId = dict[@"deduplicationId"];
     NSString *callbackId = dict[@"callbackId"];
-    NSDictionary *callbackParameters = dict[@"callbackParameters"];
-    NSDictionary *partnerParameters = dict[@"partnerParameters"];
+    NSArray *callbackParameters = dict[@"callbackParameters"];
+    NSArray *partnerParameters = dict[@"partnerParameters"];
 
     ADJEvent *adjustEvent = [[ADJEvent alloc] initWithEventToken:eventToken];
     if (![adjustEvent isValid]) {
@@ -670,16 +676,18 @@ RCT_EXPORT_METHOD(verifyAndTrackAppStorePurchase:(NSDictionary *)dict callback:(
 
     // Callback parameters
     if ([self isFieldValid:callbackParameters]) {
-        for (NSString *key in callbackParameters) {
-            NSString *value = [callbackParameters objectForKey:key];
+        for (int i = 0; i < [callbackParameters count]; i += 2) {
+            NSString *key = [callbackParameters objectAtIndex:i];
+            NSString *value = [callbackParameters objectAtIndex:i+1];
             [adjustEvent addCallbackParameter:key value:value];
         }
     }
 
     // Partner parameters
     if ([self isFieldValid:partnerParameters]) {
-        for (NSString *key in partnerParameters) {
-            NSString *value = [partnerParameters objectForKey:key];
+        for (int i = 0; i < [partnerParameters count]; i += 2) {
+            NSString *key = [partnerParameters objectAtIndex:i];
+            NSString *value = [partnerParameters objectAtIndex:i+1];
             [adjustEvent addPartnerParameter:key value:value];
         }
     }

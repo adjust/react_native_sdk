@@ -518,14 +518,6 @@ RCT_EXPORT_METHOD(getIdfv:(RCTResponseSenderBlock)callback) {
     }];
 }
 
-RCT_EXPORT_METHOD(getGoogleAdId:(RCTResponseSenderBlock)callback) {
-    callback(@[@""]);
-}
-
-RCT_EXPORT_METHOD(getAmazonAdId:(RCTResponseSenderBlock)callback) {
-    callback(@[@""]);
-}
-
 RCT_EXPORT_METHOD(getAdid:(RCTResponseSenderBlock)callback) {
     [Adjust adidWithCompletionHandler:^(NSString * _Nullable adid) {
         if (nil == adid) {
@@ -544,15 +536,6 @@ RCT_EXPORT_METHOD(getSdkVersion:(NSString *)sdkPrefix callback:(RCTResponseSende
             callback(@[[NSString stringWithFormat:@"%@@%@", sdkPrefix, sdkVersion]]);
         }
     }];
-}
-
-RCT_EXPORT_METHOD(setReferrer:(NSString *)referrer) {}
-
-RCT_EXPORT_METHOD(trackPlayStoreSubscription:(NSDictionary *)dict) {}
-
-RCT_EXPORT_METHOD(verifyPlayStorePurchase:(NSDictionary *)dict callback:(RCTResponseSenderBlock)callback) {
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-    callback(@[dictionary]);
 }
 
 RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {

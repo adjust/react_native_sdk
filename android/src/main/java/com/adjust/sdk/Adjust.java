@@ -649,16 +649,6 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
-    public void getIdfa(final Callback callback) {
-        callback.invoke("");
-    }
-
-    @ReactMethod
-    public void getIdfv(final Callback callback) {
-        callback.invoke("");
-    }
-
-    @ReactMethod
     public void getAdid(final Callback callback) {
         com.adjust.sdk.Adjust.getAdid(new com.adjust.sdk.OnAdidReadListener() {
             @Override
@@ -720,21 +710,6 @@ public class Adjust extends ReactContextBaseJavaModule implements
                 }
             }
         });
-    }
-
-    @ReactMethod
-    public void requestAppTrackingAuthorization(final Callback callback) {
-        callback.invoke("");
-    }
-
-    @ReactMethod
-    public void updateSkanConversionValue(final int conversionValue, final String coarseValue, final String lockWindow, final Callback callback) {
-        callback.invoke("");
-    }
-
-    @ReactMethod
-    public void getAppTrackingAuthorizationStatus(final Callback callback) {
-        callback.invoke(-1);
     }
 
     @ReactMethod

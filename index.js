@@ -106,15 +106,21 @@ Adjust.gdprForgetMe = function() {
 };
 
 Adjust.getIdfa = function(callback) {
-    module_adjust.getIdfa(callback);
+    if (Platform.OS === "ios") {
+        module_adjust.getIdfa(callback);
+    }
 };
 
 Adjust.getIdfv = function(callback) {
-    module_adjust.getIdfv(callback);
+    if (Platform.OS === "ios") {
+        module_adjust.getIdfv(callback);
+    }
 };
 
 Adjust.getGoogleAdId = function(callback) {
-    module_adjust.getGoogleAdId(callback);
+    if (Platform.OS === "android") {
+        module_adjust.getGoogleAdId(callback);
+    }
 };
 
 Adjust.getAdid = function(callback) {
@@ -126,7 +132,9 @@ Adjust.getAttribution = function(callback) {
 };
 
 Adjust.getAmazonAdId = function(callback) {
-    module_adjust.getAmazonAdId(callback);
+    if (Platform.OS === "android") {
+        module_adjust.getAmazonAdId(callback);
+    }
 };
 
 Adjust.getSdkVersion = function(callback) {
@@ -134,19 +142,27 @@ Adjust.getSdkVersion = function(callback) {
 };
 
 Adjust.requestAppTrackingAuthorization = function(callback) {
-    module_adjust.requestAppTrackingAuthorization(callback);
+    if (Platform.OS === "ios") {
+        module_adjust.requestAppTrackingAuthorization(callback);
+    }
 };
 
 Adjust.updateSkanConversionValue = function(conversionValue, coarseValue, lockWindow, callback) {
-    module_adjust.updateSkanConversionValue(conversionValue, coarseValue, lockWindow, callback);
+    if (Platform.OS === "ios") {
+        module_adjust.updateSkanConversionValue(conversionValue, coarseValue, lockWindow, callback);
+    }
 };
 
 Adjust.getAppTrackingAuthorizationStatus = function(callback) {
-    module_adjust.getAppTrackingAuthorizationStatus(callback);
+    if (Platform.OS === "ios") {
+        module_adjust.getAppTrackingAuthorizationStatus(callback);
+    }
 };
 
 Adjust.trackThirdPartySharing = function(adjustThirdPartySharing) {
-    module_adjust.trackThirdPartySharing(adjustThirdPartySharing);
+    if (Platform.OS === "ios") {
+        module_adjust.trackThirdPartySharing(adjustThirdPartySharing);
+    }
 };
 
 Adjust.trackMeasurementConsent = function(measurementConsent) {

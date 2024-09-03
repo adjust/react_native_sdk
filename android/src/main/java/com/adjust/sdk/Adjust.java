@@ -124,9 +124,6 @@ public class Adjust extends ReactContextBaseJavaModule implements
         }
 
         final AdjustConfig adjustConfig = new AdjustConfig(getReactApplicationContext(), appToken, environment, isLogLevelSuppress);
-        if (!adjustConfig.isValid()) {
-            return;
-        }
 
         // Log level
         if (checkKey(mapConfig, "logLevel")) {
@@ -308,9 +305,6 @@ public class Adjust extends ReactContextBaseJavaModule implements
         }
 
         final AdjustEvent event = new AdjustEvent(eventToken);
-        if (!event.isValid()) {
-            return;
-        }
 
         // Revenue
         if (checkKey(mapEvent, "revenue") || checkKey(mapEvent, "currency")) {
@@ -829,9 +823,6 @@ public class Adjust extends ReactContextBaseJavaModule implements
         }
 
         final AdjustEvent event = new AdjustEvent(eventToken);
-        if (!event.isValid()) {
-            return;
-        }
 
         // Revenue
         if (checkKey(mapEvent, "revenue") || checkKey(mapEvent, "currency")) {

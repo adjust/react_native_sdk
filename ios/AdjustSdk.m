@@ -59,10 +59,6 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
                                                       environment:environment
                                                       suppressLogLevel:isLogLevelSuppress];
 
-    if (![adjustConfig isValid]) {
-        return;
-    }
-
     // Log level
     if ([self isFieldValid:logLevel]) {
         [adjustConfig setLogLevel:[ADJLogger logLevelFromString:[logLevel lowercaseString]]];
@@ -208,9 +204,6 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
     NSArray *partnerParameters = dict[@"partnerParameters"];
 
     ADJEvent *adjustEvent = [[ADJEvent alloc] initWithEventToken:eventToken];
-    if (![adjustEvent isValid]) {
-        return;
-    }
 
     // Revenue
     if ([self isFieldValid:revenue]) {
@@ -647,9 +640,6 @@ RCT_EXPORT_METHOD(verifyAndTrackAppStorePurchase:(NSDictionary *)dict callback:(
     NSArray *partnerParameters = dict[@"partnerParameters"];
 
     ADJEvent *adjustEvent = [[ADJEvent alloc] initWithEventToken:eventToken];
-    if (![adjustEvent isValid]) {
-        return;
-    }
 
     // Revenue
     if ([self isFieldValid:revenue]) {

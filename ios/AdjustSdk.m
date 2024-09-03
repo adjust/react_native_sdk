@@ -432,7 +432,7 @@ RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
     [Adjust trackAppStoreSubscription:subscription];
 }
 
-RCT_EXPORT_METHOD(addGlobalCallbackParameter:(NSString *)value forKey:(NSString *)key) {
+RCT_EXPORT_METHOD(addGlobalCallbackParameter:(NSString *)key value:(NSString *)value) {
     if (!([self isFieldValid:key]) || !([self isFieldValid:value])) {
         return;
     }
@@ -450,7 +450,7 @@ RCT_EXPORT_METHOD(removeGlobalCallbackParameters) {
     [Adjust removeGlobalCallbackParameters];
 }
 
-RCT_EXPORT_METHOD(addGlobalPartnerParameter:(NSString *)value forKey:(NSString *)key) {
+RCT_EXPORT_METHOD(addGlobalPartnerParameter:(NSString *)key value:(NSString *)value) {
     if (!([self isFieldValid:key]) || !([self isFieldValid:value])) {
         return;
     }

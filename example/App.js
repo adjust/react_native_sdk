@@ -100,7 +100,7 @@
    });
  
    adjustConfig.setSkanUpdatedCallbackListener(function(conversionData) {
-     console.log("Conversion Data updated callback recveived");
+     console.log("Conversion Data updated callback received");
      console.log("Conversion Data: " + conversionData);
    });
  

@@ -855,13 +855,11 @@ AdjustCommandExecutor.prototype.trackAdRevenue = function(params) {
 };
 
 AdjustCommandExecutor.prototype.getLastDeeplink = function(params) {
-    if (Platform.OS === 'iOS') {
-        var _this = this;
-        Adjust.getLastDeeplink(function(lastDeeplink) {
-            AdjustSdkTest.addInfoToSend('last_deeplink', lastDeeplink);
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
-        });
-    }
+    var _this = this;
+    Adjust.getLastDeeplink(function(lastDeeplink) {
+        AdjustSdkTest.addInfoToSend('last_deeplink', lastDeeplink);
+        AdjustSdkTest.sendInfoToServer(_this.extraPath);
+    });
 };
 
 AdjustCommandExecutor.prototype.verifyPurchase = function(params) {

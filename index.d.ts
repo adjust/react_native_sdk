@@ -92,31 +92,31 @@ declare module 'react-native-adjust' {
     public attConsentWaitingInterval(attConsentWaitingInterval: number): void
     public setUrlStrategy(urlStrategyDomains: any, useSubdomains: boolean, isDataResidency: boolean): void
 
-    public setAttributionCallbackListener(
+    public setAttributionListener(
       callback: (attribution: AdjustAttribution) => void
     ): void
 
-    public setEventTrackingSucceededCallbackListener(
+    public setEventTrackingSucceededListener(
       callback: (eventSuccess: AdjustEventTrackingSuccess) => void
     ): void
 
-    public setEventTrackingFailedCallbackListener(
+    public setEventTrackingFailedListener(
       callback: (eventFailed: AdjustEventTrackingFailure) => void
     ): void
 
-    public setSessionTrackingSucceededCallbackListener(
+    public setSessionTrackingSucceededListener(
       callback: (sessionSuccess: AdjustSessionTrackingSuccess) => void
     ): void
 
-    public setSessionTrackingFailedCallbackListener(
+    public setSessionTrackingFailedListener(
       callback: (sessionFailed: AdjustSessionTrackingFailure) => void
     ): void
 
-    public setDeferredDeeplinkCallbackListener(
+    public setDeferredDeeplinkListener(
       callback: (uri: AdjustUri) => void
     ): void
 
-    public setSkanUpdatedCallbackListener(
+    public setSkanUpdatedListener(
       callback: (skadData: AdjustSkadData) => void
     ): void
 

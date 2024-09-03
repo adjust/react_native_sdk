@@ -734,31 +734,31 @@ RCT_EXPORT_METHOD(processAndResolveDeeplink:(NSDictionary *)dict callback:(RCTRe
     }];
 }
 
-RCT_EXPORT_METHOD(setAttributionCallbackListener) {
+RCT_EXPORT_METHOD(setAttributionListener) {
     _isAttributionCallbackImplemented = YES;
 }
 
-RCT_EXPORT_METHOD(setEventTrackingSucceededCallbackListener) {
+RCT_EXPORT_METHOD(setEventTrackingSucceededListener) {
     _isEventTrackingSucceededCallbackImplemented = YES;
 }
 
-RCT_EXPORT_METHOD(setEventTrackingFailedCallbackListener) {
+RCT_EXPORT_METHOD(setEventTrackingFailedListener) {
     _isEventTrackingFailedCallbackImplemented = YES;
 }
 
-RCT_EXPORT_METHOD(setSessionTrackingSucceededCallbackListener) {
+RCT_EXPORT_METHOD(setSessionTrackingSucceededListener) {
     _isSessionTrackingSucceededCallbackImplemented = YES;
 }
 
-RCT_EXPORT_METHOD(setSessionTrackingFailedCallbackListener) {
+RCT_EXPORT_METHOD(setSessionTrackingFailedListener) {
     _isSessionTrackingFailedCallbackImplemented = YES;
 }
 
-RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackListener) {
+RCT_EXPORT_METHOD(setDeferredDeeplinkListener) {
     _isDeferredDeeplinkCallbackImplemented = YES;
 }
 
-RCT_EXPORT_METHOD(setSkanUpdatedCallbackListener) {
+RCT_EXPORT_METHOD(setSkanUpdatedListener) {
     _isSkanUpdatedCallbackImplemented = YES;
 }
 

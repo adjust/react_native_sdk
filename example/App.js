@@ -42,7 +42,7 @@
    // adjustConfig.enableCoppaCompliance();
    // adjustConfig.setAttConsentWaitingInterval(16);
  
-   adjustConfig.setAttributionCallbackListener(function(attribution) {
+   adjustConfig.setAttributionListener(function(attribution) {
      console.log("Attribution callback received");
      console.log("Tracker token = " + attribution.trackerToken);
      console.log("Tracker name = " + attribution.trackerName);
@@ -56,7 +56,7 @@
      console.log("Cost currency = " + attribution.costCurrency);
    });
  
-   adjustConfig.setEventTrackingSucceededCallbackListener(function(eventSuccess) {
+   adjustConfig.setEventTrackingSucceededListener(function(eventSuccess) {
      console.log("Event tracking succeeded callback received");
      console.log("Message: " + eventSuccess.message);
      console.log("Timestamp: " + eventSuccess.timestamp);
@@ -66,7 +66,7 @@
      console.log("JSON response: " + eventSuccess.jsonResponse);
    });
  
-   adjustConfig.setEventTrackingFailedCallbackListener(function(eventFailed) {
+   adjustConfig.setEventTrackingFailedListener(function(eventFailed) {
      console.log("Event tracking failed callback received");
      console.log("Message: " + eventFailed.message);
      console.log("Timestamp: " + eventFailed.timestamp);
@@ -77,7 +77,7 @@
      console.log("JSON response: " + eventFailed.jsonResponse);
    });
  
-   adjustConfig.setSessionTrackingSucceededCallbackListener(function(sessionSuccess) {
+   adjustConfig.setSessionTrackingSucceededListener(function(sessionSuccess) {
      console.log("Session tracking succeeded callback received");
      console.log("Message: " + sessionSuccess.message);
      console.log("Timestamp: " + sessionSuccess.timestamp);
@@ -85,7 +85,7 @@
      console.log("JSON response: " + sessionSuccess.jsonResponse);
    });
  
-   adjustConfig.setSessionTrackingFailedCallbackListener(function(sessionFailed) {
+   adjustConfig.setSessionTrackingFailedListener(function(sessionFailed) {
      console.log("Session tracking failed callback received");
      console.log("Message: " + sessionFailed.message);
      console.log("Timestamp: " + sessionFailed.timestamp);
@@ -94,12 +94,12 @@
      console.log("JSON response: " + sessionFailed.jsonResponse);
    });
  
-   adjustConfig.setDeferredDeeplinkCallbackListener(function(uri) {
+   adjustConfig.setDeferredDeeplinkListener(function(uri) {
      console.log("Deferred Deeplink Callback received");
      console.log("URL: " + uri.uri);
    });
  
-   adjustConfig.setSkanUpdatedCallbackListener(function(conversionData) {
+   adjustConfig.setSkanUpdatedListener(function(conversionData) {
      console.log("Conversion Data updated callback received");
      console.log("Conversion Data: " + conversionData);
    });

@@ -59,15 +59,15 @@ Adjust.processDeeplink = function(adjustDeeplink) {
     module_adjust.processDeeplink(adjustDeeplink);
 };
 
-Adjust.trackAppStoreSubscription = function(subscription) {
+Adjust.trackAppStoreSubscription = function(adjustAppStoreSubscription) {
     if (Platform.OS === "ios") {
-        module_adjust.trackAppStoreSubscription(subscription);
+        module_adjust.trackAppStoreSubscription(adjustAppStoreSubscription);
     }
 };
 
-Adjust.trackPlayStoreSubscription = function(subscription) {
+Adjust.trackPlayStoreSubscription = function(adjustPlayStoreSubscription) {
     if (Platform.OS === "android") {
-        module_adjust.trackPlayStoreSubscription(subscription);
+        module_adjust.trackPlayStoreSubscription(adjustPlayStoreSubscription);
     }
 };
 
@@ -171,9 +171,9 @@ Adjust.getLastDeeplink = function(callback) {
     module_adjust.getLastDeeplink(callback);
 };
 
-Adjust.verifyAppStorePurchase = function(purchase, callback) {
+Adjust.verifyAppStorePurchase = function(adjustAppStorePurchase, callback) {
     if (Platform.OS === "ios") {
-        module_adjust.verifyAppStorePurchase(purchase, callback);
+        module_adjust.verifyAppStorePurchase(adjustAppStorePurchase, callback);
     }
 };
 
@@ -183,9 +183,9 @@ Adjust.verifyAndTrackAppStorePurchase = function(adjustEvent, callback) {
     }
 };
 
-Adjust.verifyPlayStorePurchase = function(purchase, callback) {
+Adjust.verifyPlayStorePurchase = function(adjustPlayStorePurchase, callback) {
     if (Platform.OS === "android") {
-        module_adjust.verifyPlayStorePurchase(purchase, callback);
+        module_adjust.verifyPlayStorePurchase(adjustPlayStorePurchase, callback);
     }
 };
 
@@ -407,66 +407,66 @@ AdjustConfig.prototype.setUrlStrategy = function(urlStrategyDomains, useSubdomai
     this.isDataResidency = isDataResidency;
 };
 
-AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {
+AdjustConfig.prototype.setAttributionListener = function(attributionListener) {
     if (null == AdjustConfig.AttributionSubscription) {
-        module_adjust.setAttributionCallbackListener();
+        module_adjust.setAttributionListener();
         AdjustConfig.AttributionSubscription = module_adjust_emitter.addListener(
-            'adjust_attribution', attributionCallbackListener
+            'adjust_attribution', attributionListener
         );
     }
 };
 
-AdjustConfig.prototype.setEventTrackingSucceededCallbackListener = function(eventTrackingSucceededCallbackListener) {
+AdjustConfig.prototype.setEventTrackingSucceededListener = function(eventTrackingSucceededListener) {
     if (null == AdjustConfig.EventTrackingSucceededSubscription) {
-        module_adjust.setEventTrackingSucceededCallbackListener();
+        module_adjust.setEventTrackingSucceededListener();
         AdjustConfig.EventTrackingSucceededSubscription = module_adjust_emitter.addListener(
-            'adjust_eventTrackingSucceeded', eventTrackingSucceededCallbackListener
+            'adjust_eventTrackingSucceeded', eventTrackingSucceededListener
         );
     }
 };
 
-AdjustConfig.prototype.setEventTrackingFailedCallbackListener = function(eventTrackingFailedCallbackListener) {
+AdjustConfig.prototype.setEventTrackingFailedListener = function(eventTrackingFailedListener) {
     if (null == AdjustConfig.EventTrackingFailedSubscription) {
-        module_adjust.setEventTrackingFailedCallbackListener();
+        module_adjust.setEventTrackingFailedListener();
         AdjustConfig.EventTrackingFailedSubscription = module_adjust_emitter.addListener(
-            'adjust_eventTrackingFailed', eventTrackingFailedCallbackListener
+            'adjust_eventTrackingFailed', eventTrackingFailedListener
         );
     }
 };
 
-AdjustConfig.prototype.setSessionTrackingSucceededCallbackListener = function(sessionTrackingSucceededCallbackListener) {
+AdjustConfig.prototype.setSessionTrackingSucceededListener = function(sessionTrackingSucceededListener) {
     if (null == AdjustConfig.SessionTrackingSucceededSubscription) {
-        module_adjust.setSessionTrackingSucceededCallbackListener();
+        module_adjust.setSessionTrackingSucceededListener();
         AdjustConfig.SessionTrackingSucceededSubscription = module_adjust_emitter.addListener(
-            'adjust_sessionTrackingSucceeded', sessionTrackingSucceededCallbackListener
+            'adjust_sessionTrackingSucceeded', sessionTrackingSucceededListener
         );
     }
 };
 
-AdjustConfig.prototype.setSessionTrackingFailedCallbackListener = function(sessionTrackingFailedCallbackListener) {
+AdjustConfig.prototype.setSessionTrackingFailedListener = function(sessionTrackingFailedListener) {
     if (null == AdjustConfig.SessionTrackingFailedSubscription) {
-        module_adjust.setSessionTrackingFailedCallbackListener();
+        module_adjust.setSessionTrackingFailedListener();
         AdjustConfig.SessionTrackingFailedSubscription = module_adjust_emitter.addListener(
-            'adjust_sessionTrackingFailed', sessionTrackingFailedCallbackListener
+            'adjust_sessionTrackingFailed', sessionTrackingFailedListener
         );
     }
 };
 
-AdjustConfig.prototype.setDeferredDeeplinkCallbackListener = function(deferredDeeplinkCallbackListener) {
+AdjustConfig.prototype.setDeferredDeeplinkListener = function(deferredDeeplinkListener) {
     if (null == AdjustConfig.DeferredDeeplinkSubscription) {
-        module_adjust.setDeferredDeeplinkCallbackListener();
+        module_adjust.setDeferredDeeplinkListener();
         AdjustConfig.DeferredDeeplinkSubscription = module_adjust_emitter.addListener(
-            'adjust_deferredDeeplink', deferredDeeplinkCallbackListener
+            'adjust_deferredDeeplink', deferredDeeplinkListener
         );
     }
 };
 
-AdjustConfig.prototype.setSkanUpdatedCallbackListener = function(skadUpdatedCallbackListener) {
+AdjustConfig.prototype.setSkanUpdatedListener = function(skadUpdatedListener) {
     if (Platform.OS === "ios") {
         if (null == AdjustConfig.SkanUpdatedSubscription) {
-            module_adjust.setSkanUpdatedCallbackListener();
+            module_adjust.setSkanUpdatedListener();
             AdjustConfig.SkanUpdatedSubscription = module_adjust_emitter.addListener(
-                'adjust_skadConversionDataUpdated', skadUpdatedCallbackListener
+                'adjust_skadConversionDataUpdated', skadUpdatedListener
             );
         }
     }

@@ -953,32 +953,32 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
-    public void setAttributionCallbackListener() {
+    public void setAttributionListener() {
         this.attributionCallback = true;
     }
 
     @ReactMethod
-    public void setEventTrackingSucceededCallbackListener() {
+    public void setEventTrackingSucceededListener() {
         this.eventTrackingSucceededCallback = true;
     }
 
     @ReactMethod
-    public void setEventTrackingFailedCallbackListener() {
+    public void setEventTrackingFailedListener() {
         this.eventTrackingFailedCallback = true;
     }
 
     @ReactMethod
-    public void setSessionTrackingSucceededCallbackListener() {
+    public void setSessionTrackingSucceededListener() {
         this.sessionTrackingSucceededCallback = true;
     }
 
     @ReactMethod
-    public void setSessionTrackingFailedCallbackListener() {
+    public void setSessionTrackingFailedListener() {
         this.sessionTrackingFailedCallback = true;
     }
 
     @ReactMethod
-    public void setDeferredDeeplinkCallbackListener() {
+    public void setDeferredDeeplinkListener() {
         this.deferredDeeplinkCallback = true;
     }
 

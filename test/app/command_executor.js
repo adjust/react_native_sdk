@@ -353,7 +353,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
 
     if ('attributionCallbackSendAll' in params) {
         var _this = this;
-        adjustConfig.setAttributionListener(function(attribution) {
+        adjustConfig.setAttributionCallback(function(attribution) {
             AdjustSdkTest.addInfoToSend('tracker_token', attribution.trackerToken);
             AdjustSdkTest.addInfoToSend('tracker_name', attribution.trackerName);
             AdjustSdkTest.addInfoToSend('network', attribution.network);
@@ -371,7 +371,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
 
     if ('sessionCallbackSendSuccess' in params) {
         var _this = this;
-        adjustConfig.setSessionTrackingSucceededListener(function(sessionSuccess) {
+        adjustConfig.setSessionTrackingSucceededCallback(function(sessionSuccess) {
             AdjustSdkTest.addInfoToSend('message', sessionSuccess.message);
             AdjustSdkTest.addInfoToSend('timestamp', sessionSuccess.timestamp);
             AdjustSdkTest.addInfoToSend('adid', sessionSuccess.adid);
@@ -384,7 +384,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
 
     if ('sessionCallbackSendFailure' in params) {
         var _this = this;
-        adjustConfig.setSessionTrackingFailedListener(function(sessionFailed) {
+        adjustConfig.setSessionTrackingFailedCallback(function(sessionFailed) {
             AdjustSdkTest.addInfoToSend('message', sessionFailed.message);
             AdjustSdkTest.addInfoToSend('timestamp', sessionFailed.timestamp);
             AdjustSdkTest.addInfoToSend('adid', sessionFailed.adid);
@@ -398,7 +398,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
 
     if ('eventCallbackSendSuccess' in params) {
         var _this = this;
-        adjustConfig.setEventTrackingSucceededListener(function(eventSuccess) {
+        adjustConfig.setEventTrackingSucceededCallback(function(eventSuccess) {
             AdjustSdkTest.addInfoToSend('message', eventSuccess.message);
             AdjustSdkTest.addInfoToSend('timestamp', eventSuccess.timestamp);
             AdjustSdkTest.addInfoToSend('adid', eventSuccess.adid);
@@ -413,7 +413,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
 
     if ('eventCallbackSendFailure' in params) {
         var _this = this;
-        adjustConfig.setEventTrackingFailedListener(function(eventFailed) {
+        adjustConfig.setEventTrackingFailedCallback(function(eventFailed) {
             AdjustSdkTest.addInfoToSend('message', eventFailed.message);
             AdjustSdkTest.addInfoToSend('timestamp', eventFailed.timestamp);
             AdjustSdkTest.addInfoToSend('adid', eventFailed.adid);
@@ -433,7 +433,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
         var launchDeferredDeeplink = launchDeferredDeeplinkS === 'true';
         console.log(`[*] Launch deferred deeplink set to: ${launchDeferredDeeplink}`);
         adjustConfig.setShouldLaunchDeeplink(launchDeferredDeeplink);
-        adjustConfig.setDeferredDeeplinkListener(function(uri) {
+        adjustConfig.setDeferredDeeplinkCallback(function(uri) {
             AdjustSdkTest.addInfoToSend('deeplink', uri);
             AdjustSdkTest.sendInfoToServer(_this.extraPath);
         });
@@ -441,7 +441,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
 
     if ('skanCallback' in params) {
         var _this = this;
-        adjustConfig.setSkanUpdatedListener(function(skanData) {
+        adjustConfig.setSkanUpdatedCallback(function(skanData) {
             AdjustSdkTest.addInfoToSend('conversion_value', skanData.conversionValue);
             AdjustSdkTest.addInfoToSend('coarse_value', skanData.coarseValue);
             AdjustSdkTest.addInfoToSend('lock_window', skanData.lockWindow);

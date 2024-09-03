@@ -29,12 +29,12 @@ public class Adjust extends ReactContextBaseJavaModule implements
                 OnSessionTrackingFailedListener,
                 OnDeferredDeeplinkResponseListener {
     private static String TAG = "AdjustBridge";
-    private boolean attributionCallback;
-    private boolean eventTrackingSucceededCallback;
-    private boolean eventTrackingFailedCallback;
-    private boolean sessionTrackingSucceededCallback;
-    private boolean sessionTrackingFailedCallback;
-    private boolean deferredDeeplinkCallback;
+    private boolean isAttributionCallbackImplemented;
+    private boolean isEventTrackingSucceededCallbackImplemented;
+    private boolean isEventTrackingFailedCallbackImplemented;
+    private boolean isSessionTrackingSucceededCallbackImplemented;
+    private boolean isSessionTrackingFailedCallbackImplemented;
+    private boolean isDeferredDeeplinkCallbackImplemented;
     private boolean isDeferredDeeplinkOpeningEnabled = true;
 
     public Adjust(ReactApplicationContext reactContext) {
@@ -248,32 +248,32 @@ public class Adjust extends ReactContextBaseJavaModule implements
          }
 
         // Attribution callback
-        if (attributionCallback) {
+        if (isAttributionCallbackImplemented) {
             adjustConfig.setOnAttributionChangedListener(this);
         }
 
         // Event tracking succeeded callback
-        if (eventTrackingSucceededCallback) {
+        if (isEventTrackingSucceededCallbackImplemented) {
             adjustConfig.setOnEventTrackingSucceededListener(this);
         }
 
         // Event tracking failed callback
-        if (eventTrackingFailedCallback) {
+        if (isEventTrackingFailedCallbackImplemented) {
             adjustConfig.setOnEventTrackingFailedListener(this);
         }
 
         // Session tracking succeeded callback
-        if (sessionTrackingSucceededCallback) {
+        if (isSessionTrackingSucceededCallbackImplemented) {
             adjustConfig.setOnSessionTrackingSucceededListener(this);
         }
 
         // Session tracking failed callback
-        if (sessionTrackingFailedCallback) {
+        if (isSessionTrackingFailedCallbackImplemented) {
             adjustConfig.setOnSessionTrackingFailedListener(this);
         }
 
         // Deferred deeplink callback
-        if (deferredDeeplinkCallback) {
+        if (isDeferredDeeplinkCallbackImplemented) {
             adjustConfig.setOnDeferredDeeplinkResponseListener(this);
         }
 
@@ -953,43 +953,43 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
-    public void setAttributionListener() {
-        this.attributionCallback = true;
+    public void setAttributionCallbackImplemented() {
+        this.isAttributionCallbackImplemented = true;
     }
 
     @ReactMethod
-    public void setEventTrackingSucceededListener() {
-        this.eventTrackingSucceededCallback = true;
+    public void setEventTrackingSucceededCallbackImplemented() {
+        this.isEventTrackingSucceededCallbackImplemented = true;
     }
 
     @ReactMethod
-    public void setEventTrackingFailedListener() {
-        this.eventTrackingFailedCallback = true;
+    public void setEventTrackingFailedCallbackImplemented() {
+        this.isEventTrackingFailedCallbackImplemented = true;
     }
 
     @ReactMethod
-    public void setSessionTrackingSucceededListener() {
-        this.sessionTrackingSucceededCallback = true;
+    public void setSessionTrackingSucceededCallbackImplemented() {
+        this.isSessionTrackingSucceededCallbackImplemented = true;
     }
 
     @ReactMethod
-    public void setSessionTrackingFailedListener() {
-        this.sessionTrackingFailedCallback = true;
+    public void setSessionTrackingFailedCallbackImplemented() {
+        this.isSessionTrackingFailedCallbackImplemented = true;
     }
 
     @ReactMethod
-    public void setDeferredDeeplinkListener() {
-        this.deferredDeeplinkCallback = true;
+    public void setDeferredDeeplinkCallbackImplemented() {
+        this.isDeferredDeeplinkCallbackImplemented = true;
     }
 
     @ReactMethod
     public void teardown() {
-        this.attributionCallback = false;
-        this.eventTrackingSucceededCallback = false;
-        this.eventTrackingFailedCallback = false;
-        this.sessionTrackingSucceededCallback = false;
-        this.sessionTrackingFailedCallback = false;
-        this.deferredDeeplinkCallback = false;
+        this.isAttributionCallbackImplemented = false;
+        this.isEventTrackingSucceededCallbackImplemented = false;
+        this.isEventTrackingFailedCallbackImplemented = false;
+        this.isSessionTrackingSucceededCallbackImplemented = false;
+        this.isSessionTrackingFailedCallbackImplemented = false;
+        this.isDeferredDeeplinkCallbackImplemented = false;
     }
 
     @ReactMethod

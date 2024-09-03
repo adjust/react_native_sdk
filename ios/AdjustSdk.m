@@ -189,7 +189,6 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
 
     // Start SDK
     [Adjust initSdk:adjustConfig];
-    [Adjust trackSubsessionStart];
 }
 
 RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {

@@ -160,9 +160,7 @@ Adjust.getAppTrackingAuthorizationStatus = function(callback) {
 };
 
 Adjust.trackThirdPartySharing = function(adjustThirdPartySharing) {
-    if (Platform.OS === "ios") {
-        module_adjust.trackThirdPartySharing(adjustThirdPartySharing);
-    }
+    module_adjust.trackThirdPartySharing(adjustThirdPartySharing);
 };
 
 Adjust.trackMeasurementConsent = function(measurementConsent) {

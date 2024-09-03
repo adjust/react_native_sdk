@@ -134,7 +134,6 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
         case 'measurementConsent': this.trackMeasurementConsent(command.params); break;
         case 'trackSubscription': this.trackAppStoreSubscription(command.params); break;
         case 'trackAdRevenue': this.trackAdRevenue(command.params); break;
-        case 'getLastDeeplink': this.getLastDeeplink(command.params); break;
         case 'verifyPurchase': this.verifyPurchase(command.params); break;
         case 'verifyTrack': this.verifyTrack(command.params); break;
         case 'processDeeplink': this.processDeeplink(command.params); break;
@@ -922,14 +921,6 @@ AdjustCommandExecutor.prototype.verifyTrack = function(params) {
     }
    
     delete this.savedEvents[0];
-};
-
-AdjustCommandExecutor.prototype.getLastDeeplink = function(params) {
-    var _this = this;
-    Adjust.getLastDeeplink(function(lastDeeplink) {
-        AdjustSdkTest.addInfoToSend('last_deeplink', lastDeeplink);
-        AdjustSdkTest.sendInfoToServer(_this.extraPath);
-    });
 };
 
 AdjustCommandExecutor.prototype.processDeeplink = function(params) {

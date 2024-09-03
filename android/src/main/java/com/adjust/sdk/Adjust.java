@@ -943,7 +943,13 @@ public class Adjust extends ReactContextBaseJavaModule implements
 
     @ReactMethod
     public void getLastDeeplink(final Callback callback) {
-        callback.invoke("");
+        com.adjust.sdk.Adjust.getLastDeeplink(getReactApplicationContext(), new OnLastDeeplinkReadListener() {
+            @Override
+            public void onLastDeeplinkRead(Uri uri) {
+                String strUri = (uri != null) ? uri.toString() : "";
+                callback.invoke(strUri);
+            }
+        });
     }
 
     @ReactMethod

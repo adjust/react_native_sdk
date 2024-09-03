@@ -79,8 +79,8 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         [adjustConfig setExternalDeviceId:externalDeviceId];
     }
 
-    NSMutableArray *urlStrategyDomainsArray;
     // URL strategy
+    NSMutableArray *urlStrategyDomainsArray;
     if ([self isFieldValid:urlStrategyDomains] && [urlStrategyDomains count] > 0) {
         urlStrategyDomainsArray = [[NSMutableArray alloc] initWithCapacity:[urlStrategyDomains count]];
         for (int i = 0; i < [urlStrategyDomains count]; i += 1) {

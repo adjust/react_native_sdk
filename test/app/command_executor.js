@@ -521,7 +521,9 @@ AdjustCommandExecutor.prototype.event = function(params) {
         for (var i = 0; i < callbackParams.length; i += 2) {
             var key = callbackParams[i];
             var value = callbackParams[i + 1];
-            adjustEvent.addCallbackParameter(key, value);
+            adjustEvent.addCallbackParameter(
+                key == "null" ? null : key,
+                value == "null" ? null : value);
         }
     }
 
@@ -530,7 +532,9 @@ AdjustCommandExecutor.prototype.event = function(params) {
         for (var i = 0; i < partnerParams.length; i += 2) {
             var key = partnerParams[i];
             var value = partnerParams[i + 1];
-            adjustEvent.addPartnerParameter(key, value);
+            adjustEvent.addPartnerParameter(
+                key == "null" ? null : key,
+                value == "null" ? null : value);
         }
     }
 
@@ -615,7 +619,9 @@ AdjustCommandExecutor.prototype.addGlobalCallbackParameter = function(params) {
     for (var i = 0; i < list.length; i += 2) {
         var key = list[i];
         var value = list[i + 1];
-        Adjust.addGlobalCallbackParameter(key, value);
+        Adjust.addGlobalCallbackParameter(
+            key == "null" ? null : key,
+            value == "null" ? null : value);
     }
 };
 
@@ -624,7 +630,9 @@ AdjustCommandExecutor.prototype.addGlobalPartnerParameter = function(params) {
     for (var i = 0; i < list.length; i += 2) {
         var key = list[i];
         var value = list[i + 1];
-        Adjust.addGlobalPartnerParameter(key, value);
+        Adjust.addGlobalPartnerParameter(
+            key == "null" ? null : key,
+            value == "null" ? null : value);
     }
 };
 
@@ -632,7 +640,7 @@ AdjustCommandExecutor.prototype.removeGlobalCallbackParameter = function(params)
     if ('key' in params) {
         var list = getValueFromKey(params, 'key');
         for (var i = 0; i < list.length; i += 1) {
-            Adjust.removeGlobalCallbackParameter(list[i]);
+            Adjust.removeGlobalCallbackParameter(list[i] == "null" ? null : list[i]);
         }
     }
 };
@@ -641,7 +649,7 @@ AdjustCommandExecutor.prototype.removeGlobalPartnerParameter = function(params) 
     if ('key' in params) {
         var list = getValueFromKey(params, 'key');
         for (var i = 0; i < list.length; i += 1) {
-            Adjust.removeGlobalPartnerParameter(list[i]);
+            Adjust.removeGlobalPartnerParameter(list[i] == "null" ? null : list[i]);
         }
     }
 };
@@ -686,7 +694,10 @@ AdjustCommandExecutor.prototype.trackThirdPartySharing = function(params) {
             var partnerName = granularOptions[i];
             var key = granularOptions[i + 1];
             var value = granularOptions[i + 2];
-            adjustThirdPartySharing.addGranularOption(partnerName, key, value);
+            adjustThirdPartySharing.addGranularOption(
+                partnerName == "null" ? null : partnerName,
+                key == "null" ? null : key,
+                value == "null" ? null : value);
         }
     }
 
@@ -696,7 +707,10 @@ AdjustCommandExecutor.prototype.trackThirdPartySharing = function(params) {
             var partnerName = partnerSharingSettings[i];
             var key = partnerSharingSettings[i + 1];
             var value = partnerSharingSettings[i + 2] === 'true';
-            adjustThirdPartySharing.addPartnerSharingSetting(partnerName, key, value);
+            adjustThirdPartySharing.addPartnerSharingSetting(
+                partnerName == "null" ? null : partnerName,
+                key == "null" ? null : key,
+                value);
         }
     }
 
@@ -725,7 +739,9 @@ AdjustCommandExecutor.prototype.trackAppStoreSubscription = function(params) {
             for (var i = 0; i < callbackParams.length; i += 2) {
                 var key = callbackParams[i];
                 var value = callbackParams[i + 1];
-                subscription.addCallbackParameter(key, value);
+                subscription.addCallbackParameter(
+                    key == "null" ? null : key,
+                    value == "null" ? null : value);
             }
         }
 
@@ -734,7 +750,9 @@ AdjustCommandExecutor.prototype.trackAppStoreSubscription = function(params) {
             for (var i = 0; i < partnerParams.length; i += 2) {
                 var key = partnerParams[i];
                 var value = partnerParams[i + 1];
-                subscription.addPartnerParameter(key, value);
+                subscription.addPartnerParameter(
+                    key == "null" ? null : key,
+                    value == "null" ? null : value);
             }
         }
 
@@ -757,7 +775,9 @@ AdjustCommandExecutor.prototype.trackAppStoreSubscription = function(params) {
             for (var i = 0; i < callbackParams.length; i += 2) {
                 var key = callbackParams[i];
                 var value = callbackParams[i + 1];
-                subscription.addCallbackParameter(key, value);
+                subscription.addCallbackParameter(
+                    key == "null" ? null : key,
+                    value == "null" ? null : value);
             }
         }
 
@@ -766,7 +786,9 @@ AdjustCommandExecutor.prototype.trackAppStoreSubscription = function(params) {
             for (var i = 0; i < partnerParams.length; i += 2) {
                 var key = partnerParams[i];
                 var value = partnerParams[i + 1];
-                subscription.addPartnerParameter(key, value);
+                subscription.addPartnerParameter(
+                    key == "null" ? null : key,
+                    value == "null" ? null : value);
             }
         }
 
@@ -838,7 +860,9 @@ AdjustCommandExecutor.prototype.trackAdRevenue = function(params) {
         for (var i = 0; i < callbackParams.length; i += 2) {
             var key = callbackParams[i];
             var value = callbackParams[i + 1];
-            adjustAdRevenue.addCallbackParameter(key, value);
+            adjustAdRevenue.addCallbackParameter(
+                key == "null" ? null : key,
+                value == "null" ? null : value);
         }
     }
 
@@ -847,7 +871,9 @@ AdjustCommandExecutor.prototype.trackAdRevenue = function(params) {
         for (var i = 0; i < partnerParams.length; i += 2) {
             var key = partnerParams[i];
             var value = partnerParams[i + 1];
-            adjustAdRevenue.addPartnerParameter(key, value);
+            adjustAdRevenue.addPartnerParameter(
+                key == "null" ? null : key,
+                value == "null" ? null : value);
         }
     }
     Adjust.trackAdRevenue(adjustAdRevenue);

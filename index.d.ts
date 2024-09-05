@@ -55,7 +55,7 @@ declare module 'react-native-adjust' {
     uri: string
   }
 
-  interface AdjustSkadData {
+  interface AdjustSkanData {
     conversionValue: number
     coarseValue: string
     lockWindow: boolean
@@ -116,8 +116,8 @@ declare module 'react-native-adjust' {
       callback: (uri: AdjustUri) => void
     ): void
 
-    public setSkanUpdatedListener(
-      callback: (skadData: AdjustSkadData) => void
+    public setSkanUpdatedCallback(
+      callback: (skanData: AdjustSkanData) => void
     ): void
 
     static LogLevelVerbose: LogLevel

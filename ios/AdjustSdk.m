@@ -469,16 +469,20 @@ RCT_EXPORT_METHOD(updateSkanConversionValue:(NSNumber * _Nonnull)conversionValue
                   coarseValue:(NSString * _Nonnull)coarseValue
                   lockWindow:(NSNumber * _Nullable)lockWindow
                   errorCallback:(RCTResponseSenderBlock)callback) {
-    [Adjust updateSkanConversionValue:[conversionValue intValue]
-                          coarseValue:coarseValue
-                           lockWindow:(lockWindow == nil) ? nil : [NSNumber numberWithBool:[lockWindow boolValue]]
-                withCompletionHandler:^(NSError * _Nullable error) {
-        if (nil == error) {
-            callback(@[@""]);
-        } else {
-            callback(@[[error localizedDescription]]);
-        }
-    }];
+    if([self isFieldValid:conversionValue]) {
+        [Adjust updateSkanConversionValue:[conversionValue intValue]
+                              coarseValue:coarseValue
+                               lockWindow:lockWindow
+                    withCompletionHandler:^(NSError * _Nullable error) {
+            if (nil == error) {
+                callback(@[@""]);
+            } else {
+                callback(@[[error localizedDescription]]);
+            }
+        }];
+    } else {
+        callback(@[@"Invalid conversion value passed."]);
+    }
 }
 
 RCT_EXPORT_METHOD(getAppTrackingAuthorizationStatus:(RCTResponseSenderBlock)callback) {

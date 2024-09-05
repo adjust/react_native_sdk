@@ -513,7 +513,9 @@ AdjustCommandExecutor.prototype.event = function(params) {
         var revenueParams = getValueFromKey(params, 'revenue');
         var currency = revenueParams[0];
         var revenue = parseFloat(revenueParams[1]);
-        adjustEvent.setRevenue(revenue, currency);
+        adjustEvent.setRevenue(
+            revenue == "null" ? null : revenue,
+            currency == "null" ? null : currency);
     }
 
     if ('callbackParams' in params) {
@@ -810,7 +812,9 @@ AdjustCommandExecutor.prototype.trackAdRevenue = function(params) {
         var revenueParams = getValueFromKey(params, 'revenue');
         var currency = revenueParams[0];
         var revenue = parseFloat(revenueParams[1]);
-        adjustAdRevenue.setRevenue(revenue, currency);
+        adjustAdRevenue.setRevenue(
+            revenue == "null" ? null : revenue,
+            currency == "null" ? null : currency);
     }
 
     if ('adImpressionsCount' in params) {

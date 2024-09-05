@@ -193,7 +193,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
 
 RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
     NSString *eventToken = dict[@"eventToken"];
-    NSString *revenue = dict[@"revenue"];
+    NSNumber *revenue = dict[@"revenue"];
     NSString *currency = dict[@"currency"];
     NSString *productId = dict[@"productId"];
     NSString *transactionId = dict[@"transactionId"];
@@ -205,9 +205,8 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
     ADJEvent *adjustEvent = [[ADJEvent alloc] initWithEventToken:eventToken];
 
     // Revenue
-    if ([self isFieldValid:revenue]) {
-        double revenueValue = [revenue doubleValue];
-        [adjustEvent setRevenue:revenueValue currency:currency];
+    if ([self isFieldValid:revenue] && [self isFieldValid:currency]) {
+        [adjustEvent setRevenue:[revenue doubleValue] currency:currency];
     }
 
     // Callback parameters
@@ -307,7 +306,7 @@ RCT_EXPORT_METHOD(processDeeplink:(NSDictionary *)dict) {
 
 RCT_EXPORT_METHOD(trackAdRevenue:(NSDictionary *)dict) {
     NSString *source = dict[@"source"];
-    NSString *revenue = dict[@"revenue"];
+    NSNumber *revenue = dict[@"revenue"];
     NSString *currency = dict[@"currency"];
     NSString *adImpressionsCount = dict[@"adImpressionsCount"];
     NSString *adRevenueNetwork = dict[@"adRevenueNetwork"];
@@ -316,15 +315,11 @@ RCT_EXPORT_METHOD(trackAdRevenue:(NSDictionary *)dict) {
     NSArray *callbackParameters = dict[@"callbackParameters"];
     NSArray *partnerParameters = dict[@"partnerParameters"];
 
-    if ([source isKindOfClass:[NSNull class]]) {
-        return;
-    }
     ADJAdRevenue *adjustAdRevenue = [[ADJAdRevenue alloc] initWithSource:source];
 
     // Revenue.
-    if ([self isFieldValid:revenue]) {
-        double revenueValue = [revenue doubleValue];
-        [adjustAdRevenue setRevenue:revenueValue currency:currency];
+    if ([self isFieldValid:revenue] && [self isFieldValid:currency]) {
+        [adjustAdRevenue setRevenue:[revenue doubleValue] currency:currency];
     }
 
     // Ad impressions count
@@ -472,7 +467,7 @@ RCT_EXPORT_METHOD(requestAppTrackingAuthorization:(RCTResponseSenderBlock)callba
 
 RCT_EXPORT_METHOD(updateSkanConversionValue:(NSNumber * _Nonnull)conversionValue
                   coarseValue:(NSString * _Nonnull)coarseValue
-                  lockWindow:(NSString * _Nullable)lockWindow
+                  lockWindow:(NSNumber * _Nullable)lockWindow
                   errorCallback:(RCTResponseSenderBlock)callback) {
     [Adjust updateSkanConversionValue:[conversionValue intValue]
                           coarseValue:coarseValue
@@ -629,7 +624,7 @@ RCT_EXPORT_METHOD(verifyAppStorePurchase:(NSDictionary *)dict callback:(RCTRespo
 
 RCT_EXPORT_METHOD(verifyAndTrackAppStorePurchase:(NSDictionary *)dict callback:(RCTResponseSenderBlock)callback) {
     NSString *eventToken = dict[@"eventToken"];
-    NSString *revenue = dict[@"revenue"];
+    NSNumber *revenue = dict[@"revenue"];
     NSString *currency = dict[@"currency"];
     NSString *productId = dict[@"productId"];
     NSString *transactionId = dict[@"transactionId"];
@@ -641,9 +636,8 @@ RCT_EXPORT_METHOD(verifyAndTrackAppStorePurchase:(NSDictionary *)dict callback:(
     ADJEvent *adjustEvent = [[ADJEvent alloc] initWithEventToken:eventToken];
 
     // Revenue
-    if ([self isFieldValid:revenue]) {
-        double revenueValue = [revenue doubleValue];
-        [adjustEvent setRevenue:revenueValue currency:currency];
+    if ([self isFieldValid:revenue] && [self isFieldValid:currency]) {
+        [adjustEvent setRevenue:[revenue doubleValue] currency:currency];
     }
 
     // Callback parameters
@@ -847,17 +841,6 @@ RCT_EXPORT_METHOD(onPause) {
     // Check if its an instance of the singleton NSNull.
     if ([field isKindOfClass:[NSNull class]]) {
         return NO;
-    }
-
-    // If 'field' can be converted to a string, check if it has any content.
-    NSString *str = [NSString stringWithFormat:@"%@", field];
-    if (str != nil) {
-        if ([str length] == 0) {
-            return NO;
-        }
-        if ([str isEqualToString:@"null"]) {
-            return NO;
-        }
     }
 
     return YES;

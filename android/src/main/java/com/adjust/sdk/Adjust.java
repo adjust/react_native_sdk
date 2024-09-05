@@ -308,15 +308,8 @@ public class Adjust extends ReactContextBaseJavaModule implements
 
         // Revenue
         if (checkKey(mapEvent, "revenue") || checkKey(mapEvent, "currency")) {
-            try {
-                revenue = Double.parseDouble(mapEvent.getString("revenue"));
-            } catch (NumberFormatException ignore) {}
-            // temporary patch, needs to be made more generic
-            // undefined from JS potentially ending as "null" value?
-            // TODO: if needed, add more generic check
-            if (mapEvent.getString("currency") != null && !mapEvent.getString("currency").equals("null")) {
-                currency = mapEvent.getString("currency");
-            }
+            revenue = mapEvent.getDouble("revenue");
+            currency = mapEvent.getString("currency");
             event.setRevenue(revenue, currency);
         }
 
@@ -452,9 +445,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
 
         // Revenue
         if (checkKey(mapAdRevenue, "revenue") || checkKey(mapAdRevenue, "currency")) {
-            try {
-                revenue = Double.parseDouble(mapAdRevenue.getString("revenue"));
-            } catch (NumberFormatException ignore) {}
+            revenue = mapAdRevenue.getDouble("revenue");
             currency = mapAdRevenue.getString("currency");
             adRevenue.setRevenue(revenue, currency);
         }
@@ -826,15 +817,8 @@ public class Adjust extends ReactContextBaseJavaModule implements
 
         // Revenue
         if (checkKey(mapEvent, "revenue") || checkKey(mapEvent, "currency")) {
-            try {
-                revenue = Double.parseDouble(mapEvent.getString("revenue"));
-            } catch (NumberFormatException ignore) {}
-            // temporary patch, needs to be made more generic
-            // undefined from JS potentially ending as "null" value?
-            // TODO: if needed, add more generic check
-            if (mapEvent.getString("currency") != null && !mapEvent.getString("currency").equals("null")) {
-                currency = mapEvent.getString("currency");
-            }
+            revenue = mapEvent.getDouble("revenue");
+            currency = mapEvent.getString("currency");
             event.setRevenue(revenue, currency);
         }
 

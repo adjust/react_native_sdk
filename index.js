@@ -488,10 +488,8 @@ var AdjustEvent = function(eventToken) {
 };
 
 AdjustEvent.prototype.setRevenue = function(revenue, currency) {
-    if (revenue != null) {
-        this.revenue = revenue.toString();
-        this.currency = currency;
-    }
+    this.revenue = revenue;
+    this.currency = currency;
 };
 
 AdjustEvent.prototype.addCallbackParameter = function(key, value) {
@@ -639,10 +637,8 @@ var AdjustAdRevenue = function(source) {
 };
 
 AdjustAdRevenue.prototype.setRevenue = function(revenue, currency) {
-    if (revenue != null) {
-        this.revenue = revenue.toString();
-        this.currency = currency;
-    }
+    this.revenue = revenue;
+    this.currency = currency;
 };
 
 AdjustAdRevenue.prototype.setAdImpressionsCount = function(adImpressionsCount) {

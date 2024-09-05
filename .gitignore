@@ -102,6 +102,9 @@ ios/Index/
 # Just in case
 temp/
 
+# yarn
+yarn.lock
+
 #example
 example/.yarn
 

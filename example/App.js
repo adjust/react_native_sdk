@@ -99,9 +99,12 @@
      console.log("URL: " + uri.uri);
    });
  
-   adjustConfig.setSkanUpdatedCallback(function(conversionData) {
-     console.log("Conversion Data updated callback received");
-     console.log("Conversion Data: " + conversionData);
+   adjustConfig.setSkanUpdatedCallback(function(skanData) {
+     console.log("Skan Data updated callback received");
+     console.log("Conversion value: " + skanData.conversionValue);
+     console.log("Coarse value: " + skanData.coarseValue);
+     console.log("Lock window: " + skanData.lockWindow);
+     console.log("Error: " + skanData.error);
    });
  
    Adjust.addGlobalCallbackParameter("scpk1", "scpv1");

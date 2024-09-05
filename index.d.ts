@@ -92,27 +92,27 @@ declare module 'react-native-adjust' {
     public attConsentWaitingInterval(attConsentWaitingInterval: number): void
     public setUrlStrategy(urlStrategyDomains: any, useSubdomains: boolean, isDataResidency: boolean): void
 
-    public setAttributionListener(
+    public setAttributionCallback(
       callback: (attribution: AdjustAttribution) => void
     ): void
 
-    public setEventTrackingSucceededListener(
+    public setEventTrackingSucceededCallback(
       callback: (eventSuccess: AdjustEventTrackingSuccess) => void
     ): void
 
-    public setEventTrackingFailedListener(
+    public setEventTrackingFailedCallback(
       callback: (eventFailed: AdjustEventTrackingFailure) => void
     ): void
 
-    public setSessionTrackingSucceededListener(
+    public setSessionTrackingSucceededCallback(
       callback: (sessionSuccess: AdjustSessionTrackingSuccess) => void
     ): void
 
-    public setSessionTrackingFailedListener(
+    public setSessionTrackingFailedCallback(
       callback: (sessionFailed: AdjustSessionTrackingFailure) => void
     ): void
 
-    public setDeferredDeeplinkListener(
+    public setDeferredDeeplinkCallback(
       callback: (uri: AdjustUri) => void
     ): void
 
@@ -200,8 +200,8 @@ declare module 'react-native-adjust' {
     setPushToken: (token: string) => void
     processDeeplink: (url: string) => void
     trackAdRevenue: (source: AdjustAdRevenue) => void
-    trackAppStoreSubscription: (subscription: AdjustAppStoreSubscription) => void
-    trackPlayStoreSubscription: (subscription: AdjustPlayStoreSubscription) => void
+    trackAppStoreSubscription: (adjustAppStoreSubscription: AdjustAppStoreSubscription) => void
+    trackPlayStoreSubscription: (adjustPlayStoreSubscription: AdjustPlayStoreSubscription) => void
     addGlobalCallbackParameter: (key: string, value: string) => void
     addGlobalPartnerParameter: (key: string, value: string) => void
     removeGlobalCallbackParameter: (key: string) => void
@@ -225,6 +225,7 @@ declare module 'react-native-adjust' {
     verifyAppStorePurchase: (purchase: AdjustAppStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
     verifyAndTrackAppStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
     verifyPlayStorePurchase: (purchase: AdjustPlayStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
+    verifyAndTrackPlayStorePurchase(adjustEvent: AdjustEvent, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
     processAndResolveDeeplink: (deeplink: string, callback: (resolvedLink: string) => void) => void
   }
 }

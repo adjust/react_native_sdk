@@ -225,7 +225,7 @@ declare module 'react-native-adjust' {
     verifyAppStorePurchase: (purchase: AdjustAppStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
     verifyAndTrackAppStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
     verifyPlayStorePurchase: (purchase: AdjustPlayStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
-    verifyAndTrackPlayStorePurchase(adjustEvent: AdjustEvent, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
+    verifyAndTrackPlayStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
     processAndResolveDeeplink: (deeplink: string, callback: (resolvedLink: string) => void) => void
   }
 }

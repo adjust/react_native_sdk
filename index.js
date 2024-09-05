@@ -290,7 +290,7 @@ var AdjustConfig = function(appToken, environment) {
     this.processName = null;
     this.isPreinstallTrackingEnabled = null;
     this.preinstallFilePath = null;
-    this.IsPlayStoreKidsComplianceEnabled = null;
+    this.isPlayStoreKidsComplianceEnabled = null;
     this.fbAppId;
 
     // iOS only

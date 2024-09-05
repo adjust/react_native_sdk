@@ -467,7 +467,7 @@ RCT_EXPORT_METHOD(requestAppTrackingAuthorization:(RCTResponseSenderBlock)callba
 
 RCT_EXPORT_METHOD(updateSkanConversionValue:(NSNumber * _Nonnull)conversionValue
                   coarseValue:(NSString * _Nonnull)coarseValue
-                  lockWindow:(NSNumber * _Nullable)lockWindow
+                  lockWindow:(NSNumber * _Nonnull)lockWindow
                   errorCallback:(RCTResponseSenderBlock)callback) {
     if([self isFieldValid:conversionValue]) {
         [Adjust updateSkanConversionValue:[conversionValue intValue]

@@ -431,9 +431,11 @@ AdjustCommandExecutor.prototype.config = function(params) {
         var launchDeferredDeeplinkS = getFirstParameterValue(params, 'deferredDeeplinkCallback');
         var launchDeferredDeeplink = launchDeferredDeeplinkS === 'true';
         console.log(`[*] Launch deferred deeplink set to: ${launchDeferredDeeplink}`);
-        adjustConfig.setShouldLaunchDeeplink(launchDeferredDeeplink);
-        adjustConfig.setDeferredDeeplinkCallback(function(uri) {
-            AdjustSdkTest.addInfoToSend('deeplink', uri);
+        if (launchDeferredDeeplink == false) {
+            adjustConfig.disableDeferredDeeplinkOpening();
+        }
+        adjustConfig.setDeferredDeeplinkCallback(function(deeplink) {
+            AdjustSdkTest.addInfoToSend('deeplink', deeplink.deeplink);
             AdjustSdkTest.sendInfoToServer(_this.extraPath);
         });
     }

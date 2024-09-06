@@ -1,7 +1,6 @@
 declare module 'react-native-adjust' {
   type Environment = 'sandbox' | 'production'
   type LogLevel = string
-  type UrlStrategy = string
 
   interface AdjustAttribution {
     trackerToken: string
@@ -51,8 +50,8 @@ declare module 'react-native-adjust' {
     jsonResponse: string
   }
 
-  interface AdjustUri {
-    uri: string
+  interface AdjustDeeplink {
+    deeplink: string
   }
 
   interface AdjustSkanData {
@@ -62,7 +61,7 @@ declare module 'react-native-adjust' {
     error: string
   }
 
-  interface AdjustPurchaseVerificationInfo {
+  interface AdjustPurchaseVerificationResult {
     verificationStatus: string
     code: number
     message: string
@@ -74,7 +73,7 @@ declare module 'react-native-adjust' {
     public setSdkPrefix(sdkPrefix: string): void
     public setLogLevel(level: LogLevel): void
     public disableDeferredDeeplinkOpening(): void
-    public setDefaultTracker(defaultTracked: string): void
+    public setDefaultTracker(defaultTracker: string): void
     public setExternalDeviceId(externalDeviceId: string): void
     public enableDeviceIdsReadingOnce(): void
     public enableCoppaCompliance(): void
@@ -82,15 +81,16 @@ declare module 'react-native-adjust' {
     public enableCostDataInAttribution(): void
     public enablePlayStoreKidsCompliance(): void
     public enableLinkMe(): void
-    public setPreinstallTrackingEnabled(preinstallTrackingEnabled: boolean): void
+    public enablePreinstallTracking(): void
     public setPreinstallFilePath(preinstallFilePath: string): void
     public setFbAppId(fbAppId: string): void
     public disableAdServices(): void
     public disableIdfaReading(): void
+    public disableIdfvReading(): void
     public disableSkanAttribution(): void
     public setEventDeduplicationIdsMaxSize(eventDeduplicationIdsMaxSize: number): void
-    public attConsentWaitingInterval(attConsentWaitingInterval: number): void
-    public setUrlStrategy(urlStrategyDomains: any, useSubdomains: boolean, isDataResidency: boolean): void
+    public setAttConsentWaitingInterval(attConsentWaitingInterval: number): void
+    public setUrlStrategy(urlStrategyDomains: string[], useSubdomains: boolean, isDataResidency: boolean): void
 
     public setAttributionCallback(
       callback: (attribution: AdjustAttribution) => void
@@ -113,7 +113,7 @@ declare module 'react-native-adjust' {
     ): void
 
     public setDeferredDeeplinkCallback(
-      callback: (uri: AdjustUri) => void
+      callback: (deeplink: AdjustDeeplink) => void
     ): void
 
     public setSkanUpdatedCallback(
@@ -139,6 +139,7 @@ declare module 'react-native-adjust' {
     public setTransactionId(transactionId: string): void
     public setCallbackId(callbackId: string): void
     public setProductId(productId: string): void
+    public setPurchaseToken(purchaseToken: string): void
     public setDeduplicationId(deduplicationId: string): void
   }
 
@@ -164,7 +165,7 @@ declare module 'react-native-adjust' {
   }
 
   export class AdjustThirdPartySharing {
-    constructor(isEnabled: boolean)
+    constructor(isEnabled: boolean | null)
     public addGranularOption(partnerName: string, key: string, value: string): void
     public addPartnerSharingSetting(partnerName: string, key: string, value: boolean): void
   }
@@ -198,8 +199,8 @@ declare module 'react-native-adjust' {
     switchToOfflineMode: () => void
     switchBackToOnlineMode: () => void
     setPushToken: (token: string) => void
-    processDeeplink: (url: string) => void
-    trackAdRevenue: (source: AdjustAdRevenue) => void
+    processDeeplink: (adjustDeeplink: AdjustDeeplink) => void
+    trackAdRevenue: (adjustAdRevenue: AdjustAdRevenue) => void
     trackAppStoreSubscription: (adjustAppStoreSubscription: AdjustAppStoreSubscription) => void
     trackPlayStoreSubscription: (adjustPlayStoreSubscription: AdjustPlayStoreSubscription) => void
     addGlobalCallbackParameter: (key: string, value: string) => void
@@ -218,14 +219,14 @@ declare module 'react-native-adjust' {
     getSdkVersion: (callback: (sdkVersion: string) => void) => void
     requestAppTrackingAuthorization: (handler: (status: number) => void) => void
     updateSkanConversionValue: (conversionValue: number, coarseValue: string, lockWindow: boolean, callback: (error: string) => void) => void
-    getAppTrackingAuthorizationStatus: (callback: (authorizationStatus: number) => void) => void
+    getAppTrackingAuthorizationStatus: (callback: (status: number) => void) => void
     trackThirdPartySharing: (adjustThirdPartySharing: AdjustThirdPartySharing) => void
     trackMeasurementConsent: (measurementConsent: boolean) => void
     getLastDeeplink: (callback: (lastDeeplink: string) => void) => void
-    verifyAppStorePurchase: (purchase: AdjustAppStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
-    verifyAndTrackAppStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
-    verifyPlayStorePurchase: (purchase: AdjustPlayStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
-    verifyAndTrackPlayStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
-    processAndResolveDeeplink: (deeplink: string, callback: (resolvedLink: string) => void) => void
+    verifyAppStorePurchase: (purchase: AdjustAppStorePurchase, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
+    verifyAndTrackAppStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
+    verifyPlayStorePurchase: (purchase: AdjustPlayStorePurchase, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
+    verifyAndTrackPlayStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
+    processAndResolveDeeplink: (adjustDeeplink: AdjustDeeplink, callback: (resolvedLink: string) => void) => void
   }
 }

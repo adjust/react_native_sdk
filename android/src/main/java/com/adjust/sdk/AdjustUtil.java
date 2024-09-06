@@ -145,7 +145,7 @@ final class AdjustUtil {
             return map;
         }
 
-        map.putString("uri", uri.toString());
+        map.putString("deeplink", uri.toString());
         return map;
     }
 

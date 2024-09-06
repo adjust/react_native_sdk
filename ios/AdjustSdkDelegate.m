@@ -189,7 +189,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
 
 - (BOOL)adjustDeferredDeeplinkReceivedWannabe:(NSURL *)deeplink {
     NSString *path = [deeplink absoluteString];
-    [AdjustEventEmitter dispatchEvent:@"adjust_deferredDeeplinkReceived" withDictionary:@{@"uri": path}];
+    [AdjustEventEmitter dispatchEvent:@"adjust_deferredDeeplinkReceived" withDictionary:@{@"deeplink": path}];
     return _shouldLaunchDeferredDeeplink;
 }
 

@@ -28,4 +28,5 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.facebook.react:react-native:+'
+    implementation 'com.adjust.sdk:adjust-android-oaid:5.0.0'
 }

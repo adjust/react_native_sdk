@@ -218,7 +218,7 @@ declare module 'react-native-adjust' {
     getAmazonAdId: (callback: (adid: string) => void) => void
     getSdkVersion: (callback: (sdkVersion: string) => void) => void
     requestAppTrackingAuthorization: (handler: (status: number) => void) => void
-    updateSkanConversionValue: (conversionValue: number, coarseValue: string, lockWindow: number, callback: (error: string) => void) => void
+    updateSkanConversionValue: (conversionValue: number, coarseValue: string, lockWindow: boolean, callback: (error: string) => void) => void
     getAppTrackingAuthorizationStatus: (callback: (status: number) => void) => void
     trackThirdPartySharing: (adjustThirdPartySharing: AdjustThirdPartySharing) => void
     trackMeasurementConsent: (measurementConsent: boolean) => void

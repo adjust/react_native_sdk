@@ -94,9 +94,9 @@
      console.log("JSON response: " + sessionFailed.jsonResponse);
    });
  
-   adjustConfig.setDeferredDeeplinkCallback(function(uri) {
+   adjustConfig.setDeferredDeeplinkCallback(function(deeplink) {
      console.log("Deferred Deeplink Callback received");
-     console.log("URL: " + uri.uri);
+     console.log("Deeplink: " + deeplink.deeplink);
    });
  
    adjustConfig.setSkanUpdatedCallback(function(skanData) {

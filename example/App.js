@@ -27,7 +27,8 @@
  import {
    Adjust,
    AdjustEvent,
-   AdjustConfig
+   AdjustConfig,
+   AdjustDeeplink
  } from 'react-native-adjust';
  import { AdjustOaid } from 'react-native-adjust-oaid';
  
@@ -161,7 +162,7 @@
    }
  
    function handleDeepLink(e) {
-     Adjust.processDeeplink(e.url);
+     Adjust.processDeeplink(new AdjustDeeplink(e.url));
    }
  
    function _onPress_trackSimpleEvent() {

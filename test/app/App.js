@@ -48,7 +48,7 @@ const App: () => React$Node = () => {
   }
 
   var urlOverwrite = "";
-  var ipAddress = "192.168.86.80";
+  var ipAddress = "192.168.8.63";
   if (Platform.OS === "android") {
     urlOverwrite = "https://" + ipAddress + ":8443";
   } else if (Platform.OS === "ios") {

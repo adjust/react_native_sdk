@@ -1,7 +1,6 @@
 declare module 'react-native-adjust' {
   type Environment = 'sandbox' | 'production'
   type LogLevel = string
-  type UrlStrategy = string
 
   interface AdjustAttribution {
     trackerToken: string
@@ -11,7 +10,6 @@ declare module 'react-native-adjust' {
     adgroup: string
     creative: string
     clickLabel: string
-    adid: string
     costType: string
     costAmount: number
     costCurrency: string
@@ -52,21 +50,18 @@ declare module 'react-native-adjust' {
     jsonResponse: string
   }
 
-  interface AdjustUri {
-    uri: string
+  interface AdjustDeeplink {
+    deeplink: string
   }
 
-  interface AdjustConversionValue {
+  interface AdjustSkanData {
     conversionValue: number
-  }
-
-  interface AdjustSkad4Data {
-    fineValue: number
     coarseValue: string
     lockWindow: boolean
+    error: string
   }
 
-  interface AdjustPurchaseVerificationInfo {
+  interface AdjustPurchaseVerificationResult {
     verificationStatus: string
     code: number
     message: string
@@ -74,69 +69,55 @@ declare module 'react-native-adjust' {
 
   export class AdjustConfig {
     constructor(appToken: string, environment: Environment)
-    public setLogLevel(level: LogLevel): void
-    public setEventBufferingEnabled(eventBufferingEnabled: boolean): void
-    public setProcessName(processName: string): void
-    public setDefaultTracker(defaultTracked: string): void
-    public setExternalDeviceId(externalDeviceId: string): void
-    public setUrlStrategy(urlStrategy: UrlStrategy): void
-    public setUserAgent(userAgent: string): void
-    public setAppSecret(
-      secretId: number,
-      info1: number,
-      info2: number,
-      info3: number,
-      info4: number): void
-    public setDelayStart(delayStart: number): void
-    public setSendInBackground(sendInBackground: boolean): void
-    public setDeviceKnown(isDeviceKnown: boolean): void
-    public setNeedsCost(needsCost: boolean): void
-    public setPreinstallTrackingEnabled(preinstallTrackingEnabled: boolean): void
-    public setPreinstallFilePath(preinstallFilePath: string): void
-    public setCoppaCompliantEnabled(coppaCompliantEnabled: boolean): void
-    public setPlayStoreKidsAppEnabled(playStoreKidsAppEnabled: boolean): void
-    public setAllowiAdInfoReading(allowiAdInfoReading: boolean): void
-    public setAllowAdServicesInfoReading(allowAdServicesInfoReading: boolean): void
-    public setAllowIdfaReading(allowIdfaReading: boolean): void
-    public setSdkPrefix(sdkPrefix: string): void
-    public setShouldLaunchDeeplink(shouldLaunchDeeplink: boolean): void
-    public deactivateSKAdNetworkHandling(): void
-    public setLinkMeEnabled(linkMeEnabled: boolean): void
-    public setFinalAndroidAttributionEnabled(finalAndroidAttributionEnabled: boolean): void
-    public setAttConsentWaitingInterval(attConsentWaitingInterval: number): void
-    public setReadDeviceInfoOnceEnabled(readDeviceInfoOnceEnabled: boolean): void
-    public setFbAppId(fbAppId: string): void
 
-    public setAttributionCallbackListener(
+    public setSdkPrefix(sdkPrefix: string): void
+    public setLogLevel(level: LogLevel): void
+    public disableDeferredDeeplinkOpening(): void
+    public setDefaultTracker(defaultTracker: string): void
+    public setExternalDeviceId(externalDeviceId: string): void
+    public enableDeviceIdsReadingOnce(): void
+    public enableCoppaCompliance(): void
+    public enableSendingInBackground(): void
+    public enableCostDataInAttribution(): void
+    public enablePlayStoreKidsCompliance(): void
+    public enableLinkMe(): void
+    public enablePreinstallTracking(): void
+    public setPreinstallFilePath(preinstallFilePath: string): void
+    public setFbAppId(fbAppId: string): void
+    public disableAdServices(): void
+    public disableIdfaReading(): void
+    public disableIdfvReading(): void
+    public disableSkanAttribution(): void
+    public setEventDeduplicationIdsMaxSize(eventDeduplicationIdsMaxSize: number): void
+    public setAttConsentWaitingInterval(attConsentWaitingInterval: number): void
+    public setUrlStrategy(urlStrategyDomains: string[], useSubdomains: boolean, isDataResidency: boolean): void
+
+    public setAttributionCallback(
       callback: (attribution: AdjustAttribution) => void
     ): void
 
-    public setEventTrackingSucceededCallbackListener(
+    public setEventTrackingSucceededCallback(
       callback: (eventSuccess: AdjustEventTrackingSuccess) => void
     ): void
 
-    public setEventTrackingFailedCallbackListener(
+    public setEventTrackingFailedCallback(
       callback: (eventFailed: AdjustEventTrackingFailure) => void
     ): void
 
-    public setSessionTrackingSucceededCallbackListener(
+    public setSessionTrackingSucceededCallback(
       callback: (sessionSuccess: AdjustSessionTrackingSuccess) => void
     ): void
 
-    public setSessionTrackingFailedCallbackListener(
+    public setSessionTrackingFailedCallback(
       callback: (sessionFailed: AdjustSessionTrackingFailure) => void
     ): void
 
-    public setDeferredDeeplinkCallbackListener(
-      callback: (uri: AdjustUri) => void
+    public setDeferredDeeplinkCallback(
+      callback: (deeplink: AdjustDeeplink) => void
     ): void
 
-    public setConversionValueUpdatedCallbackListener(
-      callback: (conversionValue: AdjustConversionValue) => void
-    ): void
-
-    public setSkad4ConversionValueUpdatedCallbackListener(
-      callback: (skad4Data: AdjustSkad4Data) => void
+    public setSkanUpdatedCallback(
+      callback: (skanData: AdjustSkanData) => void
     ): void
 
     static LogLevelVerbose: LogLevel
@@ -148,21 +129,6 @@ declare module 'react-native-adjust' {
     static LogLevelSuppress: LogLevel
     static EnvironmentSandbox: Environment
     static EnvironmentProduction: Environment
-    static UrlStrategyChina: UrlStrategy
-    static UrlStrategyIndia: UrlStrategy
-    static UrlStrategyCn: UrlStrategy
-    static UrlStrategyCnOnly: UrlStrategy
-    static DataResidencyEU: UrlStrategy
-    static DataResidencyTR: UrlStrategy
-    static DataResidencyUS: UrlStrategy
-    static AdRevenueSourceAppLovinMAX: string
-    static AdRevenueSourceMopub: string
-    static AdRevenueSourceAdmob: string
-    static AdRevenueSourceIronSource: string
-    static AdRevenueSourceAdmost: string
-    static AdRevenueSourcePublisher: string
-    static AdRevenueSourceTopOn: string
-    static AdRevenueSourceAdx: string
   }
 
   export class AdjustEvent {
@@ -172,13 +138,13 @@ declare module 'react-native-adjust' {
     public addPartnerParameter(key: string, value: string): void
     public setTransactionId(transactionId: string): void
     public setCallbackId(callbackId: string): void
-    public setReceipt(receipt: string): void
     public setProductId(productId: string): void
     public setPurchaseToken(purchaseToken: string): void
+    public setDeduplicationId(deduplicationId: string): void
   }
 
   export class AdjustAppStoreSubscription {
-    constructor(price: string, currency: string, transactionId: string, receipt: string)
+    constructor(price: string, currency: string, transactionId: string)
     public setTransactionDate(transactionDate: string): void
     public setSalesRegion(salesRegion: string): void
     public addCallbackParameter(key: string, value: string): void
@@ -199,7 +165,7 @@ declare module 'react-native-adjust' {
   }
 
   export class AdjustThirdPartySharing {
-    constructor(isEnabled: boolean)
+    constructor(isEnabled: boolean | null)
     public addGranularOption(partnerName: string, key: string, value: string): void
     public addPartnerSharingSetting(partnerName: string, key: string, value: boolean): void
   }
@@ -216,7 +182,7 @@ declare module 'react-native-adjust' {
   }
 
   export class AdjustAppStorePurchase {
-    constructor(receipt: string, productId: string, transactionId: string)
+    constructor(productId: string, transactionId: string)
   }
 
   export class AdjustPlayStorePurchase {
@@ -225,25 +191,25 @@ declare module 'react-native-adjust' {
 
   export const Adjust: {
     componentWillUnmount: () => void
-    create: (adjustConfig: AdjustConfig) => void
+    initSdk: (adjustConfig: AdjustConfig) => void
     trackEvent: (adjustEvent: AdjustEvent) => void
-    setEnabled: (enabled: boolean) => void
+    enable: () => void
+    disable: () => void
     isEnabled: (callback: (enabled: boolean) => void) => void
-    setOfflineMode: (enabled: boolean) => void
+    switchToOfflineMode: () => void
+    switchBackToOnlineMode: () => void
     setPushToken: (token: string) => void
-    appWillOpenUrl: (url: string) => void
-    sendFirstPackages: () => void
-    trackAdRevenue: ((source: string, payload: string) => void) & ((source: AdjustAdRevenue) => void)
-    trackAppStoreSubscription: (subscription: AdjustAppStoreSubscription) => void
-    trackPlayStoreSubscription: (subscription: AdjustPlayStoreSubscription) => void
-    addSessionCallbackParameter: (key: string, value: string) => void
-    addSessionPartnerParameter: (key: string, value: string) => void
-    removeSessionCallbackParameter: (key: string) => void
-    removeSessionPartnerParameter: (key: string) => void
-    resetSessionCallbackParameters: () => void
-    resetSessionPartnerParameters: () => void
+    processDeeplink: (adjustDeeplink: AdjustDeeplink) => void
+    trackAdRevenue: (adjustAdRevenue: AdjustAdRevenue) => void
+    trackAppStoreSubscription: (adjustAppStoreSubscription: AdjustAppStoreSubscription) => void
+    trackPlayStoreSubscription: (adjustPlayStoreSubscription: AdjustPlayStoreSubscription) => void
+    addGlobalCallbackParameter: (key: string, value: string) => void
+    addGlobalPartnerParameter: (key: string, value: string) => void
+    removeGlobalCallbackParameter: (key: string) => void
+    removeGlobalPartnerParameter: (key: string) => void
+    removeGlobalCallbackParameters: () => void
+    removeGlobalPartnerParameters: () => void
     gdprForgetMe: () => void
-    disableThirdPartySharing: () => void
     getIdfa: (callback: (idfa: string) => void) => void
     getIdfv: (callback: (idfv: string) => void) => void
     getGoogleAdId: (callback: (adid: string) => void) => void
@@ -251,19 +217,16 @@ declare module 'react-native-adjust' {
     getAttribution: (callback: (attribution: AdjustAttribution) => void) => void
     getAmazonAdId: (callback: (adid: string) => void) => void
     getSdkVersion: (callback: (sdkVersion: string) => void) => void
-    setReferrer: (referrer: string) => void
-    convertUniversalLink: (url: string, scheme: string, callback: (convertedUrl: string) => void) => void
-    requestTrackingAuthorizationWithCompletionHandler: (handler: (status: number) => void) => void
-    updateConversionValue: (conversionValue: number) => void
-    updateConversionValueWithErrorCallback: (conversionValue: number, callback: (error: string) => void) => void
-    updateConversionValueWithSkad4ErrorCallback: (conversionValue: number, coarseValue: string, lockWindow: boolean, callback: (error: string) => void) => void
-    getAppTrackingAuthorizationStatus: (callback: (authorizationStatus: number) => void) => void
+    requestAppTrackingAuthorization: (handler: (status: number) => void) => void
+    updateSkanConversionValue: (conversionValue: number, coarseValue: string, lockWindow: boolean, callback: (error: string) => void) => void
+    getAppTrackingAuthorizationStatus: (callback: (status: number) => void) => void
     trackThirdPartySharing: (adjustThirdPartySharing: AdjustThirdPartySharing) => void
     trackMeasurementConsent: (measurementConsent: boolean) => void
-    checkForNewAttStatus: () => void
     getLastDeeplink: (callback: (lastDeeplink: string) => void) => void
-    verifyAppStorePurchase: (purchase: AdjustAppStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
-    verifyPlayStorePurchase: (purchase: AdjustPlayStorePurchase, callback: (verificationInfo: AdjustPurchaseVerificationInfo) => void) => void
-    processDeeplink: (deeplink: string, callback: (resolvedLink: string) => void) => void
+    verifyAppStorePurchase: (purchase: AdjustAppStorePurchase, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
+    verifyAndTrackAppStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
+    verifyPlayStorePurchase: (purchase: AdjustPlayStorePurchase, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
+    verifyAndTrackPlayStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
+    processAndResolveDeeplink: (adjustDeeplink: AdjustDeeplink, callback: (resolvedLink: string) => void) => void
   }
 }

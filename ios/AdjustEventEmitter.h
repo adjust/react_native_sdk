@@ -1,9 +1,9 @@
 //
 //  AdjustEventEmitter.h
-//  Adjust SDK
+//  AdjustSdk
 //
 //  Created by Abdullah Obaied (@obaied) on 28th December 2017.
-//  Copyright © 2017 Facebook. All rights reserved.
+//  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
 #if __has_include(<React/RCTBridgeModule.h>)

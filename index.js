@@ -1,6 +1,6 @@
 'use strict';
 
-import { 
+import {
     NativeEventEmitter,
     NativeModules,
     Platform,
@@ -19,108 +19,122 @@ if (Platform.OS === "android") {
 
 var Adjust = {};
 
-Adjust.create = function(adjustConfig) {
-    module_adjust.create(adjustConfig);
+Adjust.initSdk = function(adjustConfig) {
+    module_adjust.initSdk(adjustConfig);
 };
 
-Adjust.trackEvent = function(adjustEvent) {
-    module_adjust.trackEvent(adjustEvent);
+Adjust.enable = function() {
+    module_adjust.enable();
 };
 
-Adjust.setEnabled = function(enabled) {
-    module_adjust.setEnabled(enabled);
+Adjust.disable = function() {
+    module_adjust.disable();
 };
 
 Adjust.isEnabled = function(callback) {
     module_adjust.isEnabled(callback);
 };
 
-Adjust.setOfflineMode = function(enabled) {
-    module_adjust.setOfflineMode(enabled);
+Adjust.switchToOfflineMode = function() {
+    module_adjust.switchToOfflineMode();
+};
+
+Adjust.switchBackToOnlineMode = function() {
+    module_adjust.switchBackToOnlineMode();
+};
+
+Adjust.trackEvent = function(adjustEvent) {
+    module_adjust.trackEvent(adjustEvent);
+};
+
+Adjust.trackAdRevenue = function(adjustAdrevenue) {
+    module_adjust.trackAdRevenue(adjustAdrevenue);
 };
 
 Adjust.setPushToken = function(token) {
+    if (typeof token !== 'string') {
+        console.log("[Adjust] Push token is not of type string");
+        return;
+    }
     module_adjust.setPushToken(token);
 };
 
-Adjust.appWillOpenUrl = function(uri) {
-    module_adjust.appWillOpenUrl(uri);
+Adjust.processDeeplink = function(adjustDeeplink) {
+    module_adjust.processDeeplink(adjustDeeplink);
 };
 
-Adjust.sendFirstPackages = function() {
-    module_adjust.sendFirstPackages();
-};
-
-Adjust.trackAdRevenue = function(source, payload = undefined) {
-    if (payload === undefined) {
-        // new API
-        module_adjust.trackAdRevenueNew(source);
-    } else {
-        // old API
-        module_adjust.trackAdRevenue(source, payload);
-    }
-};
-
-Adjust.trackAppStoreSubscription = function(subscription) {
+Adjust.trackAppStoreSubscription = function(adjustAppStoreSubscription) {
     if (Platform.OS === "ios") {
-        module_adjust.trackAppStoreSubscription(subscription);
+        module_adjust.trackAppStoreSubscription(adjustAppStoreSubscription);
     }
 };
 
-Adjust.trackPlayStoreSubscription = function(subscription) {
+Adjust.trackPlayStoreSubscription = function(adjustPlayStoreSubscription) {
     if (Platform.OS === "android") {
-        module_adjust.trackPlayStoreSubscription(subscription);
+        module_adjust.trackPlayStoreSubscription(adjustPlayStoreSubscription);
     }
 };
 
-Adjust.addSessionCallbackParameter = function(key, value) {
+Adjust.addGlobalCallbackParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
+        console.log("[Adjust] Global callback parameter key or value is not of type string");
         return;
     }
-    module_adjust.addSessionCallbackParameter(key, value);
+    module_adjust.addGlobalCallbackParameter(key, value);
 };
 
-Adjust.addSessionPartnerParameter = function(key, value) {
+Adjust.addGlobalPartnerParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
+        console.log("[Adjust] Global partner parameter key or value is not of type string");
         return;
     }
-    module_adjust.addSessionPartnerParameter(key, value);
+    module_adjust.addGlobalPartnerParameter(key, value);
 };
 
-Adjust.removeSessionCallbackParameter = function(key) {
-    module_adjust.removeSessionCallbackParameter(key);
+Adjust.removeGlobalCallbackParameter = function(key) {
+    if (typeof key !== 'string') {
+        console.log("[Adjust] Global callback parameter key is not of type string");
+        return;
+    }
+    module_adjust.removeGlobalCallbackParameter(key);
 };
 
-Adjust.removeSessionPartnerParameter = function(key) {
-    module_adjust.removeSessionPartnerParameter(key);
+Adjust.removeGlobalPartnerParameter = function(key) {
+    if (typeof key !== 'string') {
+        console.log("[Adjust] Global partner parameter key is not of type string");
+        return;
+    }
+    module_adjust.removeGlobalPartnerParameter(key);
 };
 
-Adjust.resetSessionCallbackParameters = function() {
-    module_adjust.resetSessionCallbackParameters();
+Adjust.removeGlobalCallbackParameters = function() {
+    module_adjust.removeGlobalCallbackParameters();
 };
 
-Adjust.resetSessionPartnerParameters = function() {
-    module_adjust.resetSessionPartnerParameters();
+Adjust.removeGlobalPartnerParameters = function() {
+    module_adjust.removeGlobalPartnerParameters();
 };
 
 Adjust.gdprForgetMe = function() {
     module_adjust.gdprForgetMe();
 };
 
-Adjust.disableThirdPartySharing = function() {
-    module_adjust.disableThirdPartySharing();
-};
-
 Adjust.getIdfa = function(callback) {
-    module_adjust.getIdfa(callback);
+    if (Platform.OS === "ios") {
+        module_adjust.getIdfa(callback);
+    }
 };
 
 Adjust.getIdfv = function(callback) {
-    module_adjust.getIdfv(callback);
+    if (Platform.OS === "ios") {
+        module_adjust.getIdfv(callback);
+    }
 };
 
 Adjust.getGoogleAdId = function(callback) {
-    module_adjust.getGoogleAdId(callback);
+    if (Platform.OS === "android") {
+        module_adjust.getGoogleAdId(callback);
+    }
 };
 
 Adjust.getAdid = function(callback) {
@@ -132,44 +146,37 @@ Adjust.getAttribution = function(callback) {
 };
 
 Adjust.getAmazonAdId = function(callback) {
-    module_adjust.getAmazonAdId(callback);
+    if (Platform.OS === "android") {
+        module_adjust.getAmazonAdId(callback);
+    }
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native4.38.1", callback);
+    module_adjust.getSdkVersion("react-native5.0.0", callback);
 };
 
-Adjust.setReferrer = function(referrer) {
-    if (Platform.OS === "android") {
-        module_adjust.setReferrer(referrer);
+Adjust.requestAppTrackingAuthorization = function(callback) {
+    if (Platform.OS === "ios") {
+        module_adjust.requestAppTrackingAuthorization(callback);
     }
 };
 
-Adjust.convertUniversalLink = function(url, scheme, callback) {
-    if (!url || !scheme || !callback) {
-        return;
+Adjust.updateSkanConversionValue = function(conversionValue, coarseValue, lockWindow, callback) {
+    if (Platform.OS === "ios") {
+        if (!Number.isInteger(conversionValue) || 
+            typeof coarseValue !== 'string' || 
+            typeof lockWindow !== 'boolean') {
+            console.log("[Adjust] SKAN parameters are not of a proper data types");
+            return;
+        }
+        module_adjust.updateSkanConversionValue(conversionValue, coarseValue, lockWindow, callback);
     }
-    module_adjust.convertUniversalLink(url, scheme, callback);
-};
-
-Adjust.requestTrackingAuthorizationWithCompletionHandler = function(callback) {
-    module_adjust.requestTrackingAuthorizationWithCompletionHandler(callback);
-};
-
-Adjust.updateConversionValue = function(conversionValue) {
-    module_adjust.updateConversionValue(conversionValue);
-};
-
-Adjust.updateConversionValueWithErrorCallback = function(conversionValue, callback) {
-    module_adjust.updateConversionValueWithErrorCallback(conversionValue, callback);
-};
-
-Adjust.updateConversionValueWithSkad4ErrorCallback = function(conversionValue, coarseValue, lockWindow, callback) {
-    module_adjust.updateConversionValueWithSkad4ErrorCallback(conversionValue, coarseValue, lockWindow, callback);
 };
 
 Adjust.getAppTrackingAuthorizationStatus = function(callback) {
-    module_adjust.getAppTrackingAuthorizationStatus(callback);
+    if (Platform.OS === "ios") {
+        module_adjust.getAppTrackingAuthorizationStatus(callback);
+    }
 };
 
 Adjust.trackThirdPartySharing = function(adjustThirdPartySharing) {
@@ -177,72 +184,79 @@ Adjust.trackThirdPartySharing = function(adjustThirdPartySharing) {
 };
 
 Adjust.trackMeasurementConsent = function(measurementConsent) {
+    if (typeof measurementConsent !== 'boolean') {
+        console.log("[Adjust] Measurement consent is not of type boolean");
+        return;
+    }
     module_adjust.trackMeasurementConsent(measurementConsent);
-};
-
-Adjust.checkForNewAttStatus = function() {
-    module_adjust.checkForNewAttStatus();
 };
 
 Adjust.getLastDeeplink = function(callback) {
     module_adjust.getLastDeeplink(callback);
 };
 
-Adjust.verifyAppStorePurchase = function(purchase, callback) {
+Adjust.verifyAppStorePurchase = function(adjustAppStorePurchase, callback) {
     if (Platform.OS === "ios") {
-        module_adjust.verifyAppStorePurchase(purchase, callback);
+        module_adjust.verifyAppStorePurchase(adjustAppStorePurchase, callback);
     }
 };
 
-Adjust.verifyPlayStorePurchase = function(purchase, callback) {
+Adjust.verifyAndTrackAppStorePurchase = function(adjustEvent, callback) {
+    if (Platform.OS === "ios") {
+        module_adjust.verifyAndTrackAppStorePurchase(adjustEvent, callback);
+    }
+};
+
+Adjust.verifyPlayStorePurchase = function(adjustPlayStorePurchase, callback) {
     if (Platform.OS === "android") {
-        module_adjust.verifyPlayStorePurchase(purchase, callback);
+        module_adjust.verifyPlayStorePurchase(adjustPlayStorePurchase, callback);
     }
 };
 
-Adjust.processDeeplink = function(deeplink, callback) {
-    module_adjust.processDeeplink(deeplink, callback);
+Adjust.verifyAndTrackPlayStorePurchase = function(adjustEvent, callback) {
+    if (Platform.OS === "android") {
+        module_adjust.verifyAndTrackPlayStorePurchase(adjustEvent, callback);
+    }
+};
+
+Adjust.processAndResolveDeeplink = function(adjustDeeplink, callback) {
+    module_adjust.processAndResolveDeeplink(adjustDeeplink, callback);
 };
 
 Adjust.componentWillUnmount = function() {
-    if (AdjustConfig.AttributionSubscription != null) {
-        AdjustConfig.AttributionSubscription.remove();
-        AdjustConfig.AttributionSubscription = null;
+    if (AdjustConfig.AttributionCallback != null) {
+        AdjustConfig.AttributionCallback.remove();
+        AdjustConfig.AttributionCallback = null;
     }
 
-    if (AdjustConfig.EventTrackingSucceededSubscription != null) {
-        AdjustConfig.EventTrackingSucceededSubscription.remove();
-        AdjustConfig.EventTrackingSucceededSubscription = null;
+    if (AdjustConfig.EventTrackingSucceededCallback != null) {
+        AdjustConfig.EventTrackingSucceededCallback.remove();
+        AdjustConfig.EventTrackingSucceededCallback = null;
     }
 
-    if (AdjustConfig.EventTrackingFailedSubscription != null) {
-        AdjustConfig.EventTrackingFailedSubscription.remove();
-        AdjustConfig.EventTrackingFailedSubscription = null;
+    if (AdjustConfig.EventTrackingFailedCallback != null) {
+        AdjustConfig.EventTrackingFailedCallback.remove();
+        AdjustConfig.EventTrackingFailedCallback = null;
     }
 
-    if (AdjustConfig.SessionTrackingSucceededSubscription != null) {
-        AdjustConfig.SessionTrackingSucceededSubscription.remove();
-        AdjustConfig.SessionTrackingSucceededSubscription = null;
+    if (AdjustConfig.SessionTrackingSucceededCallback != null) {
+        AdjustConfig.SessionTrackingSucceededCallback.remove();
+        AdjustConfig.SessionTrackingSucceededCallback = null;
     }
 
-    if (AdjustConfig.SessionTrackingFailedSubscription != null) {
-        AdjustConfig.SessionTrackingFailedSubscription.remove();
-        AdjustConfig.SessionTrackingFailedSubscription = null;
+    if (AdjustConfig.SessionTrackingFailedCallback != null) {
+        AdjustConfig.SessionTrackingFailedCallback.remove();
+        AdjustConfig.SessionTrackingFailedCallback = null;
     }
 
-    if (AdjustConfig.DeferredDeeplinkSubscription != null) {
-        AdjustConfig.DeferredDeeplinkSubscription.remove();
-        AdjustConfig.DeferredDeeplinkSubscription = null;
+    if (AdjustConfig.DeferredDeeplinkCallback != null) {
+        AdjustConfig.DeferredDeeplinkCallback.remove();
+        AdjustConfig.DeferredDeeplinkCallback = null;
     }
 
-    if (AdjustConfig.ConversionValueUpdatedSubscription != null) {
-        AdjustConfig.ConversionValueUpdatedSubscription.remove();
-        AdjustConfig.ConversionValueUpdatedSubscription = null;
-    }
-
-    if (AdjustConfig.Skad4ConversionValueUpdatedSubscription != null) {
-        AdjustConfig.Skad4ConversionValueUpdatedSubscription.remove();
-        AdjustConfig.Skad4ConversionValueUpdatedSubscription = null;
+    if (AdjustConfig.SkanUpdatedCallback != null) {
+        AdjustConfig.SkanUpdatedCallback.remove();
+        AdjustConfig.SkanUpdatedCallback = null;
     }
 };
 
@@ -280,42 +294,36 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native4.38.1";
+    this.sdkPrefix = "react-native5.0.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
-    this.eventBufferingEnabled = null;
-    this.shouldLaunchDeeplink = null;
-    this.sendInBackground = null;
-    this.needsCost = null;
-    this.delayStart = null;
-    this.userAgent = null;
-    this.isDeviceKnown = null;
+    this.isDeferredDeeplinkOpeningEnabled = null;
+    this.isSendingInBackgroundEnabled = null;
+    this.isCostDataInAttributionEnabled = null;
     this.defaultTracker = null;
     this.externalDeviceId = null;
-    this.secretId = null;
-    this.info1 = null;
-    this.info2 = null;
-    this.info3 = null;
-    this.info4 = null;
-    this.urlStrategy = null;
-    this.coppaCompliantEnabled = null;
-    this.readDeviceInfoOnceEnabled = null;
+    this.isDeviceIdsReadingOnceEnabled = null;
+    this.isCoppaComplianceEnabled = null;
+    this.eventDeduplicationIdsMaxSize = null;
+    this.isDataResidency = null;
+    this.urlStrategyDomains = null;
+    this.useSubdomains = null;
+
     // Android only
     this.processName = null;
-    this.readMobileEquipmentIdentity = null;
-    this.preinstallTrackingEnabled = null;
+    this.isPreinstallTrackingEnabled = null;
     this.preinstallFilePath = null;
-    this.playStoreKidsAppEnabled = null;
-    this.finalAndroidAttributionEnabled = null;
+    this.isPlayStoreKidsComplianceEnabled = null;
     this.fbAppId;
+
     // iOS only
-    this.allowiAdInfoReading = null;
-    this.allowAdServicesInfoReading = null;
-    this.allowIdfaReading = null;
-    this.skAdNetworkHandling = null;
-    this.linkMeEnabled = null;
+    this.isAdServicesEnabled = null;
+    this.isIdfaReadingAllowed = null;
+    this.isIdfvReadingAllowed = null;
+    this.isSkanAttributionEnabled = null;
     this.attConsentWaitingInterval = null;
+    this.isLinkMeEnabled = null;
 };
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
@@ -329,230 +337,198 @@ AdjustConfig.LogLevelError = "ERROR";
 AdjustConfig.LogLevelAssert = "ASSERT";
 AdjustConfig.LogLevelSuppress = "SUPPRESS";
 
-AdjustConfig.AttributionSubscription = null;
-AdjustConfig.EventTrackingSucceededSubscription = null;
-AdjustConfig.EventTrackingFailedSubscription = null;
-AdjustConfig.SessionTrackingSucceededSubscription = null;
-AdjustConfig.SessionTrackingFailedSubscription = null;
-AdjustConfig.DeferredDeeplinkSubscription = null;
-AdjustConfig.ConversionValueUpdatedSubscription = null;
-AdjustConfig.Skad4ConversionValueUpdatedSubscription = null;
+AdjustConfig.AttributionCallback = null;
+AdjustConfig.EventTrackingSucceededCallback = null;
+AdjustConfig.EventTrackingFailedCallback = null;
+AdjustConfig.SessionTrackingSucceededCallback = null;
+AdjustConfig.SessionTrackingFailedCallback = null;
+AdjustConfig.DeferredDeeplinkCallback = null;
+AdjustConfig.SkanUpdatedCallback = null
 
-AdjustConfig.UrlStrategyChina = "china";
-AdjustConfig.UrlStrategyIndia = "india";
-AdjustConfig.UrlStrategyCn = "cn";
-AdjustConfig.UrlStrategyCnOnly = "cn-only";
-
-AdjustConfig.DataResidencyEU = "data-residency-eu";
-AdjustConfig.DataResidencyTR = "data-residency-tr";
-AdjustConfig.DataResidencyUS = "data-residency-us";
-
-AdjustConfig.AdRevenueSourceAppLovinMAX = "applovin_max_sdk";
-AdjustConfig.AdRevenueSourceMopub = "mopub";
-AdjustConfig.AdRevenueSourceAdmob = "admob_sdk";
-AdjustConfig.AdRevenueSourceIronSource = "ironsource_sdk";
-AdjustConfig.AdRevenueSourceAdmost = "admost_sdk";
-AdjustConfig.AdRevenueSourcePublisher = "publisher_sdk";
-AdjustConfig.AdRevenueSourceTopOn = "topon_sdk";
-AdjustConfig.AdRevenueSourceAdx = "adx_sdk";
-
-AdjustConfig.prototype.setEventBufferingEnabled = function(isEnabled) {
-    this.eventBufferingEnabled = isEnabled;
+AdjustConfig.prototype.setSdkPrefix = function(sdkPrefix) {
+    if (typeof sdkPrefix !== 'string') {
+        console.log("[Adjust] SDK prefix is not of type string");
+        return;
+    }
+    this.sdkPrefix = sdkPrefix;
 };
 
 AdjustConfig.prototype.setLogLevel = function(logLevel) {
+    if (typeof logLevel !== 'string') {
+        console.log("[Adjust] Log level is not of type string");
+        return;
+    }
     this.logLevel = logLevel;
 };
 
-AdjustConfig.prototype.setProcessName = function(processName) {
-    this.processName = processName;
+AdjustConfig.prototype.disableDeferredDeeplinkOpening = function() {
+    this.isDeferredDeeplinkOpeningEnabled = false;
+};
+
+AdjustConfig.prototype.enableSendingInBackground = function() {
+    this.isSendingInBackgroundEnabled = true;
 };
 
 AdjustConfig.prototype.setDefaultTracker = function(defaultTracker) {
+    if (typeof defaultTracker !== 'string') {
+        console.log("[Adjust] Default tracker is not of type string");
+        return;
+    }
     this.defaultTracker = defaultTracker;
 };
 
 AdjustConfig.prototype.setExternalDeviceId = function(externalDeviceId) {
+    if (typeof externalDeviceId !== 'string') {
+        console.log("[Adjust] External device ID is not of type string");
+        return;
+    }
     this.externalDeviceId = externalDeviceId;
 };
 
-AdjustConfig.prototype.setUserAgent = function(userAgent) {
-    this.userAgent = userAgent;
+AdjustConfig.prototype.enableDeviceIdsReadingOnce = function() {
+    this.isDeviceIdsReadingOnceEnabled = true;
 };
 
-AdjustConfig.prototype.setAppSecret = function(secretId, info1, info2, info3, info4) {
-    if (secretId != null) {
-        this.secretId = secretId.toString();
-    }
-    if (info1 != null) {
-        this.info1 = info1.toString();
-    }
-    if (info2 != null) {
-        this.info2 = info2.toString();
-    }
-    if (info3 != null) {
-        this.info3 = info3.toString();
-    }
-    if (info4 != null) {
-        this.info4 = info4.toString();
-    }
+AdjustConfig.prototype.enableCoppaCompliance = function() {
+    this.isCoppaComplianceEnabled = true;
 };
 
-AdjustConfig.prototype.setDelayStart = function(delayStart) {
-    this.delayStart = delayStart;
+AdjustConfig.prototype.enableCostDataInAttribution = function() {
+    this.isCostDataInAttributionEnabled = true;
 };
 
-AdjustConfig.prototype.setSendInBackground = function(sendInBackground) {
-    this.sendInBackground = sendInBackground;
-};
-
-AdjustConfig.prototype.setDeviceKnown = function(isDeviceKnown) {
-    this.isDeviceKnown = isDeviceKnown;
-};
-
-AdjustConfig.prototype.setNeedsCost = function(needsCost) {
-    this.needsCost = needsCost;
-};
-
-AdjustConfig.prototype.setSdkPrefix = function(sdkPrefix) {
-    this.sdkPrefix = sdkPrefix;
-};
-
-AdjustConfig.prototype.setUrlStrategy = function(urlStrategy) {
-    this.urlStrategy = urlStrategy;
-};
-
-AdjustConfig.prototype.setCoppaCompliantEnabled = function(coppaCompliantEnabled) {
-    this.coppaCompliantEnabled = coppaCompliantEnabled;
-};
-
-AdjustConfig.prototype.setReadDeviceInfoOnceEnabled = function(readDeviceInfoOnceEnabled) {
-    this.readDeviceInfoOnceEnabled = readDeviceInfoOnceEnabled;
-};
-
-AdjustConfig.prototype.setReadMobileEquipmentIdentity = function(readMobileEquipmentIdentity) {
-    // this.readMobileEquipmentIdentity = readMobileEquipmentIdentity;
-};
-
-AdjustConfig.prototype.setPreinstallTrackingEnabled = function(isEnabled) {
-    this.preinstallTrackingEnabled = isEnabled;
+AdjustConfig.prototype.enablePreinstallTracking = function() {
+    this.isPreinstallTrackingEnabled = true;
 };
 
 AdjustConfig.prototype.setPreinstallFilePath = function(preinstallFilePath) {
+    if (typeof preinstallFilePath !== 'string') {
+        console.log("[Adjust] Preinstall file path is not of type string");
+        return;
+    }
     this.preinstallFilePath = preinstallFilePath;
 };
 
-AdjustConfig.prototype.setPlayStoreKidsAppEnabled = function(isEnabled) {
-    this.playStoreKidsAppEnabled = isEnabled;
-};
-
-AdjustConfig.prototype.setFinalAndroidAttributionEnabled = function(isEnabled) {
-    this.finalAndroidAttributionEnabled = isEnabled;
+AdjustConfig.prototype.enablePlayStoreKidsCompliance = function() {
+    this.isPlayStoreKidsComplianceEnabled = true;
 };
 
 AdjustConfig.prototype.setFbAppId = function(fbAppId) {
+    if (typeof fbAppId !== 'string') {
+        console.log("[Adjust] FB app ID is not of type string");
+        return;
+    }
     this.fbAppId = fbAppId;
 };
 
-AdjustConfig.prototype.setAllowiAdInfoReading = function(allowiAdInfoReading) {
-    this.allowiAdInfoReading = allowiAdInfoReading;
+AdjustConfig.prototype.disableAdServices = function() {
+    this.isAdServicesEnabled = false;
 };
 
-AdjustConfig.prototype.setAllowAdServicesInfoReading = function(allowAdServicesInfoReading) {
-    this.allowAdServicesInfoReading = allowAdServicesInfoReading;
+AdjustConfig.prototype.disableIdfaReading = function() {
+    this.isIdfaReadingAllowed = false;
 };
 
-AdjustConfig.prototype.setAllowIdfaReading = function(allowIdfaReading) {
-    this.allowIdfaReading = allowIdfaReading;
+AdjustConfig.prototype.disableIdfvReading = function() {
+    this.isIdfvReadingAllowed = false;
 };
 
-AdjustConfig.prototype.setShouldLaunchDeeplink = function(shouldLaunchDeeplink) {
-    this.shouldLaunchDeeplink = shouldLaunchDeeplink;
+AdjustConfig.prototype.disableSkanAttribution = function() {
+    this.isSkanAttributionEnabled = false;
 };
 
-AdjustConfig.prototype.deactivateSKAdNetworkHandling = function() {
-    this.skAdNetworkHandling = false;
-};
-
-AdjustConfig.prototype.setLinkMeEnabled = function(linkMeEnabled) {
-    this.linkMeEnabled = linkMeEnabled;
+AdjustConfig.prototype.enableLinkMe = function() {
+    this.isLinkMeEnabled = true;
 };
 
 AdjustConfig.prototype.setAttConsentWaitingInterval = function(attConsentWaitingInterval) {
+    if (!Number.isInteger(attConsentWaitingInterval)) {
+        console.log("[Adjust] ATT consent waiting interval is not of type integer");
+        return;
+    }
     this.attConsentWaitingInterval = attConsentWaitingInterval;
 };
 
-AdjustConfig.prototype.setAttributionCallbackListener = function(attributionCallbackListener) {
-    if (null == AdjustConfig.AttributionSubscription) {
-        module_adjust.setAttributionCallbackListener();
-        AdjustConfig.AttributionSubscription = module_adjust_emitter.addListener(
-            'adjust_attribution', attributionCallbackListener
+AdjustConfig.prototype.setEventDeduplicationIdsMaxSize = function(eventDeduplicationIdsMaxSize) {
+    if (!Number.isInteger(eventDeduplicationIdsMaxSize)) {
+        console.log("[Adjust] Maximum number of event deduplication IDs is not of type integer");
+        return;
+    }
+    this.eventDeduplicationIdsMaxSize = eventDeduplicationIdsMaxSize;
+};
+
+AdjustConfig.prototype.setUrlStrategy = function(urlStrategyDomains, useSubdomains, isDataResidency) {
+    if (!Array.isArray(urlStrategyDomains) ||
+        typeof useSubdomains !== 'boolean' ||
+        typeof isDataResidency !== 'boolean') {
+        console.log("[Adjust] URL strategy parameters are not of a proper data types");
+        return;
+    }
+    this.urlStrategyDomains = urlStrategyDomains;
+    this.useSubdomains = useSubdomains;
+    this.isDataResidency = isDataResidency;
+};
+
+AdjustConfig.prototype.setAttributionCallback = function(attributionCallback) {
+    if (null == AdjustConfig.AttributionCallback) {
+        module_adjust.setAttributionCallbackImplemented();
+        AdjustConfig.AttributionCallback = module_adjust_emitter.addListener(
+            'adjust_attributionChanged', attributionCallback
         );
     }
 };
 
-AdjustConfig.prototype.setEventTrackingSucceededCallbackListener = function(eventTrackingSucceededCallbackListener) {
-    if (null == AdjustConfig.EventTrackingSucceededSubscription) {
-        module_adjust.setEventTrackingSucceededCallbackListener();
-        AdjustConfig.EventTrackingSucceededSubscription = module_adjust_emitter.addListener(
-            'adjust_eventTrackingSucceeded', eventTrackingSucceededCallbackListener
+AdjustConfig.prototype.setEventTrackingSucceededCallback = function(eventTrackingSucceededCallback) {
+    if (null == AdjustConfig.EventTrackingSucceededCallback) {
+        module_adjust.setEventTrackingSucceededCallbackImplemented();
+        AdjustConfig.EventTrackingSucceededCallback = module_adjust_emitter.addListener(
+            'adjust_eventTrackingSucceeded', eventTrackingSucceededCallback
         );
     }
 };
 
-AdjustConfig.prototype.setEventTrackingFailedCallbackListener = function(eventTrackingFailedCallbackListener) {
-    if (null == AdjustConfig.EventTrackingFailedSubscription) {
-        module_adjust.setEventTrackingFailedCallbackListener();
-        AdjustConfig.EventTrackingFailedSubscription = module_adjust_emitter.addListener(
-            'adjust_eventTrackingFailed', eventTrackingFailedCallbackListener
+AdjustConfig.prototype.setEventTrackingFailedCallback = function(eventTrackingFailedCallback) {
+    if (null == AdjustConfig.EventTrackingFailedCallback) {
+        module_adjust.setEventTrackingFailedCallbackImplemented();
+        AdjustConfig.EventTrackingFailedCallback = module_adjust_emitter.addListener(
+            'adjust_eventTrackingFailed', eventTrackingFailedCallback
         );
     }
 };
 
-AdjustConfig.prototype.setSessionTrackingSucceededCallbackListener = function(sessionTrackingSucceededCallbackListener) {
-    if (null == AdjustConfig.SessionTrackingSucceededSubscription) {
-        module_adjust.setSessionTrackingSucceededCallbackListener();
-        AdjustConfig.SessionTrackingSucceededSubscription = module_adjust_emitter.addListener(
-            'adjust_sessionTrackingSucceeded', sessionTrackingSucceededCallbackListener
+AdjustConfig.prototype.setSessionTrackingSucceededCallback = function(sessionTrackingSucceededCallback) {
+    if (null == AdjustConfig.SessionTrackingSucceededCallback) {
+        module_adjust.setSessionTrackingSucceededCallbackImplemented();
+        AdjustConfig.SessionTrackingSucceededCallback = module_adjust_emitter.addListener(
+            'adjust_sessionTrackingSucceeded', sessionTrackingSucceededCallback
         );
     }
 };
 
-AdjustConfig.prototype.setSessionTrackingFailedCallbackListener = function(sessionTrackingFailedCallbackListener) {
-    if (null == AdjustConfig.SessionTrackingFailedSubscription) {
-        module_adjust.setSessionTrackingFailedCallbackListener();
-        AdjustConfig.SessionTrackingFailedSubscription = module_adjust_emitter.addListener(
-            'adjust_sessionTrackingFailed', sessionTrackingFailedCallbackListener
+AdjustConfig.prototype.setSessionTrackingFailedCallback = function(sessionTrackingFailedCallback) {
+    if (null == AdjustConfig.SessionTrackingFailedCallback) {
+        module_adjust.setSessionTrackingFailedCallbackImplemented();
+        AdjustConfig.SessionTrackingFailedCallback = module_adjust_emitter.addListener(
+            'adjust_sessionTrackingFailed', sessionTrackingFailedCallback
         );
     }
 };
 
-AdjustConfig.prototype.setDeferredDeeplinkCallbackListener = function(deferredDeeplinkCallbackListener) {
-    if (null == AdjustConfig.DeferredDeeplinkSubscription) {
-        module_adjust.setDeferredDeeplinkCallbackListener();
-        AdjustConfig.DeferredDeeplinkSubscription = module_adjust_emitter.addListener(
-            'adjust_deferredDeeplink', deferredDeeplinkCallbackListener
+AdjustConfig.prototype.setDeferredDeeplinkCallback = function(deferredDeeplinkCallback) {
+    if (null == AdjustConfig.DeferredDeeplinkCallback) {
+        module_adjust.setDeferredDeeplinkCallbackImplemented();
+        AdjustConfig.DeferredDeeplinkCallback = module_adjust_emitter.addListener(
+            'adjust_deferredDeeplinkReceived', deferredDeeplinkCallback
         );
     }
 };
 
-AdjustConfig.prototype.setConversionValueUpdatedCallbackListener = function(conversionValueUpdatedCallbackListener) {
+AdjustConfig.prototype.setSkanUpdatedCallback = function(skanUpdatedCallback) {
     if (Platform.OS === "ios") {
-        if (null == AdjustConfig.ConversionValueUpdatedSubscription) {
-            module_adjust.setConversionValueUpdatedCallbackListener();
-            AdjustConfig.ConversionValueUpdatedSubscription = module_adjust_emitter.addListener(
-                'adjust_conversionValueUpdated', conversionValueUpdatedCallbackListener
-            );
-        }
-    }
-};
-
-AdjustConfig.prototype.setSkad4ConversionValueUpdatedCallbackListener = function(skad4ConversionValueUpdatedCallbackListener) {
-    if (Platform.OS === "ios") {
-        if (null == AdjustConfig.Skad4ConversionValueUpdatedSubscription) {
-            module_adjust.setSkad4ConversionValueUpdatedCallbackListener();
-            AdjustConfig.Skad4ConversionValueUpdatedSubscription = module_adjust_emitter.addListener(
-                'adjust_skad4ConversionValueUpdated', skad4ConversionValueUpdatedCallbackListener
+        if (null == AdjustConfig.SkanUpdatedCallback) {
+            module_adjust.setSkanUpdatedCallbackImplemented();
+            AdjustConfig.SkanUpdatedCallback = module_adjust_emitter.addListener(
+                'adjust_skanUpdated', skanUpdatedCallback
             );
         }
     }
@@ -564,89 +540,125 @@ var AdjustEvent = function(eventToken) {
     this.eventToken = eventToken;
     this.revenue = null;
     this.currency = null;
-    this.receipt = null;
+    this.deduplicationId = null;
     this.productId = null;
     this.transactionId = null;
     this.purchaseToken = null;
     this.callbackId = null;
-    this.callbackParameters = {};
-    this.partnerParameters = {};
+    this.callbackParameters = [];
+    this.partnerParameters = [];
 };
 
 AdjustEvent.prototype.setRevenue = function(revenue, currency) {
-    if (revenue != null) {
-        this.revenue = revenue.toString();
-        this.currency = currency;
+    if (typeof revenue !== 'number' || typeof currency !== 'string') {
+        console.log("[Adjust] Event revenue or currency is not of a proper data type");
     }
+    this.revenue = revenue;
+    this.currency = currency;
 };
 
 AdjustEvent.prototype.addCallbackParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
+        console.log("[Adjust] Event callback parameter key or value is not of type string");
         return;
     }
-    this.callbackParameters[key] = value;
+    this.callbackParameters.push(key);
+    this.callbackParameters.push(value);
 };
 
 AdjustEvent.prototype.addPartnerParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
+        console.log("[Adjust] Event partner parameter key or value is not of type string");
         return;
     }
-    this.partnerParameters[key] = value;
-};
-
-AdjustEvent.prototype.setReceipt = function(receipt) {
-    this.receipt = receipt;
+    this.partnerParameters.push(key);
+    this.partnerParameters.push(value);
 };
 
 AdjustEvent.prototype.setProductId = function(productId) {
+    if (typeof productId !== 'string') {
+        console.log("[Adjust] Event product ID is not of type string");
+        return;
+    }
     this.productId = productId;
 };
 
 AdjustEvent.prototype.setTransactionId = function(transactionId) {
+    if (typeof transactionId !== 'string') {
+        console.log("[Adjust] Event transaction ID is not of type string");
+        return;
+    }
     this.transactionId = transactionId;
 };
 
 AdjustEvent.prototype.setPurchaseToken = function(purchaseToken) {
+    if (typeof purchaseToken !== 'string') {
+        console.log("[Adjust] Event purchase token is not of type string");
+        return;
+    }
     this.purchaseToken = purchaseToken;
 };
 
+AdjustEvent.prototype.setDeduplicationId = function(deduplicationId) {
+    if (typeof deduplicationId !== 'string') {
+        console.log("[Adjust] Event deduplication ID is not of type string");
+        return;
+    }
+    this.deduplicationId = deduplicationId;
+};
+
 AdjustEvent.prototype.setCallbackId = function(callbackId) {
+    if (typeof callbackId !== 'string') {
+        console.log("[Adjust] Event callback ID is not of type string");
+        return;
+    }
     this.callbackId = callbackId;
 };
 
 // AdjustAppStoreSubscription
 
-var AdjustAppStoreSubscription = function(price, currency, transactionId, receipt) {
+var AdjustAppStoreSubscription = function(price, currency, transactionId) {
     this.price = price;
     this.currency = currency;
     this.transactionId = transactionId;
-    this.receipt = receipt;
     this.transactionDate = null;
     this.salesRegion = null;
-    this.callbackParameters = {};
-    this.partnerParameters = {};
+    this.callbackParameters = [];
+    this.partnerParameters = [];
 };
 
 AdjustAppStoreSubscription.prototype.setTransactionDate = function(transactionDate) {
+    if (typeof transactionDate !== 'string') {
+        console.log("[Adjust] App Store subscription transaction date is not of type string");
+        return;
+    }
     this.transactionDate = transactionDate;
 };
 
 AdjustAppStoreSubscription.prototype.setSalesRegion = function(salesRegion) {
+    if (typeof salesRegion !== 'string') {
+        console.log("[Adjust] App Store subscription sales region is not of type string");
+        return;
+    }
     this.salesRegion = salesRegion;
 };
 
 AdjustAppStoreSubscription.prototype.addCallbackParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
+        console.log("[Adjust] App Store subscription callback parameter key or value is not of type string");
         return;
     }
-    this.callbackParameters[key] = value;
+    this.callbackParameters.push(key);
+    this.callbackParameters.push(value);
 };
 
 AdjustAppStoreSubscription.prototype.addPartnerParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
+        console.log("[Adjust] App Store subscription partner parameter key or value is not of type string");
         return;
     }
-    this.partnerParameters[key] = value;
+    this.partnerParameters.push(key);
+    this.partnerParameters.push(value);
 };
 
 // AdjustPlayStoreSubscription
@@ -659,29 +671,35 @@ var AdjustPlayStoreSubscription = function(price, currency, sku, orderId, signat
     this.signature = signature;
     this.purchaseToken = purchaseToken;
     this.purchaseTime = null;
-    this.callbackParameters = {};
-    this.partnerParameters = {};
+    this.callbackParameters = [];
+    this.partnerParameters = [];
 };
 
 AdjustPlayStoreSubscription.prototype.setPurchaseTime = function(purchaseTime) {
+    if (!Number.isInteger(purchaseTime)) {
+        console.log("[Adjust] Play Store subscription purchase time is not of type integer");
+        return;
+    }
     this.purchaseTime = purchaseTime;
 };
 
 AdjustPlayStoreSubscription.prototype.addCallbackParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
+        console.log("[Adjust] Play Store subscription callback parameter key or value is not of type string");
         return;
     }
-    this.callbackParameters[key] = value;
+    this.callbackParameters.push(key);
+    this.callbackParameters.push(value);
 };
 
 AdjustPlayStoreSubscription.prototype.addPartnerParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
+        console.log("[Adjust] Play Store subscription partner parameter key or value is not of type string");
         return;
     }
-    this.partnerParameters[key] = value;
+    this.partnerParameters.push(key);
+    this.partnerParameters.push(value);
 };
-
-// AdjustThirdPartySharing
 
 var AdjustThirdPartySharing = function(isEnabled) {
     this.isEnabled = isEnabled;
@@ -691,6 +709,7 @@ var AdjustThirdPartySharing = function(isEnabled) {
 
 AdjustThirdPartySharing.prototype.addGranularOption = function(partnerName, key, value) {
     if (typeof partnerName !== 'string' || typeof key !== 'string' || typeof value !== 'string') {
+        console.log("[Adjust] Granular option parameterName, key or value is not of a type string");
         return;
     }
     this.granularOptions.push(partnerName);
@@ -700,6 +719,7 @@ AdjustThirdPartySharing.prototype.addGranularOption = function(partnerName, key,
 
 AdjustThirdPartySharing.prototype.addPartnerSharingSetting = function(partnerName, key, value) {
     if (typeof partnerName !== 'string' || typeof key !== 'string' || typeof value !== 'boolean') {
+        console.log("[Adjust] Partner sharing setting parameters are not of a proper data type");
         return;
     }
     this.partnerSharingSettings.push(partnerName);
@@ -717,51 +737,71 @@ var AdjustAdRevenue = function(source) {
     this.adRevenueNetwork = null;
     this.adRevenueUnit = null;
     this.adRevenuePlacement = null;
-    this.callbackParameters = {};
-    this.partnerParameters = {};
+    this.callbackParameters = [];
+    this.partnerParameters = [];
 };
 
 AdjustAdRevenue.prototype.setRevenue = function(revenue, currency) {
-    if (revenue != null) {
-        this.revenue = revenue.toString();
-        this.currency = currency;
+    if (typeof revenue !== 'number' || typeof currency !== 'string') {
+        console.log("[Adjust] Ad revenue or currency is not of a proper data type");
     }
+    this.revenue = revenue;
+    this.currency = currency;
 };
 
 AdjustAdRevenue.prototype.setAdImpressionsCount = function(adImpressionsCount) {
-    this.adImpressionsCount = adImpressionsCount.toString();
+    if (!Number.isInteger(adImpressionsCount)) {
+        console.log("[Adjust] Ad impressions count is not of type integer");
+        return;
+    }
+    this.adImpressionsCount = adImpressionsCount;
 };
 
 AdjustAdRevenue.prototype.setAdRevenueNetwork = function(adRevenueNetwork) {
+    if (typeof adRevenueNetwork !== 'string') {
+        console.log("[Adjust] Ad revenue network is not of type string");
+        return;
+    }
     this.adRevenueNetwork = adRevenueNetwork;
 };
 
 AdjustAdRevenue.prototype.setAdRevenueUnit = function(adRevenueUnit) {
+    if (typeof adRevenueUnit !== 'string') {
+        console.log("[Adjust] Ad revenue unit is not of type string");
+        return;
+    }
     this.adRevenueUnit = adRevenueUnit;
 };
 
 AdjustAdRevenue.prototype.setAdRevenuePlacement = function(adRevenuePlacement) {
+    if (typeof adRevenuePlacement !== 'string') {
+        console.log("[Adjust] Ad revenue placement is not of type string");
+        return;
+    }
     this.adRevenuePlacement = adRevenuePlacement;
 };
 
 AdjustAdRevenue.prototype.addCallbackParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
+        console.log("[Adjust] Ad revenue callback parameter key or value is not of type string");
         return;
     }
-    this.callbackParameters[key] = value;
+    this.callbackParameters.push(key);
+    this.callbackParameters.push(value);
 };
 
 AdjustAdRevenue.prototype.addPartnerParameter = function(key, value) {
     if (typeof key !== 'string' || typeof value !== 'string') {
+        console.log("[Adjust] Ad revenue partner parameter key or value is not of type string");
         return;
     }
-    this.partnerParameters[key] = value;
+    this.partnerParameters.push(key);
+    this.partnerParameters.push(value);
 };
 
 // AdjustAppStorePurchase
 
-var AdjustAppStorePurchase = function(receipt, productId, transactionId) {
-    this.receipt = receipt;
+var AdjustAppStorePurchase = function(productId, transactionId) {
     this.productId = productId;
     this.transactionId = transactionId;
 };
@@ -773,14 +813,21 @@ var AdjustPlayStorePurchase = function(productId, purchaseToken) {
     this.purchaseToken = purchaseToken;
 };
 
+// AdjustDeeplink
+
+var AdjustDeeplink = function(deeplink) {
+    this.deeplink = deeplink;
+};
+
 module.exports = {
     Adjust,
-    AdjustEvent,
     AdjustConfig,
+    AdjustEvent,
+    AdjustAdRevenue,
+    AdjustThirdPartySharing,
     AdjustAppStoreSubscription,
     AdjustPlayStoreSubscription,
-    AdjustThirdPartySharing,
-    AdjustAdRevenue,
     AdjustAppStorePurchase,
-    AdjustPlayStorePurchase
+    AdjustPlayStorePurchase,
+    AdjustDeeplink
 }

@@ -1,9 +1,9 @@
 //
 //  AdjustSdkDelegate.m
-//  Adjust SDK
+//  AdjustSdk
 //
 //  Created by Abdullah Obaied (@obaied) on 17th November 2016.
-//  Copyright © 2016-2021 Adjust GmbH. All rights reserved.
+//  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
 #import <objc/runtime.h>
@@ -38,8 +38,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
                          sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
-                   conversionValueUpdatedCallback:(BOOL)swizzleConversionValueUpdatedCallback
-              skad4ConversionValueUpdatedCallback:(BOOL)swizzleSkad4ConversionValueUpdatedCallback
+                skanUpdatedCallback:(BOOL)swizzleSkanUpdatedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
     dispatch_once(&onceToken, ^{
         defaultInstance = [[AdjustSdkDelegate alloc] init];
@@ -66,16 +65,12 @@ static AdjustSdkDelegate *defaultInstance = nil;
                                   swizzledSelector:@selector(adjustSessionTrackingFailedWananbe:)];
         }
         if (swizzleDeferredDeeplinkCallback) {
-            [defaultInstance swizzleCallbackMethod:@selector(adjustDeeplinkResponse:)
-                                  swizzledSelector:@selector(adjustDeeplinkResponseWannabe:)];
+            [defaultInstance swizzleCallbackMethod:@selector(adjustDeferredDeeplinkReceived:)
+                                  swizzledSelector:@selector(adjustDeferredDeeplinkReceivedWannabe:)];
         }
-        if (swizzleConversionValueUpdatedCallback) {
-            [defaultInstance swizzleCallbackMethod:@selector(adjustConversionValueUpdated:)
-                                  swizzledSelector:@selector(adjustConversionValueUpdatedWannabe:)];
-        }
-        if (swizzleSkad4ConversionValueUpdatedCallback) {
-            [defaultInstance swizzleCallbackMethod:@selector(adjustConversionValueUpdated:coarseValue:lockWindow:)
-                                  swizzledSelector:@selector(adjustConversionValueUpdatedWannabe:coarseValue:lockWindow:)];
+        if (swizzleSkanUpdatedCallback) {
+            [defaultInstance swizzleCallbackMethod:@selector(adjustSkanUpdatedWithConversionData:)
+                                  swizzledSelector:@selector(adjustSkanUpdatedWithConversionDataWannabe:)];
         }
         [defaultInstance setShouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink];
     });
@@ -103,11 +98,10 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"creative" value:attribution.creative];
     [self addValueOrEmpty:dictionary key:@"adgroup" value:attribution.adgroup];
     [self addValueOrEmpty:dictionary key:@"clickLabel" value:attribution.clickLabel];
-    [self addValueOrEmpty:dictionary key:@"adid" value:attribution.adid];
     [self addValueOrEmpty:dictionary key:@"costType" value:attribution.costType];
     [self addValueOrEmpty:dictionary key:@"costAmount" value:attribution.costAmount];
     [self addValueOrEmpty:dictionary key:@"costCurrency" value:attribution.costCurrency];
-    [AdjustEventEmitter dispatchEvent:@"adjust_attribution" withDictionary:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_attributionChanged" withDictionary:dictionary];
 }
 
 - (void)adjustEventTrackingSucceededWannabe:(ADJEventSuccess *)eventSuccessResponseData {
@@ -117,7 +111,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [self addValueOrEmpty:dictionary key:@"message" value:eventSuccessResponseData.message];
-    [self addValueOrEmpty:dictionary key:@"timestamp" value:eventSuccessResponseData.timeStamp];
+    [self addValueOrEmpty:dictionary key:@"timestamp" value:eventSuccessResponseData.timestamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:eventSuccessResponseData.adid];
     [self addValueOrEmpty:dictionary key:@"eventToken" value:eventSuccessResponseData.eventToken];
     [self addValueOrEmpty:dictionary key:@"callbackId" value:eventSuccessResponseData.callbackId];
@@ -138,7 +132,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [self addValueOrEmpty:dictionary key:@"message" value:eventFailureResponseData.message];
-    [self addValueOrEmpty:dictionary key:@"timestamp" value:eventFailureResponseData.timeStamp];
+    [self addValueOrEmpty:dictionary key:@"timestamp" value:eventFailureResponseData.timestamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:eventFailureResponseData.adid];
     [self addValueOrEmpty:dictionary key:@"eventToken" value:eventFailureResponseData.eventToken];
     [self addValueOrEmpty:dictionary key:@"callbackId" value:eventFailureResponseData.callbackId];
@@ -161,7 +155,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [self addValueOrEmpty:dictionary key:@"message" value:sessionSuccessResponseData.message];
-    [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionSuccessResponseData.timeStamp];
+    [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionSuccessResponseData.timestamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:sessionSuccessResponseData.adid];
     if (sessionSuccessResponseData.jsonResponse != nil) {
         NSData *dataJsonResponse = [NSJSONSerialization dataWithJSONObject:sessionSuccessResponseData.jsonResponse options:0 error:nil];
@@ -180,7 +174,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [self addValueOrEmpty:dictionary key:@"message" value:sessionFailureResponseData.message];
-    [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionFailureResponseData.timeStamp];
+    [self addValueOrEmpty:dictionary key:@"timestamp" value:sessionFailureResponseData.timestamp];
     [self addValueOrEmpty:dictionary key:@"adid" value:sessionFailureResponseData.adid];
     [dictionary setObject:(sessionFailureResponseData.willRetry ? @"true" : @"false") forKey:@"willRetry"];
     if (sessionFailureResponseData.jsonResponse != nil) {
@@ -193,26 +187,19 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [AdjustEventEmitter dispatchEvent:@"adjust_sessionTrackingFailed" withDictionary:dictionary];
 }
 
-- (BOOL)adjustDeeplinkResponseWannabe:(NSURL *)deeplink {
+- (BOOL)adjustDeferredDeeplinkReceivedWannabe:(NSURL *)deeplink {
     NSString *path = [deeplink absoluteString];
-    [AdjustEventEmitter dispatchEvent:@"adjust_deferredDeeplink" withDictionary:@{@"uri": path}];
+    [AdjustEventEmitter dispatchEvent:@"adjust_deferredDeeplinkReceived" withDictionary:@{@"deeplink": path}];
     return _shouldLaunchDeferredDeeplink;
 }
 
-- (void)adjustConversionValueUpdatedWannabe:(NSNumber *)conversionValue {
-    // NSString *strConversionValue = [conversionValue stringValue];
-    [AdjustEventEmitter dispatchEvent:@"adjust_conversionValueUpdated" withDictionary:@{@"conversionValue": conversionValue}];
-}
-
-
-- (void)adjustConversionValueUpdatedWannabe:(nullable NSNumber *)fineValue
-                                coarseValue:(nullable NSString *)coarseValue
-                                 lockWindow:(nullable NSNumber *)lockWindow {
+- (void)adjustSkanUpdatedWithConversionDataWannabe:(nonnull NSDictionary<NSString *, NSString *> *)data {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-    [self addValueOrEmpty:dictionary key:@"fineValue" value:[fineValue stringValue]];
-    [self addValueOrEmpty:dictionary key:@"coarseValue" value:coarseValue];
-    [self addValueOrEmpty:dictionary key:@"lockWindow" value:[lockWindow stringValue]];
-    [AdjustEventEmitter dispatchEvent:@"adjust_skad4ConversionValueUpdated" withDictionary:dictionary];
+    [self addValueOrEmpty:dictionary key:@"conversionValue" value:data[@"conversion_value"]];
+    [self addValueOrEmpty:dictionary key:@"coarseValue" value:data[@"coarse_value"]];
+    [self addValueOrEmpty:dictionary key:@"lockWindow" value:data[@"lock_window"]];
+    [self addValueOrEmpty:dictionary key:@"error" value:data[@"error"]];
+    [AdjustEventEmitter dispatchEvent:@"adjust_skanUpdated" withDictionary:dictionary];
 }
 
 - (void)swizzleCallbackMethod:(SEL)originalSelector
@@ -245,3 +232,4 @@ static AdjustSdkDelegate *defaultInstance = nil;
 }
 
 @end
+

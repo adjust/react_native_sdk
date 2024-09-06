@@ -48,7 +48,7 @@ const App: () => React$Node = () => {
   }
 
   var urlOverwrite = "";
-  var ipAddress = "192.168.86.53";
+  var ipAddress = "192.168.8.63";
   if (Platform.OS === "android") {
     urlOverwrite = "https://" + ipAddress + ":8443";
   } else if (Platform.OS === "ios") {
@@ -56,9 +56,9 @@ const App: () => React$Node = () => {
   }
   var controlUrl = "ws://" + ipAddress + ":1987";
 
-  // AdjustSdkTest.addTestDirectory("purchase-verification");
-  // AdjustSdkTest.addTest("Test_AdRevenue_ad_revenue_v2");
-  Adjust.getSdkVersion(function(sdkVersion) {
+  // AdjustSdkTest.addTestDirectory("tracking-domain");
+  // AdjustSdkTest.addTest("Test_Skan_all_packages");
+  Adjust.getSdkVersion(function (sdkVersion) {
     AdjustSdkTest.startTestSession(urlOverwrite, controlUrl, sdkVersion);
   });
 

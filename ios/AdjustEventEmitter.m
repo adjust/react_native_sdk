@@ -1,9 +1,9 @@
 //
 //  AdjustEventEmitter.m
-//  Adjust SDK
+//  AdjustSdk
 //
 //  Created by Abdullah Obaied (@obaied) on 28th December 2017.
-//  Copyright © 2017 Facebook. All rights reserved.
+//  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
 #import "AdjustEventEmitter.h"
@@ -24,14 +24,13 @@ RCT_EXPORT_MODULE();
 }
 
 - (NSArray<NSString *> *)supportedEvents {
-    return @[@"adjust_attribution",
+    return @[@"adjust_attributionChanged",
              @"adjust_eventTrackingSucceeded",
              @"adjust_eventTrackingFailed",
              @"adjust_sessionTrackingSucceeded",
              @"adjust_sessionTrackingFailed",
-             @"adjust_deferredDeeplink",
-             @"adjust_conversionValueUpdated",
-             @"adjust_skad4ConversionValueUpdated"];
+             @"adjust_deferredDeeplinkReceived",
+             @"adjust_skanUpdated"];
 }
 
 - (void)startObserving {
@@ -60,3 +59,5 @@ RCT_EXPORT_MODULE();
 }
 
 @end
+
+

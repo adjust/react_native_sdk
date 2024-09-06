@@ -3,13 +3,14 @@
 //  Adjust SDK
 //
 //  Created by Abdullah Obaied (@Obaied) on 19th October 2016.
-//  Copyright (c) 2016-2021 Adjust GmbH. All rights reserved.
+//  Copyright (c) 2016-Present Adjust GmbH. All rights reserved.
 //
 
 package com.adjust.nativemodule;
 
 import android.net.Uri;
 import android.util.Log;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -21,21 +22,21 @@ import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
 import com.adjust.sdk.*;
 
-public class Adjust extends ReactContextBaseJavaModule implements LifecycleEventListener,
+public class Adjust extends ReactContextBaseJavaModule implements
                 OnAttributionChangedListener,
                 OnEventTrackingSucceededListener,
                 OnEventTrackingFailedListener,
                 OnSessionTrackingSucceededListener,
                 OnSessionTrackingFailedListener,
-                OnDeeplinkResponseListener {
+                OnDeferredDeeplinkResponseListener {
     private static String TAG = "AdjustBridge";
-    private boolean attributionCallback;
-    private boolean eventTrackingSucceededCallback;
-    private boolean eventTrackingFailedCallback;
-    private boolean sessionTrackingSucceededCallback;
-    private boolean sessionTrackingFailedCallback;
-    private boolean deferredDeeplinkCallback;
-    private boolean shouldLaunchDeeplink = true;
+    private boolean isAttributionCallbackImplemented;
+    private boolean isEventTrackingSucceededCallbackImplemented;
+    private boolean isEventTrackingFailedCallbackImplemented;
+    private boolean isSessionTrackingSucceededCallbackImplemented;
+    private boolean isSessionTrackingFailedCallbackImplemented;
+    private boolean isDeferredDeeplinkCallbackImplemented;
+    private boolean isDeferredDeeplinkOpeningEnabled = true;
 
     public Adjust(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -47,56 +48,56 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @Override
-    public void initialize() {
-        getReactApplicationContext().addLifecycleEventListener(this);
-    }
-
-    @Override
-    public void onHostPause() {
-        com.adjust.sdk.Adjust.onPause();
-    }
-
-    @Override
-    public void onHostResume() {
-        com.adjust.sdk.Adjust.onResume();
-    }
-
-    @Override
-    public void onHostDestroy() {}
-
-    @Override
     public void onAttributionChanged(AdjustAttribution attribution) {
-        sendEvent(getReactApplicationContext(), "adjust_attribution", AdjustUtil.attributionToMap(attribution));
+        sendEvent(
+            getReactApplicationContext(),
+            "adjust_attributionChanged",
+            AdjustUtil.attributionToMap(attribution));
     }
 
     @Override
-    public void onFinishedEventTrackingSucceeded(AdjustEventSuccess event) {
-        sendEvent(getReactApplicationContext(), "adjust_eventTrackingSucceeded", AdjustUtil.eventSuccessToMap(event));
+    public void onEventTrackingSucceeded(AdjustEventSuccess event) {
+        sendEvent(
+            getReactApplicationContext(),
+            "adjust_eventTrackingSucceeded",
+            AdjustUtil.eventSuccessToMap(event));
     }
 
     @Override
-    public void onFinishedEventTrackingFailed(AdjustEventFailure event) {
-        sendEvent(getReactApplicationContext(), "adjust_eventTrackingFailed", AdjustUtil.eventFailureToMap(event));
+    public void onEventTrackingFailed(AdjustEventFailure event) {
+        sendEvent(
+            getReactApplicationContext(),
+            "adjust_eventTrackingFailed",
+            AdjustUtil.eventFailureToMap(event));
     }
 
     @Override
-    public void onFinishedSessionTrackingSucceeded(AdjustSessionSuccess session) {
-        sendEvent(getReactApplicationContext(), "adjust_sessionTrackingSucceeded", AdjustUtil.sessionSuccessToMap(session));
+    public void onSessionTrackingSucceeded(AdjustSessionSuccess session) {
+        sendEvent(
+            getReactApplicationContext(),
+            "adjust_sessionTrackingSucceeded",
+            AdjustUtil.sessionSuccessToMap(session));
     }
 
     @Override
-    public void onFinishedSessionTrackingFailed(AdjustSessionFailure session) {
-        sendEvent(getReactApplicationContext(), "adjust_sessionTrackingFailed", AdjustUtil.sessionFailureToMap(session));
+    public void onSessionTrackingFailed(AdjustSessionFailure session) {
+        sendEvent(
+            getReactApplicationContext(),
+            "adjust_sessionTrackingFailed",
+            AdjustUtil.sessionFailureToMap(session));
     }
 
     @Override
     public boolean launchReceivedDeeplink(Uri uri) {
-        sendEvent(getReactApplicationContext(), "adjust_deferredDeeplink", AdjustUtil.deferredDeeplinkToMap(uri));
-        return this.shouldLaunchDeeplink;
+        sendEvent(
+            getReactApplicationContext(),
+            "adjust_deferredDeeplinkReceived",
+            AdjustUtil.deferredDeeplinkToMap(uri));
+        return this.isDeferredDeeplinkOpeningEnabled;
     }
 
     @ReactMethod
-    public void create(final ReadableMap mapConfig) {
+    public void initSdk(final ReadableMap mapConfig) {
         if (mapConfig == null) {
             return;
         }
@@ -105,33 +106,25 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         String environment = null;
         String logLevel = null;
         String sdkPrefix = null;
-        String userAgent = null;
         String processName = null;
         String defaultTracker = null;
         String externalDeviceId = null;
-        String urlStrategy = null;
         String preinstallFilePath = null;
         String fbAppId = null;
-        long secretId  = 0L;
-        long info1 = 0L;
-        long info2 = 0L;
-        long info3 = 0L;
-        long info4 = 0L;
-        double delayStart = 0.0;
-        boolean isDeviceKnown = false;
-        boolean sendInBackground = false;
+        int eventDeduplicationIdsMaxSize = -1;
+        boolean isSendingInBackgroundEnabled = false;
         boolean isLogLevelSuppress = false;
-        boolean shouldLaunchDeeplink = false;
-        boolean eventBufferingEnabled = false;
-        boolean readMobileEquipmentIdentity = false;
-        boolean preinstallTrackingEnabled = false;
-        boolean needsCost = false;
-        boolean playStoreKidsAppEnabled = false;
-        boolean coppaCompliantEnabled = false;
-        boolean finalAndroidAttributionEnabled = false;
-        boolean readDeviceInfoOnceEnabled = false;
+        boolean isDeferredDeeplinkOpeningEnabled = false;
+        boolean isPreinstallTrackingEnabled = false;
+        boolean isCostDataInAttributionEnabled = false;
+        boolean isPlayStoreKidsComplianceEnabled = false;
+        boolean isCoppaComplianceEnabled = false;
+        boolean isDeviceIdsReadingOnceEnabled = false;
+        List<Object> urlStrategyDomains = null;
+        boolean useSubdomains = false;
+        boolean isDataResidency = false;
 
-        // Suppress log level.
+        // suppress log level
         if (checkKey(mapConfig, "logLevel")) {
             logLevel = mapConfig.getString("logLevel");
             if (logLevel.equals("SUPPRESS")) {
@@ -139,22 +132,19 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // App token.
+        // app token
         if (checkKey(mapConfig, "appToken")) {
             appToken = mapConfig.getString("appToken");
         }
 
-        // Environment.
+        // environment
         if (checkKey(mapConfig, "environment")) {
             environment = mapConfig.getString("environment");
         }
 
         final AdjustConfig adjustConfig = new AdjustConfig(getReactApplicationContext(), appToken, environment, isLogLevelSuppress);
-        if (!adjustConfig.isValid()) {
-            return;
-        }
 
-        // Log level.
+        // log level
         if (checkKey(mapConfig, "logLevel")) {
             logLevel = mapConfig.getString("logLevel");
             if (logLevel.equals("VERBOSE")) {
@@ -176,190 +166,150 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Event buffering.
-        if (checkKey(mapConfig, "eventBufferingEnabled")) {
-            eventBufferingEnabled = mapConfig.getBoolean("eventBufferingEnabled");
-            adjustConfig.setEventBufferingEnabled(eventBufferingEnabled);
-        }
-
-        // SDK prefix.
+        // SDK prefix
         if (checkKey(mapConfig, "sdkPrefix")) {
             sdkPrefix = mapConfig.getString("sdkPrefix");
             adjustConfig.setSdkPrefix(sdkPrefix);
         }
 
-        // Main process name.
+        // main process name
         if (checkKey(mapConfig, "processName")) {
             processName = mapConfig.getString("processName");
             adjustConfig.setProcessName(processName);
         }
 
-        // Default tracker.
+        // default tracker
         if (checkKey(mapConfig, "defaultTracker")) {
             defaultTracker = mapConfig.getString("defaultTracker");
             adjustConfig.setDefaultTracker(defaultTracker);
         }
 
-        // External device ID.
+        // external device ID
         if (checkKey(mapConfig, "externalDeviceId")) {
             externalDeviceId = mapConfig.getString("externalDeviceId");
             adjustConfig.setExternalDeviceId(externalDeviceId);
         }
 
-        // URL strategy.
-        if (checkKey(mapConfig, "urlStrategy")) {
-            urlStrategy = mapConfig.getString("urlStrategy");
-            if (urlStrategy.equalsIgnoreCase("china")) {
-                adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_CHINA);
-            } else if (urlStrategy.equalsIgnoreCase("india")) {
-                adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_INDIA);
-            } else if (urlStrategy.equalsIgnoreCase("cn")) {
-                adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_CN);
-            } else if (urlStrategy.equalsIgnoreCase("cn-only")) {
-                adjustConfig.setUrlStrategy(AdjustConfig.URL_STRATEGY_CN_ONLY);
-            } else if (urlStrategy.equalsIgnoreCase("data-residency-eu")) {
-                adjustConfig.setUrlStrategy(AdjustConfig.DATA_RESIDENCY_EU);
-            } else if (urlStrategy.equalsIgnoreCase("data-residency-us")) {
-                adjustConfig.setUrlStrategy(AdjustConfig.DATA_RESIDENCY_US);
-            } else if (urlStrategy.equalsIgnoreCase("data-residency-tr")) {
-                adjustConfig.setUrlStrategy(AdjustConfig.DATA_RESIDENCY_TR);
+         // URL strategy
+        if (checkKey(mapConfig, "urlStrategyDomains")
+            && checkKey(mapConfig, "useSubdomains") 
+            && checkKey(mapConfig, "isDataResidency")) {
+            urlStrategyDomains = AdjustUtil.toList(mapConfig.getArray("urlStrategyDomains"));
+            if (urlStrategyDomains != null) {
+                List<String> strUrlStrategyDomains = new ArrayList<>();
+                for (int i = 0; i < urlStrategyDomains.size(); i += 1) {
+                    strUrlStrategyDomains.add(urlStrategyDomains.get(i).toString());
+                }
+                useSubdomains = mapConfig.getBoolean("useSubdomains");
+                isDataResidency = mapConfig.getBoolean("isDataResidency");
+                adjustConfig.setUrlStrategy(strUrlStrategyDomains, useSubdomains, isDataResidency);
             }
         }
-
-        // User agent.
-        if (checkKey(mapConfig, "userAgent")) {
-            userAgent = mapConfig.getString("userAgent");
-            adjustConfig.setUserAgent(userAgent);
-        }
-
-        // Preinstall file path.
+       
+        // preinstall file path
         if (checkKey(mapConfig, "preinstallFilePath")) {
             preinstallFilePath = mapConfig.getString("preinstallFilePath");
             adjustConfig.setPreinstallFilePath(preinstallFilePath);
         }
 
-        // FB app ID (meta install referrer).
+        // FB app ID (META install referrer)
         if (checkKey(mapConfig, "fbAppId")) {
             fbAppId = mapConfig.getString("fbAppId");
             adjustConfig.setFbAppId(fbAppId);
         }
 
-        // App secret.
-        if (checkKey(mapConfig, "secretId")
-                && checkKey(mapConfig, "info1")
-                && checkKey(mapConfig, "info2")
-                && checkKey(mapConfig, "info3")
-                && checkKey(mapConfig, "info4")) {
-            try {
-                secretId = Long.parseLong(mapConfig.getString("secretId"), 10);
-                info1 = Long.parseLong(mapConfig.getString("info1"), 10);
-                info2 = Long.parseLong(mapConfig.getString("info2"), 10);
-                info3 = Long.parseLong(mapConfig.getString("info3"), 10);
-                info4 = Long.parseLong(mapConfig.getString("info4"), 10);
-                adjustConfig.setAppSecret(secretId, info1, info2, info3, info4);
-            } catch (NumberFormatException ignore) {}
+        // sending in background
+        if (checkKey(mapConfig, "isSendingInBackgroundEnabled")) {
+            isSendingInBackgroundEnabled = mapConfig.getBoolean("isSendingInBackgroundEnabled");
+            if (isSendingInBackgroundEnabled) {
+               adjustConfig.enableSendingInBackground();
+            }
         }
 
-        // Background tracking.
-        if (checkKey(mapConfig, "sendInBackground")) {
-            sendInBackground = mapConfig.getBoolean("sendInBackground");
-            adjustConfig.setSendInBackground(sendInBackground);
+        // preinstall tracking
+        if (checkKey(mapConfig, "isPreinstallTrackingEnabled")) {
+            isPreinstallTrackingEnabled = mapConfig.getBoolean("isPreinstallTrackingEnabled");
+            if(isPreinstallTrackingEnabled) {
+               adjustConfig.enablePreinstallTracking();
+            }
         }
 
-        // Set device known.
-        if (checkKey(mapConfig, "isDeviceKnown")) {
-            isDeviceKnown = mapConfig.getBoolean("isDeviceKnown");
-            adjustConfig.setDeviceKnown(isDeviceKnown);
+        // cost data in attribution
+        if (checkKey(mapConfig, "isCostDataInAttributionEnabled")) {
+            isCostDataInAttributionEnabled = mapConfig.getBoolean("isCostDataInAttributionEnabled");
+            if (isCostDataInAttributionEnabled) {
+               adjustConfig.enableCostDataInAttribution();
+            }
         }
 
-        // Deprecated.
-        // Set read mobile equipment ID.
-        // if (checkKey(mapConfig, "readMobileEquipmentIdentity")) {
-        //     readMobileEquipmentIdentity = mapConfig.getBoolean("readMobileEquipmentIdentity");
-        //     adjustConfig.setReadMobileEquipmentIdentity(readMobileEquipmentIdentity);
-        // }
-
-        // Preinstall tracking.
-        if (checkKey(mapConfig, "preinstallTrackingEnabled")) {
-            preinstallTrackingEnabled = mapConfig.getBoolean("preinstallTrackingEnabled");
-            adjustConfig.setPreinstallTrackingEnabled(preinstallTrackingEnabled);
+        // play store kids apps compliance
+        if (checkKey(mapConfig, "isPlayStoreKidsComplianceEnabled")) {
+            isPlayStoreKidsComplianceEnabled = mapConfig.getBoolean("isPlayStoreKidsComplianceEnabled");
+            if (isPlayStoreKidsComplianceEnabled) {
+               adjustConfig.enablePlayStoreKidsCompliance();
+            }
         }
 
-        // Cost data.
-        if (checkKey(mapConfig, "needsCost")) {
-            needsCost = mapConfig.getBoolean("needsCost");
-            adjustConfig.setNeedsCost(needsCost);
+        // should open deferred deep link
+        if (checkKey(mapConfig, "isDeferredDeeplinkOpeningEnabled")) {
+            isDeferredDeeplinkOpeningEnabled = mapConfig.getBoolean("isDeferredDeeplinkOpeningEnabled");
+            this.isDeferredDeeplinkOpeningEnabled = isDeferredDeeplinkOpeningEnabled;
         }
 
-        // Google Play Store kids app.
-        if (checkKey(mapConfig, "playStoreKidsAppEnabled")) {
-            playStoreKidsAppEnabled = mapConfig.getBoolean("playStoreKidsAppEnabled");
-            adjustConfig.setPlayStoreKidsAppEnabled(playStoreKidsAppEnabled);
+        // COPPA compliance
+        if (checkKey(mapConfig, "isCoppaComplianceEnabled")) {
+            isCoppaComplianceEnabled = mapConfig.getBoolean("isCoppaComplianceEnabled");
+            if (isCoppaComplianceEnabled) {
+               adjustConfig.enableCoppaCompliance();
+            }
         }
 
-        // Launching deferred deep link.
-        if (checkKey(mapConfig, "shouldLaunchDeeplink")) {
-            shouldLaunchDeeplink = mapConfig.getBoolean("shouldLaunchDeeplink");
-            this.shouldLaunchDeeplink = shouldLaunchDeeplink;
+        // read device info only once
+        if (checkKey(mapConfig, "isDeviceIdsReadingOnceEnabled")) {
+            isDeviceIdsReadingOnceEnabled = mapConfig.getBoolean("isDeviceIdsReadingOnceEnabled");
+            if (isDeviceIdsReadingOnceEnabled) {
+                adjustConfig.enableDeviceIdsReadingOnce();
+            }
         }
 
-        // Delayed start.
-        if (checkKey(mapConfig, "delayStart")) {
-            delayStart = mapConfig.getDouble("delayStart");
-            adjustConfig.setDelayStart(delayStart);
+        // max number of deduplication IDs
+        if (checkKey(mapConfig, "eventDeduplicationIdsMaxSize")) {
+            eventDeduplicationIdsMaxSize = mapConfig.getInt("eventDeduplicationIdsMaxSize");
+            adjustConfig.setEventDeduplicationIdsMaxSize(eventDeduplicationIdsMaxSize);
         }
 
-        // COPPA compliance.
-        if (checkKey(mapConfig, "coppaCompliantEnabled")) {
-            coppaCompliantEnabled = mapConfig.getBoolean("coppaCompliantEnabled");
-            adjustConfig.setCoppaCompliantEnabled(coppaCompliantEnabled);
-        }
-
-        // Final Android attribution.
-        if (checkKey(mapConfig, "finalAndroidAttributionEnabled")) {
-            finalAndroidAttributionEnabled = mapConfig.getBoolean("finalAndroidAttributionEnabled");
-            adjustConfig.setFinalAttributionEnabled(finalAndroidAttributionEnabled);
-        }
-
-        // Read device info only once.
-        if (checkKey(mapConfig, "readDeviceInfoOnceEnabled")) {
-            readDeviceInfoOnceEnabled = mapConfig.getBoolean("readDeviceInfoOnceEnabled");
-            adjustConfig.setReadDeviceInfoOnceEnabled(readDeviceInfoOnceEnabled);
-        }
-
-        // Attribution callback.
-        if (attributionCallback) {
+        // attribution callback
+        if (isAttributionCallbackImplemented) {
             adjustConfig.setOnAttributionChangedListener(this);
         }
 
-        // Event tracking succeeded callback.
-        if (eventTrackingSucceededCallback) {
+        // event tracking succeeded callback
+        if (isEventTrackingSucceededCallbackImplemented) {
             adjustConfig.setOnEventTrackingSucceededListener(this);
         }
 
-        // Event tracking failed callback.
-        if (eventTrackingFailedCallback) {
+        // event tracking failed callback
+        if (isEventTrackingFailedCallbackImplemented) {
             adjustConfig.setOnEventTrackingFailedListener(this);
         }
 
-        // Session tracking succeeded callback.
-        if (sessionTrackingSucceededCallback) {
+        // session tracking succeeded callback
+        if (isSessionTrackingSucceededCallbackImplemented) {
             adjustConfig.setOnSessionTrackingSucceededListener(this);
         }
 
-        // Session tracking failed callback.
-        if (sessionTrackingFailedCallback) {
+        // session tracking failed callback
+        if (isSessionTrackingFailedCallbackImplemented) {
             adjustConfig.setOnSessionTrackingFailedListener(this);
         }
 
-        // Deferred deeplink callback.
-        if (deferredDeeplinkCallback) {
-            adjustConfig.setOnDeeplinkResponseListener(this);
+        // deferred deeplink callback
+        if (isDeferredDeeplinkCallbackImplemented) {
+            adjustConfig.setOnDeferredDeeplinkResponseListener(this);
         }
 
-        // Start SDK.
-        com.adjust.sdk.Adjust.onCreate(adjustConfig);
-        com.adjust.sdk.Adjust.onResume();
+        // init SDK
+        com.adjust.sdk.Adjust.initSdk(adjustConfig);
     }
 
     @ReactMethod
@@ -375,49 +325,50 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         String productId = null;
         String purchaseToken = null;
         String callbackId = null;
-        Map<String, Object> callbackParameters = null;
-        Map<String, Object> partnerParameters = null;
+        String deduplicationId = null;
 
-        // Event token.
+        List<Object> callbackParameters = null;
+        List<Object> partnerParameters = null;
+
+        // event token
         if (checkKey(mapEvent, "eventToken")) {
             eventToken = mapEvent.getString("eventToken");
         }
 
         final AdjustEvent event = new AdjustEvent(eventToken);
-        if (!event.isValid()) {
-            return;
-        }
 
-        // Revenue.
+        // revenue and currency
         if (checkKey(mapEvent, "revenue") || checkKey(mapEvent, "currency")) {
-            try {
-                revenue = Double.parseDouble(mapEvent.getString("revenue"));
-            } catch (NumberFormatException ignore) {}
+            revenue = mapEvent.getDouble("revenue");
             currency = mapEvent.getString("currency");
             event.setRevenue(revenue, currency);
         }
 
-        // Callback parameters.
+        // callback parameters
         if (checkKey(mapEvent, "callbackParameters")) {
-            callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
+            callbackParameters = AdjustUtil.toList(mapEvent.getArray("callbackParameters"));
             if (null != callbackParameters) {
-                for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
-                    event.addCallbackParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < callbackParameters.size(); i += 2) {
+                    event.addCallbackParameter(
+                        callbackParameters.get(i).toString(),
+                        callbackParameters.get(i+1).toString());
                 }
             }
         }
 
-        // Partner parameters.
+        // partner parameters
         if (checkKey(mapEvent, "partnerParameters")) {
-            partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
+            partnerParameters = AdjustUtil.toList(mapEvent.getArray("partnerParameters"));
             if (null != partnerParameters) {
-                for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
-                    event.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < partnerParameters.size(); i += 2) {
+                    event.addPartnerParameter(
+                        partnerParameters.get(i).toString(),
+                        partnerParameters.get(i+1).toString());
                 }
             }
         }
 
-        // Revenue deduplication.
+        // transaction ID
         if (checkKey(mapEvent, "transactionId")) {
             transactionId = mapEvent.getString("transactionId");
             if (null != transactionId) {
@@ -425,7 +376,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Callback ID.
+        // callback ID
         if (checkKey(mapEvent, "callbackId")) {
             callbackId = mapEvent.getString("callbackId");
             if (null != callbackId) {
@@ -433,7 +384,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Product ID.
+        // product ID
         if (checkKey(mapEvent, "productId")) {
             productId = mapEvent.getString("productId");
             if (null != productId) {
@@ -441,7 +392,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Purchase token.
+        // purchase token
         if (checkKey(mapEvent, "purchaseToken")) {
             purchaseToken = mapEvent.getString("purchaseToken");
             if (null != purchaseToken) {
@@ -449,28 +400,36 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Track event.
+         // event deduplication
+        if (checkKey(mapEvent, "deduplicationId")) {
+            deduplicationId = mapEvent.getString("deduplicationId");
+            if (null != deduplicationId) {
+                event.setDeduplicationId(deduplicationId);
+            }
+        }
+
+        // track event
         com.adjust.sdk.Adjust.trackEvent(event);
     }
 
     @ReactMethod
-    public void setEnabled(final Boolean enabled) {
-        com.adjust.sdk.Adjust.setEnabled(enabled);
+    public void enable() {
+        com.adjust.sdk.Adjust.enable();
     }
 
     @ReactMethod
-    public void isEnabled(final Callback callback) {
-        callback.invoke(com.adjust.sdk.Adjust.isEnabled());
+    public void disable() {
+        com.adjust.sdk.Adjust.disable();
     }
 
     @ReactMethod
-    public void setReferrer(final String referrer) {
-        com.adjust.sdk.Adjust.setReferrer(referrer, getReactApplicationContext());
+    public void switchToOfflineMode() {
+        com.adjust.sdk.Adjust.switchToOfflineMode();
     }
 
     @ReactMethod
-    public void setOfflineMode(final Boolean enabled) {
-        com.adjust.sdk.Adjust.setOfflineMode(enabled);
+    public void switchBackToOnlineMode() {
+        com.adjust.sdk.Adjust.switchBackToOnlineMode();
     }
 
     @ReactMethod
@@ -479,28 +438,23 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void appWillOpenUrl(final String strUri) {
-        final Uri uri = Uri.parse(strUri);
-        com.adjust.sdk.Adjust.appWillOpenUrl(uri, getReactApplicationContext());
-    }
-
-    @ReactMethod
-    public void sendFirstPackages() {
-        com.adjust.sdk.Adjust.sendFirstPackages();
-    }
-
-    @ReactMethod
-    public void trackAdRevenue(final String source, final String payload) {
-        try {
-            JSONObject jsonPayload = new JSONObject(payload);
-            com.adjust.sdk.Adjust.trackAdRevenue(source, jsonPayload);
-        } catch (JSONException err) {
-             Log.d(TAG, "Give ad revenue payload is not a valid JSON string");
+    public void processDeeplink(final ReadableMap mapDeeplink) {
+        if (mapDeeplink == null) {
+            return;
         }
+
+        String deeplink = null;
+
+        if (checkKey(mapDeeplink, "deeplink")) {
+            deeplink = mapDeeplink.getString("deeplink");
+        }
+
+        final Uri uri = Uri.parse(deeplink);
+        com.adjust.sdk.Adjust.processDeeplink(new AdjustDeeplink(uri), getReactApplicationContext());
     }
 
     @ReactMethod
-    public void trackAdRevenueNew(final ReadableMap mapAdRevenue) {
+    public void trackAdRevenue(final ReadableMap mapAdRevenue) {
         if (mapAdRevenue == null) {
             return;
         }
@@ -512,34 +466,30 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         String adRevenueNetwork = null;
         String adRevenueUnit = null;
         String adRevenuePlacement = null;
-        Map<String, Object> callbackParameters = null;
-        Map<String, Object> partnerParameters = null;
+        List<Object> callbackParameters = null;
+        List<Object> partnerParameters = null;
 
-        // Source.
+        // ad revenue source
         if (checkKey(mapAdRevenue, "source")) {
             source = mapAdRevenue.getString("source");
         }
 
         final AdjustAdRevenue adRevenue = new AdjustAdRevenue(source);
 
-        // Revenue.
+        // revenue and currency
         if (checkKey(mapAdRevenue, "revenue") || checkKey(mapAdRevenue, "currency")) {
-            try {
-                revenue = Double.parseDouble(mapAdRevenue.getString("revenue"));
-            } catch (NumberFormatException ignore) {}
+            revenue = mapAdRevenue.getDouble("revenue");
             currency = mapAdRevenue.getString("currency");
             adRevenue.setRevenue(revenue, currency);
         }
 
-        // Ad impressions count.
+        // ad impressions count
         if (checkKey(mapAdRevenue, "adImpressionsCount")) {
-            try {
-                adImpressionsCount = Integer.parseInt(mapAdRevenue.getString("adImpressionsCount"));
-            } catch (NumberFormatException ignore) {}
+            adImpressionsCount = mapAdRevenue.getInt("adImpressionsCount");
             adRevenue.setAdImpressionsCount(adImpressionsCount);
         }
 
-        // Ad revenue network.
+        // ad revenue network
         if (checkKey(mapAdRevenue, "adRevenueNetwork")) {
             adRevenueNetwork = mapAdRevenue.getString("adRevenueNetwork");
             if (null != adRevenueNetwork) {
@@ -547,7 +497,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Ad revenue unit.
+        // ad revenue unit
         if (checkKey(mapAdRevenue, "adRevenueUnit")) {
             adRevenueUnit = mapAdRevenue.getString("adRevenueUnit");
             if (null != adRevenueUnit) {
@@ -555,7 +505,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Ad revenue placement.
+        // ad revenue placement
         if (checkKey(mapAdRevenue, "adRevenuePlacement")) {
             adRevenuePlacement = mapAdRevenue.getString("adRevenuePlacement");
             if (null != adRevenuePlacement) {
@@ -563,27 +513,31 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Callback parameters.
+        // callback parameters
         if (checkKey(mapAdRevenue, "callbackParameters")) {
-            callbackParameters = AdjustUtil.toMap(mapAdRevenue.getMap("callbackParameters"));
+            callbackParameters = AdjustUtil.toList(mapAdRevenue.getArray("callbackParameters"));
             if (null != callbackParameters) {
-                for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
-                    adRevenue.addCallbackParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < callbackParameters.size(); i += 2) {
+                    adRevenue.addCallbackParameter(
+                        callbackParameters.get(i).toString(),
+                        callbackParameters.get(i+1).toString());
                 }
             }
         }
 
-        // Partner parameters.
+        // partner parameters
         if (checkKey(mapAdRevenue, "partnerParameters")) {
-            partnerParameters = AdjustUtil.toMap(mapAdRevenue.getMap("partnerParameters"));
+            partnerParameters = AdjustUtil.toList(mapAdRevenue.getArray("partnerParameters"));
             if (null != partnerParameters) {
-                for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
-                    adRevenue.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < partnerParameters.size(); i += 2) {
+                    adRevenue.addPartnerParameter(
+                        partnerParameters.get(i).toString(),
+                        partnerParameters.get(i+1).toString());
                 }
             }
         }
 
-        // Track ad revenue.
+        // track ad revenue
         com.adjust.sdk.Adjust.trackAdRevenue(adRevenue);
     }
 
@@ -593,44 +547,42 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             return;
         }
 
-        long price = -1;
+        int price = -1;
         String currency = null;
         String sku = null;
         String orderId = null;
         String signature = null;
         String purchaseToken = null;
-        long purchaseTime = -1;
-        Map<String, Object> callbackParameters = null;
-        Map<String, Object> partnerParameters = null;
+        int purchaseTime = -1;
+        List<Object> callbackParameters = null;
+        List<Object> partnerParameters = null;
 
-        // Price.
+        // price
         if (checkKey(mapEvent, "price")) {
-            try {
-                price = Long.parseLong(mapEvent.getString("price"));
-            } catch (NumberFormatException ignore) {}
+            price = mapEvent.getInt("price");
         }
 
-        // Currency.
+        // currency
         if (checkKey(mapEvent, "currency")) {
             currency = mapEvent.getString("currency");
         }
 
-        // SKU.
+        // SKU
         if (checkKey(mapEvent, "sku")) {
             sku = mapEvent.getString("sku");
         }
 
-        // Order ID.
+        // order ID
         if (checkKey(mapEvent, "orderId")) {
             orderId = mapEvent.getString("orderId");
         }
 
-        // Signature.
+        // signature
         if (checkKey(mapEvent, "signature")) {
             signature = mapEvent.getString("signature");
         }
 
-        // Purchase token.
+        // purchase token
         if (checkKey(mapEvent, "purchaseToken")) {
             purchaseToken = mapEvent.getString("purchaseToken");
         }
@@ -643,66 +595,68 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                 signature,
                 purchaseToken);
 
-        // Purchase time.
+        // purchase time
         if (checkKey(mapEvent, "purchaseTime")) {
-            try {
-                purchaseTime = Long.parseLong(mapEvent.getString("purchaseTime"));
-                subscription.setPurchaseTime(purchaseTime);
-            } catch (NumberFormatException ignore) {}
+            purchaseTime = mapEvent.getInt("purchaseTime");
+            subscription.setPurchaseTime(purchaseTime);
         }
 
-        // Callback parameters.
+        // callback parameters
         if (checkKey(mapEvent, "callbackParameters")) {
-            callbackParameters = AdjustUtil.toMap(mapEvent.getMap("callbackParameters"));
+            callbackParameters = AdjustUtil.toList(mapEvent.getArray("callbackParameters"));
             if (null != callbackParameters) {
-                for (Map.Entry<String, Object> entry : callbackParameters.entrySet()) {
-                    subscription.addCallbackParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < callbackParameters.size(); i += 2) {
+                    subscription.addCallbackParameter(
+                        callbackParameters.get(i).toString(),
+                        callbackParameters.get(i+1).toString());
                 }
             }
         }
 
-        // Partner parameters.
+        // partner parameters
         if (checkKey(mapEvent, "partnerParameters")) {
-            partnerParameters = AdjustUtil.toMap(mapEvent.getMap("partnerParameters"));
+            partnerParameters = AdjustUtil.toList(mapEvent.getArray("partnerParameters"));
             if (null != partnerParameters) {
-                for (Map.Entry<String, Object> entry : partnerParameters.entrySet()) {
-                    subscription.addPartnerParameter(entry.getKey(), entry.getValue().toString());
+                for (int i = 0; i < partnerParameters.size(); i += 2) {
+                    subscription.addPartnerParameter(
+                        partnerParameters.get(i).toString(),
+                        partnerParameters.get(i+1).toString());
                 }
             }
         }
 
-        // Track subscription.
+        // track subscription
         com.adjust.sdk.Adjust.trackPlayStoreSubscription(subscription);
     }
 
     @ReactMethod
-    public void addSessionCallbackParameter(final String key, final String value) {
-        com.adjust.sdk.Adjust.addSessionCallbackParameter(key, value);
+    public void addGlobalCallbackParameter(final String key, final String value) {
+        com.adjust.sdk.Adjust.addGlobalCallbackParameter(key, value);
     }
 
     @ReactMethod
-    public void addSessionPartnerParameter(final String key, final String value) {
-        com.adjust.sdk.Adjust.addSessionPartnerParameter(key, value);
+    public void addGlobalPartnerParameter(final String key, final String value) {
+        com.adjust.sdk.Adjust.addGlobalPartnerParameter(key, value);
     }
 
     @ReactMethod
-    public void removeSessionCallbackParameter(final String key) {
-        com.adjust.sdk.Adjust.removeSessionCallbackParameter(key);
+    public void removeGlobalCallbackParameter(final String key) {
+        com.adjust.sdk.Adjust.removeGlobalCallbackParameter(key);
     }
 
     @ReactMethod
-    public void removeSessionPartnerParameter(final String key) {
-        com.adjust.sdk.Adjust.removeSessionPartnerParameter(key);
+    public void removeGlobalPartnerParameter(final String key) {
+        com.adjust.sdk.Adjust.removeGlobalPartnerParameter(key);
     }
 
     @ReactMethod
-    public void resetSessionCallbackParameters() {
-        com.adjust.sdk.Adjust.resetSessionCallbackParameters();
+    public void removeGlobalCallbackParameters() {
+        com.adjust.sdk.Adjust.removeGlobalCallbackParameters();
     }
 
     @ReactMethod
-    public void resetSessionPartnerParameters() {
-        com.adjust.sdk.Adjust.resetSessionPartnerParameters();
+    public void removeGlobalPartnerParameters() {
+        com.adjust.sdk.Adjust.removeGlobalPartnerParameters();
     }
 
     @ReactMethod
@@ -711,23 +665,20 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void disableThirdPartySharing() {
-        com.adjust.sdk.Adjust.disableThirdPartySharing(getReactApplicationContext());
-    }
-
-    @ReactMethod
-    public void getIdfa(final Callback callback) {
-        callback.invoke("");
-    }
-
-    @ReactMethod
-    public void getIdfv(final Callback callback) {
-        callback.invoke("");
+    public void getAdid(final Callback callback) {
+        com.adjust.sdk.Adjust.getAdid(new com.adjust.sdk.OnAdidReadListener() {
+            @Override
+            public void onAdidRead(String adid) {
+                callback.invoke(adid);
+            }
+        });
     }
 
     @ReactMethod
     public void getGoogleAdId(final Callback callback) {
-        com.adjust.sdk.Adjust.getGoogleAdId(getReactApplicationContext(), new com.adjust.sdk.OnDeviceIdsRead() {
+        com.adjust.sdk.Adjust.getGoogleAdId(
+            getReactApplicationContext(),
+            new com.adjust.sdk.OnGoogleAdIdReadListener() {
             @Override
             public void onGoogleAdIdRead(String googleAdId) {
                 callback.invoke(googleAdId);
@@ -736,48 +687,51 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void getAdid(final Callback callback) {
-        callback.invoke(com.adjust.sdk.Adjust.getAdid());
-    }
-
-    @ReactMethod
     public void getAmazonAdId(final Callback callback) {
-        callback.invoke(com.adjust.sdk.Adjust.getAmazonAdId(getReactApplicationContext()));
+        com.adjust.sdk.Adjust.getAmazonAdId(
+            getReactApplicationContext(),
+            new com.adjust.sdk.OnAmazonAdIdReadListener() {
+            @Override
+            public void onAmazonAdIdRead(String amazonAdId) {
+                callback.invoke(amazonAdId);
+            }
+        });
     }
 
     @ReactMethod
     public void getAttribution(final Callback callback) {
-        callback.invoke(AdjustUtil.attributionToMap(com.adjust.sdk.Adjust.getAttribution()));
+        com.adjust.sdk.Adjust.getAttribution(new com.adjust.sdk.OnAttributionReadListener() {
+            @Override
+            public void onAttributionRead(AdjustAttribution attribution) {
+                callback.invoke(AdjustUtil.attributionToMap(attribution));
+            }
+        });
+    }
+
+    @ReactMethod
+    public void isEnabled(final Callback callback) {
+        com.adjust.sdk.Adjust.isEnabled(
+            getReactApplicationContext(),
+            new com.adjust.sdk.OnIsEnabledListener() {
+            @Override
+            public void onIsEnabledRead(boolean isEnabled) {
+                callback.invoke(isEnabled);
+            }
+        });
     }
 
     @ReactMethod
     public void getSdkVersion(final String sdkPrefix, final Callback callback) {
-        String sdkVersion = com.adjust.sdk.Adjust.getSdkVersion();
-        if (sdkVersion == null) {
-            callback.invoke("");
-        } else {
-            callback.invoke(sdkPrefix + "@" + sdkVersion);
-        }
-    }
-
-    @ReactMethod
-    public void convertUniversalLink(final String url, final String scheme, final Callback callback) {
-        callback.invoke("");
-    }
-
-    @ReactMethod
-    public void requestTrackingAuthorizationWithCompletionHandler(final Callback callback) {
-        callback.invoke("");
-    }
-
-    @ReactMethod
-    public void updateConversionValue(final int conversionValue) {
-        // do nothing
-    }
-
-    @ReactMethod
-    public void getAppTrackingAuthorizationStatus(final Callback callback) {
-        callback.invoke(-1);
+        com.adjust.sdk.Adjust.getSdkVersion(new com.adjust.sdk.OnSdkVersionReadListener() {
+            @Override
+            public void onSdkVersionRead(String sdkVersion) {
+                if (sdkVersion == null) {
+                    callback.invoke("");
+                } else {
+                    callback.invoke(sdkPrefix + "@" + sdkVersion);
+                }
+            }
+        });
     }
 
     @ReactMethod
@@ -790,14 +744,14 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         List<Object> granularOptions = null;
         List<Object> partnerSharingSettings = null;
 
-        // Enabled.
+        // is third party sharing enabled
         if (checkKey(mapThirdPartySharing, "isEnabled")) {
             isEnabled = mapThirdPartySharing.getBoolean("isEnabled");
         }
 
         final AdjustThirdPartySharing thirdPartySharing = new AdjustThirdPartySharing(isEnabled);
 
-        // Granular options.
+        // granular options
         if (checkKey(mapThirdPartySharing, "granularOptions")) {
             granularOptions = AdjustUtil.toList(mapThirdPartySharing.getArray("granularOptions"));
             if (null != granularOptions) {
@@ -810,7 +764,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Partner sharing settings.
+        // partner sharing settings
         if (checkKey(mapThirdPartySharing, "partnerSharingSettings")) {
             partnerSharingSettings = AdjustUtil.toList(mapThirdPartySharing.getArray("partnerSharingSettings"));
             if (null != partnerSharingSettings) {
@@ -823,7 +777,7 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             }
         }
 
-        // Track third party sharing.
+        // track third party sharing
         com.adjust.sdk.Adjust.trackThirdPartySharing(thirdPartySharing);
     }
 
@@ -841,21 +795,20 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         String productId = null;
         String purchaseToken = null;
 
-        // Product ID.
+        // product ID
         if (checkKey(mapEvent, "productId")) {
             productId = mapEvent.getString("productId");
         }
 
-        // Purchase token.
+        // purchase token
         if (checkKey(mapEvent, "purchaseToken")) {
             purchaseToken = mapEvent.getString("purchaseToken");
         }
 
-        // Create purchase instance.
-        final AdjustPurchase purchase = new AdjustPurchase(productId, purchaseToken);
+        final AdjustPlayStorePurchase purchase = new AdjustPlayStorePurchase(productId, purchaseToken);
 
-        // Verify purchase.
-        com.adjust.sdk.Adjust.verifyPurchase(purchase, new OnPurchaseVerificationFinishedListener() {
+        // verify purchase
+        com.adjust.sdk.Adjust.verifyPlayStorePurchase(purchase, new OnPurchaseVerificationFinishedListener() {
             @Override
             public void onVerificationFinished(AdjustPurchaseVerificationResult verificationResult) {
                 if (callback != null) {
@@ -864,9 +817,14 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
                         callback.invoke(map);
                         return;
                     }
-                    map.putString("verificationStatus", null != verificationResult.getVerificationStatus() ? verificationResult.getVerificationStatus() : "");
-                    map.putString("code", String.valueOf(verificationResult.getCode()));
-                    map.putString("message", null != verificationResult.getMessage() ? verificationResult.getMessage() : "");
+                    map.putString(
+                        AdjustUtil.PURCHASE_VERIFICATION_STATUS,
+                        null != verificationResult.getVerificationStatus() ? verificationResult.getVerificationStatus() : "");
+                    map.putString(
+                        AdjustUtil.PURCHASE_VERIFICATION_CODE,
+                        String.valueOf(verificationResult.getCode()));
+                    map.putString(AdjustUtil.PURCHASE_VERIFICATION_MESSAGE,
+                        null != verificationResult.getMessage() ? verificationResult.getMessage() : "");
                     callback.invoke(map);
                 }
             }
@@ -874,11 +832,144 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void processDeeplink(final String strUri, final Callback callback) {
-        final Uri uri = Uri.parse(strUri);
+    public void verifyAndTrackPlayStorePurchase(final ReadableMap mapEvent, final Callback callback) {
+        if (mapEvent == null) {
+            return;
+        }
 
-        // Process deeplink.
-        com.adjust.sdk.Adjust.processDeeplink(uri, getReactApplicationContext(), new OnDeeplinkResolvedListener() {
+        double revenue = -1.0;
+        String eventToken = null;
+        String currency = null;
+        String transactionId = null;
+        String productId = null;
+        String purchaseToken = null;
+        String callbackId = null;
+        String deduplicationId = null;
+
+        List<Object> callbackParameters = null;
+        List<Object> partnerParameters = null;
+
+        // event token
+        if (checkKey(mapEvent, "eventToken")) {
+            eventToken = mapEvent.getString("eventToken");
+        }
+
+        final AdjustEvent event = new AdjustEvent(eventToken);
+
+        // revenue and currency
+        if (checkKey(mapEvent, "revenue") || checkKey(mapEvent, "currency")) {
+            revenue = mapEvent.getDouble("revenue");
+            currency = mapEvent.getString("currency");
+            event.setRevenue(revenue, currency);
+        }
+
+        // callback parameters
+        if (checkKey(mapEvent, "callbackParameters")) {
+            callbackParameters = AdjustUtil.toList(mapEvent.getArray("callbackParameters"));
+            if (null != callbackParameters) {
+                for (int i = 0; i < callbackParameters.size(); i += 2) {
+                    event.addCallbackParameter(
+                        callbackParameters.get(i).toString(),
+                        callbackParameters.get(i+1).toString());
+                }
+            }
+        }
+
+        // partner parameters
+        if (checkKey(mapEvent, "partnerParameters")) {
+            partnerParameters = AdjustUtil.toList(mapEvent.getArray("partnerParameters"));
+            if (null != partnerParameters) {
+                for (int i = 0; i < partnerParameters.size(); i += 2) {
+                    event.addPartnerParameter(
+                        partnerParameters.get(i).toString(),
+                        partnerParameters.get(i+1).toString());
+                }
+            }
+        }
+
+        // transaction ID
+        if (checkKey(mapEvent, "transactionId")) {
+            transactionId = mapEvent.getString("transactionId");
+            if (null != transactionId) {
+                event.setOrderId(transactionId);
+            }
+        }
+
+        // callback ID
+        if (checkKey(mapEvent, "callbackId")) {
+            callbackId = mapEvent.getString("callbackId");
+            if (null != callbackId) {
+                event.setCallbackId(callbackId);
+            }
+        }
+
+        // product ID
+        if (checkKey(mapEvent, "productId")) {
+            productId = mapEvent.getString("productId");
+            if (null != productId) {
+                event.setProductId(productId);
+            }
+        }
+
+        // purchase token
+        if (checkKey(mapEvent, "purchaseToken")) {
+            purchaseToken = mapEvent.getString("purchaseToken");
+            if (null != purchaseToken) {
+                event.setPurchaseToken(purchaseToken);
+            }
+        }
+
+         // event deduplication
+        if (checkKey(mapEvent, "deduplicationId")) {
+            deduplicationId = mapEvent.getString("deduplicationId");
+            if (null != deduplicationId) {
+                event.setDeduplicationId(deduplicationId);
+            }
+        }
+
+        // verify and track purrchase
+        com.adjust.sdk.Adjust.verifyAndTrackPlayStorePurchase(event, new OnPurchaseVerificationFinishedListener() {
+            @Override
+            public void onVerificationFinished(AdjustPurchaseVerificationResult verificationResult) {
+                if (callback != null) {
+                    WritableMap map = Arguments.createMap();
+                    if (null == verificationResult) {
+                        callback.invoke(map);
+                        return;
+                    }
+                    map.putString(
+                        AdjustUtil.PURCHASE_VERIFICATION_STATUS,
+                        null != verificationResult.getVerificationStatus() ? verificationResult.getVerificationStatus() : "");
+                    map.putString(
+                        AdjustUtil.PURCHASE_VERIFICATION_CODE,
+                        String.valueOf(verificationResult.getCode()));
+                    map.putString(AdjustUtil.PURCHASE_VERIFICATION_MESSAGE,
+                        null != verificationResult.getMessage() ? verificationResult.getMessage() : "");
+                    callback.invoke(map);
+                }
+            }
+        });
+    }
+
+    @ReactMethod
+    public void processAndResolveDeeplink(final ReadableMap mapDeeplink, final Callback callback) {
+        if (mapDeeplink == null) {
+            return;
+        }
+
+        String deeplink = null;
+
+        if (checkKey(mapDeeplink, "deeplink")) {
+            deeplink = mapDeeplink.getString("deeplink");
+        }
+
+        final Uri uri = Uri.parse(deeplink);
+
+        // process and resolve deeplink
+        com.adjust.sdk.Adjust.processAndResolveDeeplink(
+            new AdjustDeeplink(uri),
+            getReactApplicationContext(),
+            new OnDeeplinkResolvedListener() {
             @Override
             public void onDeeplinkResolved(String resolvedLink) {
                 callback.invoke(resolvedLink);
@@ -887,53 +978,56 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
     }
 
     @ReactMethod
-    public void checkForNewAttStatus() {
-        // do nothing
-    }
-
-    @ReactMethod
     public void getLastDeeplink(final Callback callback) {
-        callback.invoke("");
+        com.adjust.sdk.Adjust.getLastDeeplink(
+            getReactApplicationContext(),
+            new OnLastDeeplinkReadListener() {
+            @Override
+            public void onLastDeeplinkRead(Uri uri) {
+                String strUri = (uri != null) ? uri.toString() : "";
+                callback.invoke(strUri);
+            }
+        });
     }
 
     @ReactMethod
-    public void setAttributionCallbackListener() {
-        this.attributionCallback = true;
+    public void setAttributionCallbackImplemented() {
+        this.isAttributionCallbackImplemented = true;
     }
 
     @ReactMethod
-    public void setEventTrackingSucceededCallbackListener() {
-        this.eventTrackingSucceededCallback = true;
+    public void setEventTrackingSucceededCallbackImplemented() {
+        this.isEventTrackingSucceededCallbackImplemented = true;
     }
 
     @ReactMethod
-    public void setEventTrackingFailedCallbackListener() {
-        this.eventTrackingFailedCallback = true;
+    public void setEventTrackingFailedCallbackImplemented() {
+        this.isEventTrackingFailedCallbackImplemented = true;
     }
 
     @ReactMethod
-    public void setSessionTrackingSucceededCallbackListener() {
-        this.sessionTrackingSucceededCallback = true;
+    public void setSessionTrackingSucceededCallbackImplemented() {
+        this.isSessionTrackingSucceededCallbackImplemented = true;
     }
 
     @ReactMethod
-    public void setSessionTrackingFailedCallbackListener() {
-        this.sessionTrackingFailedCallback = true;
+    public void setSessionTrackingFailedCallbackImplemented() {
+        this.isSessionTrackingFailedCallbackImplemented = true;
     }
 
     @ReactMethod
-    public void setDeferredDeeplinkCallbackListener() {
-        this.deferredDeeplinkCallback = true;
+    public void setDeferredDeeplinkCallbackImplemented() {
+        this.isDeferredDeeplinkCallbackImplemented = true;
     }
 
     @ReactMethod
     public void teardown() {
-        this.attributionCallback = false;
-        this.eventTrackingSucceededCallback = false;
-        this.eventTrackingFailedCallback = false;
-        this.sessionTrackingSucceededCallback = false;
-        this.sessionTrackingFailedCallback = false;
-        this.deferredDeeplinkCallback = false;
+        this.isAttributionCallbackImplemented = false;
+        this.isEventTrackingSucceededCallbackImplemented = false;
+        this.isEventTrackingFailedCallbackImplemented = false;
+        this.isSessionTrackingSucceededCallbackImplemented = false;
+        this.isSessionTrackingFailedCallbackImplemented = false;
+        this.isDeferredDeeplinkCallbackImplemented = false;
     }
 
     @ReactMethod
@@ -943,12 +1037,6 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         }
 
         final AdjustTestOptions testOptions = new AdjustTestOptions();
-        if (checkKey(mapTest, "hasContext")) {
-            boolean value = mapTest.getBoolean("hasContext");
-            if (value) {
-                testOptions.context = getReactApplicationContext();
-            }
-        }
         if (checkKey(mapTest, "baseUrl")) {
             String value = mapTest.getString("baseUrl");
             testOptions.baseUrl = value;
@@ -1029,6 +1117,16 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
             boolean value = mapTest.getBoolean("teardown");
             testOptions.teardown = value;
         }
+        if (checkKey(mapTest, "deleteState")) {
+            boolean value = mapTest.getBoolean("deleteState");
+            if (value == true) {
+                testOptions.context = getReactApplicationContext();
+            }
+        }
+        if (checkKey(mapTest, "ignoreSystemLifecycleBootstrap")) {
+            boolean value = mapTest.getBoolean("ignoreSystemLifecycleBootstrap");
+            testOptions.ignoreSystemLifecycleBootstrap = value;
+        }
 
         com.adjust.sdk.Adjust.setTestOptions(testOptions);
     }
@@ -1043,7 +1141,10 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
         com.adjust.sdk.Adjust.onPause();
     }
 
-    private void sendEvent(final ReactContext reactContext, final String eventName, final @Nullable WritableMap params) {
+    private void sendEvent(
+        final ReactContext reactContext,
+        final String eventName,
+        final @Nullable WritableMap params) {
         reactContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(eventName, params);
@@ -1055,11 +1156,11 @@ public class Adjust extends ReactContextBaseJavaModule implements LifecycleEvent
 
     @ReactMethod
     public void addListener(String eventName) {
-        // Keep: Required for RN built in Event Emitter Calls.
+        // keep: required for RN built in event emitter calls
     }
 
     @ReactMethod
     public void removeListeners(double count) {
-        // Keep: Required for RN built in Event Emitter Calls.
+        // keep: required for RN built in event emitter calls
     }
 }

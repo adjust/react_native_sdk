@@ -101,7 +101,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"costType" value:attribution.costType];
     [self addValueOrEmpty:dictionary key:@"costAmount" value:attribution.costAmount];
     [self addValueOrEmpty:dictionary key:@"costCurrency" value:attribution.costCurrency];
-    [AdjustEventEmitter dispatchEvent:@"adjust_attribution" withDictionary:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_attributionChanged" withDictionary:dictionary];
 }
 
 - (void)adjustEventTrackingSucceededWannabe:(ADJEventSuccess *)eventSuccessResponseData {
@@ -189,7 +189,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
 
 - (BOOL)adjustDeferredDeeplinkReceivedWannabe:(NSURL *)deeplink {
     NSString *path = [deeplink absoluteString];
-    [AdjustEventEmitter dispatchEvent:@"adjust_deferredDeeplink" withDictionary:@{@"uri": path}];
+    [AdjustEventEmitter dispatchEvent:@"adjust_deferredDeeplinkReceived" withDictionary:@{@"uri": path}];
     return _shouldLaunchDeferredDeeplink;
 }
 
@@ -199,7 +199,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"coarseValue" value:data[@"coarse_value"]];
     [self addValueOrEmpty:dictionary key:@"lockWindow" value:data[@"lock_window"]];
     [self addValueOrEmpty:dictionary key:@"error" value:data[@"error"]];
-    [AdjustEventEmitter dispatchEvent:@"adjust_skadConversionDataUpdated" withDictionary:dictionary];
+    [AdjustEventEmitter dispatchEvent:@"adjust_skanUpdated" withDictionary:dictionary];
 }
 
 - (void)swizzleCallbackMethod:(SEL)originalSelector

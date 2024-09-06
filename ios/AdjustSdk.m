@@ -48,7 +48,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSNumber *isDataResidency = [dict objectForKey:@"isDataResidency"];
     BOOL isLogLevelSuppress = NO;
 
-    // Suppress log level
+    // suppress log level
     if ([self isFieldValid:logLevel]) {
         if ([logLevel isEqualToString:@"SUPPRESS"]) {
             isLogLevelSuppress = YES;
@@ -59,7 +59,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
                                                       environment:environment
                                                       suppressLogLevel:isLogLevelSuppress];
 
-    // Log level
+    // log level
     if ([self isFieldValid:logLevel]) {
         [adjustConfig setLogLevel:[ADJLogger logLevelFromString:[logLevel lowercaseString]]];
     }
@@ -69,12 +69,12 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         [adjustConfig setSdkPrefix:sdkPrefix];
     }
 
-    // Default tracker
+    // default tracker
     if ([self isFieldValid:defaultTracker]) {
         [adjustConfig setDefaultTracker:defaultTracker];
     }
 
-    // External device ID
+    // external device ID
     if ([self isFieldValid:externalDeviceId]) {
         [adjustConfig setExternalDeviceId:externalDeviceId];
     }
@@ -87,21 +87,21 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
             NSString *domain = [[urlStrategyDomains objectAtIndex:i] description];
             [urlStrategyDomainsArray addObject:domain];
         }
-    }
-    if ([self isFieldValid:useSubdomains] && [self isFieldValid:isDataResidency]) {
-        [adjustConfig setUrlStrategy:(NSArray *)urlStrategyDomainsArray
-                       useSubdomains:[useSubdomains boolValue]
-                     isDataResidency:[isDataResidency boolValue]];
+        if ([self isFieldValid:useSubdomains] && [self isFieldValid:isDataResidency]) {
+            [adjustConfig setUrlStrategy:(NSArray *)urlStrategyDomainsArray
+                           useSubdomains:[useSubdomains boolValue]
+                         isDataResidency:[isDataResidency boolValue]];
+        }
     }
 
-    // Send in background
+    // sending in background
     if ([self isFieldValid:isSendingInBackgroundEnabled]) {
         if ([isSendingInBackgroundEnabled boolValue] == YES) {
             [adjustConfig enableSendingInBackground];
         }
     }
 
-    // Cost data
+    // cost data in attribution
     if ([self isFieldValid:isCostDataInAttributionEnabled]) {
         if ([isCostDataInAttributionEnabled boolValue] == YES) {
             [adjustConfig enableCostDataInAttribution];
@@ -148,26 +148,26 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         [adjustConfig setAttConsentWaitingInterval:[attConsentWaitingInterval intValue]];
     }
 
-    // Read device info just once
+    // read device info just once
     if ([self isFieldValid:isDeviceIdsReadingOnceEnabled]) {
         if ([isDeviceIdsReadingOnceEnabled boolValue] == YES) {
             [adjustConfig enableDeviceIdsReadingOnce];
         }
     }
 
-    // Set event Deduplication ids
+    // max number of deduplication IDs
     if ([self isFieldValid:eventDeduplicationIdsMaxSize]) {
         [adjustConfig setEventDeduplicationIdsMaxSize:[eventDeduplicationIdsMaxSize integerValue]];
     }
 
-    // Set Coppa compliance
+    // COPPA compliance
     if ([self isFieldValid:isCoppaComplianceEnabled]) {
         if ([isCoppaComplianceEnabled boolValue] == YES) {
             [adjustConfig enableCoppaCompliance];
         }
     }
 
-    // Attribution delegate & other delegates
+    // callbacks
     BOOL shouldLaunchDeferredDeeplink = [self isFieldValid:isDeferredDeeplinkOpeningEnabled] ? [isDeferredDeeplinkOpeningEnabled boolValue] : YES;
     if (_isAttributionCallbackImplemented
         || _isEventTrackingSucceededCallbackImplemented
@@ -187,7 +187,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
                                            shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
     }
 
-    // Start SDK
+    // init SDK
     [Adjust initSdk:adjustConfig];
 }
 
@@ -204,12 +204,12 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
 
     ADJEvent *adjustEvent = [[ADJEvent alloc] initWithEventToken:eventToken];
 
-    // Revenue
+    // revenue and currency
     if ([self isFieldValid:revenue] && [self isFieldValid:currency]) {
         [adjustEvent setRevenue:[revenue doubleValue] currency:currency];
     }
 
-    // Callback parameters
+    // callback parameters
     if ([self isFieldValid:callbackParameters]) {
         for (int i = 0; i < [callbackParameters count]; i += 2) {
             NSString *key = [callbackParameters objectAtIndex:i];
@@ -218,7 +218,7 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
         }
     }
 
-    // Partner parameters
+    // partner parameters
     if ([self isFieldValid:partnerParameters]) {
         for (int i = 0; i < [partnerParameters count]; i += 2) {
             NSString *key = [partnerParameters objectAtIndex:i];
@@ -227,32 +227,27 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
         }
     }
 
-    // Transaction ID
+    // transaction ID
     if ([self isFieldValid:transactionId]) {
         [adjustEvent setTransactionId:transactionId];
     }
 
-    // Callback ID
+    // callback ID
     if ([self isFieldValid:callbackId]) {
         [adjustEvent setCallbackId:callbackId];
     }
 
-    // Product ID
+    // product ID
     if ([self isFieldValid:productId]) {
         [adjustEvent setProductId:productId];
     }
 
-    // Transaction ID
-    if ([self isFieldValid:transactionId]) {
-        [adjustEvent setTransactionId:transactionId];
-    }
-
-    // DeduplicationId ID
+    // event deduplication
     if ([self isFieldValid:deduplicationId]) {
         [adjustEvent setDeduplicationId:deduplicationId];
     }
 
-    // Track event
+    // track event
     [Adjust trackEvent:adjustEvent];
 }
 
@@ -308,7 +303,7 @@ RCT_EXPORT_METHOD(trackAdRevenue:(NSDictionary *)dict) {
     NSString *source = dict[@"source"];
     NSNumber *revenue = dict[@"revenue"];
     NSString *currency = dict[@"currency"];
-    NSString *adImpressionsCount = dict[@"adImpressionsCount"];
+    NSNumber *adImpressionsCount = dict[@"adImpressionsCount"];
     NSString *adRevenueNetwork = dict[@"adRevenueNetwork"];
     NSString *adRevenueUnit = dict[@"adRevenueUnit"];
     NSString *adRevenuePlacement = dict[@"adRevenuePlacement"];
@@ -317,33 +312,33 @@ RCT_EXPORT_METHOD(trackAdRevenue:(NSDictionary *)dict) {
 
     ADJAdRevenue *adjustAdRevenue = [[ADJAdRevenue alloc] initWithSource:source];
 
-    // Revenue.
+    // revenue and currency
     if ([self isFieldValid:revenue] && [self isFieldValid:currency]) {
         [adjustAdRevenue setRevenue:[revenue doubleValue] currency:currency];
     }
 
-    // Ad impressions count
+    // ad impressions count
     if ([self isFieldValid:adImpressionsCount]) {
         int adImpressionsCountValue = [adImpressionsCount intValue];
         [adjustAdRevenue setAdImpressionsCount:adImpressionsCountValue];
     }
 
-    // Ad revenue network
+    // ad revenue network
     if ([self isFieldValid:adRevenueNetwork]) {
         [adjustAdRevenue setAdRevenueNetwork:adRevenueNetwork];
     }
 
-    // Ad revenue unit
+    // ad revenue unit
     if ([self isFieldValid:adRevenueUnit]) {
         [adjustAdRevenue setAdRevenueUnit:adRevenueUnit];
     }
 
-    // Ad revenue placement
+    // ad revenue placement
     if ([self isFieldValid:adRevenuePlacement]) {
         [adjustAdRevenue setAdRevenuePlacement:adRevenuePlacement];
     }
 
-    // Callback parameters
+    // callback parameters
     if ([self isFieldValid:callbackParameters]) {
         for (int i = 0; i < [callbackParameters count]; i += 2) {
             NSString *key = [callbackParameters objectAtIndex:i];
@@ -352,7 +347,7 @@ RCT_EXPORT_METHOD(trackAdRevenue:(NSDictionary *)dict) {
         }
     }
 
-    // Partner parameters
+    // partner parameters
     if ([self isFieldValid:partnerParameters]) {
         for (int i = 0; i < [partnerParameters count]; i += 2) {
             NSString *key = [partnerParameters objectAtIndex:i];
@@ -361,7 +356,7 @@ RCT_EXPORT_METHOD(trackAdRevenue:(NSDictionary *)dict) {
         }
     }
 
-    // Track ad revenue
+    // track ad revenue
     [Adjust trackAdRevenue:adjustAdRevenue];
 }
 
@@ -374,7 +369,7 @@ RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
     NSArray *callbackParameters = dict[@"callbackParameters"];
     NSArray *partnerParameters = dict[@"partnerParameters"];
 
-    // Price
+    // price
     NSDecimalNumber *priceValue;
     if ([self isFieldValid:price]) {
         priceValue = [NSDecimalNumber decimalNumberWithString:price];
@@ -385,19 +380,19 @@ RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
                                              currency:currency
                                              transactionId:transactionId];
 
-    // Transaction date
+    // transaction date
     if ([self isFieldValid:transactionDate]) {
         NSTimeInterval transactionDateInterval = [transactionDate doubleValue] / 1000.0;
         NSDate *oTransactionDate = [NSDate dateWithTimeIntervalSince1970:transactionDateInterval];
         [subscription setTransactionDate:oTransactionDate];
     }
 
-    // Sales region
+    // sales region
     if ([self isFieldValid:salesRegion]) {
         [subscription setSalesRegion:salesRegion];
     }
 
-    // Callback parameters
+    // callback parameters
     if ([self isFieldValid:callbackParameters]) {
         for (int i = 0; i < [callbackParameters count]; i += 2) {
             NSString *key = [callbackParameters objectAtIndex:i];
@@ -406,7 +401,7 @@ RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
         }
     }
 
-    // Partner parameters
+    // partner parameters
     if ([self isFieldValid:partnerParameters]) {
         for (int i = 0; i < [partnerParameters count]; i += 2) {
             NSString *key = [partnerParameters objectAtIndex:i];
@@ -415,7 +410,7 @@ RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
         }
     }
 
-    // Track subscription
+    // track subscription
     [Adjust trackAppStoreSubscription:subscription];
 }
 
@@ -469,7 +464,7 @@ RCT_EXPORT_METHOD(updateSkanConversionValue:(NSNumber * _Nonnull)conversionValue
                   coarseValue:(NSString * _Nonnull)coarseValue
                   lockWindow:(NSNumber * _Nonnull)lockWindow
                   errorCallback:(RCTResponseSenderBlock)callback) {
-    if([self isFieldValid:conversionValue]) {
+    if ([self isFieldValid:conversionValue]) {
         [Adjust updateSkanConversionValue:[conversionValue intValue]
                               coarseValue:coarseValue
                                lockWindow:lockWindow
@@ -556,6 +551,7 @@ RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
     NSArray *granularOptions = dict[@"granularOptions"];
     NSArray *partnerSharingSettings = dict[@"partnerSharingSettings"];
 
+    // is third party sharing enabled
     if (isEnabled != nil && [isEnabled isKindOfClass:[NSNull class]]) {
         isEnabled = nil;
     }
@@ -563,7 +559,7 @@ RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
     ADJThirdPartySharing *adjustThirdPartySharing = [[ADJThirdPartySharing alloc]
                                                      initWithIsEnabled:isEnabled];
 
-    // Granular options
+    // granular options
     if ([self isFieldValid:granularOptions]) {
         for (int i = 0; i < [granularOptions count]; i += 3) {
             NSString *partnerName = [granularOptions objectAtIndex:i];
@@ -573,7 +569,7 @@ RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
         }
     }
 
-    // Partner sharing settings
+    // partner sharing settings
     if ([self isFieldValid:partnerSharingSettings]) {
         for (int i = 0; i < [partnerSharingSettings count]; i += 3) {
             NSString *partnerName = [partnerSharingSettings objectAtIndex:i];
@@ -583,7 +579,7 @@ RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
         }
     }
 
-    // Track third party sharing.
+    // track third party sharing.
     [Adjust trackThirdPartySharing:adjustThirdPartySharing];
 }
 
@@ -605,11 +601,10 @@ RCT_EXPORT_METHOD(verifyAppStorePurchase:(NSDictionary *)dict callback:(RCTRespo
     NSString *productId = dict[@"productId"];
     NSString *transactionId = dict[@"transactionId"];
 
-    // Create purchase instance
     ADJAppStorePurchase *purchase = [[ADJAppStorePurchase alloc] initWithTransactionId:transactionId
                                                                              productId:productId];
 
-    // Verify purchase
+    // verify purchase
     [Adjust verifyAppStorePurchase:purchase
              withCompletionHandler:^(ADJPurchaseVerificationResult * _Nonnull verificationResult) {
         NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
@@ -639,12 +634,12 @@ RCT_EXPORT_METHOD(verifyAndTrackAppStorePurchase:(NSDictionary *)dict callback:(
 
     ADJEvent *adjustEvent = [[ADJEvent alloc] initWithEventToken:eventToken];
 
-    // Revenue
+    // revenue and currency
     if ([self isFieldValid:revenue] && [self isFieldValid:currency]) {
         [adjustEvent setRevenue:[revenue doubleValue] currency:currency];
     }
 
-    // Callback parameters
+    // callback parameters
     if ([self isFieldValid:callbackParameters]) {
         for (int i = 0; i < [callbackParameters count]; i += 2) {
             NSString *key = [callbackParameters objectAtIndex:i];
@@ -653,7 +648,7 @@ RCT_EXPORT_METHOD(verifyAndTrackAppStorePurchase:(NSDictionary *)dict callback:(
         }
     }
 
-    // Partner parameters
+    // partner parameters
     if ([self isFieldValid:partnerParameters]) {
         for (int i = 0; i < [partnerParameters count]; i += 2) {
             NSString *key = [partnerParameters objectAtIndex:i];
@@ -662,35 +657,27 @@ RCT_EXPORT_METHOD(verifyAndTrackAppStorePurchase:(NSDictionary *)dict callback:(
         }
     }
 
-    // Transaction ID
+    // transaction ID
     if ([self isFieldValid:transactionId]) {
         [adjustEvent setTransactionId:transactionId];
     }
 
-    // Callback ID
+    // callback ID
     if ([self isFieldValid:callbackId]) {
         [adjustEvent setCallbackId:callbackId];
     }
 
-    // Product ID
+    // product ID
     if ([self isFieldValid:productId]) {
         [adjustEvent setProductId:productId];
     }
 
-    // Transaction ID
-    if ([self isFieldValid:transactionId]) {
-        [adjustEvent setTransactionId:transactionId];
-    }
-
-    // DeduplicationId ID
+    // event deduplication
     if ([self isFieldValid:deduplicationId]) {
         [adjustEvent setDeduplicationId:deduplicationId];
     }
 
-    if (adjustEvent == nil) {
-        return;
-    }
-
+    // verify and track
     [Adjust verifyAndTrackAppStorePurchase:adjustEvent
                      withCompletionHandler:^(ADJPurchaseVerificationResult * _Nonnull verificationResult) {
         NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
@@ -722,7 +709,7 @@ RCT_EXPORT_METHOD(processAndResolveDeeplink:(NSDictionary *)dict callback:(RCTRe
     }
 #pragma clang diagnostic pop
 
-    // Process deeplink
+    // process deeplink
     [Adjust processAndResolveDeeplink:[[ADJDeeplink alloc] initWithDeeplink:url] withCompletionHandler:^(NSString * _Nonnull resolvedLink) {
         if (resolvedLink == nil) {
             callback(@[@""]);
@@ -842,7 +829,7 @@ RCT_EXPORT_METHOD(onPause) {
         return NO;
     }
 
-    // Check if its an instance of the singleton NSNull.
+    // check if its an instance of the singleton NSNull
     if ([field isKindOfClass:[NSNull class]]) {
         return NO;
     }

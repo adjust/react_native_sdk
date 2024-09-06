@@ -769,8 +769,8 @@ AdjustCommandExecutor.prototype.trackAppStoreSubscription = function(params) {
         var orderId = getFirstParameterValue(params, 'transactionId');
         var purchaseTime = getFirstParameterValue(params, 'transactionDate');
 
-        var subscription = new AdjustPlayStoreSubscription(price, currency, sku, orderId, signature, purchaseToken);
-        subscription.setPurchaseTime(purchaseTime);
+        var subscription = new AdjustPlayStoreSubscription(Number(price), currency, sku, orderId, signature, purchaseToken);
+        subscription.setPurchaseTime(Number(purchaseTime));
 
         if ('callbackParams' in params) {
             var callbackParams = getValueFromKey(params, 'callbackParams');

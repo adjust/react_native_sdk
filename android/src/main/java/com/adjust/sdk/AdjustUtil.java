@@ -3,7 +3,7 @@
 //  Adjust SDK
 //
 //  Created by Abdullah Obaied (@Obaied) on 19th October 2016.
-//  Copyright (c) 2016-2021 Adjust GmbH. All rights reserved.
+//  Copyright (c) 2016-Present Adjust GmbH. All rights reserved.
 //
 
 package com.adjust.nativemodule;
@@ -57,9 +57,9 @@ final class AdjustUtil {
     private static final String SESSION_FAILED_WILL_RETRY = "willRetry";
     private static final String SESSION_FAILED_JSON_RESPONSE = "jsonResponse";
 
-    private static final String PURCHAE_VERIFICATION_STATUS = "verificationStatus";
-    private static final String PURCHAE_VERIFICATION_CODE = "code";
-    private static final String PURCHAE_VERIFICATION_MESSAGE = "message";
+    public static final String PURCHASE_VERIFICATION_STATUS = "verificationStatus";
+    public static final String PURCHASE_VERIFICATION_CODE = "code";
+    public static final String PURCHASE_VERIFICATION_MESSAGE = "message";
 
     public static WritableMap attributionToMap(AdjustAttribution attribution) {
         WritableMap map = Arguments.createMap();
@@ -149,6 +149,15 @@ final class AdjustUtil {
         return map;
     }
 
+    public static boolean isFieldValid(String field) {
+        if (field != null) {
+            if (!field.equals("") && !field.equals("null")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /** 
      * toMap converts a {@link ReadableMap} into a HashMap. 
      * 
@@ -194,12 +203,13 @@ final class AdjustUtil {
         for (int index = 0; index < readableArray.size(); index++) {
             ReadableType readableType = readableArray.getType(index);
             switch (readableType) {
-                case Null: 
-                    break; 
-                case Boolean: 
+                case Null:
+                    result.add(null);
+                    break;
+                case Boolean:
                     result.add(readableArray.getBoolean(index));
-                    break; 
-                case Number: 
+                    break;
+                case Number:
                     // Can be int or double. 
                     double tmp = readableArray.getDouble(index);
                     if (tmp == (int)tmp) {
@@ -207,60 +217,22 @@ final class AdjustUtil {
                     } else { 
                         result.add(tmp);
                     }
-                    break; 
-                case String: 
+                    break;
+                case String:
                     result.add(readableArray.getString(index));
-                    break; 
-                case Map: 
+                    break;
+                case Map:
                     result.add(toMap(readableArray.getMap(index)));
-                    break; 
-                case Array: 
+                    break;
+                case Array:
                     result = toList(readableArray.getArray(index));
-                    break; 
-                default: 
+                    break;
+                default:
                     AdjustFactory.getLogger().error("Could not convert object with index: " + index + ".");
             } 
         } 
 
         return result;
-    } 
-
-    /** 
-     * toListString converts a {@link ReadableArray} into an String ArrayList. 
-     * 
-     * @param readableArray The ReadableArray to be converted. 
-     * @return An ArrayList containing the data that was in the ReadableArray. 
-     */ 
-    public static List<String> toListString(@Nullable ReadableArray readableArray) {
-        if (readableArray == null) {
-            return null; 
-        }
-
-        List<String> result = new ArrayList<>(readableArray.size());
-        for (int index = 0; index < readableArray.size(); index++) {
-            ReadableType readableType = readableArray.getType(index);
-            switch (readableType) {
-                case Null: 
-                    break; 
-                case String: 
-                    result.add(readableArray.getString(index));
-                    break; 
-                default: 
-                    AdjustFactory.getLogger().error("Could not convert object with index: " + index + ".");
-            } 
-        } 
-
-        return result;
-    } 
-
-    public static boolean isFieldValid(String field) {
-        if (field != null) {
-            if (!field.equals("") && !field.equals("null")) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /** 
@@ -279,13 +251,13 @@ final class AdjustUtil {
         Object result = null;
         ReadableType readableType = readableMap.getType(key);
         switch (readableType) {
-            case Null: 
+            case Null:
                 result = null;
-                break; 
-            case Boolean: 
+                break;
+            case Boolean:
                 result = readableMap.getBoolean(key);
-                break; 
-            case Number: 
+                break;
+            case Number:
                 // Can be int or double. 
                 double tmp = readableMap.getDouble(key);
                 if (tmp == (int)tmp) {
@@ -293,17 +265,17 @@ final class AdjustUtil {
                 } else { 
                     result = tmp;
                 }
-                break; 
-            case String: 
+                break;
+            case String:
                 result = readableMap.getString(key);
-                break; 
-            case Map: 
+                break;
+            case Map:
                 result = toMap(readableMap.getMap(key));
-                break; 
-            case Array: 
+                break;
+            case Array:
                 result = toList(readableMap.getArray(key));
-                break; 
-            default: 
+                break;
+            default:
                 AdjustFactory.getLogger().error("Could not convert object with key: " + key + ".");
         }
 

@@ -24,13 +24,13 @@ RCT_EXPORT_MODULE();
 }
 
 - (NSArray<NSString *> *)supportedEvents {
-    return @[@"adjust_attribution",
+    return @[@"adjust_attributionChanged",
              @"adjust_eventTrackingSucceeded",
              @"adjust_eventTrackingFailed",
              @"adjust_sessionTrackingSucceeded",
              @"adjust_sessionTrackingFailed",
-             @"adjust_deferredDeeplink",
-             @"adjust_skadConversionDataUpdated"];
+             @"adjust_deferredDeeplinkReceived",
+             @"adjust_skanUpdated"];
 }
 
 - (void)startObserving {

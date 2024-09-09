@@ -189,6 +189,10 @@ declare module 'react-native-adjust' {
     constructor(productId: string, purchaseToken: string)
   }
 
+  export class AdjustDeeplink {
+    constructor(deeplink: string)
+  }
+
   export const Adjust: {
     componentWillUnmount: () => void
     initSdk: (adjustConfig: AdjustConfig) => void

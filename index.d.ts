@@ -50,7 +50,7 @@ declare module 'react-native-adjust' {
     jsonResponse: string
   }
 
-  interface AdjustDeeplink {
+  interface AdjustDeferredDeeplink {
     deeplink: string
   }
 
@@ -113,7 +113,7 @@ declare module 'react-native-adjust' {
     ): void
 
     public setDeferredDeeplinkCallback(
-      callback: (deeplink: AdjustDeeplink) => void
+      callback: (deeplink: AdjustDeferredDeeplink) => void
     ): void
 
     public setSkanUpdatedCallback(
@@ -187,6 +187,10 @@ declare module 'react-native-adjust' {
 
   export class AdjustPlayStorePurchase {
     constructor(productId: string, purchaseToken: string)
+  }
+
+  export class AdjustDeeplink {
+    constructor(deeplink: string)
   }
 
   export const Adjust: {

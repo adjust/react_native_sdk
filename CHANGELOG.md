@@ -1,3 +1,14 @@
+### Version 5.0.1 (10th September 2024)
+#### Fixed
+- Added missing `AdjustDeeplink` class export to `index.d.ts` (https://github.com/adjust/react_native_sdk/pull/246).
+- Renamed `AdjustDeeplink` interface to `AdjustDeferredDeeplink` to avoid naming collision with as of now the class named `AdjustDeeplink`.
+
+#### Native SDKs
+- [iOS@v5.0.0][ios_sdk_v5.0.0]
+- [Android@v5.0.0][android_sdk_v5.0.0]
+
+---
+
 ### Version 5.0.0 (6th September 2024)
 
 We're excited to release our major new SDK version (v5). Among many internal improvements, our spoofing protection solution is now included out of the box, reinforcing our commitment to accurate, actionable, and fraud-free data.

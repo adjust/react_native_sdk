@@ -2,10 +2,10 @@ apply plugin: 'com.android.library'
 
 def _ext = rootProject.ext
 
-def _compileSdkVersion = _ext.has('compileSdkVersion') ? _ext.compileSdkVersion : 33
-def _buildToolsVersion = _ext.has('buildToolsVersion') ? _ext.buildToolsVersion : "33.0.0"
+def _compileSdkVersion = _ext.has('compileSdkVersion') ? _ext.compileSdkVersion : 34
+def _buildToolsVersion = _ext.has('buildToolsVersion') ? _ext.buildToolsVersion : "34.0.0"
 def _minSdkVersion = _ext.has('minSdkVersion') ? _ext.minSdkVersion : 16
-def _targetSdkVersion = _ext.has('targetSdkVersion') ? _ext.targetSdkVersion : 33
+def _targetSdkVersion = _ext.has('targetSdkVersion') ? _ext.targetSdkVersion : 34
 
 android {
     compileSdkVersion _compileSdkVersion

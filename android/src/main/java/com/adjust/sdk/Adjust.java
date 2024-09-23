@@ -160,7 +160,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
             } else if (logLevel.equals("ASSERT")) {
                 adjustConfig.setLogLevel(LogLevel.ASSERT);
             } else if (logLevel.equals("SUPPRESS")) {
-                adjustConfig.setLogLevel(LogLevel.SUPRESS);
+                adjustConfig.setLogLevel(LogLevel.SUPPRESS);
             } else {
                 adjustConfig.setLogLevel(LogLevel.INFO);
             }

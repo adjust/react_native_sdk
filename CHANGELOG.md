@@ -1,3 +1,14 @@
+### Version 5.0.2 (23rd September 2024)
+#### Fixed
+- Fixed `Adjust.modulemap not found` error in certain CocoaPods integration cases.
+- Fixed occasional ANRs while reading install referrer from Shared Preferences during the SDK initialization.
+
+#### Native SDKs
+- [iOS@v5.0.1][ios_sdk_v5.0.1]
+- [Android@v5.0.1][android_sdk_v5.0.1]
+
+---
+
 ### Version 5.0.1 (10th September 2024)
 #### Fixed
 - Added missing `AdjustDeeplink` class export to `index.d.ts` (https://github.com/adjust/react_native_sdk/pull/246).
@@ -687,6 +698,7 @@ In case you were using beta version of the SDK v5, please switch to the official
 [ios_sdk_v4.38.0]: https://github.com/adjust/ios_sdk/tree/v4.38.0
 [ios_sdk_v4.38.2]: https://github.com/adjust/ios_sdk/tree/v4.38.2
 [ios_sdk_v5.0.0]: https://github.com/adjust/ios_sdk/tree/v5.0.0
+[ios_sdk_v5.0.1]: https://github.com/adjust/ios_sdk/tree/v5.0.1
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -725,3 +737,4 @@ In case you were using beta version of the SDK v5, please switch to the official
 [android_sdk_v4.38.2]: https://github.com/adjust/android_sdk/tree/v4.38.2
 [android_sdk_v4.38.3]: https://github.com/adjust/android_sdk/tree/v4.38.3
 [android_sdk_v5.0.0]: https://github.com/adjust/android_sdk/tree/v5.0.0
+[android_sdk_v5.0.1]: https://github.com/adjust/android_sdk/tree/v5.0.1

@@ -1,7 +1,7 @@
 {
     "name": "react-native-adjust-oaid",
     "description": "Adjust React Native OAID plugin",
-    "version": "5.0.1",
+    "version": "5.0.2",
     "main": "index.js",
     "author": "Adjust",
     "license": "MIT",

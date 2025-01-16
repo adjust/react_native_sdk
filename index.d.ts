@@ -153,13 +153,13 @@ declare module 'react-native-adjust' {
 
   export class AdjustPlayStoreSubscription {
     constructor(
-      price: string,
+      price: number,
       currency: string,
       sku: string,
       orderId: string,
       signature: string,
       purchaseToken: string)
-    public setPurchaseTime(purchaseTime: string): void
+    public setPurchaseTime(purchaseTime: number): void
     public addCallbackParameter(key: string, value: string): void
     public addPartnerParameter(key: string, value: string): void
   }

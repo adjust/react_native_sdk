@@ -206,6 +206,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"conversionValue" value:data[@"conversion_value"]];
     [self addValueOrEmpty:dictionary key:@"coarseValue" value:data[@"coarse_value"]];
     [self addValueOrEmpty:dictionary key:@"lockWindow" value:data[@"lock_window"]];
+    [self addValueOrEmpty:dictionary key:@"lastSkanUpdate" value:data[@"last_skan_update"]];
     [self addValueOrEmpty:dictionary key:@"error" value:data[@"error"]];
     [AdjustEventEmitter dispatchEvent:@"adjust_skanUpdated" withDictionary:dictionary];
 }

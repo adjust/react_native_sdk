@@ -459,6 +459,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
             AdjustSdkTest.addInfoToSend('conversion_value', skanData.conversionValue);
             AdjustSdkTest.addInfoToSend('coarse_value', skanData.coarseValue);
             AdjustSdkTest.addInfoToSend('lock_window', skanData.lockWindow);
+            AdjustSdkTest.addInfoToSend('last_skan_update', skanData.lastSkanUpdate);
             AdjustSdkTest.sendInfoToServer(_this.extraPath);
         });
     }

@@ -364,6 +364,19 @@ AdjustCommandExecutor.prototype.config = function(params) {
             AdjustSdkTest.addInfoToSend('cost_amount', attribution.costAmount.toString());
             AdjustSdkTest.addInfoToSend('cost_currency', attribution.costCurrency);
             AdjustSdkTest.addInfoToSend('fb_install_referrer', attribution.fbInstallReferrer);
+           
+            const attributionJsonResponse = JSON.parse(attribution.jsonResponse);
+            if (attributionJsonResponse.cost_amount !== undefined) {
+                attributionJsonResponse.cost_amount = parseFloat(attributionJsonResponse.cost_amount.toFixed(2));
+                attributionJsonResponse.cost_amount = attributionJsonResponse.cost_amount.toString();
+            }
+            if (Platform.OS === 'ios') {
+                delete attributionJsonResponse.fb_install_referrer;
+            }
+
+            if (attribution.jsonResponse != null) {
+                AdjustSdkTest.addInfoToSend('json_response', JSON.stringify(attributionJsonResponse));
+            }
             AdjustSdkTest.sendInfoToServer(_this.extraPath);
         });
     }
@@ -978,6 +991,17 @@ AdjustCommandExecutor.prototype.attributionGetter = function(params) {
         AdjustSdkTest.addInfoToSend('cost_amount', attribution.costAmount.toString());
         AdjustSdkTest.addInfoToSend('cost_currency', attribution.costCurrency);
         AdjustSdkTest.addInfoToSend('fb_install_referrer', attribution.fbInstallReferrer);
+
+        const attributionJsonResponse = JSON.parse(attribution.jsonResponse);
+        if (attributionJsonResponse.cost_amount !== undefined) {
+            attributionJsonResponse.cost_amount = parseFloat(attributionJsonResponse.cost_amount.toFixed(2));
+            attributionJsonResponse.cost_amount = attributionJsonResponse.cost_amount.toString();
+        }
+        if (Platform.OS === 'ios') {
+            delete attributionJsonResponse.fb_install_referrer;
+        }
+        AdjustSdkTest.addInfoToSend('json_response', JSON.stringify(attributionJsonResponse)); 
+
         AdjustSdkTest.sendInfoToServer(_this.extraPath);
     });
 };

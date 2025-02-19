@@ -542,6 +542,14 @@ RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
         [self addValueOrEmpty:dictionary key:@"costType" value:attribution.costType];
         [self addValueOrEmpty:dictionary key:@"costAmount" value:attribution.costAmount];
         [self addValueOrEmpty:dictionary key:@"costCurrency" value:attribution.costCurrency];
+        if (attribution.jsonResponse != nil) {
+            NSData *dataJsonResponse = [NSJSONSerialization dataWithJSONObject:attribution.jsonResponse
+                                                                       options:0 error:nil];
+            NSString *stringJsonResponse = [[NSString alloc] initWithBytes:[dataJsonResponse bytes]
+                                                                    length:[dataJsonResponse length]
+                                                                  encoding:NSUTF8StringEncoding];
+            [self addValueOrEmpty:dictionary key:@"jsonResponse" value:stringJsonResponse];
+        }
         callback(@[dictionary]);
     }];
 }

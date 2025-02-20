@@ -1,7 +1,7 @@
 {
     "name": "react-native-adjust-test",
     "description": "Adjust Test Plugin For React Native SDK",
-    "version": "5.0.4",
+    "version": "5.0.5",
     "author": "Adjust",
     "license": "MIT",
     "keywords": [

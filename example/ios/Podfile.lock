@@ -940,7 +940,7 @@ PODS:
   - React-Mapbuffer (0.74.2):
     - glog
     - React-debug
-  - react-native-adjust (5.0.4):
+  - react-native-adjust (5.0.5):
     - Adjust (= 5.1.0)
     - React-Core
   - React-nativeconfig (0.74.2)
@@ -1386,7 +1386,7 @@ SPEC CHECKSUMS:
   React-jsitracing: 0fa7f78d8fdda794667cb2e6f19c874c1cf31d7e
   React-logger: 29fa3e048f5f67fe396bc08af7606426d9bd7b5d
   React-Mapbuffer: bf56147c9775491e53122a94c423ac201417e326
-  react-native-adjust: 8ef15c5ba79ef1cb0a53ad996c7c2aa253b995c6
+  react-native-adjust: 9a00021c6e86d4b72a38ef46c77b16e111d0166f
   React-nativeconfig: 9f223cd321823afdecf59ed00861ab2d69ee0fc1
   React-NativeModulesApple: ff7efaff7098639db5631236cfd91d60abff04c0
   React-perflogger: 32ed45d9cee02cf6639acae34251590dccd30994

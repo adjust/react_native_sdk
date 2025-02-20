@@ -1242,10 +1242,10 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-adjust (5.0.4):
+  - react-native-adjust (5.0.5):
     - Adjust (= 5.1.0)
     - React-Core
-  - react-native-adjust-test (5.0.4):
+  - react-native-adjust-test (5.0.5):
     - React
   - React-nativeconfig (0.75.2)
   - React-NativeModulesApple (0.75.2):
@@ -1753,8 +1753,8 @@ SPEC CHECKSUMS:
   React-logger: 8db32983d75dc2ad54f278f344ccb9b256e694fc
   React-Mapbuffer: 1c08607305558666fd16678b85ef135e455d5c96
   React-microtasksnativemodule: 87b8de96f937faefece8afd2cb3a518321b2ef99
-  react-native-adjust: 8ef15c5ba79ef1cb0a53ad996c7c2aa253b995c6
-  react-native-adjust-test: 9e1b3a5e8d8e340797167d9fc76b1f05cb973ee3
+  react-native-adjust: 9a00021c6e86d4b72a38ef46c77b16e111d0166f
+  react-native-adjust-test: 7e164a24cb155c6a29173c7deafee521ce5c2fb9
   React-nativeconfig: 57781b79e11d5af7573e6f77cbf1143b71802a6d
   React-NativeModulesApple: 7ff2e2cfb2e5fa5bdedcecf28ce37e696c6ef1e1
   React-perflogger: 8a360ccf603de6ddbe9ff8f54383146d26e6c936

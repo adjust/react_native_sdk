@@ -368,7 +368,6 @@ AdjustCommandExecutor.prototype.config = function(params) {
             const attributionJsonResponse = JSON.parse(attribution.jsonResponse);
             if (attributionJsonResponse.cost_amount !== undefined) {
                 attributionJsonResponse.cost_amount = parseFloat(attributionJsonResponse.cost_amount.toFixed(2));
-                attributionJsonResponse.cost_amount = attributionJsonResponse.cost_amount.toString();
             }
             if (Platform.OS === 'ios') {
                 delete attributionJsonResponse.fb_install_referrer;
@@ -996,7 +995,6 @@ AdjustCommandExecutor.prototype.attributionGetter = function(params) {
         const attributionJsonResponse = JSON.parse(attribution.jsonResponse);
         if (attributionJsonResponse.cost_amount !== undefined) {
             attributionJsonResponse.cost_amount = parseFloat(attributionJsonResponse.cost_amount.toFixed(2));
-            attributionJsonResponse.cost_amount = attributionJsonResponse.cost_amount.toString();
         }
         if (Platform.OS === 'ios') {
             delete attributionJsonResponse.fb_install_referrer;

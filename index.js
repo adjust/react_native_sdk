@@ -152,7 +152,7 @@ Adjust.getAmazonAdId = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native5.0.5", callback);
+    module_adjust.getSdkVersion("react-native5.1.0", callback);
 };
 
 Adjust.requestAppTrackingAuthorization = function(callback) {
@@ -294,7 +294,7 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native5.0.5";
+    this.sdkPrefix = "react-native5.1.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;

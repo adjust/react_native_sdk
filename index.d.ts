@@ -13,6 +13,7 @@ declare module 'react-native-adjust' {
     costType: string
     costAmount: number
     costCurrency: string
+    jsonResponse: string
     fbInstallReferrer: string
   }
 

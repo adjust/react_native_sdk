@@ -101,6 +101,14 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"costType" value:attribution.costType];
     [self addValueOrEmpty:dictionary key:@"costAmount" value:attribution.costAmount];
     [self addValueOrEmpty:dictionary key:@"costCurrency" value:attribution.costCurrency];
+    if (attribution.jsonResponse != nil) {
+        NSData *dataJsonResponse = [NSJSONSerialization dataWithJSONObject:attribution.jsonResponse
+                                                                   options:0 error:nil];
+        NSString *stringJsonResponse = [[NSString alloc] initWithBytes:[dataJsonResponse bytes]
+                                                                length:[dataJsonResponse length]
+                                                              encoding:NSUTF8StringEncoding];
+        [self addValueOrEmpty:dictionary key:@"jsonResponse" value:stringJsonResponse];
+    }
     [AdjustEventEmitter dispatchEvent:@"adjust_attributionChanged" withDictionary:dictionary];
 }
 
@@ -198,6 +206,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"conversionValue" value:data[@"conversion_value"]];
     [self addValueOrEmpty:dictionary key:@"coarseValue" value:data[@"coarse_value"]];
     [self addValueOrEmpty:dictionary key:@"lockWindow" value:data[@"lock_window"]];
+    [self addValueOrEmpty:dictionary key:@"lastSkanUpdate" value:data[@"last_skan_update"]];
     [self addValueOrEmpty:dictionary key:@"error" value:data[@"error"]];
     [AdjustEventEmitter dispatchEvent:@"adjust_skanUpdated" withDictionary:dictionary];
 }

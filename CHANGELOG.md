@@ -1,3 +1,17 @@
+### Version 5.1.0 (25th February 2025)
+#### Added
+- Added `jsonResponse` field (JSON string) to `AdjustAttribution` where every key-value pair sent by the backend as part of the attribution response can be found.
+
+#### Fixed
+- Fixed occasional occurrences in which ATT waiting interval timer was not being started.
+- Fixed occasional NPE occurrences when app was entering background (https://github.com/adjust/android_sdk/issues/630).
+
+#### Native SDKs
+- [iOS@v5.1.1][ios_sdk_v5.1.1]
+- [Android@v5.1.0][android_sdk_v5.1.0]
+
+---
+
 ### Version 5.0.4 (17th January 2025)
 #### Fixed
 - Fixed type mismatch of some `AdjustPlayStoreSubscription` fields in JS and TS (https://github.com/adjust/react_native_sdk/issues/260).
@@ -720,6 +734,7 @@ In case you were using beta version of the SDK v5, please switch to the official
 [ios_sdk_v5.0.0]: https://github.com/adjust/ios_sdk/tree/v5.0.0
 [ios_sdk_v5.0.1]: https://github.com/adjust/ios_sdk/tree/v5.0.1
 [ios_sdk_v5.0.2]: https://github.com/adjust/ios_sdk/tree/v5.0.2
+[ios_sdk_v5.1.1]: https://github.com/adjust/ios_sdk/tree/v5.1.1
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -760,3 +775,4 @@ In case you were using beta version of the SDK v5, please switch to the official
 [android_sdk_v5.0.0]: https://github.com/adjust/android_sdk/tree/v5.0.0
 [android_sdk_v5.0.1]: https://github.com/adjust/android_sdk/tree/v5.0.1
 [android_sdk_v5.0.2]: https://github.com/adjust/android_sdk/tree/v5.0.2
+[android_sdk_v5.1.0]: https://github.com/adjust/android_sdk/tree/v5.1.0

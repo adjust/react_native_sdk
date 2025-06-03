@@ -152,7 +152,7 @@ Adjust.getAmazonAdId = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native5.1.0", callback);
+    module_adjust.getSdkVersion("react-native5.4.0", callback);
 };
 
 Adjust.requestAppTrackingAuthorization = function(callback) {
@@ -221,6 +221,34 @@ Adjust.verifyAndTrackPlayStorePurchase = function(adjustEvent, callback) {
 
 Adjust.processAndResolveDeeplink = function(adjustDeeplink, callback) {
     module_adjust.processAndResolveDeeplink(adjustDeeplink, callback);
+};
+
+Adjust.endFirstSessionDelay = function() {
+    module_adjust.endFirstSessionDelay();
+};
+
+Adjust.enableCoppaComplianceInDelay = function() {
+    module_adjust.enableCoppaComplianceInDelay();
+};
+
+Adjust.disableCoppaComplianceInDelay = function() {
+    module_adjust.disableCoppaComplianceInDelay();
+};
+
+Adjust.enablePlayStoreKidsComplianceInDelay = function() {
+    if (Platform.OS === "android") {
+    module_adjust.enablePlayStoreKidsComplianceInDelay();
+    }
+};
+
+Adjust.disablePlayStoreKidsComplianceInDelay = function() {
+    if (Platform.OS === "android") {
+    module_adjust.disablePlayStoreKidsComplianceInDelay();
+    }
+};
+
+Adjust.setExternalDeviceIdInDelay = function(externalDeviceId) {
+    module_adjust.setExternalDeviceIdInDelay(externalDeviceId);
 };
 
 Adjust.componentWillUnmount = function() {
@@ -294,13 +322,14 @@ Adjust.onPause = function(testParam) {
 // AdjustConfig
 
 var AdjustConfig = function(appToken, environment) {
-    this.sdkPrefix = "react-native5.1.0";
+    this.sdkPrefix = "react-native5.4.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
     this.isDeferredDeeplinkOpeningEnabled = null;
     this.isSendingInBackgroundEnabled = null;
     this.isCostDataInAttributionEnabled = null;
+    this.isFirstSessionDelayEnabled = null;
     this.defaultTracker = null;
     this.externalDeviceId = null;
     this.isDeviceIdsReadingOnceEnabled = null;
@@ -399,6 +428,10 @@ AdjustConfig.prototype.enableCostDataInAttribution = function() {
 
 AdjustConfig.prototype.enablePreinstallTracking = function() {
     this.isPreinstallTrackingEnabled = true;
+};
+
+AdjustConfig.prototype.enableFirstSessionDelay = function() {
+    this.isFirstSessionDelayEnabled = true;
 };
 
 AdjustConfig.prototype.setPreinstallFilePath = function(preinstallFilePath) {

@@ -83,6 +83,7 @@ declare module 'react-native-adjust' {
     public enablePlayStoreKidsCompliance(): void
     public enableLinkMe(): void
     public enablePreinstallTracking(): void
+    public enableFirstSessionDelay(): void
     public setPreinstallFilePath(preinstallFilePath: string): void
     public setFbAppId(fbAppId: string): void
     public disableAdServices(): void
@@ -233,5 +234,11 @@ declare module 'react-native-adjust' {
     verifyPlayStorePurchase: (purchase: AdjustPlayStorePurchase, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
     verifyAndTrackPlayStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
     processAndResolveDeeplink: (adjustDeeplink: AdjustDeeplink, callback: (resolvedLink: string) => void) => void
+    endFirstSessionDelay: () => void
+    enableCoppaComplianceInDelay: () => void
+    disableCoppaComplianceInDelay: () => void
+    enablePlayStoreKidsComplianceInDelay: () => void
+    disablePlayStoreKidsComplianceInDelay: () => void
+    setExternalDeviceIdInDelay:(externalDeviceId: string) => void
   }
 }

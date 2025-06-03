@@ -43,6 +43,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSNumber *attConsentWaitingInterval = [dict objectForKey:@"attConsentWaitingInterval"];
     NSNumber *eventDeduplicationIdsMaxSize = [dict objectForKey:@"eventDeduplicationIdsMaxSize"];
     NSNumber *isCoppaComplianceEnabled = [dict objectForKey:@"isCoppaComplianceEnabled"];
+    NSNumber *isFirstSessionDelayEnabled = [dict objectForKey:@"isFirstSessionDelayEnabled"];
     id urlStrategyDomains = [dict objectForKey:@"urlStrategyDomains"];
     NSNumber *useSubdomains = [dict objectForKey:@"useSubdomains"];
     NSNumber *isDataResidency = [dict objectForKey:@"isDataResidency"];
@@ -164,6 +165,13 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     if ([self isFieldValid:isCoppaComplianceEnabled]) {
         if ([isCoppaComplianceEnabled boolValue] == YES) {
             [adjustConfig enableCoppaCompliance];
+        }
+    }
+
+     // First Session Delay Enabled info reading
+    if ([self isFieldValid:isFirstSessionDelayEnabled]) {
+        if ([isFirstSessionDelayEnabled boolValue] == YES) {
+            [adjustConfig enableFirstSessionDelay];
         }
     }
 
@@ -450,6 +458,25 @@ RCT_EXPORT_METHOD(requestAppTrackingAuthorization:(RCTResponseSenderBlock)callba
     [Adjust requestAppTrackingAuthorizationWithCompletionHandler:^(NSUInteger status) {
         callback(@[@(status)]);
     }];
+}
+
+RCT_EXPORT_METHOD(endFirstSessionDelay) {
+    [Adjust endFirstSessionDelay];
+}
+
+RCT_EXPORT_METHOD(enableCoppaComplianceInDelay) {
+    [Adjust enableCoppaComplianceInDelay];
+}
+
+RCT_EXPORT_METHOD(disableCoppaComplianceInDelay) {
+    [Adjust disableCoppaComplianceInDelay];
+}
+
+RCT_EXPORT_METHOD(setExternalDeviceIdInDelay:(NSString *)externalDeviceId) {
+    if (!([self isFieldValid:externalDeviceId])) {
+        return;
+    }
+    [Adjust setExternalDeviceIdInDelay:externalDeviceId];
 }
 
 RCT_EXPORT_METHOD(updateSkanConversionValue:(NSNumber * _Nonnull)conversionValue

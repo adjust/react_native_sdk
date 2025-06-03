@@ -120,6 +120,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
         boolean isPlayStoreKidsComplianceEnabled = false;
         boolean isCoppaComplianceEnabled = false;
         boolean isDeviceIdsReadingOnceEnabled = false;
+        boolean isFirstSessionDelayEnabled = false;
         List<Object> urlStrategyDomains = null;
         boolean useSubdomains = false;
         boolean isDataResidency = false;
@@ -269,6 +270,14 @@ public class Adjust extends ReactContextBaseJavaModule implements
             isDeviceIdsReadingOnceEnabled = mapConfig.getBoolean("isDeviceIdsReadingOnceEnabled");
             if (isDeviceIdsReadingOnceEnabled) {
                 adjustConfig.enableDeviceIdsReadingOnce();
+            }
+        }
+
+        // first session delay enabled
+        if (checkKey(mapConfig, "isFirstSessionDelayEnabled")) {
+            isFirstSessionDelayEnabled = mapConfig.getBoolean("isFirstSessionDelayEnabled");
+            if (isFirstSessionDelayEnabled) {
+               adjustConfig.enableFirstSessionDelay();
             }
         }
 
@@ -988,6 +997,36 @@ public class Adjust extends ReactContextBaseJavaModule implements
                 callback.invoke(strUri);
             }
         });
+    }
+
+    @ReactMethod
+    public void endFirstSessionDelay() {
+        com.adjust.sdk.Adjust.endFirstSessionDelay();
+    }
+
+    @ReactMethod
+    public void enableCoppaComplianceInDelay() {
+        com.adjust.sdk.Adjust.enableCoppaComplianceInDelay();
+    }
+
+    @ReactMethod
+    public void disableCoppaComplianceInDelay() {
+        com.adjust.sdk.Adjust.disableCoppaComplianceInDelay();
+    }
+
+    @ReactMethod
+    public void setExternalDeviceIdInDelay(final String externalDeviceId) {
+        com.adjust.sdk.Adjust.setExternalDeviceIdInDelay(externalDeviceId);
+    }
+
+    @ReactMethod
+    public void enablePlayStoreKidsComplianceInDelay() {
+        com.adjust.sdk.Adjust.enablePlayStoreKidsComplianceInDelay();
+    }
+
+    @ReactMethod
+    public void disablePlayStoreKidsComplianceInDelay() {
+        com.adjust.sdk.Adjust.disablePlayStoreKidsComplianceInDelay();
     }
 
     @ReactMethod

@@ -139,6 +139,10 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
         case 'processDeeplink': this.processDeeplink(command.params); break;
         case 'attributionGetter': this.attributionGetter(command.params); break;
         case 'getLastDeeplink' : this.getLastDeeplink(command.params); break;
+        case 'endFirstSessionDelay': this.endFirstSessionDelay(command.params); break;
+        case 'coppaComplianceInDelay': this.coppaComplianceInDelay(command.params); break;
+        case 'playStoreKidsComplianceInDelay': this.playStoreKidsComplianceInDelay(command.params); break;
+        case 'externalDeviceIdInDelay': this.setExternalDeviceIdInDelay(command.params); break;
     }
 
     this.nextToSendCounter++;
@@ -348,6 +352,13 @@ AdjustCommandExecutor.prototype.config = function(params) {
     if ('externalDeviceId' in params) {
         var externalDeviceId = getFirstParameterValue(params, 'externalDeviceId');
         adjustConfig.setExternalDeviceId(externalDeviceId);
+    }
+
+    if ('firstSessionDelayEnabled' in params) {
+        var firstSessionDelayEnabledS = getFirstParameterValue(params, 'firstSessionDelayEnabled');
+        if (firstSessionDelayEnabledS == 'true') {
+            adjustConfig.enableFirstSessionDelay();
+        }
     }
 
     if ('attributionCallbackSendAll' in params) {
@@ -975,6 +986,47 @@ AdjustCommandExecutor.prototype.processDeeplink = function(params) {
         AdjustSdkTest.addInfoToSend('resolved_link', resolvedLink);
         AdjustSdkTest.sendInfoToServer(_this.extraPath);
     });
+};
+
+AdjustCommandExecutor.prototype.coppaComplianceInDelay = function(params) {
+    if (getFirstParameterValue(params, 'isEnabled') == 'true') {
+        Adjust.enableCoppaComplianceInDelay();
+    } else {
+        Adjust.disableCoppaComplianceInDelay();
+    }
+};
+
+AdjustCommandExecutor.prototype.enableCoppaComplianceInDelay = function() {
+    Adjust.enableCoppaComplianceInDelay();
+};
+
+AdjustCommandExecutor.prototype.disableCoppaComplianceInDelay = function() {
+    Adjust.disableCoppaComplianceInDelay();
+};
+
+AdjustCommandExecutor.prototype.playStoreKidsComplianceInDelay = function(params) {
+    if (getFirstParameterValue(params, 'isEnabled') == 'true') {
+        Adjust.enablePlayStoreKidsComplianceInDelay();
+    } else {
+        Adjust.disablePlayStoreKidsComplianceInDelay();
+    }
+};
+
+AdjustCommandExecutor.prototype.enablePlayStoreKidsComplianceInDelay = function() {
+    Adjust.enablePlayStoreKidsComplianceInDelay();
+};
+
+AdjustCommandExecutor.prototype.disablePlayStoreKidsComplianceInDelay = function() {
+    Adjust.disablePlayStoreKidsComplianceInDelay();
+};
+
+AdjustCommandExecutor.prototype.endFirstSessionDelay = function() {
+    Adjust.endFirstSessionDelay();
+};
+
+AdjustCommandExecutor.prototype.setExternalDeviceIdInDelay = function(params) {
+    var externalDeviceId = getFirstParameterValue(params, 'externalDeviceId');
+    Adjust.setExternalDeviceIdInDelay(externalDeviceId);
 };
 
 AdjustCommandExecutor.prototype.attributionGetter = function(params) {

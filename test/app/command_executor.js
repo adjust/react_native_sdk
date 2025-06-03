@@ -342,6 +342,13 @@ AdjustCommandExecutor.prototype.config = function(params) {
         }
     }
 
+    if ('allowAttUsage' in params) {
+        var allowAttUsageS = getFirstParameterValue(params, 'allowAttUsage');
+        if (allowAttUsageS != 'true') {
+            adjustConfig.disableAppTrackingTransparencyUsage();
+        }
+    }
+
     if ('allowSkAdNetworkHandling' in params) {
         var allowSkAdNetworkHandlingS = getFirstParameterValue(params, 'allowSkAdNetworkHandling');
         if (allowSkAdNetworkHandlingS != 'true') {

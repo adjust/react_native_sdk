@@ -353,6 +353,7 @@ var AdjustConfig = function(appToken, environment) {
     this.isSkanAttributionEnabled = null;
     this.attConsentWaitingInterval = null;
     this.isLinkMeEnabled = null;
+    this.isAppTrackingTransparencyUsageEnabled = null;
 };
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
@@ -472,6 +473,10 @@ AdjustConfig.prototype.disableSkanAttribution = function() {
 
 AdjustConfig.prototype.enableLinkMe = function() {
     this.isLinkMeEnabled = true;
+};
+
+AdjustConfig.prototype.disableAppTrackingTransparencyUsage = function() {
+    this.isAppTrackingTransparencyUsageEnabled = false;
 };
 
 AdjustConfig.prototype.setAttConsentWaitingInterval = function(attConsentWaitingInterval) {

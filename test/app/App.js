@@ -56,7 +56,7 @@ const App: () => React$Node = () => {
   }
   var controlUrl = "ws://" + ipAddress + ":1987";
 
-  AdjustSdkTest.addTestDirectory("first-session-delay");
+  AdjustSdkTest.addTestDirectory("tracking-domain");
   // AdjustSdkTest.addTest("Test_Skan_all_packages");
   Adjust.getSdkVersion(function (sdkVersion) {
     AdjustSdkTest.startTestSession(urlOverwrite, controlUrl, sdkVersion);

@@ -35,6 +35,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSNumber *isLinkMeEnabled = [dict objectForKey:@"isLinkMeEnabled"];
     NSNumber *isCostDataInAttributionEnabled = [dict objectForKey:@"isCostDataInAttributionEnabled"];
     NSNumber *isAdServicesEnabled = [dict objectForKey:@"isAdServicesEnabled"];
+    NSNumber *isAppTrackingTransparencyUsageEnabled = [dict objectForKey:@"isAppTrackingTransparencyUsageEnabled"];
     NSNumber *isIdfaReadingAllowed = [dict objectForKey:@"isIdfaReadingAllowed"];
     NSNumber *isIdfvReadingAllowed = [dict objectForKey:@"isIdfvReadingAllowed"];
     NSNumber *isSkanAttributionEnabled = [dict objectForKey:@"isSkanAttributionEnabled"];
@@ -113,6 +114,13 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     if ([self isFieldValid:isAdServicesEnabled]) {
         if ([isAdServicesEnabled boolValue] == NO) {
             [adjustConfig disableAdServices];
+        }
+    }
+
+    // AdServices info reading
+    if ([self isFieldValid:isAppTrackingTransparencyUsageEnabled]) {
+        if ([isAppTrackingTransparencyUsageEnabled boolValue] == NO) {
+            [adjustConfig disableAppTrackingTransparencyUsage];
         }
     }
 

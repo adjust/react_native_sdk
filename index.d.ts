@@ -90,6 +90,7 @@ declare module 'react-native-adjust' {
     public disableIdfaReading(): void
     public disableIdfvReading(): void
     public disableSkanAttribution(): void
+    public disableAppTrackingTransparencyUsage(): void
     public setEventDeduplicationIdsMaxSize(eventDeduplicationIdsMaxSize: number): void
     public setAttConsentWaitingInterval(attConsentWaitingInterval: number): void
     public setUrlStrategy(urlStrategyDomains: string[], useSubdomains: boolean, isDataResidency: boolean): void

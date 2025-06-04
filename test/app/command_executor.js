@@ -13,7 +13,8 @@ import {
     AdjustAdRevenue,
     AdjustAppStorePurchase,
     AdjustPlayStorePurchase,
-    AdjustDeeplink
+    AdjustDeeplink,
+    AdjustStoreInfo
 } from 'react-native-adjust';
 import { AdjustTestOptions } from './test_options.js';
 const AdjustSdkTest = NativeModules.AdjustSdkTest;
@@ -366,6 +367,18 @@ AdjustCommandExecutor.prototype.config = function(params) {
         if (firstSessionDelayEnabledS == 'true') {
             adjustConfig.enableFirstSessionDelay();
         }
+    }
+
+    if ('storeName' in params) {
+        var storeInfo;
+        var storeName = getFirstParameterValue(params, 'storeName');
+        storeInfo = new AdjustStoreInfo(storeName);
+
+        if ('storeAppId' in params) {
+            var storeAppId = getFirstParameterValue(params, 'storeAppId');
+            storeInfo.setStoreAppId(storeAppId);
+        }
+        adjustConfig.setStoreInfo(storeInfo);
     }
 
     if ('attributionCallbackSendAll' in params) {

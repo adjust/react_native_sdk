@@ -46,6 +46,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSNumber *isCoppaComplianceEnabled = [dict objectForKey:@"isCoppaComplianceEnabled"];
     NSNumber *isFirstSessionDelayEnabled = [dict objectForKey:@"isFirstSessionDelayEnabled"];
     id urlStrategyDomains = [dict objectForKey:@"urlStrategyDomains"];
+    id storeInfo = [dict objectForKey:@"storeInfo"];
     NSNumber *useSubdomains = [dict objectForKey:@"useSubdomains"];
     NSNumber *isDataResidency = [dict objectForKey:@"isDataResidency"];
     BOOL isLogLevelSuppress = NO;
@@ -176,11 +177,25 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         }
     }
 
-     // First Session Delay Enabled info reading
+    // First Session Delay Enabled info reading
     if ([self isFieldValid:isFirstSessionDelayEnabled]) {
         if ([isFirstSessionDelayEnabled boolValue] == YES) {
             [adjustConfig enableFirstSessionDelay];
         }
+    }
+
+    // store parameters handling
+    if ([self isFieldValid:storeInfo]) {
+        NSString *storeName = [storeInfo objectForKey:@"storeName"];
+        NSString *storeAppId = [storeInfo objectForKey:@"storeAppId"];
+        ADJStoreInfo *storeInfo;
+        if ([self isFieldValid:storeName]) {
+            storeInfo = [[ADJStoreInfo alloc] initWithStoreName:storeName];
+            if ([self isFieldValid:storeAppId]) {
+                [storeInfo setStoreAppId:storeAppId];
+            }
+        }
+        [adjustConfig setStoreInfo:storeInfo];
     }
 
     // callbacks

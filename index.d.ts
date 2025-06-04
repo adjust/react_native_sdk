@@ -94,6 +94,7 @@ declare module 'react-native-adjust' {
     public setEventDeduplicationIdsMaxSize(eventDeduplicationIdsMaxSize: number): void
     public setAttConsentWaitingInterval(attConsentWaitingInterval: number): void
     public setUrlStrategy(urlStrategyDomains: string[], useSubdomains: boolean, isDataResidency: boolean): void
+    public setStoreInfo(storeInfo: AdjustStoreInfo): void
 
     public setAttributionCallback(
       callback: (attribution: AdjustAttribution) => void
@@ -194,6 +195,11 @@ declare module 'react-native-adjust' {
 
   export class AdjustDeeplink {
     constructor(deeplink: string)
+  }
+
+  export class AdjustStoreInfo {
+    constructor(storeName: string)
+    public setStoreInfo(storeInfo: string): void
   }
 
   export const Adjust: {

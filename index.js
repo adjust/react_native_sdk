@@ -339,6 +339,9 @@ var AdjustConfig = function(appToken, environment) {
     this.urlStrategyDomains = null;
     this.useSubdomains = null;
 
+    //store parameters
+    this.storeInfo = null;
+
     // Android only
     this.processName = null;
     this.isPreinstallTrackingEnabled = null;
@@ -570,6 +573,19 @@ AdjustConfig.prototype.setSkanUpdatedCallback = function(skanUpdatedCallback) {
             );
         }
     }
+};
+
+AdjustConfig.prototype.setStoreInfo = function(storeInfo) {
+    this.storeInfo = storeInfo;
+};
+
+var AdjustStoreInfo = function(storeName) {
+    this.storeName = storeName;
+    this.storeAppId = null;
+};
+
+AdjustStoreInfo.prototype.setStoreAppId = function(storeAppId) {
+    this.storeAppId = storeAppId;
 };
 
 // AdjustEvent
@@ -867,5 +883,6 @@ module.exports = {
     AdjustPlayStoreSubscription,
     AdjustAppStorePurchase,
     AdjustPlayStorePurchase,
-    AdjustDeeplink
-}
+    AdjustDeeplink,
+    AdjustStoreInfo
+} 

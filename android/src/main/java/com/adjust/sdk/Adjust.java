@@ -281,6 +281,25 @@ public class Adjust extends ReactContextBaseJavaModule implements
             }
         }
 
+        // store info 
+        if (checkKey(mapConfig, "storeInfo")) {
+            ReadableMap storeInfo = mapConfig.getMap("storeInfo");
+            try {
+                String strStoreInfo = storeInfo.toString();
+                JSONObject storeInfoJson = new JSONObject(strStoreInfo);
+                String storeName = storeInfoJson.optString("storeName", null);
+                if (AdjustUtil.isFieldValid(storeName)) {
+                    AdjustStoreInfo adjustStoreInfo = new AdjustStoreInfo(storeName);
+                    String storeAppId = storeInfoJson.optString("storeAppId", null);
+                    if (AdjustUtil.isFieldValid(storeAppId)) {
+                        adjustStoreInfo.setStoreAppId(storeAppId);
+                    }
+                    adjustConfig.setStoreInfo(adjustStoreInfo);
+                }
+            } catch (JSONException e) {
+            }
+        }
+
         // max number of deduplication IDs
         if (checkKey(mapConfig, "eventDeduplicationIdsMaxSize")) {
             eventDeduplicationIdsMaxSize = mapConfig.getInt("eventDeduplicationIdsMaxSize");

@@ -472,13 +472,17 @@ public class Adjust extends ReactContextBaseJavaModule implements
         }
 
         String deeplink = null;
-
         if (checkKey(mapDeeplink, "deeplink")) {
             deeplink = mapDeeplink.getString("deeplink");
         }
 
-        final Uri uri = Uri.parse(deeplink);
-        com.adjust.sdk.Adjust.processDeeplink(new AdjustDeeplink(uri), getReactApplicationContext());
+        AdjustDeeplink adjustDeeplink = new AdjustDeeplink(Uri.parse(deeplink));
+        
+        if (checkKey(mapDeeplink, "referrer")) {
+            String referrer = mapDeeplink.getString("referrer");
+            adjustDeeplink.setReferrer(Uri.parse(referrer));
+        }
+        com.adjust.sdk.Adjust.processDeeplink(adjustDeeplink, getReactApplicationContext());
     }
 
     @ReactMethod
@@ -986,16 +990,20 @@ public class Adjust extends ReactContextBaseJavaModule implements
         }
 
         String deeplink = null;
-
         if (checkKey(mapDeeplink, "deeplink")) {
             deeplink = mapDeeplink.getString("deeplink");
         }
 
-        final Uri uri = Uri.parse(deeplink);
+        AdjustDeeplink adjustDeeplink = new AdjustDeeplink(Uri.parse(deeplink));
+        
+        if (checkKey(mapDeeplink, "referrer")) {
+            String referrer = mapDeeplink.getString("referrer");
+            adjustDeeplink.setReferrer(Uri.parse(referrer));
+        }
 
         // process and resolve deeplink
         com.adjust.sdk.Adjust.processAndResolveDeeplink(
-            new AdjustDeeplink(uri),
+            adjustDeeplink,
             getReactApplicationContext(),
             new OnDeeplinkResolvedListener() {
             @Override

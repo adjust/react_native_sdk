@@ -195,6 +195,7 @@ declare module 'react-native-adjust' {
 
   export class AdjustDeeplink {
     constructor(deeplink: string)
+    public setReferrer(referrer: string): void
   }
 
   export class AdjustStoreInfo {

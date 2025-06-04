@@ -56,7 +56,7 @@ const App: () => React$Node = () => {
   }
   var controlUrl = "ws://" + ipAddress + ":1987";
 
-  // AdjustSdkTest.addTestDirectory("store-info");
+  AdjustSdkTest.addTestDirectory("deeplink");
   // AdjustSdkTest.addTest("Test_StoreInfo_valid_string");
   Adjust.getSdkVersion(function (sdkVersion) {
     AdjustSdkTest.startTestSession(urlOverwrite, controlUrl, sdkVersion);

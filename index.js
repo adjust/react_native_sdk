@@ -868,9 +868,13 @@ var AdjustPlayStorePurchase = function(productId, purchaseToken) {
 };
 
 // AdjustDeeplink
-
 var AdjustDeeplink = function(deeplink) {
     this.deeplink = deeplink;
+    this.referrer = null;
+};
+
+AdjustDeeplink.prototype.setReferrer= function(referrer) {
+    this.referrer = referrer;
 };
 
 module.exports = {

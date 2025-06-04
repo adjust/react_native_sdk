@@ -717,7 +717,12 @@ AdjustCommandExecutor.prototype.setPushToken = function(params) {
 
 AdjustCommandExecutor.prototype.openDeeplink = function(params) {
     var deeplink = getFirstParameterValue(params, 'deeplink');
-    Adjust.processDeeplink(new AdjustDeeplink(deeplink));
+    var adjustDeeplink = new AdjustDeeplink(deeplink);
+    var referrer = getFirstParameterValue(params, 'referrer');
+    if (typeof referrer === 'string') {
+        adjustDeeplink.setReferrer(referrer);
+    }
+    Adjust.processDeeplink(adjustDeeplink);
 };
 
 AdjustCommandExecutor.prototype.gdprForgetMe = function(params) {
@@ -1001,8 +1006,13 @@ AdjustCommandExecutor.prototype.verifyTrack = function(params) {
 
 AdjustCommandExecutor.prototype.processDeeplink = function(params) {
     var deeplink = getFirstParameterValue(params, 'deeplink');
+    var adjustDeeplink = new AdjustDeeplink(deeplink);
+    var referrer = getFirstParameterValue(params, 'referrer');
+    if (typeof referrer === 'string') {
+        adjustDeeplink.setReferrer(referrer);
+    }
     var _this = this;
-    Adjust.processAndResolveDeeplink(new AdjustDeeplink(deeplink), function(resolvedLink) {
+    Adjust.processAndResolveDeeplink(adjustDeeplink, function(resolvedLink) {
         AdjustSdkTest.addInfoToSend('resolved_link', resolvedLink);
         AdjustSdkTest.sendInfoToServer(_this.extraPath);
     });

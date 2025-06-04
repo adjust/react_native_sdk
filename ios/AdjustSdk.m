@@ -313,13 +313,19 @@ RCT_EXPORT_METHOD(setPushToken:(NSString *)token) {
 }
 
 RCT_EXPORT_METHOD(processDeeplink:(NSDictionary *)dict) {
-    NSString *strUrl = dict[@"deeplink"];
-    if (strUrl == nil) {
+    NSString *deeplink = dict[@"deeplink"];
+    if (deeplink == nil) {
         return;
     }
 
-    NSURL *url = [NSURL URLWithString:strUrl];
-    [Adjust processDeeplink:[[ADJDeeplink alloc] initWithDeeplink:url]];
+    NSURL *urlDeeplink = [NSURL URLWithString:deeplink];
+    ADJDeeplink *adjustDeeplink = [[ADJDeeplink alloc] initWithDeeplink:urlDeeplink];
+    if ([self isFieldValid:dict[@"referrer"]]) {
+        NSString *referrer = dict[@"referrer"];
+        NSURL *urlReferrer = [NSURL URLWithString:referrer];
+        [adjustDeeplink setReferrer:urlReferrer]; 
+    }
+    [Adjust processDeeplink:adjustDeeplink];
 }
 
 RCT_EXPORT_METHOD(trackAdRevenue:(NSDictionary *)dict) {
@@ -744,14 +750,20 @@ RCT_EXPORT_METHOD(verifyAndTrackAppStorePurchase:(NSDictionary *)dict callback:(
 }
 
 RCT_EXPORT_METHOD(processAndResolveDeeplink:(NSDictionary *)dict callback:(RCTResponseSenderBlock)callback) {
-    NSString *strUrl = dict[@"deeplink"];
-    if (strUrl == nil) {
+    NSString *deeplink = dict[@"deeplink"];
+    if (deeplink == nil) {
         return;
     }
 
-    NSURL *url = [NSURL URLWithString:strUrl];
+    NSURL *urlDeeplink = [NSURL URLWithString:deeplink];
+    ADJDeeplink *adjustDeeplink = [[ADJDeeplink alloc] initWithDeeplink:urlDeeplink];
+    if ([self isFieldValid:dict[@"referrer"]]) {
+        NSString *referrer = dict[@"referrer"];
+        NSURL *urlReferrer = [NSURL URLWithString:referrer];
+        [adjustDeeplink setReferrer:urlReferrer];
+    }
     // process deeplink
-    [Adjust processAndResolveDeeplink:[[ADJDeeplink alloc] initWithDeeplink:url] withCompletionHandler:^(NSString * _Nonnull resolvedLink) {
+    [Adjust processAndResolveDeeplink:adjustDeeplink withCompletionHandler:^(NSString * _Nonnull resolvedLink) {
         if (resolvedLink == nil) {
             callback(@[@""]);
         } else {

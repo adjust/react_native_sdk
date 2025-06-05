@@ -320,7 +320,6 @@ Adjust.onPause = function(testParam) {
 };
 
 // AdjustConfig
-
 var AdjustConfig = function(appToken, environment) {
     this.sdkPrefix = "react-native5.4.0";
     this.appToken = appToken;
@@ -575,6 +574,7 @@ AdjustConfig.prototype.setSkanUpdatedCallback = function(skanUpdatedCallback) {
     }
 };
 
+// AdjustStoreInfo
 AdjustConfig.prototype.setStoreInfo = function(storeInfo) {
     this.storeInfo = storeInfo;
 };
@@ -589,7 +589,6 @@ AdjustStoreInfo.prototype.setStoreAppId = function(storeAppId) {
 };
 
 // AdjustEvent
-
 var AdjustEvent = function(eventToken) {
     this.eventToken = eventToken;
     this.revenue = null;
@@ -670,7 +669,6 @@ AdjustEvent.prototype.setCallbackId = function(callbackId) {
 };
 
 // AdjustAppStoreSubscription
-
 var AdjustAppStoreSubscription = function(price, currency, transactionId) {
     this.price = price;
     this.currency = currency;
@@ -716,7 +714,6 @@ AdjustAppStoreSubscription.prototype.addPartnerParameter = function(key, value) 
 };
 
 // AdjustPlayStoreSubscription
-
 var AdjustPlayStoreSubscription = function(price, currency, sku, orderId, signature, purchaseToken) {
     this.price = price;
     this.currency = currency;
@@ -782,7 +779,6 @@ AdjustThirdPartySharing.prototype.addPartnerSharingSetting = function(partnerNam
 };
 
 // AdjustAdRevenue
-
 var AdjustAdRevenue = function(source) {
     this.source = source;
     this.revenue = null;
@@ -854,14 +850,12 @@ AdjustAdRevenue.prototype.addPartnerParameter = function(key, value) {
 };
 
 // AdjustAppStorePurchase
-
 var AdjustAppStorePurchase = function(productId, transactionId) {
     this.productId = productId;
     this.transactionId = transactionId;
 };
 
 // AdjustPlayStorePurchase
-
 var AdjustPlayStorePurchase = function(productId, purchaseToken) {
     this.productId = productId;
     this.purchaseToken = purchaseToken;

@@ -60,7 +60,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
 
     ADJConfig *adjustConfig = [[ADJConfig alloc] initWithAppToken:appToken
                                                       environment:environment
-                                                      suppressLogLevel:isLogLevelSuppress];
+                                                 suppressLogLevel:isLogLevelSuppress];
 
     // log level
     if ([self isFieldValid:logLevel]) {
@@ -177,14 +177,14 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         }
     }
 
-    // First Session Delay Enabled info reading
+    // first session delay
     if ([self isFieldValid:isFirstSessionDelayEnabled]) {
         if ([isFirstSessionDelayEnabled boolValue] == YES) {
             [adjustConfig enableFirstSessionDelay];
         }
     }
 
-    // store parameters handling
+    // store info
     if ([self isFieldValid:storeInfo]) {
         NSString *storeName = [storeInfo objectForKey:@"storeName"];
         NSString *storeAppId = [storeInfo objectForKey:@"storeAppId"];
@@ -214,11 +214,11 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
                                                sessionSucceededCallback:_isSessionTrackingSucceededCallbackImplemented
                                                   sessionFailedCallback:_isSessionTrackingFailedCallbackImplemented
                                                deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
-                                      skanUpdatedCallback:_isSkanUpdatedCallbackImplemented
+                                                    skanUpdatedCallback:_isSkanUpdatedCallbackImplemented
                                            shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
     }
 
-    // init SDK
+    // initialize SDK
     [Adjust initSdk:adjustConfig];
 }
 
@@ -323,7 +323,7 @@ RCT_EXPORT_METHOD(processDeeplink:(NSDictionary *)dict) {
     if ([self isFieldValid:dict[@"referrer"]]) {
         NSString *referrer = dict[@"referrer"];
         NSURL *urlReferrer = [NSURL URLWithString:referrer];
-        [adjustDeeplink setReferrer:urlReferrer]; 
+        [adjustDeeplink setReferrer:urlReferrer];
     }
     [Adjust processDeeplink:adjustDeeplink];
 }
@@ -635,7 +635,7 @@ RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
         }
     }
 
-    // track third party sharing.
+    // track third party sharing
     [Adjust trackThirdPartySharing:adjustThirdPartySharing];
 }
 

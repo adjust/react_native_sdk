@@ -191,9 +191,9 @@ public class Adjust extends ReactContextBaseJavaModule implements
             adjustConfig.setExternalDeviceId(externalDeviceId);
         }
 
-         // URL strategy
+        // URL strategy
         if (checkKey(mapConfig, "urlStrategyDomains")
-            && checkKey(mapConfig, "useSubdomains") 
+            && checkKey(mapConfig, "useSubdomains")
             && checkKey(mapConfig, "isDataResidency")) {
             urlStrategyDomains = AdjustUtil.toList(mapConfig.getArray("urlStrategyDomains"));
             if (urlStrategyDomains != null) {
@@ -273,7 +273,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
             }
         }
 
-        // first session delay enabled
+        // first session delay
         if (checkKey(mapConfig, "isFirstSessionDelayEnabled")) {
             isFirstSessionDelayEnabled = mapConfig.getBoolean("isFirstSessionDelayEnabled");
             if (isFirstSessionDelayEnabled) {
@@ -336,7 +336,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
             adjustConfig.setOnDeferredDeeplinkResponseListener(this);
         }
 
-        // init SDK
+        // initialize SDK
         com.adjust.sdk.Adjust.initSdk(adjustConfig);
     }
 

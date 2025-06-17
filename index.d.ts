@@ -200,7 +200,7 @@ declare module 'react-native-adjust' {
 
   export class AdjustStoreInfo {
     constructor(storeName: string)
-    public setStoreInfo(storeInfo: string): void
+    public setStoreAppId(storeAppId: string): void
   }
 
   export const Adjust: {

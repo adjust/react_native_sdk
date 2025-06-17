@@ -4,7 +4,6 @@
 - Added ability to initialize the SDK for the first session in delayed mode. You can start the SDK in the delayed mode by calling the `enableFirstSessionDelay` method on your `AdjustConfig` instance. To end the delay, make sure to call `endFirstSessionDelay` method of `Adjust` instance. For more details about this feature, refer to the [official documentation](https://dev.adjust.com/en/sdk/react-native/features/first-session-delay).
 - Added ability to send organic search referrer together with deep link. You can send it via `setReferrer` method of the `AdjustDeeplink` instance. For more details about this feature, refer to the [official documentation](https://dev.adjust.com/en/sdk/react-native/features/deep-links#handling-deeplinks-with-referrer).
 - Added ability to disable SDK's interaction with `AppTrackingTransparency.framework` API. You can disable it by calling the `disableAppTrackingTransparencyUsage` method on your `AdjustConfig` instance. For more details about this feature, refer to the [official documentation](https://dev.adjust.com/en/sdk/react-native/features/att#disable-att-framework).
-- Added `jsonResponse` to attribution which represents the JSON string sent by the backend as part of the attribution response.
 
 #### Native SDKs
 - [iOS@v5.4.0][ios_sdk_v5.4.0]

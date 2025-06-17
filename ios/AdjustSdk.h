@@ -2,7 +2,7 @@
 //  AdjustSdk.h
 //  AdjustSdk
 //
-//  Created by Abdullah Obaied (@obaied) on 25th October 2016.
+//  Created by Abdullah Obaied on 25th October 2016.
 //  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 

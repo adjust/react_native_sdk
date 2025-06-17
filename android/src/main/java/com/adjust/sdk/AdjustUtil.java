@@ -2,7 +2,7 @@
 //  AdjustUtil.java
 //  Adjust SDK
 //
-//  Created by Abdullah Obaied (@Obaied) on 19th October 2016.
+//  Created by Abdullah Obaied on 19th October 2016.
 //  Copyright (c) 2016-Present Adjust GmbH. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  AdjustSdkDelegate.h
 //  AdjustSdk
 //
-//  Created by Abdullah Obaied (@obaied) on 17th November 2016.
+//  Created by Abdullah Obaied on 17th November 2016.
 //  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
@@ -19,10 +19,9 @@
                          sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
-                skanUpdatedCallback:(BOOL)swizzleSkanConversionValueUpdatedCallback
+                              skanUpdatedCallback:(BOOL)swizzleSkanConversionValueUpdatedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink;
 
 + (void)teardown;
 
 @end
-

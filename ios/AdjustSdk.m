@@ -2,7 +2,7 @@
 //  AdjustSdk.h
 //  AdjustSdk
 //
-//  Created by Abdullah Obaied (@obaied) on 25th October 2016.
+//  Created by Abdullah Obaied on 25th October 2016.
 //  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
@@ -22,7 +22,7 @@ BOOL _isSessionTrackingFailedCallbackImplemented;
 BOOL _isDeferredDeeplinkCallbackImplemented;
 BOOL _isSkanUpdatedCallbackImplemented;
 
-#pragma mark - Public methods
+#pragma mark - Common methods
 
 RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSString *appToken = [dict objectForKey:@"appToken"];
@@ -45,8 +45,8 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSNumber *eventDeduplicationIdsMaxSize = [dict objectForKey:@"eventDeduplicationIdsMaxSize"];
     NSNumber *isCoppaComplianceEnabled = [dict objectForKey:@"isCoppaComplianceEnabled"];
     NSNumber *isFirstSessionDelayEnabled = [dict objectForKey:@"isFirstSessionDelayEnabled"];
-    id urlStrategyDomains = [dict objectForKey:@"urlStrategyDomains"];
     id storeInfo = [dict objectForKey:@"storeInfo"];
+    id urlStrategyDomains = [dict objectForKey:@"urlStrategyDomains"];
     NSNumber *useSubdomains = [dict objectForKey:@"useSubdomains"];
     NSNumber *isDataResidency = [dict objectForKey:@"isDataResidency"];
     BOOL isLogLevelSuppress = NO;
@@ -187,15 +187,14 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     // store info
     if ([self isFieldValid:storeInfo]) {
         NSString *storeName = [storeInfo objectForKey:@"storeName"];
-        NSString *storeAppId = [storeInfo objectForKey:@"storeAppId"];
-        ADJStoreInfo *storeInfo;
         if ([self isFieldValid:storeName]) {
-            storeInfo = [[ADJStoreInfo alloc] initWithStoreName:storeName];
+            ADJStoreInfo *adjustStoreInfo = [[ADJStoreInfo alloc] initWithStoreName:storeName];
+            NSString *storeAppId = [storeInfo objectForKey:@"storeAppId"];
             if ([self isFieldValid:storeAppId]) {
-                [storeInfo setStoreAppId:storeAppId];
+                [adjustStoreInfo setStoreAppId:storeAppId];
             }
+            [adjustConfig setStoreInfo:adjustStoreInfo];
         }
-        [adjustConfig setStoreInfo:storeInfo];
     }
 
     // callbacks
@@ -282,52 +281,6 @@ RCT_EXPORT_METHOD(trackEvent:(NSDictionary *)dict) {
     [Adjust trackEvent:adjustEvent];
 }
 
-RCT_EXPORT_METHOD(switchToOfflineMode) {
-    [Adjust switchToOfflineMode];
-}
-
-RCT_EXPORT_METHOD(switchBackToOnlineMode) {
-    [Adjust switchBackToOnlineMode];
-}
-
-RCT_EXPORT_METHOD(enable) {
-    [Adjust enable];
-}
-
-RCT_EXPORT_METHOD(disable) {
-    [Adjust disable];
-}
-
-RCT_EXPORT_METHOD(isEnabled:(RCTResponseSenderBlock)callback) {
-    [Adjust isEnabledWithCompletionHandler:^(BOOL isEnabled) {
-        NSNumber *boolNumber = [NSNumber numberWithBool:isEnabled];
-        callback(@[boolNumber]);
-    }];
-}
-
-RCT_EXPORT_METHOD(setPushToken:(NSString *)token) {
-    if (!([self isFieldValid:token])) {
-        return;
-    }
-    [Adjust setPushTokenAsString:token];
-}
-
-RCT_EXPORT_METHOD(processDeeplink:(NSDictionary *)dict) {
-    NSString *deeplink = dict[@"deeplink"];
-    if (deeplink == nil) {
-        return;
-    }
-
-    NSURL *urlDeeplink = [NSURL URLWithString:deeplink];
-    ADJDeeplink *adjustDeeplink = [[ADJDeeplink alloc] initWithDeeplink:urlDeeplink];
-    if ([self isFieldValid:dict[@"referrer"]]) {
-        NSString *referrer = dict[@"referrer"];
-        NSURL *urlReferrer = [NSURL URLWithString:referrer];
-        [adjustDeeplink setReferrer:urlReferrer];
-    }
-    [Adjust processDeeplink:adjustDeeplink];
-}
-
 RCT_EXPORT_METHOD(trackAdRevenue:(NSDictionary *)dict) {
     NSString *source = dict[@"source"];
     NSNumber *revenue = dict[@"revenue"];
@@ -389,6 +342,263 @@ RCT_EXPORT_METHOD(trackAdRevenue:(NSDictionary *)dict) {
     [Adjust trackAdRevenue:adjustAdRevenue];
 }
 
+RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
+    NSNumber *isEnabled = dict[@"isEnabled"];
+    NSArray *granularOptions = dict[@"granularOptions"];
+    NSArray *partnerSharingSettings = dict[@"partnerSharingSettings"];
+
+    // is third party sharing enabled
+    if (isEnabled != nil && [isEnabled isKindOfClass:[NSNull class]]) {
+        isEnabled = nil;
+    }
+
+    ADJThirdPartySharing *adjustThirdPartySharing = [[ADJThirdPartySharing alloc]
+                                                     initWithIsEnabled:isEnabled];
+
+    // granular options
+    if ([self isFieldValid:granularOptions]) {
+        for (int i = 0; i < [granularOptions count]; i += 3) {
+            NSString *partnerName = [granularOptions objectAtIndex:i];
+            NSString *key = [granularOptions objectAtIndex:i+1];
+            NSString *value = [granularOptions objectAtIndex:i+2];
+            [adjustThirdPartySharing addGranularOption:partnerName key:key value:value];
+        }
+    }
+
+    // partner sharing settings
+    if ([self isFieldValid:partnerSharingSettings]) {
+        for (int i = 0; i < [partnerSharingSettings count]; i += 3) {
+            NSString *partnerName = [partnerSharingSettings objectAtIndex:i];
+            NSString *key = [partnerSharingSettings objectAtIndex:i+1];
+            NSString *value = [partnerSharingSettings objectAtIndex:i+2];
+            [adjustThirdPartySharing addPartnerSharingSetting:partnerName key:key value:[value boolValue]];
+        }
+    }
+
+    // track third party sharing
+    [Adjust trackThirdPartySharing:adjustThirdPartySharing];
+}
+
+RCT_EXPORT_METHOD(trackMeasurementConsent:(NSNumber * _Nonnull)measurementConsent) {
+    [Adjust trackMeasurementConsent:[measurementConsent boolValue]];
+}
+
+RCT_EXPORT_METHOD(processDeeplink:(NSDictionary *)dict) {
+    NSString *deeplink = dict[@"deeplink"];
+    if (![self isFieldValid:deeplink]) {
+        return;
+    }
+
+    NSURL *urlDeeplink = [NSURL URLWithString:deeplink];
+    ADJDeeplink *adjustDeeplink = [[ADJDeeplink alloc] initWithDeeplink:urlDeeplink];
+    NSString *referrer = dict[@"referrer"];
+    if ([self isFieldValid:referrer]) {
+        NSURL *urlReferrer = [NSURL URLWithString:referrer];
+        [adjustDeeplink setReferrer:urlReferrer];
+    }
+
+    [Adjust processDeeplink:adjustDeeplink];
+}
+
+RCT_EXPORT_METHOD(processAndResolveDeeplink:(NSDictionary *)dict callback:(RCTResponseSenderBlock)callback) {
+    NSString *deeplink = dict[@"deeplink"];
+    if (![self isFieldValid:deeplink]) {
+        return;
+    }
+
+    NSURL *urlDeeplink = [NSURL URLWithString:deeplink];
+    ADJDeeplink *adjustDeeplink = [[ADJDeeplink alloc] initWithDeeplink:urlDeeplink];
+    NSString *referrer = dict[@"referrer"];
+    if ([self isFieldValid:referrer]) {
+        NSURL *urlReferrer = [NSURL URLWithString:referrer];
+        [adjustDeeplink setReferrer:urlReferrer];
+    }
+
+    [Adjust processAndResolveDeeplink:adjustDeeplink withCompletionHandler:^(NSString * _Nonnull resolvedLink) {
+        if (resolvedLink == nil) {
+            callback(@[@""]);
+        } else {
+            callback(@[resolvedLink]);
+        }
+    }];
+}
+
+RCT_EXPORT_METHOD(setPushToken:(NSString *)token) {
+    if (!([self isFieldValid:token])) {
+        return;
+    }
+    [Adjust setPushTokenAsString:token];
+}
+
+RCT_EXPORT_METHOD(gdprForgetMe) {
+    [Adjust gdprForgetMe];
+}
+
+RCT_EXPORT_METHOD(enable) {
+    [Adjust enable];
+}
+
+RCT_EXPORT_METHOD(disable) {
+    [Adjust disable];
+}
+
+RCT_EXPORT_METHOD(switchToOfflineMode) {
+    [Adjust switchToOfflineMode];
+}
+
+RCT_EXPORT_METHOD(switchBackToOnlineMode) {
+    [Adjust switchBackToOnlineMode];
+}
+
+RCT_EXPORT_METHOD(addGlobalCallbackParameter:(NSString *)key value:(NSString *)value) {
+    if (!([self isFieldValid:key]) || !([self isFieldValid:value])) {
+        return;
+    }
+    [Adjust addGlobalCallbackParameter:value forKey:key];
+}
+
+RCT_EXPORT_METHOD(removeGlobalCallbackParameter:(NSString *)key) {
+    if (!([self isFieldValid:key])) {
+        return;
+    }
+    [Adjust removeGlobalCallbackParameterForKey:key];
+}
+
+RCT_EXPORT_METHOD(removeGlobalCallbackParameters) {
+    [Adjust removeGlobalCallbackParameters];
+}
+
+RCT_EXPORT_METHOD(addGlobalPartnerParameter:(NSString *)key value:(NSString *)value) {
+    if (!([self isFieldValid:key]) || !([self isFieldValid:value])) {
+        return;
+    }
+    [Adjust addGlobalPartnerParameter:value forKey:key];
+}
+
+RCT_EXPORT_METHOD(removeGlobalPartnerParameter:(NSString *)key) {
+    if (!([self isFieldValid:key])) {
+        return;
+    }
+    [Adjust removeGlobalPartnerParameterForKey:key];
+}
+
+RCT_EXPORT_METHOD(removeGlobalPartnerParameters) {
+    [Adjust removeGlobalPartnerParameters];
+}
+
+RCT_EXPORT_METHOD(endFirstSessionDelay) {
+    [Adjust endFirstSessionDelay];
+}
+
+RCT_EXPORT_METHOD(enableCoppaComplianceInDelay) {
+    [Adjust enableCoppaComplianceInDelay];
+}
+
+RCT_EXPORT_METHOD(disableCoppaComplianceInDelay) {
+    [Adjust disableCoppaComplianceInDelay];
+}
+
+RCT_EXPORT_METHOD(setExternalDeviceIdInDelay:(NSString *)externalDeviceId) {
+    if (!([self isFieldValid:externalDeviceId])) {
+        return;
+    }
+    [Adjust setExternalDeviceIdInDelay:externalDeviceId];
+}
+
+RCT_EXPORT_METHOD(isEnabled:(RCTResponseSenderBlock)callback) {
+    [Adjust isEnabledWithCompletionHandler:^(BOOL isEnabled) {
+        NSNumber *boolNumber = [NSNumber numberWithBool:isEnabled];
+        callback(@[boolNumber]);
+    }];
+}
+
+RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
+    [Adjust attributionWithCompletionHandler:^(ADJAttribution * _Nullable attribution) {
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+        if (attribution == nil) {
+            callback(@[dictionary]);
+            return;
+        }
+
+        [self addValueOrEmpty:dictionary key:@"trackerToken" value:attribution.trackerToken];
+        [self addValueOrEmpty:dictionary key:@"trackerName" value:attribution.trackerName];
+        [self addValueOrEmpty:dictionary key:@"network" value:attribution.network];
+        [self addValueOrEmpty:dictionary key:@"campaign" value:attribution.campaign];
+        [self addValueOrEmpty:dictionary key:@"creative" value:attribution.creative];
+        [self addValueOrEmpty:dictionary key:@"adgroup" value:attribution.adgroup];
+        [self addValueOrEmpty:dictionary key:@"clickLabel" value:attribution.clickLabel];
+        [self addValueOrEmpty:dictionary key:@"costType" value:attribution.costType];
+        [self addValueOrEmpty:dictionary key:@"costAmount" value:attribution.costAmount];
+        [self addValueOrEmpty:dictionary key:@"costCurrency" value:attribution.costCurrency];
+        if (attribution.jsonResponse != nil) {
+            NSData *dataJsonResponse = [NSJSONSerialization dataWithJSONObject:attribution.jsonResponse
+                                                                       options:0
+                                                                         error:nil];
+            NSString *stringJsonResponse = [[NSString alloc] initWithBytes:[dataJsonResponse bytes]
+                                                                    length:[dataJsonResponse length]
+                                                                  encoding:NSUTF8StringEncoding];
+            [self addValueOrEmpty:dictionary key:@"jsonResponse" value:stringJsonResponse];
+        }
+        callback(@[dictionary]);
+    }];
+}
+
+RCT_EXPORT_METHOD(getAdid:(RCTResponseSenderBlock)callback) {
+    [Adjust adidWithCompletionHandler:^(NSString * _Nullable adid) {
+        if (nil == adid) {
+            callback(@[@""]);
+        } else {
+            callback(@[adid]);
+        }
+    }];
+}
+
+RCT_EXPORT_METHOD(getLastDeeplink:(RCTResponseSenderBlock)callback) {
+    [Adjust lastDeeplinkWithCompletionHandler:^(NSURL * _Nullable lastDeeplink) {
+        if (nil == lastDeeplink) {
+            callback(@[@""]);
+        } else {
+            callback(@[[lastDeeplink absoluteString]]);
+        }
+    }];
+}
+
+RCT_EXPORT_METHOD(getSdkVersion:(NSString *)sdkPrefix callback:(RCTResponseSenderBlock)callback) {
+    [Adjust sdkVersionWithCompletionHandler:^(NSString * _Nullable sdkVersion) {
+        if (nil == sdkVersion) {
+            callback(@[@""]);
+        } else {
+            callback(@[[NSString stringWithFormat:@"%@@%@", sdkPrefix, sdkVersion]]);
+        }
+    }];
+}
+
+RCT_EXPORT_METHOD(setAttributionCallbackImplemented) {
+    _isAttributionCallbackImplemented = YES;
+}
+
+RCT_EXPORT_METHOD(setEventTrackingSucceededCallbackImplemented) {
+    _isEventTrackingSucceededCallbackImplemented = YES;
+}
+
+RCT_EXPORT_METHOD(setEventTrackingFailedCallbackImplemented) {
+    _isEventTrackingFailedCallbackImplemented = YES;
+}
+
+RCT_EXPORT_METHOD(setSessionTrackingSucceededCallbackImplemented) {
+    _isSessionTrackingSucceededCallbackImplemented = YES;
+}
+
+RCT_EXPORT_METHOD(setSessionTrackingFailedCallbackImplemented) {
+    _isSessionTrackingFailedCallbackImplemented = YES;
+}
+
+RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackImplemented) {
+    _isDeferredDeeplinkCallbackImplemented = YES;
+}
+
+#pragma mark - iOS only methods
+
 RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
     NSString *price = dict[@"price"];
     NSString *currency = dict[@"currency"];
@@ -443,222 +653,13 @@ RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
     [Adjust trackAppStoreSubscription:subscription];
 }
 
-RCT_EXPORT_METHOD(addGlobalCallbackParameter:(NSString *)key value:(NSString *)value) {
-    if (!([self isFieldValid:key]) || !([self isFieldValid:value])) {
-        return;
-    }
-    [Adjust addGlobalCallbackParameter:value forKey:key];
-}
-
-RCT_EXPORT_METHOD(removeGlobalCallbackParameter:(NSString *)key) {
-    if (!([self isFieldValid:key])) {
-        return;
-    }
-    [Adjust removeGlobalCallbackParameterForKey:key];
-}
-
-RCT_EXPORT_METHOD(removeGlobalCallbackParameters) {
-    [Adjust removeGlobalCallbackParameters];
-}
-
-RCT_EXPORT_METHOD(addGlobalPartnerParameter:(NSString *)key value:(NSString *)value) {
-    if (!([self isFieldValid:key]) || !([self isFieldValid:value])) {
-        return;
-    }
-    [Adjust addGlobalPartnerParameter:value forKey:key];
-}
-
-RCT_EXPORT_METHOD(removeGlobalPartnerParameter:(NSString *)key) {
-    if (!([self isFieldValid:key])) {
-        return;
-    }
-    [Adjust removeGlobalPartnerParameterForKey:key];
-}
-
-RCT_EXPORT_METHOD(removeGlobalPartnerParameters) {
-    [Adjust removeGlobalPartnerParameters];
-}
-
-RCT_EXPORT_METHOD(gdprForgetMe) {
-    [Adjust gdprForgetMe];
-}
-
-RCT_EXPORT_METHOD(requestAppTrackingAuthorization:(RCTResponseSenderBlock)callback) {
-    [Adjust requestAppTrackingAuthorizationWithCompletionHandler:^(NSUInteger status) {
-        callback(@[@(status)]);
-    }];
-}
-
-RCT_EXPORT_METHOD(endFirstSessionDelay) {
-    [Adjust endFirstSessionDelay];
-}
-
-RCT_EXPORT_METHOD(enableCoppaComplianceInDelay) {
-    [Adjust enableCoppaComplianceInDelay];
-}
-
-RCT_EXPORT_METHOD(disableCoppaComplianceInDelay) {
-    [Adjust disableCoppaComplianceInDelay];
-}
-
-RCT_EXPORT_METHOD(setExternalDeviceIdInDelay:(NSString *)externalDeviceId) {
-    if (!([self isFieldValid:externalDeviceId])) {
-        return;
-    }
-    [Adjust setExternalDeviceIdInDelay:externalDeviceId];
-}
-
-RCT_EXPORT_METHOD(updateSkanConversionValue:(NSNumber * _Nonnull)conversionValue
-                  coarseValue:(NSString * _Nonnull)coarseValue
-                  lockWindow:(NSNumber * _Nonnull)lockWindow
-                  errorCallback:(RCTResponseSenderBlock)callback) {
-    if ([self isFieldValid:conversionValue]) {
-        [Adjust updateSkanConversionValue:[conversionValue intValue]
-                              coarseValue:coarseValue
-                               lockWindow:lockWindow
-                    withCompletionHandler:^(NSError * _Nullable error) {
-            if (nil == error) {
-                callback(@[@""]);
-            } else {
-                callback(@[[error localizedDescription]]);
-            }
-        }];
-    } else {
-        callback(@[@"Invalid conversion value passed."]);
-    }
-}
-
-RCT_EXPORT_METHOD(getAppTrackingAuthorizationStatus:(RCTResponseSenderBlock)callback) {
-    callback(@[@([Adjust appTrackingAuthorizationStatus])]);
-}
-
-RCT_EXPORT_METHOD(getIdfa:(RCTResponseSenderBlock)callback) {
-    [Adjust idfaWithCompletionHandler:^(NSString * _Nullable idfa) {
-        if (nil == idfa) {
-            callback(@[@""]);
-        } else {
-            callback(@[idfa]);
-        }
-    }];
-}
-
-RCT_EXPORT_METHOD(getIdfv:(RCTResponseSenderBlock)callback) {
-    [Adjust idfvWithCompletionHandler:^(NSString * _Nullable idfv) {
-        if (nil == idfv) {
-            callback(@[@""]);
-        } else {
-            callback(@[idfv]);
-        }
-    }];
-}
-
-RCT_EXPORT_METHOD(getAdid:(RCTResponseSenderBlock)callback) {
-    [Adjust adidWithCompletionHandler:^(NSString * _Nullable adid) {
-        if (nil == adid) {
-            callback(@[@""]);
-        } else {
-            callback(@[adid]);
-        }
-    }];
-}
-
-RCT_EXPORT_METHOD(getSdkVersion:(NSString *)sdkPrefix callback:(RCTResponseSenderBlock)callback) {
-    [Adjust sdkVersionWithCompletionHandler:^(NSString * _Nullable sdkVersion) {
-        if (nil == sdkVersion) {
-            callback(@[@""]);
-        } else {
-            callback(@[[NSString stringWithFormat:@"%@@%@", sdkPrefix, sdkVersion]]);
-        }
-    }];
-}
-
-RCT_EXPORT_METHOD(getAttribution:(RCTResponseSenderBlock)callback) {
-    [Adjust attributionWithCompletionHandler:^(ADJAttribution * _Nullable attribution) {
-        NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-        if (attribution == nil) {
-            callback(@[dictionary]);
-            return;
-        }
-
-        [self addValueOrEmpty:dictionary key:@"trackerToken" value:attribution.trackerToken];
-        [self addValueOrEmpty:dictionary key:@"trackerName" value:attribution.trackerName];
-        [self addValueOrEmpty:dictionary key:@"network" value:attribution.network];
-        [self addValueOrEmpty:dictionary key:@"campaign" value:attribution.campaign];
-        [self addValueOrEmpty:dictionary key:@"creative" value:attribution.creative];
-        [self addValueOrEmpty:dictionary key:@"adgroup" value:attribution.adgroup];
-        [self addValueOrEmpty:dictionary key:@"clickLabel" value:attribution.clickLabel];
-        [self addValueOrEmpty:dictionary key:@"costType" value:attribution.costType];
-        [self addValueOrEmpty:dictionary key:@"costAmount" value:attribution.costAmount];
-        [self addValueOrEmpty:dictionary key:@"costCurrency" value:attribution.costCurrency];
-        if (attribution.jsonResponse != nil) {
-            NSData *dataJsonResponse = [NSJSONSerialization dataWithJSONObject:attribution.jsonResponse
-                                                                       options:0 error:nil];
-            NSString *stringJsonResponse = [[NSString alloc] initWithBytes:[dataJsonResponse bytes]
-                                                                    length:[dataJsonResponse length]
-                                                                  encoding:NSUTF8StringEncoding];
-            [self addValueOrEmpty:dictionary key:@"jsonResponse" value:stringJsonResponse];
-        }
-        callback(@[dictionary]);
-    }];
-}
-
-RCT_EXPORT_METHOD(trackThirdPartySharing:(NSDictionary *)dict) {
-    NSNumber *isEnabled = dict[@"isEnabled"];
-    NSArray *granularOptions = dict[@"granularOptions"];
-    NSArray *partnerSharingSettings = dict[@"partnerSharingSettings"];
-
-    // is third party sharing enabled
-    if (isEnabled != nil && [isEnabled isKindOfClass:[NSNull class]]) {
-        isEnabled = nil;
-    }
-
-    ADJThirdPartySharing *adjustThirdPartySharing = [[ADJThirdPartySharing alloc]
-                                                     initWithIsEnabled:isEnabled];
-
-    // granular options
-    if ([self isFieldValid:granularOptions]) {
-        for (int i = 0; i < [granularOptions count]; i += 3) {
-            NSString *partnerName = [granularOptions objectAtIndex:i];
-            NSString *key = [granularOptions objectAtIndex:i+1];
-            NSString *value = [granularOptions objectAtIndex:i+2];
-            [adjustThirdPartySharing addGranularOption:partnerName key:key value:value];
-        }
-    }
-
-    // partner sharing settings
-    if ([self isFieldValid:partnerSharingSettings]) {
-        for (int i = 0; i < [partnerSharingSettings count]; i += 3) {
-            NSString *partnerName = [partnerSharingSettings objectAtIndex:i];
-            NSString *key = [partnerSharingSettings objectAtIndex:i+1];
-            NSString *value = [partnerSharingSettings objectAtIndex:i+2];
-            [adjustThirdPartySharing addPartnerSharingSetting:partnerName key:key value:[value boolValue]];
-        }
-    }
-
-    // track third party sharing
-    [Adjust trackThirdPartySharing:adjustThirdPartySharing];
-}
-
-RCT_EXPORT_METHOD(trackMeasurementConsent:(NSNumber * _Nonnull)measurementConsent) {
-    [Adjust trackMeasurementConsent:[measurementConsent boolValue]];
-}
-
-RCT_EXPORT_METHOD(getLastDeeplink:(RCTResponseSenderBlock)callback) {
-    [Adjust lastDeeplinkWithCompletionHandler:^(NSURL * _Nullable lastDeeplink) {
-        if (nil == lastDeeplink) {
-            callback(@[@""]);
-        } else {
-            callback(@[[lastDeeplink absoluteString]]);
-        }
-    }];
-}
-
 RCT_EXPORT_METHOD(verifyAppStorePurchase:(NSDictionary *)dict callback:(RCTResponseSenderBlock)callback) {
     NSString *productId = dict[@"productId"];
     NSString *transactionId = dict[@"transactionId"];
 
-    ADJAppStorePurchase *purchase = [[ADJAppStorePurchase alloc] initWithTransactionId:transactionId
-                                                                             productId:productId];
+    ADJAppStorePurchase *purchase =
+    [[ADJAppStorePurchase alloc] initWithTransactionId:transactionId
+                                             productId:productId];
 
     // verify purchase
     [Adjust verifyAppStorePurchase:purchase
@@ -669,9 +670,15 @@ RCT_EXPORT_METHOD(verifyAppStorePurchase:(NSDictionary *)dict callback:(RCTRespo
             return;
         }
 
-        [self addValueOrEmpty:dictionary key:@"verificationStatus" value:verificationResult.verificationStatus];
-        [self addValueOrEmpty:dictionary key:@"code" value:[NSString stringWithFormat:@"%d", verificationResult.code]];
-        [self addValueOrEmpty:dictionary key:@"message" value:verificationResult.message];
+        [self addValueOrEmpty:dictionary
+                          key:@"verificationStatus"
+                        value:verificationResult.verificationStatus];
+        [self addValueOrEmpty:dictionary
+                          key:@"code"
+                        value:[NSString stringWithFormat:@"%d", verificationResult.code]];
+        [self addValueOrEmpty:dictionary
+                          key:@"message"
+                        value:verificationResult.message];
 
         callback(@[dictionary]);
     }];
@@ -742,62 +749,81 @@ RCT_EXPORT_METHOD(verifyAndTrackAppStorePurchase:(NSDictionary *)dict callback:(
             return;
         }
 
-        [self addValueOrEmpty:dictionary key:@"verificationStatus" value:verificationResult.verificationStatus];
-        [self addValueOrEmpty:dictionary key:@"code" value:[NSString stringWithFormat:@"%d", verificationResult.code]];
-        [self addValueOrEmpty:dictionary key:@"message" value:verificationResult.message];
+        [self addValueOrEmpty:dictionary
+                          key:@"verificationStatus"
+                        value:verificationResult.verificationStatus];
+        [self addValueOrEmpty:dictionary
+                          key:@"code"
+                        value:[NSString stringWithFormat:@"%d", verificationResult.code]];
+        [self addValueOrEmpty:dictionary
+                          key:@"message"
+                        value:verificationResult.message];
         callback(@[dictionary]);
     }];
 }
 
-RCT_EXPORT_METHOD(processAndResolveDeeplink:(NSDictionary *)dict callback:(RCTResponseSenderBlock)callback) {
-    NSString *deeplink = dict[@"deeplink"];
-    if (deeplink == nil) {
-        return;
-    }
+RCT_EXPORT_METHOD(requestAppTrackingAuthorization:(RCTResponseSenderBlock)callback) {
+    [Adjust requestAppTrackingAuthorizationWithCompletionHandler:^(NSUInteger status) {
+        callback(@[@(status)]);
+    }];
+}
 
-    NSURL *urlDeeplink = [NSURL URLWithString:deeplink];
-    ADJDeeplink *adjustDeeplink = [[ADJDeeplink alloc] initWithDeeplink:urlDeeplink];
-    if ([self isFieldValid:dict[@"referrer"]]) {
-        NSString *referrer = dict[@"referrer"];
-        NSURL *urlReferrer = [NSURL URLWithString:referrer];
-        [adjustDeeplink setReferrer:urlReferrer];
+RCT_EXPORT_METHOD(updateSkanConversionValue:(NSNumber * _Nonnull)conversionValue
+                                coarseValue:(NSString * _Nonnull)coarseValue
+                                 lockWindow:(NSNumber * _Nonnull)lockWindow
+                              errorCallback:(RCTResponseSenderBlock)callback) {
+    if ([self isFieldValid:conversionValue]) {
+        [Adjust updateSkanConversionValue:[conversionValue intValue]
+                              coarseValue:coarseValue
+                               lockWindow:lockWindow
+                    withCompletionHandler:^(NSError * _Nullable error) {
+            if (nil == error) {
+                callback(@[@""]);
+            } else {
+                callback(@[[error localizedDescription]]);
+            }
+        }];
+    } else {
+        callback(@[@"Invalid conversion value passed."]);
     }
-    // process deeplink
-    [Adjust processAndResolveDeeplink:adjustDeeplink withCompletionHandler:^(NSString * _Nonnull resolvedLink) {
-        if (resolvedLink == nil) {
+}
+
+RCT_EXPORT_METHOD(getIdfa:(RCTResponseSenderBlock)callback) {
+    [Adjust idfaWithCompletionHandler:^(NSString * _Nullable idfa) {
+        if (nil == idfa) {
             callback(@[@""]);
         } else {
-            callback(@[resolvedLink]);
+            callback(@[idfa]);
         }
     }];
 }
 
-RCT_EXPORT_METHOD(setAttributionCallbackImplemented) {
-    _isAttributionCallbackImplemented = YES;
+RCT_EXPORT_METHOD(getIdfv:(RCTResponseSenderBlock)callback) {
+    [Adjust idfvWithCompletionHandler:^(NSString * _Nullable idfv) {
+        if (nil == idfv) {
+            callback(@[@""]);
+        } else {
+            callback(@[idfv]);
+        }
+    }];
 }
 
-RCT_EXPORT_METHOD(setEventTrackingSucceededCallbackImplemented) {
-    _isEventTrackingSucceededCallbackImplemented = YES;
-}
-
-RCT_EXPORT_METHOD(setEventTrackingFailedCallbackImplemented) {
-    _isEventTrackingFailedCallbackImplemented = YES;
-}
-
-RCT_EXPORT_METHOD(setSessionTrackingSucceededCallbackImplemented) {
-    _isSessionTrackingSucceededCallbackImplemented = YES;
-}
-
-RCT_EXPORT_METHOD(setSessionTrackingFailedCallbackImplemented) {
-    _isSessionTrackingFailedCallbackImplemented = YES;
-}
-
-RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackImplemented) {
-    _isDeferredDeeplinkCallbackImplemented = YES;
+RCT_EXPORT_METHOD(getAppTrackingAuthorizationStatus:(RCTResponseSenderBlock)callback) {
+    callback(@[@([Adjust appTrackingAuthorizationStatus])]);
 }
 
 RCT_EXPORT_METHOD(setSkanUpdatedCallbackImplemented) {
     _isSkanUpdatedCallbackImplemented = YES;
+}
+
+#pragma mark - Testing only methods
+
+RCT_EXPORT_METHOD(onResume) {
+    [Adjust trackSubsessionStart];
+}
+
+RCT_EXPORT_METHOD(onPause) {
+    [Adjust trackSubsessionEnd];
 }
 
 RCT_EXPORT_METHOD(setTestOptions:(NSDictionary *)dict) {
@@ -867,14 +893,6 @@ RCT_EXPORT_METHOD(teardown) {
     [AdjustSdkDelegate teardown];
 }
 
-RCT_EXPORT_METHOD(onResume) {
-    [Adjust trackSubsessionStart];
-}
-
-RCT_EXPORT_METHOD(onPause) {
-    [Adjust trackSubsessionEnd];
-}
-
 #pragma mark - Private & helper methods
 
 - (BOOL)isFieldValid:(NSObject *)field {
@@ -906,5 +924,3 @@ RCT_EXPORT_METHOD(onPause) {
 }
 
 @end
-
-

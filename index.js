@@ -791,7 +791,7 @@ var AdjustDeeplink = function(deeplink) {
     this.referrer = null;
 };
 
-AdjustDeeplink.prototype.setReferrer= function(referrer) {
+AdjustDeeplink.prototype.setReferrer = function(referrer) {
     this.referrer = referrer;
 };
 

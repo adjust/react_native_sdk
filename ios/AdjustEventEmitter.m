@@ -2,7 +2,7 @@
 //  AdjustEventEmitter.m
 //  AdjustSdk
 //
-//  Created by Abdullah Obaied (@obaied) on 28th December 2017.
+//  Created by Abdullah Obaied on 28th December 2017.
 //  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
@@ -59,5 +59,3 @@ RCT_EXPORT_MODULE();
 }
 
 @end
-
-

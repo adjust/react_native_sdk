@@ -2,7 +2,7 @@
 //  Adjust.java
 //  Adjust SDK
 //
-//  Created by Abdullah Obaied (@Obaied) on 19th October 2016.
+//  Created by Abdullah Obaied on 19th October 2016.
 //  Copyright (c) 2016-Present Adjust GmbH. All rights reserved.
 //
 
@@ -96,6 +96,8 @@ public class Adjust extends ReactContextBaseJavaModule implements
         return this.isDeferredDeeplinkOpeningEnabled;
     }
 
+    // common methods
+
     @ReactMethod
     public void initSdk(final ReadableMap mapConfig) {
         if (mapConfig == null) {
@@ -120,6 +122,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
         boolean isPlayStoreKidsComplianceEnabled = false;
         boolean isCoppaComplianceEnabled = false;
         boolean isDeviceIdsReadingOnceEnabled = false;
+        boolean isFirstSessionDelayEnabled = false;
         List<Object> urlStrategyDomains = null;
         boolean useSubdomains = false;
         boolean isDataResidency = false;
@@ -190,9 +193,9 @@ public class Adjust extends ReactContextBaseJavaModule implements
             adjustConfig.setExternalDeviceId(externalDeviceId);
         }
 
-         // URL strategy
+        // URL strategy
         if (checkKey(mapConfig, "urlStrategyDomains")
-            && checkKey(mapConfig, "useSubdomains") 
+            && checkKey(mapConfig, "useSubdomains")
             && checkKey(mapConfig, "isDataResidency")) {
             urlStrategyDomains = AdjustUtil.toList(mapConfig.getArray("urlStrategyDomains"));
             if (urlStrategyDomains != null) {
@@ -272,6 +275,32 @@ public class Adjust extends ReactContextBaseJavaModule implements
             }
         }
 
+        // first session delay
+        if (checkKey(mapConfig, "isFirstSessionDelayEnabled")) {
+            isFirstSessionDelayEnabled = mapConfig.getBoolean("isFirstSessionDelayEnabled");
+            if (isFirstSessionDelayEnabled) {
+               adjustConfig.enableFirstSessionDelay();
+            }
+        }
+
+        // store info 
+        if (checkKey(mapConfig, "storeInfo")) {
+            ReadableMap storeInfo = mapConfig.getMap("storeInfo");
+            try {
+                String strStoreInfo = storeInfo.toString();
+                JSONObject storeInfoJson = new JSONObject(strStoreInfo);
+                String storeName = storeInfoJson.optString("storeName", null);
+                if (AdjustUtil.isFieldValid(storeName)) {
+                    AdjustStoreInfo adjustStoreInfo = new AdjustStoreInfo(storeName);
+                    String storeAppId = storeInfoJson.optString("storeAppId", null);
+                    if (AdjustUtil.isFieldValid(storeAppId)) {
+                        adjustStoreInfo.setStoreAppId(storeAppId);
+                    }
+                    adjustConfig.setStoreInfo(adjustStoreInfo);
+                }
+            } catch (JSONException e) {}
+        }
+
         // max number of deduplication IDs
         if (checkKey(mapConfig, "eventDeduplicationIdsMaxSize")) {
             eventDeduplicationIdsMaxSize = mapConfig.getInt("eventDeduplicationIdsMaxSize");
@@ -308,7 +337,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
             adjustConfig.setOnDeferredDeeplinkResponseListener(this);
         }
 
-        // init SDK
+        // initialize SDK
         com.adjust.sdk.Adjust.initSdk(adjustConfig);
     }
 
@@ -413,47 +442,6 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
-    public void enable() {
-        com.adjust.sdk.Adjust.enable();
-    }
-
-    @ReactMethod
-    public void disable() {
-        com.adjust.sdk.Adjust.disable();
-    }
-
-    @ReactMethod
-    public void switchToOfflineMode() {
-        com.adjust.sdk.Adjust.switchToOfflineMode();
-    }
-
-    @ReactMethod
-    public void switchBackToOnlineMode() {
-        com.adjust.sdk.Adjust.switchBackToOnlineMode();
-    }
-
-    @ReactMethod
-    public void setPushToken(final String token) {
-        com.adjust.sdk.Adjust.setPushToken(token, getReactApplicationContext());
-    }
-
-    @ReactMethod
-    public void processDeeplink(final ReadableMap mapDeeplink) {
-        if (mapDeeplink == null) {
-            return;
-        }
-
-        String deeplink = null;
-
-        if (checkKey(mapDeeplink, "deeplink")) {
-            deeplink = mapDeeplink.getString("deeplink");
-        }
-
-        final Uri uri = Uri.parse(deeplink);
-        com.adjust.sdk.Adjust.processDeeplink(new AdjustDeeplink(uri), getReactApplicationContext());
-    }
-
-    @ReactMethod
     public void trackAdRevenue(final ReadableMap mapAdRevenue) {
         if (mapAdRevenue == null) {
             return;
@@ -542,6 +530,275 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
+    public void trackThirdPartySharing(final ReadableMap mapThirdPartySharing) {
+        if (mapThirdPartySharing == null) {
+            return;
+        }
+
+        Boolean isEnabled = null;
+        List<Object> granularOptions = null;
+        List<Object> partnerSharingSettings = null;
+
+        // is third party sharing enabled
+        if (checkKey(mapThirdPartySharing, "isEnabled")) {
+            isEnabled = mapThirdPartySharing.getBoolean("isEnabled");
+        }
+
+        final AdjustThirdPartySharing thirdPartySharing = new AdjustThirdPartySharing(isEnabled);
+
+        // granular options
+        if (checkKey(mapThirdPartySharing, "granularOptions")) {
+            granularOptions = AdjustUtil.toList(mapThirdPartySharing.getArray("granularOptions"));
+            if (null != granularOptions) {
+                for (int i = 0; i < granularOptions.size(); i += 3) {
+                    thirdPartySharing.addGranularOption(
+                        granularOptions.get(i).toString(),
+                        granularOptions.get(i+1).toString(),
+                        granularOptions.get(i+2).toString());
+                }
+            }
+        }
+
+        // partner sharing settings
+        if (checkKey(mapThirdPartySharing, "partnerSharingSettings")) {
+            partnerSharingSettings = AdjustUtil.toList(mapThirdPartySharing.getArray("partnerSharingSettings"));
+            if (null != partnerSharingSettings) {
+                for (int i = 0; i < partnerSharingSettings.size(); i += 3) {
+                    thirdPartySharing.addPartnerSharingSetting(
+                        partnerSharingSettings.get(i).toString(),
+                        partnerSharingSettings.get(i+1).toString(),
+                        Boolean.parseBoolean(partnerSharingSettings.get(i+2).toString()));
+                }
+            }
+        }
+
+        // track third party sharing
+        com.adjust.sdk.Adjust.trackThirdPartySharing(thirdPartySharing);
+    }
+
+    @ReactMethod
+    public void trackMeasurementConsent(final boolean measurementConsent) {
+        com.adjust.sdk.Adjust.trackMeasurementConsent(measurementConsent);
+    }
+
+    @ReactMethod
+    public void processDeeplink(final ReadableMap mapDeeplink) {
+        if (mapDeeplink == null) {
+            return;
+        }
+        if (!checkKey(mapDeeplink, "deeplink")) {
+            return;
+        }
+
+        String deeplink = mapDeeplink.getString("deeplink");
+        AdjustDeeplink adjustDeeplink = new AdjustDeeplink(Uri.parse(deeplink));
+        if (checkKey(mapDeeplink, "referrer")) {
+            String referrer = mapDeeplink.getString("referrer");
+            adjustDeeplink.setReferrer(Uri.parse(referrer));
+        }
+
+        com.adjust.sdk.Adjust.processDeeplink(adjustDeeplink, getReactApplicationContext());
+    }
+
+    @ReactMethod
+    public void processAndResolveDeeplink(final ReadableMap mapDeeplink, final Callback callback) {
+        if (mapDeeplink == null) {
+            return;
+        }
+        if (!checkKey(mapDeeplink, "deeplink")) {
+            return;
+        }
+
+        String deeplink = mapDeeplink.getString("deeplink");
+        AdjustDeeplink adjustDeeplink = new AdjustDeeplink(Uri.parse(deeplink));
+        if (checkKey(mapDeeplink, "referrer")) {
+            String referrer = mapDeeplink.getString("referrer");
+            adjustDeeplink.setReferrer(Uri.parse(referrer));
+        }
+
+        com.adjust.sdk.Adjust.processAndResolveDeeplink(
+            adjustDeeplink,
+            getReactApplicationContext(),
+            new OnDeeplinkResolvedListener() {
+            @Override
+            public void onDeeplinkResolved(String resolvedLink) {
+                callback.invoke(resolvedLink);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void setPushToken(final String token) {
+        com.adjust.sdk.Adjust.setPushToken(token, getReactApplicationContext());
+    }
+
+    @ReactMethod
+    public void gdprForgetMe() {
+        com.adjust.sdk.Adjust.gdprForgetMe(getReactApplicationContext());
+    }
+
+    @ReactMethod
+    public void enable() {
+        com.adjust.sdk.Adjust.enable();
+    }
+
+    @ReactMethod
+    public void disable() {
+        com.adjust.sdk.Adjust.disable();
+    }
+
+    @ReactMethod
+    public void switchToOfflineMode() {
+        com.adjust.sdk.Adjust.switchToOfflineMode();
+    }
+
+    @ReactMethod
+    public void switchBackToOnlineMode() {
+        com.adjust.sdk.Adjust.switchBackToOnlineMode();
+    }
+
+    @ReactMethod
+    public void addGlobalCallbackParameter(final String key, final String value) {
+        com.adjust.sdk.Adjust.addGlobalCallbackParameter(key, value);
+    }
+
+    @ReactMethod
+    public void addGlobalPartnerParameter(final String key, final String value) {
+        com.adjust.sdk.Adjust.addGlobalPartnerParameter(key, value);
+    }
+
+    @ReactMethod
+    public void removeGlobalCallbackParameter(final String key) {
+        com.adjust.sdk.Adjust.removeGlobalCallbackParameter(key);
+    }
+
+    @ReactMethod
+    public void removeGlobalPartnerParameter(final String key) {
+        com.adjust.sdk.Adjust.removeGlobalPartnerParameter(key);
+    }
+
+    @ReactMethod
+    public void removeGlobalCallbackParameters() {
+        com.adjust.sdk.Adjust.removeGlobalCallbackParameters();
+    }
+
+    @ReactMethod
+    public void removeGlobalPartnerParameters() {
+        com.adjust.sdk.Adjust.removeGlobalPartnerParameters();
+    }
+
+    @ReactMethod
+    public void endFirstSessionDelay() {
+        com.adjust.sdk.Adjust.endFirstSessionDelay();
+    }
+
+    @ReactMethod
+    public void enableCoppaComplianceInDelay() {
+        com.adjust.sdk.Adjust.enableCoppaComplianceInDelay();
+    }
+
+    @ReactMethod
+    public void disableCoppaComplianceInDelay() {
+        com.adjust.sdk.Adjust.disableCoppaComplianceInDelay();
+    }
+
+    @ReactMethod
+    public void setExternalDeviceIdInDelay(final String externalDeviceId) {
+        com.adjust.sdk.Adjust.setExternalDeviceIdInDelay(externalDeviceId);
+    }
+
+    @ReactMethod
+    public void isEnabled(final Callback callback) {
+        com.adjust.sdk.Adjust.isEnabled(
+            getReactApplicationContext(),
+            new com.adjust.sdk.OnIsEnabledListener() {
+            @Override
+            public void onIsEnabledRead(boolean isEnabled) {
+                callback.invoke(isEnabled);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void getAttribution(final Callback callback) {
+        com.adjust.sdk.Adjust.getAttribution(new com.adjust.sdk.OnAttributionReadListener() {
+            @Override
+            public void onAttributionRead(AdjustAttribution attribution) {
+                callback.invoke(AdjustUtil.attributionToMap(attribution));
+            }
+        });
+    }
+
+    @ReactMethod
+    public void getAdid(final Callback callback) {
+        com.adjust.sdk.Adjust.getAdid(new com.adjust.sdk.OnAdidReadListener() {
+            @Override
+            public void onAdidRead(String adid) {
+                callback.invoke(adid);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void getLastDeeplink(final Callback callback) {
+        com.adjust.sdk.Adjust.getLastDeeplink(
+            getReactApplicationContext(),
+            new OnLastDeeplinkReadListener() {
+            @Override
+            public void onLastDeeplinkRead(Uri uri) {
+                String strUri = (uri != null) ? uri.toString() : "";
+                callback.invoke(strUri);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void getSdkVersion(final String sdkPrefix, final Callback callback) {
+        com.adjust.sdk.Adjust.getSdkVersion(new com.adjust.sdk.OnSdkVersionReadListener() {
+            @Override
+            public void onSdkVersionRead(String sdkVersion) {
+                if (sdkVersion == null) {
+                    callback.invoke("");
+                } else {
+                    callback.invoke(sdkPrefix + "@" + sdkVersion);
+                }
+            }
+        });
+    }
+
+    @ReactMethod
+    public void setAttributionCallbackImplemented() {
+        this.isAttributionCallbackImplemented = true;
+    }
+
+    @ReactMethod
+    public void setEventTrackingSucceededCallbackImplemented() {
+        this.isEventTrackingSucceededCallbackImplemented = true;
+    }
+
+    @ReactMethod
+    public void setEventTrackingFailedCallbackImplemented() {
+        this.isEventTrackingFailedCallbackImplemented = true;
+    }
+
+    @ReactMethod
+    public void setSessionTrackingSucceededCallbackImplemented() {
+        this.isSessionTrackingSucceededCallbackImplemented = true;
+    }
+
+    @ReactMethod
+    public void setSessionTrackingFailedCallbackImplemented() {
+        this.isSessionTrackingFailedCallbackImplemented = true;
+    }
+
+    @ReactMethod
+    public void setDeferredDeeplinkCallbackImplemented() {
+        this.isDeferredDeeplinkCallbackImplemented = true;
+    }
+    
+    // android only methods
+
+    @ReactMethod
     public void trackPlayStoreSubscription(final ReadableMap mapEvent) {
         if (mapEvent == null) {
             return;
@@ -627,163 +884,6 @@ public class Adjust extends ReactContextBaseJavaModule implements
 
         // track subscription
         com.adjust.sdk.Adjust.trackPlayStoreSubscription(subscription);
-    }
-
-    @ReactMethod
-    public void addGlobalCallbackParameter(final String key, final String value) {
-        com.adjust.sdk.Adjust.addGlobalCallbackParameter(key, value);
-    }
-
-    @ReactMethod
-    public void addGlobalPartnerParameter(final String key, final String value) {
-        com.adjust.sdk.Adjust.addGlobalPartnerParameter(key, value);
-    }
-
-    @ReactMethod
-    public void removeGlobalCallbackParameter(final String key) {
-        com.adjust.sdk.Adjust.removeGlobalCallbackParameter(key);
-    }
-
-    @ReactMethod
-    public void removeGlobalPartnerParameter(final String key) {
-        com.adjust.sdk.Adjust.removeGlobalPartnerParameter(key);
-    }
-
-    @ReactMethod
-    public void removeGlobalCallbackParameters() {
-        com.adjust.sdk.Adjust.removeGlobalCallbackParameters();
-    }
-
-    @ReactMethod
-    public void removeGlobalPartnerParameters() {
-        com.adjust.sdk.Adjust.removeGlobalPartnerParameters();
-    }
-
-    @ReactMethod
-    public void gdprForgetMe() {
-        com.adjust.sdk.Adjust.gdprForgetMe(getReactApplicationContext());
-    }
-
-    @ReactMethod
-    public void getAdid(final Callback callback) {
-        com.adjust.sdk.Adjust.getAdid(new com.adjust.sdk.OnAdidReadListener() {
-            @Override
-            public void onAdidRead(String adid) {
-                callback.invoke(adid);
-            }
-        });
-    }
-
-    @ReactMethod
-    public void getGoogleAdId(final Callback callback) {
-        com.adjust.sdk.Adjust.getGoogleAdId(
-            getReactApplicationContext(),
-            new com.adjust.sdk.OnGoogleAdIdReadListener() {
-            @Override
-            public void onGoogleAdIdRead(String googleAdId) {
-                callback.invoke(googleAdId);
-            }
-        });
-    }
-
-    @ReactMethod
-    public void getAmazonAdId(final Callback callback) {
-        com.adjust.sdk.Adjust.getAmazonAdId(
-            getReactApplicationContext(),
-            new com.adjust.sdk.OnAmazonAdIdReadListener() {
-            @Override
-            public void onAmazonAdIdRead(String amazonAdId) {
-                callback.invoke(amazonAdId);
-            }
-        });
-    }
-
-    @ReactMethod
-    public void getAttribution(final Callback callback) {
-        com.adjust.sdk.Adjust.getAttribution(new com.adjust.sdk.OnAttributionReadListener() {
-            @Override
-            public void onAttributionRead(AdjustAttribution attribution) {
-                callback.invoke(AdjustUtil.attributionToMap(attribution));
-            }
-        });
-    }
-
-    @ReactMethod
-    public void isEnabled(final Callback callback) {
-        com.adjust.sdk.Adjust.isEnabled(
-            getReactApplicationContext(),
-            new com.adjust.sdk.OnIsEnabledListener() {
-            @Override
-            public void onIsEnabledRead(boolean isEnabled) {
-                callback.invoke(isEnabled);
-            }
-        });
-    }
-
-    @ReactMethod
-    public void getSdkVersion(final String sdkPrefix, final Callback callback) {
-        com.adjust.sdk.Adjust.getSdkVersion(new com.adjust.sdk.OnSdkVersionReadListener() {
-            @Override
-            public void onSdkVersionRead(String sdkVersion) {
-                if (sdkVersion == null) {
-                    callback.invoke("");
-                } else {
-                    callback.invoke(sdkPrefix + "@" + sdkVersion);
-                }
-            }
-        });
-    }
-
-    @ReactMethod
-    public void trackThirdPartySharing(final ReadableMap mapThirdPartySharing) {
-        if (mapThirdPartySharing == null) {
-            return;
-        }
-
-        Boolean isEnabled = null;
-        List<Object> granularOptions = null;
-        List<Object> partnerSharingSettings = null;
-
-        // is third party sharing enabled
-        if (checkKey(mapThirdPartySharing, "isEnabled")) {
-            isEnabled = mapThirdPartySharing.getBoolean("isEnabled");
-        }
-
-        final AdjustThirdPartySharing thirdPartySharing = new AdjustThirdPartySharing(isEnabled);
-
-        // granular options
-        if (checkKey(mapThirdPartySharing, "granularOptions")) {
-            granularOptions = AdjustUtil.toList(mapThirdPartySharing.getArray("granularOptions"));
-            if (null != granularOptions) {
-                for (int i = 0; i < granularOptions.size(); i += 3) {
-                    thirdPartySharing.addGranularOption(
-                        granularOptions.get(i).toString(),
-                        granularOptions.get(i+1).toString(),
-                        granularOptions.get(i+2).toString());
-                }
-            }
-        }
-
-        // partner sharing settings
-        if (checkKey(mapThirdPartySharing, "partnerSharingSettings")) {
-            partnerSharingSettings = AdjustUtil.toList(mapThirdPartySharing.getArray("partnerSharingSettings"));
-            if (null != partnerSharingSettings) {
-                for (int i = 0; i < partnerSharingSettings.size(); i += 3) {
-                    thirdPartySharing.addPartnerSharingSetting(
-                        partnerSharingSettings.get(i).toString(),
-                        partnerSharingSettings.get(i+1).toString(),
-                        Boolean.parseBoolean(partnerSharingSettings.get(i+2).toString()));
-                }
-            }
-        }
-
-        // track third party sharing
-        com.adjust.sdk.Adjust.trackThirdPartySharing(thirdPartySharing);
-    }
-
-    @ReactMethod
-    public void trackMeasurementConsent(final boolean measurementConsent) {
-        com.adjust.sdk.Adjust.trackMeasurementConsent(measurementConsent);
     }
 
     @ReactMethod
@@ -952,82 +1052,49 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
-    public void processAndResolveDeeplink(final ReadableMap mapDeeplink, final Callback callback) {
-        if (mapDeeplink == null) {
-            return;
-        }
+    public void enablePlayStoreKidsComplianceInDelay() {
+        com.adjust.sdk.Adjust.enablePlayStoreKidsComplianceInDelay();
+    }
 
-        String deeplink = null;
+    @ReactMethod
+    public void disablePlayStoreKidsComplianceInDelay() {
+        com.adjust.sdk.Adjust.disablePlayStoreKidsComplianceInDelay();
+    }
 
-        if (checkKey(mapDeeplink, "deeplink")) {
-            deeplink = mapDeeplink.getString("deeplink");
-        }
-
-        final Uri uri = Uri.parse(deeplink);
-
-        // process and resolve deeplink
-        com.adjust.sdk.Adjust.processAndResolveDeeplink(
-            new AdjustDeeplink(uri),
+    @ReactMethod
+    public void getGoogleAdId(final Callback callback) {
+        com.adjust.sdk.Adjust.getGoogleAdId(
             getReactApplicationContext(),
-            new OnDeeplinkResolvedListener() {
+            new com.adjust.sdk.OnGoogleAdIdReadListener() {
             @Override
-            public void onDeeplinkResolved(String resolvedLink) {
-                callback.invoke(resolvedLink);
+            public void onGoogleAdIdRead(String googleAdId) {
+                callback.invoke(googleAdId);
             }
         });
     }
 
     @ReactMethod
-    public void getLastDeeplink(final Callback callback) {
-        com.adjust.sdk.Adjust.getLastDeeplink(
+    public void getAmazonAdId(final Callback callback) {
+        com.adjust.sdk.Adjust.getAmazonAdId(
             getReactApplicationContext(),
-            new OnLastDeeplinkReadListener() {
+            new com.adjust.sdk.OnAmazonAdIdReadListener() {
             @Override
-            public void onLastDeeplinkRead(Uri uri) {
-                String strUri = (uri != null) ? uri.toString() : "";
-                callback.invoke(strUri);
+            public void onAmazonAdIdRead(String amazonAdId) {
+                callback.invoke(amazonAdId);
             }
         });
     }
 
+    // testing only
+
     @ReactMethod
-    public void setAttributionCallbackImplemented() {
-        this.isAttributionCallbackImplemented = true;
+    public void onResume() {
+        com.adjust.sdk.Adjust.onResume();
     }
 
     @ReactMethod
-    public void setEventTrackingSucceededCallbackImplemented() {
-        this.isEventTrackingSucceededCallbackImplemented = true;
-    }
-
-    @ReactMethod
-    public void setEventTrackingFailedCallbackImplemented() {
-        this.isEventTrackingFailedCallbackImplemented = true;
-    }
-
-    @ReactMethod
-    public void setSessionTrackingSucceededCallbackImplemented() {
-        this.isSessionTrackingSucceededCallbackImplemented = true;
-    }
-
-    @ReactMethod
-    public void setSessionTrackingFailedCallbackImplemented() {
-        this.isSessionTrackingFailedCallbackImplemented = true;
-    }
-
-    @ReactMethod
-    public void setDeferredDeeplinkCallbackImplemented() {
-        this.isDeferredDeeplinkCallbackImplemented = true;
-    }
-
-    @ReactMethod
-    public void teardown() {
-        this.isAttributionCallbackImplemented = false;
-        this.isEventTrackingSucceededCallbackImplemented = false;
-        this.isEventTrackingFailedCallbackImplemented = false;
-        this.isSessionTrackingSucceededCallbackImplemented = false;
-        this.isSessionTrackingFailedCallbackImplemented = false;
-        this.isDeferredDeeplinkCallbackImplemented = false;
+    public void onPause() {
+        com.adjust.sdk.Adjust.onPause();
     }
 
     @ReactMethod
@@ -1069,10 +1136,6 @@ public class Adjust extends ReactContextBaseJavaModule implements
             String value = mapTest.getString("purchaseVerificationPath");
             testOptions.purchaseVerificationPath = value;
         }
-        // if (checkKey(mapTest, "useTestConnectionOptions")) {
-        //     boolean value = mapTest.getBoolean("useTestConnectionOptions");
-        //     testOptions.useTestConnectionOptions = value;
-        // }
         if (checkKey(mapTest, "timerIntervalInMilliseconds")) {
             try {
                 Long value = Long.parseLong(mapTest.getString("timerIntervalInMilliseconds"));
@@ -1132,14 +1195,16 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
-    public void onResume() {
-        com.adjust.sdk.Adjust.onResume();
+    public void teardown() {
+        this.isAttributionCallbackImplemented = false;
+        this.isEventTrackingSucceededCallbackImplemented = false;
+        this.isEventTrackingFailedCallbackImplemented = false;
+        this.isSessionTrackingSucceededCallbackImplemented = false;
+        this.isSessionTrackingFailedCallbackImplemented = false;
+        this.isDeferredDeeplinkCallbackImplemented = false;
     }
 
-    @ReactMethod
-    public void onPause() {
-        com.adjust.sdk.Adjust.onPause();
-    }
+    // private & helper methods
 
     private void sendEvent(
         final ReactContext reactContext,

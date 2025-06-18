@@ -2,7 +2,7 @@
 //  AdjustSdkDelegate.m
 //  AdjustSdk
 //
-//  Created by Abdullah Obaied (@obaied) on 17th November 2016.
+//  Created by Abdullah Obaied on 17th November 2016.
 //  Copyright © 2016-Present Adjust GmbH. All rights reserved.
 //
 
@@ -11,7 +11,7 @@
 
 #if __has_include(<React/RCTAssert.h>)
 #import <React/RCTEventDispatcher.h>
-#else // back compatibility for RN version < 0.40
+#else // backwards compatibility for RN version < 0.40
 #import "RCTEventDispatcher.h"
 #endif
 
@@ -38,12 +38,12 @@ static AdjustSdkDelegate *defaultInstance = nil;
                          sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
-                skanUpdatedCallback:(BOOL)swizzleSkanUpdatedCallback
+                              skanUpdatedCallback:(BOOL)swizzleSkanUpdatedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
     dispatch_once(&onceToken, ^{
         defaultInstance = [[AdjustSdkDelegate alloc] init];
 
-        // Do the swizzling where and if needed.
+        // do the swizzling where and if needed
         if (swizzleAttributionCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustAttributionChanged:)
                                   swizzledSelector:@selector(adjustAttributionChangedWannabe:)];
@@ -241,4 +241,3 @@ static AdjustSdkDelegate *defaultInstance = nil;
 }
 
 @end
-

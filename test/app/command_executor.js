@@ -13,7 +13,8 @@ import {
     AdjustAdRevenue,
     AdjustAppStorePurchase,
     AdjustPlayStorePurchase,
-    AdjustDeeplink
+    AdjustDeeplink,
+    AdjustStoreInfo
 } from 'react-native-adjust';
 import { AdjustTestOptions } from './test_options.js';
 const AdjustSdkTest = NativeModules.AdjustSdkTest;
@@ -139,6 +140,10 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
         case 'processDeeplink': this.processDeeplink(command.params); break;
         case 'attributionGetter': this.attributionGetter(command.params); break;
         case 'getLastDeeplink' : this.getLastDeeplink(command.params); break;
+        case 'endFirstSessionDelay': this.endFirstSessionDelay(command.params); break;
+        case 'coppaComplianceInDelay': this.coppaComplianceInDelay(command.params); break;
+        case 'playStoreKidsComplianceInDelay': this.playStoreKidsComplianceInDelay(command.params); break;
+        case 'externalDeviceIdInDelay': this.setExternalDeviceIdInDelay(command.params); break;
     }
 
     this.nextToSendCounter++;
@@ -338,6 +343,13 @@ AdjustCommandExecutor.prototype.config = function(params) {
         }
     }
 
+    if ('allowAttUsage' in params) {
+        var allowAttUsageS = getFirstParameterValue(params, 'allowAttUsage');
+        if (allowAttUsageS != 'true') {
+            adjustConfig.disableAppTrackingTransparencyUsage();
+        }
+    }
+
     if ('allowSkAdNetworkHandling' in params) {
         var allowSkAdNetworkHandlingS = getFirstParameterValue(params, 'allowSkAdNetworkHandling');
         if (allowSkAdNetworkHandlingS != 'true') {
@@ -348,6 +360,25 @@ AdjustCommandExecutor.prototype.config = function(params) {
     if ('externalDeviceId' in params) {
         var externalDeviceId = getFirstParameterValue(params, 'externalDeviceId');
         adjustConfig.setExternalDeviceId(externalDeviceId);
+    }
+
+    if ('firstSessionDelayEnabled' in params) {
+        var firstSessionDelayEnabledS = getFirstParameterValue(params, 'firstSessionDelayEnabled');
+        if (firstSessionDelayEnabledS == 'true') {
+            adjustConfig.enableFirstSessionDelay();
+        }
+    }
+
+    if ('storeName' in params) {
+        var storeInfo;
+        var storeName = getFirstParameterValue(params, 'storeName');
+        storeInfo = new AdjustStoreInfo(storeName);
+
+        if ('storeAppId' in params) {
+            var storeAppId = getFirstParameterValue(params, 'storeAppId');
+            storeInfo.setStoreAppId(storeAppId);
+        }
+        adjustConfig.setStoreInfo(storeInfo);
     }
 
     if ('attributionCallbackSendAll' in params) {
@@ -686,7 +717,12 @@ AdjustCommandExecutor.prototype.setPushToken = function(params) {
 
 AdjustCommandExecutor.prototype.openDeeplink = function(params) {
     var deeplink = getFirstParameterValue(params, 'deeplink');
-    Adjust.processDeeplink(new AdjustDeeplink(deeplink));
+    var adjustDeeplink = new AdjustDeeplink(deeplink);
+    var referrer = getFirstParameterValue(params, 'referrer');
+    if (typeof referrer === 'string') {
+        adjustDeeplink.setReferrer(referrer);
+    }
+    Adjust.processDeeplink(adjustDeeplink);
 };
 
 AdjustCommandExecutor.prototype.gdprForgetMe = function(params) {
@@ -970,11 +1006,57 @@ AdjustCommandExecutor.prototype.verifyTrack = function(params) {
 
 AdjustCommandExecutor.prototype.processDeeplink = function(params) {
     var deeplink = getFirstParameterValue(params, 'deeplink');
+    var adjustDeeplink = new AdjustDeeplink(deeplink);
+    var referrer = getFirstParameterValue(params, 'referrer');
+    if (typeof referrer === 'string') {
+        adjustDeeplink.setReferrer(referrer);
+    }
     var _this = this;
-    Adjust.processAndResolveDeeplink(new AdjustDeeplink(deeplink), function(resolvedLink) {
+    Adjust.processAndResolveDeeplink(adjustDeeplink, function(resolvedLink) {
         AdjustSdkTest.addInfoToSend('resolved_link', resolvedLink);
         AdjustSdkTest.sendInfoToServer(_this.extraPath);
     });
+};
+
+AdjustCommandExecutor.prototype.coppaComplianceInDelay = function(params) {
+    if (getFirstParameterValue(params, 'isEnabled') == 'true') {
+        Adjust.enableCoppaComplianceInDelay();
+    } else {
+        Adjust.disableCoppaComplianceInDelay();
+    }
+};
+
+AdjustCommandExecutor.prototype.enableCoppaComplianceInDelay = function() {
+    Adjust.enableCoppaComplianceInDelay();
+};
+
+AdjustCommandExecutor.prototype.disableCoppaComplianceInDelay = function() {
+    Adjust.disableCoppaComplianceInDelay();
+};
+
+AdjustCommandExecutor.prototype.playStoreKidsComplianceInDelay = function(params) {
+    if (getFirstParameterValue(params, 'isEnabled') == 'true') {
+        Adjust.enablePlayStoreKidsComplianceInDelay();
+    } else {
+        Adjust.disablePlayStoreKidsComplianceInDelay();
+    }
+};
+
+AdjustCommandExecutor.prototype.enablePlayStoreKidsComplianceInDelay = function() {
+    Adjust.enablePlayStoreKidsComplianceInDelay();
+};
+
+AdjustCommandExecutor.prototype.disablePlayStoreKidsComplianceInDelay = function() {
+    Adjust.disablePlayStoreKidsComplianceInDelay();
+};
+
+AdjustCommandExecutor.prototype.endFirstSessionDelay = function() {
+    Adjust.endFirstSessionDelay();
+};
+
+AdjustCommandExecutor.prototype.setExternalDeviceIdInDelay = function(params) {
+    var externalDeviceId = getFirstParameterValue(params, 'externalDeviceId');
+    Adjust.setExternalDeviceIdInDelay(externalDeviceId);
 };
 
 AdjustCommandExecutor.prototype.attributionGetter = function(params) {

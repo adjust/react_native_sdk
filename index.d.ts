@@ -83,15 +83,18 @@ declare module 'react-native-adjust' {
     public enablePlayStoreKidsCompliance(): void
     public enableLinkMe(): void
     public enablePreinstallTracking(): void
+    public enableFirstSessionDelay(): void
     public setPreinstallFilePath(preinstallFilePath: string): void
     public setFbAppId(fbAppId: string): void
     public disableAdServices(): void
     public disableIdfaReading(): void
     public disableIdfvReading(): void
     public disableSkanAttribution(): void
+    public disableAppTrackingTransparencyUsage(): void
     public setEventDeduplicationIdsMaxSize(eventDeduplicationIdsMaxSize: number): void
     public setAttConsentWaitingInterval(attConsentWaitingInterval: number): void
     public setUrlStrategy(urlStrategyDomains: string[], useSubdomains: boolean, isDataResidency: boolean): void
+    public setStoreInfo(storeInfo: AdjustStoreInfo): void
 
     public setAttributionCallback(
       callback: (attribution: AdjustAttribution) => void
@@ -192,6 +195,12 @@ declare module 'react-native-adjust' {
 
   export class AdjustDeeplink {
     constructor(deeplink: string)
+    public setReferrer(referrer: string): void
+  }
+
+  export class AdjustStoreInfo {
+    constructor(storeName: string)
+    public setStoreAppId(storeAppId: string): void
   }
 
   export const Adjust: {
@@ -233,5 +242,11 @@ declare module 'react-native-adjust' {
     verifyPlayStorePurchase: (purchase: AdjustPlayStorePurchase, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
     verifyAndTrackPlayStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
     processAndResolveDeeplink: (adjustDeeplink: AdjustDeeplink, callback: (resolvedLink: string) => void) => void
+    endFirstSessionDelay: () => void
+    enableCoppaComplianceInDelay: () => void
+    disableCoppaComplianceInDelay: () => void
+    enablePlayStoreKidsComplianceInDelay: () => void
+    disablePlayStoreKidsComplianceInDelay: () => void
+    setExternalDeviceIdInDelay:(externalDeviceId: string) => void
   }
 }

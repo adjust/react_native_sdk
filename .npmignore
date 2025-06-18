@@ -9,10 +9,11 @@ node_modules
 /android/build
 /ios/**/*xcuserdata*
 /ios/**/*xcshareddata*
+.gitmodules
 
 # Adjust SDK
 ext/
 example/
 test/
 plugins/
-docs/
+

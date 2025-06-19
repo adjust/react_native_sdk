@@ -226,7 +226,7 @@ declare module 'react-native-adjust' {
     gdprForgetMe: () => void
     getIdfa: (callback: (idfa: string) => void) => void
     getIdfv: (callback: (idfv: string) => void) => void
-    getGoogleAdId: (callback: (adid: string) => void) => void
+    getGoogleAdId: (callback: (adid: string | null) => void) => void
     getAdid: (callback: (adid: string) => void) => void
     getAttribution: (callback: (attribution: AdjustAttribution) => void) => void
     getAmazonAdId: (callback: (adid: string) => void) => void

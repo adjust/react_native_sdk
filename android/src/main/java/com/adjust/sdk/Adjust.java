@@ -740,6 +740,33 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
+    public void resolveLinkWithUrl(final String url, final ReadableArray resolveUrlSuffixArray, final Callback callback) {
+        if (url == null || callback == null) {
+            return;
+        }
+
+        String[] suffixArray = null;
+        if (resolveUrlSuffixArray != null) {
+            suffixArray = new String[resolveUrlSuffixArray.size()];
+            for (int i = 0; i < resolveUrlSuffixArray.size(); i++) {
+                suffixArray[i] = resolveUrlSuffixArray.getString(i);
+            }
+        }
+
+        com.adjust.sdk.AdjustLinkResolution.resolveLink(
+            url,
+            suffixArray,
+            new com.adjust.sdk.AdjustLinkResolution.AdjustLinkResolutionCallback() {
+                @Override
+                public void resolvedLinkCallback(Uri resolvedLink) {
+                    String resolvedUrl = resolvedLink != null ? resolvedLink.toString() : "";
+                    callback.invoke(resolvedUrl);
+                }
+            }
+        );
+    }
+
+    @ReactMethod
     public void getLastDeeplink(final Callback callback) {
         com.adjust.sdk.Adjust.getLastDeeplink(
             getReactApplicationContext(),

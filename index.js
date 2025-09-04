@@ -149,6 +149,10 @@ Adjust.getAdid = function(callback) {
     module_adjust.getAdid(callback);
 };
 
+Adjust.resolveLinkWithUrl = function(url, resolveUrlSuffixArray, callback) {
+    module_adjust.resolveLinkWithUrl(url, resolveUrlSuffixArray, callback);
+};
+
 Adjust.getLastDeeplink = function(callback) {
     module_adjust.getLastDeeplink(callback);
 };

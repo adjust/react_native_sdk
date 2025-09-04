@@ -553,6 +553,26 @@ RCT_EXPORT_METHOD(getAdid:(RCTResponseSenderBlock)callback) {
     }];
 }
 
+RCT_EXPORT_METHOD(resolveLinkWithUrl:(NSString *)url resolveUrlSuffixArray:(NSArray *)resolveUrlSuffixArray callback:(RCTResponseSenderBlock)callback) {
+    NSURL *nsUrl;
+    if ([NSString instancesRespondToSelector:@selector(stringByAddingPercentEncodingWithAllowedCharacters:)]) {
+        nsUrl = [NSURL URLWithString:[url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
+    } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        nsUrl = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+#pragma clang diagnostic pop
+    }
+
+    [ADJLinkResolution resolveLinkWithUrl:nsUrl resolveUrlSuffixArray:resolveUrlSuffixArray callback:^(NSURL *resolvedLink) {
+        if (resolvedLink == nil) {
+            callback(@[@""]);
+        } else {
+            callback(@[resolvedLink.absoluteString]);
+        }
+    }];
+}
+
 RCT_EXPORT_METHOD(getLastDeeplink:(RCTResponseSenderBlock)callback) {
     [Adjust lastDeeplinkWithCompletionHandler:^(NSURL * _Nullable lastDeeplink) {
         if (nil == lastDeeplink) {

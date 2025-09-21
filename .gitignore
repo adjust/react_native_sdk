@@ -101,6 +101,7 @@ temp/
 
 # yarn
 yarn.lock
+node_modules
 
 #example
 example/.yarn

@@ -38,6 +38,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
                          sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
+                            remoteTriggerCallback:(BOOL)swizzleRemoteTriggerCallback
                               skanUpdatedCallback:(BOOL)swizzleSkanUpdatedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
     dispatch_once(&onceToken, ^{
@@ -67,6 +68,10 @@ static AdjustSdkDelegate *defaultInstance = nil;
         if (swizzleDeferredDeeplinkCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustDeferredDeeplinkReceived:)
                                   swizzledSelector:@selector(adjustDeferredDeeplinkReceivedWannabe:)];
+        }
+        if (swizzleRemoteTriggerCallback) {
+            [defaultInstance swizzleCallbackMethod:@selector(adjustRemoteTriggerReceived:)
+                                  swizzledSelector:@selector(adjustRemoteTriggerReceivedWannabe:)];
         }
         if (swizzleSkanUpdatedCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustSkanUpdatedWithConversionData:)
@@ -201,6 +206,16 @@ static AdjustSdkDelegate *defaultInstance = nil;
     return _shouldLaunchDeferredDeeplink;
 }
 
+- (void)adjustRemoteTriggerReceivedWannabe:(ADJRemoteTrigger *)remoteTrigger {
+    if (nil == remoteTrigger) {
+        return;
+    }
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    [self addValueOrEmpty:dictionary key:@"label" value:[remoteTrigger label]];
+    [self addObjectOrEmpty:dictionary key:@"payload" value:[remoteTrigger payload]];
+    [AdjustEventEmitter dispatchEvent:@"adjust_remoteTriggerReceived" withDictionary:dictionary];
+}
+
 - (void)adjustSkanUpdatedWithConversionDataWannabe:(nonnull NSDictionary<NSString *, NSString *> *)data {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [self addValueOrEmpty:dictionary key:@"conversionValue" value:data[@"conversion_value"]];
@@ -237,6 +252,16 @@ static AdjustSdkDelegate *defaultInstance = nil;
         [dictionary setObject:[NSString stringWithFormat:@"%@", value] forKey:key];
     } else {
         [dictionary setObject:@"" forKey:key];
+    }
+}
+
+- (void)addObjectOrEmpty:(NSMutableDictionary *)dictionary
+                     key:(NSString *)key
+                   value:(NSObject *)value {
+    if (nil != value) {
+        [dictionary setObject:value forKey:key];
+    } else {
+        [dictionary setObject:@{} forKey:key];
     }
 }
 

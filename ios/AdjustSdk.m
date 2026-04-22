@@ -20,6 +20,7 @@ BOOL _isEventTrackingFailedCallbackImplemented;
 BOOL _isSessionTrackingSucceededCallbackImplemented;
 BOOL _isSessionTrackingFailedCallbackImplemented;
 BOOL _isDeferredDeeplinkCallbackImplemented;
+BOOL _isRemoteTriggerCallbackImplemented;
 BOOL _isSkanUpdatedCallbackImplemented;
 
 #pragma mark - Common methods
@@ -205,6 +206,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         || _isSessionTrackingSucceededCallbackImplemented
         || _isSessionTrackingFailedCallbackImplemented
         || _isDeferredDeeplinkCallbackImplemented
+        || _isRemoteTriggerCallbackImplemented
         || _isSkanUpdatedCallbackImplemented) {
         [adjustConfig setDelegate:
          [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
@@ -213,6 +215,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
                                                sessionSucceededCallback:_isSessionTrackingSucceededCallbackImplemented
                                                   sessionFailedCallback:_isSessionTrackingFailedCallbackImplemented
                                                deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
+                                                  remoteTriggerCallback:_isRemoteTriggerCallbackImplemented
                                                     skanUpdatedCallback:_isSkanUpdatedCallbackImplemented
                                            shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
     }
@@ -695,6 +698,10 @@ RCT_EXPORT_METHOD(setDeferredDeeplinkCallbackImplemented) {
     _isDeferredDeeplinkCallbackImplemented = YES;
 }
 
+RCT_EXPORT_METHOD(setRemoteTriggerCallbackImplemented) {
+    _isRemoteTriggerCallbackImplemented = YES;
+}
+
 #pragma mark - iOS only methods
 
 RCT_EXPORT_METHOD(trackAppStoreSubscription:(NSDictionary *)dict) {
@@ -1003,6 +1010,7 @@ RCT_EXPORT_METHOD(teardown) {
     _isSessionTrackingSucceededCallbackImplemented = NO;
     _isSessionTrackingFailedCallbackImplemented = NO;
     _isDeferredDeeplinkCallbackImplemented = NO;
+    _isRemoteTriggerCallbackImplemented = NO;
     _isSkanUpdatedCallbackImplemented = NO;
     [AdjustSdkDelegate teardown];
 }

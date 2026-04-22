@@ -17,6 +17,8 @@ import javax.annotation.Nullable;
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
 import com.adjust.sdk.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 final class AdjustUtil {
     private static final String ATTRIBUTION_TRACKER_TOKEN = "trackerToken";
@@ -151,6 +153,19 @@ final class AdjustUtil {
         return map;
     }
 
+    public static WritableMap remoteTriggerToMap(AdjustRemoteTrigger remoteTrigger) {
+        WritableMap map = Arguments.createMap();
+        if (remoteTrigger == null) {
+            map.putString("label", "");
+            map.putMap("payload", Arguments.createMap());
+            return map;
+        }
+
+        map.putString("label", remoteTrigger.getLabel());
+        map.putMap("payload", Arguments.makeNativeMap(jsonObjectToMap(remoteTrigger.getPayload())));
+        return map;
+    }
+
     public static boolean isFieldValid(String field) {
         if (field != null) {
             if (!field.equals("") && !field.equals("null")) {
@@ -282,5 +297,75 @@ final class AdjustUtil {
         }
 
         return result;
+    }
+
+    /**
+     * jsonObjectToMap converts a {@link JSONObject} into a HashMap.
+     *
+     * @param jsonObject The JSONObject to be converted.
+     * @return A HashMap containing the data that was in the JSONObject.
+     */
+    private static Map<String, Object> jsonObjectToMap(JSONObject jsonObject) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (jsonObject == null) {
+            return map;
+        }
+
+        JSONArray names = jsonObject.names();
+        if (names == null) {
+            return map;
+        }
+
+        for (int i = 0; i < names.length(); i++) {
+            String key = names.optString(i, null);
+            if (key == null) {
+                continue;
+            }
+
+            map.put(key, jsonValueToObject(jsonObject.opt(key)));
+        }
+
+        return map;
+    }
+
+    /**
+     * jsonArrayToList converts a {@link JSONArray} into an ArrayList.
+     *
+     * @param jsonArray The JSONArray to be converted.
+     * @return An ArrayList containing the data that was in the JSONArray.
+     */
+    private static List<Object> jsonArrayToList(JSONArray jsonArray) {
+        List<Object> list = new ArrayList<Object>();
+        if (jsonArray == null) {
+            return list;
+        }
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            list.add(jsonValueToObject(jsonArray.opt(i)));
+        }
+
+        return list;
+    }
+
+    /**
+     * jsonValueToObject converts a JSON value into a POJO.
+     *
+     * @param value The JSON value to be converted.
+     * @return The converted POJO.
+     */
+    private static Object jsonValueToObject(Object value) {
+        if (value == null || value == JSONObject.NULL) {
+            return null;
+        }
+
+        if (value instanceof JSONObject) {
+            return jsonObjectToMap((JSONObject) value);
+        }
+
+        if (value instanceof JSONArray) {
+            return jsonArrayToList((JSONArray) value);
+        }
+
+        return value;
     }
 }

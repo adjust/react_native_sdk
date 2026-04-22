@@ -200,6 +200,11 @@ Adjust.componentWillUnmount = function() {
         AdjustConfig.DeferredDeeplinkCallback = null;
     }
 
+    if (AdjustConfig.RemoteTriggerCallback != null) {
+        AdjustConfig.RemoteTriggerCallback.remove();
+        AdjustConfig.RemoteTriggerCallback = null;
+    }
+
     if (AdjustConfig.SkanUpdatedCallback != null) {
         AdjustConfig.SkanUpdatedCallback.remove();
         AdjustConfig.SkanUpdatedCallback = null;
@@ -395,6 +400,7 @@ AdjustConfig.EventTrackingFailedCallback = null;
 AdjustConfig.SessionTrackingSucceededCallback = null;
 AdjustConfig.SessionTrackingFailedCallback = null;
 AdjustConfig.DeferredDeeplinkCallback = null;
+AdjustConfig.RemoteTriggerCallback = null;
 AdjustConfig.SkanUpdatedCallback = null;
 
 // common
@@ -529,6 +535,15 @@ AdjustConfig.prototype.setDeferredDeeplinkCallback = function(deferredDeeplinkCa
         module_adjust.setDeferredDeeplinkCallbackImplemented();
         AdjustConfig.DeferredDeeplinkCallback = module_adjust_emitter.addListener(
             'adjust_deferredDeeplinkReceived', deferredDeeplinkCallback
+        );
+    }
+};
+
+AdjustConfig.prototype.setRemoteTriggerCallback = function(remoteTriggerCallback) {
+    if (null == AdjustConfig.RemoteTriggerCallback) {
+        module_adjust.setRemoteTriggerCallbackImplemented();
+        AdjustConfig.RemoteTriggerCallback = module_adjust_emitter.addListener(
+            'adjust_remoteTriggerReceived', remoteTriggerCallback
         );
     }
 };

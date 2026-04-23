@@ -1,9 +1,9 @@
 PODS:
-  - Adjust (5.4.6):
-    - Adjust/Adjust (= 5.4.6)
-  - Adjust/Adjust (5.4.6):
-    - AdjustSignature (= 3.61.0)
-  - AdjustSignature (3.61.0)
+  - Adjust (5.6.2):
+    - Adjust/Adjust (= 5.6.2)
+  - Adjust/Adjust (5.6.2):
+    - AdjustSignature (= 3.67.0)
+  - AdjustSignature (3.67.0)
   - boost (1.84.0)
   - DoubleConversion (1.1.6)
   - fast_float (6.1.4)
@@ -1337,8 +1337,8 @@ PODS:
     - React-jsiexecutor
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
-  - react-native-adjust (5.4.4):
-    - Adjust (= 5.4.6)
+  - react-native-adjust (5.6.0):
+    - Adjust (= 5.6.2)
     - React-Core
   - React-NativeModulesApple (0.79.2):
     - glog
@@ -1892,8 +1892,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adjust: 293c828a88a2c280471797edb3e895c80652a786
-  AdjustSignature: 94b6b7f7150edbbebc4320eeaddaac881f6e8e2d
+  Adjust: 62ea53a252534df416676e7ac2f1558d60e6e39e
+  AdjustSignature: 9498705a4ac67b719e31828be4d74fbb8656950c
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
@@ -1932,7 +1932,7 @@ SPEC CHECKSUMS:
   React-logger: 8edfcedc100544791cd82692ca5a574240a16219
   React-Mapbuffer: c3f4b608e4a59dd2f6a416ef4d47a14400194468
   React-microtasksnativemodule: 054f34e9b82f02bd40f09cebd4083828b5b2beb6
-  react-native-adjust: 69bde27f09efbe930ac1daca6b66db80fcfa8b9f
+  react-native-adjust: 1ed9577cd1998e4278ad26e1175bdd391207938c
   React-NativeModulesApple: 2c4377e139522c3d73f5df582e4f051a838ff25e
   React-oscompat: ef5df1c734f19b8003e149317d041b8ce1f7d29c
   React-perflogger: 9a151e0b4c933c9205fd648c246506a83f31395d
@@ -1967,6 +1967,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: c758bfb934100bb4bf9cbaccb52557cee35e8bdf
 
-PODFILE CHECKSUM: 5136a0260720238d69f1895031f2a06bfb483d8b
+PODFILE CHECKSUM: aeb13096241d0249588f7f6bc1ce6e9495f477e5
 
 COCOAPODS: 1.16.2

@@ -19,6 +19,7 @@ target 'AdjustExample' do
 
   use_react_native!(
     :path => config[:reactNativePath],
+    :new_arch_enabled => true,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )

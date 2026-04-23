@@ -491,6 +491,15 @@ AdjustCommandExecutor.prototype.config = function(params) {
         });
     }
 
+    if ('remoteTriggerCallback' in params) {
+        var _this = this;
+        adjustConfig.setRemoteTriggerCallback(function(remoteTrigger) {
+            AdjustSdkTest.addInfoToSend('label', remoteTrigger.label);
+            AdjustSdkTest.addInfoToSend('payload', JSON.stringify(remoteTrigger.payload));
+            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+        });
+    }
+    
     if ('skanCallback' in params) {
         var _this = this;
         adjustConfig.setSkanUpdatedCallback(function(skanData) {

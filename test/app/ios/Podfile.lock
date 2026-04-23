@@ -1,9 +1,9 @@
 PODS:
-  - Adjust (5.5.0):
-    - Adjust/Adjust (= 5.5.0)
-  - Adjust/Adjust (5.5.0):
-    - AdjustSignature (= 3.62.0)
-  - AdjustSignature (3.62.0)
+  - Adjust (5.6.2):
+    - Adjust/Adjust (= 5.6.2)
+  - Adjust/Adjust (5.6.2):
+    - AdjustSignature (= 3.67.0)
+  - AdjustSignature (3.67.0)
   - boost (1.84.0)
   - DoubleConversion (1.1.6)
   - fast_float (6.1.4)
@@ -1337,10 +1337,10 @@ PODS:
     - React-jsiexecutor
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
-  - react-native-adjust (5.5.0):
-    - Adjust (= 5.5.0)
+  - react-native-adjust (5.6.0):
+    - Adjust (= 5.6.2)
     - React-Core
-  - react-native-adjust-test (5.5.0):
+  - react-native-adjust-test (5.6.0):
     - React
   - React-NativeModulesApple (0.79.2):
     - glog
@@ -1897,8 +1897,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adjust: a0095eda439b925f809b0efbf64923c05701e937
-  AdjustSignature: 682d788005a6e21557913a9dc0381ae8d943ca0a
+  Adjust: 62ea53a252534df416676e7ac2f1558d60e6e39e
+  AdjustSignature: 9498705a4ac67b719e31828be4d74fbb8656950c
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
@@ -1937,8 +1937,8 @@ SPEC CHECKSUMS:
   React-logger: 8edfcedc100544791cd82692ca5a574240a16219
   React-Mapbuffer: c3f4b608e4a59dd2f6a416ef4d47a14400194468
   React-microtasksnativemodule: 054f34e9b82f02bd40f09cebd4083828b5b2beb6
-  react-native-adjust: 4defc7b3283aa8aa2e5cf089f3de7c4289118d82
-  react-native-adjust-test: a93ff9f5fe3fc34155601736b0c114433cd67125
+  react-native-adjust: 1ed9577cd1998e4278ad26e1175bdd391207938c
+  react-native-adjust-test: 132bd853f8bc85c2ff2b369e3ae0837d50f3493c
   React-NativeModulesApple: 2c4377e139522c3d73f5df582e4f051a838ff25e
   React-oscompat: ef5df1c734f19b8003e149317d041b8ce1f7d29c
   React-perflogger: 9a151e0b4c933c9205fd648c246506a83f31395d

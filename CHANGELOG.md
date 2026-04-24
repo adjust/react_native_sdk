@@ -1,6 +1,6 @@
 ### Version 5.6.0 (23rd April 2026)
 #### Added
-- Added support for remote trigger callbacks. You can now receive remote trigger updates by calling `setRemoteTriggerCallback` member of your `AdjustConfig` instance.
+- Added support for remote trigger callbacks. You can now receive remote trigger updates by calling `setRemoteTriggerCallback` on your `AdjustConfig` instance.
 
 #### Changed
 - Updated the Adjust Signature library version to 3.67.0.

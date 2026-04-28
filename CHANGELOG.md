@@ -9,6 +9,8 @@
 - [iOS@v5.6.2][ios_sdk_v5.6.2]
 - [Android@v5.6.1][android_sdk_v5.6.1]
 
+---
+
 ### Version 5.5.0 (6th December 2025)
 #### Added
 - Added `getAdidWithTimeout` method to the `Adjust` API to allow retrieving the ADID with a specified timeout. If the value is not obtained in time, null is returned.

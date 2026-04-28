@@ -48,8 +48,17 @@ RCT_EXPORT_METHOD(addInfoToSend:(NSString *)key value:(NSString *)value) {
     }
 }
 
-RCT_EXPORT_METHOD(sendInfoToServer:(NSString *)basePath) {
+RCT_EXPORT_METHOD(setInfoToSend:(NSDictionary *)info) {
+    if (testLibrary == nil) {
+        return;
+    }
+
+    [testLibrary setInfoToSend:[self stringInfoFromDictionary:info]];
+}
+
+RCT_EXPORT_METHOD(sendInfoToServer:(NSString *)basePath info:(NSDictionary *)info) {
     if (testLibrary != nil) {
+        [testLibrary setInfoToSend:[self stringInfoFromDictionary:info]];
         [testLibrary sendInfoToServer:basePath];
     }
 }
@@ -97,6 +106,27 @@ RCT_EXPORT_METHOD(setTestConnectionOptions) {
     }
 
     return true;
+}
+
+- (NSDictionary *)stringInfoFromDictionary:(NSDictionary *)info {
+    NSMutableDictionary<NSString *, NSString *> *filteredInfo = [NSMutableDictionary dictionary];
+    if (info == nil) {
+        return filteredInfo;
+    }
+
+    for (id key in info) {
+        id value = [info objectForKey:key];
+        if (![key isKindOfClass:[NSString class]]
+            || value == nil
+            || ![value isKindOfClass:[NSString class]]) {
+            continue;
+        }
+
+        [filteredInfo setObject:(NSString *)value
+                         forKey:(NSString *)key];
+    }
+
+    return filteredInfo;
 }
 
 @end

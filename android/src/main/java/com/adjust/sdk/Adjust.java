@@ -1359,6 +1359,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
         this.isSessionTrackingSucceededCallbackImplemented = false;
         this.isSessionTrackingFailedCallbackImplemented = false;
         this.isDeferredDeeplinkCallbackImplemented = false;
+        this.isRemoteTriggerCallbackImplemented = false;
     }
 
     // private & helper methods

@@ -495,7 +495,7 @@ AdjustCommandExecutor.prototype.config = function(params) {
         var _this = this;
         adjustConfig.setRemoteTriggerCallback(function(remoteTrigger) {
             AdjustSdkTest.addInfoToSend('label', remoteTrigger.label);
-            AdjustSdkTest.addInfoToSend('payload', JSON.stringify(remoteTrigger.payload));
+            AdjustSdkTest.addInfoToSend('payload', remoteTrigger.payloadJson);
             AdjustSdkTest.sendInfoToServer(_this.extraPath);
         });
     }

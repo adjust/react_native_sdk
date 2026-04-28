@@ -210,10 +210,11 @@ static AdjustSdkDelegate *defaultInstance = nil;
     if (nil == remoteTrigger) {
         return;
     }
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-    [self addValueOrEmpty:dictionary key:@"label" value:[remoteTrigger label]];
-    [self addObjectOrEmpty:dictionary key:@"payload" value:[remoteTrigger payload]];
-    [AdjustEventEmitter dispatchEvent:@"adjust_remoteTriggerReceived" withDictionary:dictionary];
+    NSMutableDictionary *remoteTriggerDictionary = [NSMutableDictionary dictionary];
+    [self addValueOrEmpty:remoteTriggerDictionary key:@"label" value:[remoteTrigger label]];
+    [remoteTriggerDictionary setObject:[self jsonStringOrEmptyObject:remoteTrigger.payload]
+                                forKey:@"payloadJson"];
+    [AdjustEventEmitter dispatchEvent:@"adjust_remoteTriggerReceived" withDictionary:remoteTriggerDictionary];
 }
 
 - (void)adjustSkanUpdatedWithConversionDataWannabe:(nonnull NSDictionary<NSString *, NSString *> *)data {
@@ -255,14 +256,21 @@ static AdjustSdkDelegate *defaultInstance = nil;
     }
 }
 
-- (void)addObjectOrEmpty:(NSMutableDictionary *)dictionary
-                     key:(NSString *)key
-                   value:(NSObject *)value {
-    if (nil != value) {
-        [dictionary setObject:value forKey:key];
-    } else {
-        [dictionary setObject:@{} forKey:key];
+- (NSString *)jsonStringOrEmptyObject:(id)object {
+    if (object == nil || ![NSJSONSerialization isValidJSONObject:object]) {
+        return @"{}";
     }
+
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:object
+                                                       options:0
+                                                         error:nil];
+    if (jsonData == nil) {
+        return @"{}";
+    }
+
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData
+                                                 encoding:NSUTF8StringEncoding];
+    return jsonString == nil ? @"{}" : jsonString;
 }
 
 @end

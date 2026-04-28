@@ -57,7 +57,7 @@ declare module 'react-native-adjust' {
 
   interface AdjustRemoteTrigger {
     label: string
-    payload: { [key: string]: any }
+    payloadJson: string
   }
 
   interface AdjustSkanData {

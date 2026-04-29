@@ -1,4 +1,4 @@
-### Version 5.6.0 (28th April 2026)
+### Version 5.6.0 (29th April 2026)
 #### Added
 - Added support for remote trigger callbacks. You can now receive remote trigger updates by calling `setRemoteTriggerCallback` on your `AdjustConfig` instance. Remote trigger payload is exposed as a JSON string in `payloadJson`.
 

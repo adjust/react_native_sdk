@@ -392,17 +392,18 @@ AdjustCommandExecutor.prototype.config = function(params) {
     if ('attributionCallbackSendAll' in params) {
         var _this = this;
         adjustConfig.setAttributionCallback(function(attribution) {
-            AdjustSdkTest.addInfoToSend('tracker_token', attribution.trackerToken);
-            AdjustSdkTest.addInfoToSend('tracker_name', attribution.trackerName);
-            AdjustSdkTest.addInfoToSend('network', attribution.network);
-            AdjustSdkTest.addInfoToSend('campaign', attribution.campaign);
-            AdjustSdkTest.addInfoToSend('adgroup', attribution.adgroup);
-            AdjustSdkTest.addInfoToSend('creative', attribution.creative);
-            AdjustSdkTest.addInfoToSend('click_label', attribution.clickLabel);
-            AdjustSdkTest.addInfoToSend('cost_type', attribution.costType);
-            AdjustSdkTest.addInfoToSend('cost_amount', attribution.costAmount.toString());
-            AdjustSdkTest.addInfoToSend('cost_currency', attribution.costCurrency);
-            AdjustSdkTest.addInfoToSend('fb_install_referrer', attribution.fbInstallReferrer);
+            var infoToSend = {};
+            if (attribution.trackerToken != null) { infoToSend.tracker_token = attribution.trackerToken; }
+            if (attribution.trackerName != null) { infoToSend.tracker_name = attribution.trackerName; }
+            if (attribution.network != null) { infoToSend.network = attribution.network; }
+            if (attribution.campaign != null) { infoToSend.campaign = attribution.campaign; }
+            if (attribution.adgroup != null) { infoToSend.adgroup = attribution.adgroup; }
+            if (attribution.creative != null) { infoToSend.creative = attribution.creative; }
+            if (attribution.clickLabel != null) { infoToSend.click_label = attribution.clickLabel; }
+            if (attribution.costType != null) { infoToSend.cost_type = attribution.costType; }
+            if (attribution.costAmount != null) { infoToSend.cost_amount = attribution.costAmount.toString(); }
+            if (attribution.costCurrency != null) { infoToSend.cost_currency = attribution.costCurrency; }
+            if (attribution.fbInstallReferrer != null) { infoToSend.fb_install_referrer = attribution.fbInstallReferrer; }
            
             const attributionJsonResponse = JSON.parse(attribution.jsonResponse);
             if (attributionJsonResponse.cost_amount !== undefined) {
@@ -413,67 +414,71 @@ AdjustCommandExecutor.prototype.config = function(params) {
             }
 
             if (attribution.jsonResponse != null) {
-                AdjustSdkTest.addInfoToSend('json_response', JSON.stringify(attributionJsonResponse));
+                infoToSend.json_response = JSON.stringify(attributionJsonResponse);
             }
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     }
 
     if ('sessionCallbackSendSuccess' in params) {
         var _this = this;
         adjustConfig.setSessionTrackingSucceededCallback(function(sessionSuccess) {
-            AdjustSdkTest.addInfoToSend('message', sessionSuccess.message);
-            AdjustSdkTest.addInfoToSend('timestamp', sessionSuccess.timestamp);
-            AdjustSdkTest.addInfoToSend('adid', sessionSuccess.adid);
+            var infoToSend = {};
+            if (sessionSuccess.message != null) { infoToSend.message = sessionSuccess.message; }
+            if (sessionSuccess.timestamp != null) { infoToSend.timestamp = sessionSuccess.timestamp; }
+            if (sessionSuccess.adid != null) { infoToSend.adid = sessionSuccess.adid; }
             if (sessionSuccess.jsonResponse != null) {
-                AdjustSdkTest.addInfoToSend('jsonResponse', sessionSuccess.jsonResponse.toString());
+                infoToSend.jsonResponse = sessionSuccess.jsonResponse;
             }
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     }
 
     if ('sessionCallbackSendFailure' in params) {
         var _this = this;
         adjustConfig.setSessionTrackingFailedCallback(function(sessionFailed) {
-            AdjustSdkTest.addInfoToSend('message', sessionFailed.message);
-            AdjustSdkTest.addInfoToSend('timestamp', sessionFailed.timestamp);
-            AdjustSdkTest.addInfoToSend('adid', sessionFailed.adid);
-            AdjustSdkTest.addInfoToSend('willRetry', sessionFailed.willRetry);
+            var infoToSend = {};
+            if (sessionFailed.message != null) { infoToSend.message = sessionFailed.message; }
+            if (sessionFailed.timestamp != null) { infoToSend.timestamp = sessionFailed.timestamp; }
+            if (sessionFailed.adid != null) { infoToSend.adid = sessionFailed.adid; }
+            if (sessionFailed.willRetry != null) { infoToSend.willRetry = sessionFailed.willRetry.toString(); }
             if (sessionFailed.jsonResponse != null) {
-                AdjustSdkTest.addInfoToSend('jsonResponse', sessionFailed.jsonResponse.toString());
+                infoToSend.jsonResponse = sessionFailed.jsonResponse;
             }
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     }
 
     if ('eventCallbackSendSuccess' in params) {
         var _this = this;
         adjustConfig.setEventTrackingSucceededCallback(function(eventSuccess) {
-            AdjustSdkTest.addInfoToSend('message', eventSuccess.message);
-            AdjustSdkTest.addInfoToSend('timestamp', eventSuccess.timestamp);
-            AdjustSdkTest.addInfoToSend('adid', eventSuccess.adid);
-            AdjustSdkTest.addInfoToSend('eventToken', eventSuccess.eventToken);
-            AdjustSdkTest.addInfoToSend('callbackId', eventSuccess.callbackId);
+            var infoToSend = {};
+            if (eventSuccess.message != null) { infoToSend.message = eventSuccess.message; }
+            if (eventSuccess.timestamp != null) { infoToSend.timestamp = eventSuccess.timestamp; }
+            if (eventSuccess.adid != null) { infoToSend.adid = eventSuccess.adid; }
+            if (eventSuccess.eventToken != null) { infoToSend.eventToken = eventSuccess.eventToken; }
+            if (eventSuccess.callbackId != null) { infoToSend.callbackId = eventSuccess.callbackId; }
             if (eventSuccess.jsonResponse != null) {
-                AdjustSdkTest.addInfoToSend('jsonResponse', eventSuccess.jsonResponse.toString());
+                infoToSend.jsonResponse = eventSuccess.jsonResponse;
             }
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     }
 
     if ('eventCallbackSendFailure' in params) {
         var _this = this;
         adjustConfig.setEventTrackingFailedCallback(function(eventFailed) {
-            AdjustSdkTest.addInfoToSend('message', eventFailed.message);
-            AdjustSdkTest.addInfoToSend('timestamp', eventFailed.timestamp);
-            AdjustSdkTest.addInfoToSend('adid', eventFailed.adid);
-            AdjustSdkTest.addInfoToSend('eventToken', eventFailed.eventToken);
-            AdjustSdkTest.addInfoToSend('callbackId', eventFailed.callbackId);
-            AdjustSdkTest.addInfoToSend('willRetry', eventFailed.willRetry);
+            var infoToSend = {};
+            if (eventFailed.message != null) { infoToSend.message = eventFailed.message; }
+            if (eventFailed.timestamp != null) { infoToSend.timestamp = eventFailed.timestamp; }
+            if (eventFailed.adid != null) { infoToSend.adid = eventFailed.adid; }
+            if (eventFailed.eventToken != null) { infoToSend.eventToken = eventFailed.eventToken; }
+            if (eventFailed.callbackId != null) { infoToSend.callbackId = eventFailed.callbackId; }
+            if (eventFailed.willRetry != null) { infoToSend.willRetry = eventFailed.willRetry.toString(); }
             if (eventFailed.jsonResponse != null) {
-                AdjustSdkTest.addInfoToSend('jsonResponse', eventFailed.jsonResponse.toString());
+                infoToSend.jsonResponse = eventFailed.jsonResponse;
             }
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     }
 
@@ -486,19 +491,31 @@ AdjustCommandExecutor.prototype.config = function(params) {
             adjustConfig.disableDeferredDeeplinkOpening();
         }
         adjustConfig.setDeferredDeeplinkCallback(function(deeplink) {
-            AdjustSdkTest.addInfoToSend('deeplink', deeplink.deeplink);
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            var infoToSend = {};
+            if (deeplink.deeplink != null) { infoToSend.deeplink = deeplink.deeplink; }
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     }
 
+    if ('remoteTriggerCallback' in params) {
+        var _this = this;
+        adjustConfig.setRemoteTriggerCallback(function(remoteTrigger) {
+            var infoToSend = {};
+            if (remoteTrigger.label != null) { infoToSend.label = remoteTrigger.label; }
+            if (remoteTrigger.payloadJson != null) { infoToSend.payload = remoteTrigger.payloadJson; }
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
+        });
+    }
+    
     if ('skanCallback' in params) {
         var _this = this;
         adjustConfig.setSkanUpdatedCallback(function(skanData) {
-            AdjustSdkTest.addInfoToSend('conversion_value', skanData.conversionValue);
-            AdjustSdkTest.addInfoToSend('coarse_value', skanData.coarseValue);
-            AdjustSdkTest.addInfoToSend('lock_window', skanData.lockWindow);
-            AdjustSdkTest.addInfoToSend('last_skan_update', skanData.lastSkanUpdate);
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            var infoToSend = {};
+            if (skanData.conversionValue != null) { infoToSend.conversion_value = skanData.conversionValue.toString(); }
+            if (skanData.coarseValue != null) { infoToSend.coarse_value = skanData.coarseValue; }
+            if (skanData.lockWindow != null) { infoToSend.lock_window = skanData.lockWindow.toString(); }
+            if (skanData.lastSkanUpdate != null) { infoToSend.last_skan_update = skanData.lastSkanUpdate; }
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     }
 
@@ -962,11 +979,12 @@ AdjustCommandExecutor.prototype.getLastDeeplink = function(params) {
     var testCallbackId = getFirstParameterValue(params, 'testCallbackId');
     var _this = this;
     Adjust.getLastDeeplink(function(lastDeeplink) {
-        AdjustSdkTest.addInfoToSend('last_deeplink', lastDeeplink);
+        var infoToSend = {};
+        if (lastDeeplink != null) { infoToSend.last_deeplink = lastDeeplink; }
         if (testCallbackId) {
-            AdjustSdkTest.addInfoToSend('test_callback_id', testCallbackId);
+            infoToSend.test_callback_id = testCallbackId;
         }
-        AdjustSdkTest.sendInfoToServer(_this.extraPath);
+        AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
     });
 };
 
@@ -978,10 +996,11 @@ AdjustCommandExecutor.prototype.verifyPurchase = function(params) {
 
         var _this = this;
         Adjust.verifyAppStorePurchase(purchase, function(verificationInfo) {
-            AdjustSdkTest.addInfoToSend('verification_status', verificationInfo.verificationStatus);
-            AdjustSdkTest.addInfoToSend('code', verificationInfo.code);
-            AdjustSdkTest.addInfoToSend('message', verificationInfo.message);
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            var infoToSend = {};
+            if (verificationInfo.verificationStatus != null) { infoToSend.verification_status = verificationInfo.verificationStatus; }
+            if (verificationInfo.code != null) { infoToSend.code = verificationInfo.code.toString(); }
+            if (verificationInfo.message != null) { infoToSend.message = verificationInfo.message; }
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     } else if (Platform.OS === 'android') {
         var productId = getFirstParameterValue(params, 'productId');
@@ -990,10 +1009,11 @@ AdjustCommandExecutor.prototype.verifyPurchase = function(params) {
 
         var _this = this;
         Adjust.verifyPlayStorePurchase(purchase, function(verificationInfo) {
-            AdjustSdkTest.addInfoToSend('verification_status', verificationInfo.verificationStatus);
-            AdjustSdkTest.addInfoToSend('code', verificationInfo.code);
-            AdjustSdkTest.addInfoToSend('message', verificationInfo.message);
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            var infoToSend = {};
+            if (verificationInfo.verificationStatus != null) { infoToSend.verification_status = verificationInfo.verificationStatus; }
+            if (verificationInfo.code != null) { infoToSend.code = verificationInfo.code.toString(); }
+            if (verificationInfo.message != null) { infoToSend.message = verificationInfo.message; }
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     }
 };
@@ -1009,10 +1029,11 @@ AdjustCommandExecutor.prototype.verifyTrack = function(params) {
         }
         var adjustEvent = this.savedEvents[eventNumber];
         Adjust.verifyAndTrackAppStorePurchase(adjustEvent, function(verificationResult) {
-            AdjustSdkTest.addInfoToSend('verification_status', verificationResult.verificationStatus);
-            AdjustSdkTest.addInfoToSend('code', verificationResult.code);
-            AdjustSdkTest.addInfoToSend('message', verificationResult.message);
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            var infoToSend = {};
+            if (verificationResult.verificationStatus != null) { infoToSend.verification_status = verificationResult.verificationStatus; }
+            if (verificationResult.code != null) { infoToSend.code = verificationResult.code.toString(); }
+            if (verificationResult.message != null) { infoToSend.message = verificationResult.message; }
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
 
     } else if (Platform.OS === 'android') {
@@ -1022,10 +1043,11 @@ AdjustCommandExecutor.prototype.verifyTrack = function(params) {
         }
         var adjustEvent = this.savedEvents[eventNumber];
         Adjust.verifyAndTrackPlayStorePurchase(adjustEvent, function(verificationResult) {
-            AdjustSdkTest.addInfoToSend('verification_status', verificationResult.verificationStatus);
-            AdjustSdkTest.addInfoToSend('code', verificationResult.code);
-            AdjustSdkTest.addInfoToSend('message', verificationResult.message);
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            var infoToSend = {};
+            if (verificationResult.verificationStatus != null) { infoToSend.verification_status = verificationResult.verificationStatus; }
+            if (verificationResult.code != null) { infoToSend.code = verificationResult.code.toString(); }
+            if (verificationResult.message != null) { infoToSend.message = verificationResult.message; }
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     }
    
@@ -1041,8 +1063,9 @@ AdjustCommandExecutor.prototype.processDeeplink = function(params) {
     }
     var _this = this;
     Adjust.processAndResolveDeeplink(adjustDeeplink, function(resolvedLink) {
-        AdjustSdkTest.addInfoToSend('resolved_link', resolvedLink);
-        AdjustSdkTest.sendInfoToServer(_this.extraPath);
+        var infoToSend = {};
+        if (resolvedLink != null) { infoToSend.resolved_link = resolvedLink; }
+        AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
     });
 };
 
@@ -1091,11 +1114,12 @@ AdjustCommandExecutor.prototype.adidGetter = function(params) {
     var testCallbackId = getFirstParameterValue(params, 'testCallbackId');
     var _this = this;
     Adjust.getAdid(function(adid) {
-        AdjustSdkTest.addInfoToSend('adid', adid);
+        var infoToSend = {};
+        if (adid != null) { infoToSend.adid = adid; }
         if (testCallbackId) {
-            AdjustSdkTest.addInfoToSend('test_callback_id', testCallbackId);
+            infoToSend.test_callback_id = testCallbackId;
         }
-        AdjustSdkTest.sendInfoToServer(_this.extraPath);
+        AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
     });
 };
 
@@ -1105,19 +1129,20 @@ AdjustCommandExecutor.prototype.adidGetterWithTimeout = function(params) {
     var testCallbackId = getFirstParameterValue(params, 'testCallbackId');
     var _this = this;
     Adjust.getAdidWithTimeout(timeout, function(adid) {
+        var infoToSend = {};
         if (adid != null) {
-            AdjustSdkTest.addInfoToSend('adid', adid);
+            infoToSend.adid = adid;
         } else {
             if (Platform.OS === 'ios') {
-                AdjustSdkTest.addInfoToSend('adid', 'nil');
+                infoToSend.adid = 'nil';
             } else if (Platform.OS === 'android') {
-                AdjustSdkTest.addInfoToSend('adid', 'null');
+                infoToSend.adid = 'null';
             }
         }
         if (testCallbackId) {
-            AdjustSdkTest.addInfoToSend('test_callback_id', testCallbackId);
+            infoToSend.test_callback_id = testCallbackId;
         }
-        AdjustSdkTest.sendInfoToServer(_this.extraPath);
+        AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
     });
 };
 
@@ -1125,17 +1150,18 @@ AdjustCommandExecutor.prototype.attributionGetter = function(params) {
     var testCallbackId = getFirstParameterValue(params, 'testCallbackId');
     var _this = this;
     Adjust.getAttribution(function(attribution) {
-        AdjustSdkTest.addInfoToSend('tracker_token', attribution.trackerToken);
-        AdjustSdkTest.addInfoToSend('tracker_name', attribution.trackerName);
-        AdjustSdkTest.addInfoToSend('network', attribution.network);
-        AdjustSdkTest.addInfoToSend('campaign', attribution.campaign);
-        AdjustSdkTest.addInfoToSend('adgroup', attribution.adgroup);
-        AdjustSdkTest.addInfoToSend('creative', attribution.creative);
-        AdjustSdkTest.addInfoToSend('click_label', attribution.clickLabel);
-        AdjustSdkTest.addInfoToSend('cost_type', attribution.costType);
-        AdjustSdkTest.addInfoToSend('cost_amount', attribution.costAmount.toString());
-        AdjustSdkTest.addInfoToSend('cost_currency', attribution.costCurrency);
-        AdjustSdkTest.addInfoToSend('fb_install_referrer', attribution.fbInstallReferrer);
+        var infoToSend = {};
+        if (attribution.trackerToken != null) { infoToSend.tracker_token = attribution.trackerToken; }
+        if (attribution.trackerName != null) { infoToSend.tracker_name = attribution.trackerName; }
+        if (attribution.network != null) { infoToSend.network = attribution.network; }
+        if (attribution.campaign != null) { infoToSend.campaign = attribution.campaign; }
+        if (attribution.adgroup != null) { infoToSend.adgroup = attribution.adgroup; }
+        if (attribution.creative != null) { infoToSend.creative = attribution.creative; }
+        if (attribution.clickLabel != null) { infoToSend.click_label = attribution.clickLabel; }
+        if (attribution.costType != null) { infoToSend.cost_type = attribution.costType; }
+        if (attribution.costAmount != null) { infoToSend.cost_amount = attribution.costAmount.toString(); }
+        if (attribution.costCurrency != null) { infoToSend.cost_currency = attribution.costCurrency; }
+        if (attribution.fbInstallReferrer != null) { infoToSend.fb_install_referrer = attribution.fbInstallReferrer; }
 
         const attributionJsonResponse = JSON.parse(attribution.jsonResponse);
         if (attributionJsonResponse.cost_amount !== undefined) {
@@ -1144,12 +1170,12 @@ AdjustCommandExecutor.prototype.attributionGetter = function(params) {
         if (Platform.OS === 'ios') {
             delete attributionJsonResponse.fb_install_referrer;
         }
-        AdjustSdkTest.addInfoToSend('json_response', JSON.stringify(attributionJsonResponse));
+        infoToSend.json_response = JSON.stringify(attributionJsonResponse);
         if (testCallbackId) {
-            AdjustSdkTest.addInfoToSend('test_callback_id', testCallbackId);
+            infoToSend.test_callback_id = testCallbackId;
         }
 
-        AdjustSdkTest.sendInfoToServer(_this.extraPath);
+        AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
     });
 };
 
@@ -1159,18 +1185,19 @@ AdjustCommandExecutor.prototype.attributionGetterWithTimeout = function(params) 
     var testCallbackId = getFirstParameterValue(params, 'testCallbackId');
     var _this = this;
     Adjust.getAttributionWithTimeout(timeout, function(attribution) {
+        var infoToSend = {};
         if (attribution != null) {
-            AdjustSdkTest.addInfoToSend('tracker_token', attribution.trackerToken);
-            AdjustSdkTest.addInfoToSend('tracker_name', attribution.trackerName);
-            AdjustSdkTest.addInfoToSend('network', attribution.network);
-            AdjustSdkTest.addInfoToSend('campaign', attribution.campaign);
-            AdjustSdkTest.addInfoToSend('adgroup', attribution.adgroup);
-            AdjustSdkTest.addInfoToSend('creative', attribution.creative);
-            AdjustSdkTest.addInfoToSend('click_label', attribution.clickLabel);
-            AdjustSdkTest.addInfoToSend('cost_type', attribution.costType);
-            AdjustSdkTest.addInfoToSend('cost_amount', attribution.costAmount.toString());
-            AdjustSdkTest.addInfoToSend('cost_currency', attribution.costCurrency);
-            AdjustSdkTest.addInfoToSend('fb_install_referrer', attribution.fbInstallReferrer);
+            if (attribution.trackerToken != null) { infoToSend.tracker_token = attribution.trackerToken; }
+            if (attribution.trackerName != null) { infoToSend.tracker_name = attribution.trackerName; }
+            if (attribution.network != null) { infoToSend.network = attribution.network; }
+            if (attribution.campaign != null) { infoToSend.campaign = attribution.campaign; }
+            if (attribution.adgroup != null) { infoToSend.adgroup = attribution.adgroup; }
+            if (attribution.creative != null) { infoToSend.creative = attribution.creative; }
+            if (attribution.clickLabel != null) { infoToSend.click_label = attribution.clickLabel; }
+            if (attribution.costType != null) { infoToSend.cost_type = attribution.costType; }
+            if (attribution.costAmount != null) { infoToSend.cost_amount = attribution.costAmount.toString(); }
+            if (attribution.costCurrency != null) { infoToSend.cost_currency = attribution.costCurrency; }
+            if (attribution.fbInstallReferrer != null) { infoToSend.fb_install_referrer = attribution.fbInstallReferrer; }
 
             if (attribution.jsonResponse != null && attribution.jsonResponse.length > 0) {
                 try {
@@ -1181,7 +1208,7 @@ AdjustCommandExecutor.prototype.attributionGetterWithTimeout = function(params) 
                             delete jsonMap.fb_install_referrer;
                         }
                         var jsonString = JSON.stringify(jsonMap);
-                        AdjustSdkTest.addInfoToSend('json_response', jsonString);
+                        infoToSend.json_response = jsonString;
                     }
                 } catch (e) {
                     console.log("JSON Parsing Error: " + e);
@@ -1189,15 +1216,15 @@ AdjustCommandExecutor.prototype.attributionGetterWithTimeout = function(params) 
             }
         } else {
             if (Platform.OS === 'ios') {
-                AdjustSdkTest.addInfoToSend('attribution', 'nil');
+                infoToSend.attribution = 'nil';
             } else if (Platform.OS === 'android') {
-                AdjustSdkTest.addInfoToSend('attribution', 'null');
+                infoToSend.attribution = 'null';
             }
         }
         if (testCallbackId) {
-            AdjustSdkTest.addInfoToSend('test_callback_id', testCallbackId);
+            infoToSend.test_callback_id = testCallbackId;
         }
-        AdjustSdkTest.sendInfoToServer(_this.extraPath);
+        AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
     });
 };
 
@@ -1206,11 +1233,12 @@ AdjustCommandExecutor.prototype.idfaGetter = function(params) {
     var _this = this;
     if (Platform.OS === 'ios') {
         Adjust.getIdfa(function(idfa) {
-            AdjustSdkTest.addInfoToSend('idfa', idfa);
+            var infoToSend = {};
+            if (idfa != null) { infoToSend.idfa = idfa; }
             if (testCallbackId) {
-                AdjustSdkTest.addInfoToSend('test_callback_id', testCallbackId);
+                infoToSend.test_callback_id = testCallbackId;
             }
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     } else {
         console.log('[Adjust]: Error! IDFA is not available on this platform.');
@@ -1222,11 +1250,12 @@ AdjustCommandExecutor.prototype.idfvGetter = function(params) {
     var _this = this;
     if (Platform.OS === 'ios') {
         Adjust.getIdfv(function(idfv) {
-            AdjustSdkTest.addInfoToSend('idfv', idfv);
+            var infoToSend = {};
+            if (idfv != null) { infoToSend.idfv = idfv; }
             if (testCallbackId) {
-                AdjustSdkTest.addInfoToSend('test_callback_id', testCallbackId);
+                infoToSend.test_callback_id = testCallbackId;
             }
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     } else {
         console.log('[Adjust]: Error! IDFV is not available on this platform.');
@@ -1238,11 +1267,12 @@ AdjustCommandExecutor.prototype.googleAdIdGetter = function(params) {
     var _this = this;
     if (Platform.OS === 'android') {
         Adjust.getGoogleAdId(function(googleAdId) {
-            AdjustSdkTest.addInfoToSend('gps_adid', googleAdId);
+            var infoToSend = {};
+            if (googleAdId != null) { infoToSend.gps_adid = googleAdId; }
             if (testCallbackId) {
-                AdjustSdkTest.addInfoToSend('test_callback_id', testCallbackId);
+                infoToSend.test_callback_id = testCallbackId;
             }
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     } else {
         console.log('[Adjust]: Error! Google Advertising ID is not available on this platform.');
@@ -1254,11 +1284,12 @@ AdjustCommandExecutor.prototype.amazonAdIdGetter = function(params) {
     var _this = this;
     if (Platform.OS === 'android') {
         Adjust.getAmazonAdId(function(amazonAdId) {
-            AdjustSdkTest.addInfoToSend('fire_adid', amazonAdId);
+            var infoToSend = {};
+            if (amazonAdId != null) { infoToSend.fire_adid = amazonAdId; }
             if (testCallbackId) {
-                AdjustSdkTest.addInfoToSend('test_callback_id', testCallbackId);
+                infoToSend.test_callback_id = testCallbackId;
             }
-            AdjustSdkTest.sendInfoToServer(_this.extraPath);
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     } else {
         console.log('[Adjust]: Error! Amazon Fire Advertising ID is not available on this platform.');
@@ -1269,11 +1300,12 @@ AdjustCommandExecutor.prototype.sdkVersionGetter = function(params) {
     var testCallbackId = getFirstParameterValue(params, 'testCallbackId');
     var _this = this;
     Adjust.getSdkVersion(function(sdkVersion) {
-        AdjustSdkTest.addInfoToSend('sdk_version', sdkVersion);
+        var infoToSend = {};
+        if (sdkVersion != null) { infoToSend.sdk_version = sdkVersion; }
         if (testCallbackId) {
-            AdjustSdkTest.addInfoToSend('test_callback_id', testCallbackId);
+            infoToSend.test_callback_id = testCallbackId;
         }
-        AdjustSdkTest.sendInfoToServer(_this.extraPath);
+        AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
     });
 };
 

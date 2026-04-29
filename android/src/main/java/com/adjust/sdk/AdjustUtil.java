@@ -17,6 +17,7 @@ import javax.annotation.Nullable;
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
 import com.adjust.sdk.*;
+import org.json.JSONObject;
 
 final class AdjustUtil {
     private static final String ATTRIBUTION_TRACKER_TOKEN = "trackerToken";
@@ -148,6 +149,19 @@ final class AdjustUtil {
         }
 
         map.putString("deeplink", uri.toString());
+        return map;
+    }
+
+    public static WritableMap remoteTriggerToMap(AdjustRemoteTrigger remoteTrigger) {
+        WritableMap map = Arguments.createMap();
+        if (remoteTrigger == null) {
+            map.putString("label", "");
+            map.putString("payloadJson", "{}");
+            return map;
+        }
+
+        map.putString("label", remoteTrigger.getLabel() != null ? remoteTrigger.getLabel() : "");
+        map.putString("payloadJson", remoteTrigger.getPayload() != null ? remoteTrigger.getPayload().toString() : "{}");
         return map;
     }
 

@@ -30,6 +30,7 @@ RCT_EXPORT_MODULE();
              @"adjust_sessionTrackingSucceeded",
              @"adjust_sessionTrackingFailed",
              @"adjust_deferredDeeplinkReceived",
+             @"adjust_remoteTriggerReceived",
              @"adjust_skanUpdated"];
 }
 

@@ -38,6 +38,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
                          sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
                             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
+                            remoteTriggerCallback:(BOOL)swizzleRemoteTriggerCallback
                               skanUpdatedCallback:(BOOL)swizzleSkanUpdatedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
     dispatch_once(&onceToken, ^{
@@ -67,6 +68,10 @@ static AdjustSdkDelegate *defaultInstance = nil;
         if (swizzleDeferredDeeplinkCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustDeferredDeeplinkReceived:)
                                   swizzledSelector:@selector(adjustDeferredDeeplinkReceivedWannabe:)];
+        }
+        if (swizzleRemoteTriggerCallback) {
+            [defaultInstance swizzleCallbackMethod:@selector(adjustRemoteTriggerReceived:)
+                                  swizzledSelector:@selector(adjustRemoteTriggerReceivedWannabe:)];
         }
         if (swizzleSkanUpdatedCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustSkanUpdatedWithConversionData:)
@@ -201,6 +206,17 @@ static AdjustSdkDelegate *defaultInstance = nil;
     return _shouldLaunchDeferredDeeplink;
 }
 
+- (void)adjustRemoteTriggerReceivedWannabe:(ADJRemoteTrigger *)remoteTrigger {
+    if (nil == remoteTrigger) {
+        return;
+    }
+    NSMutableDictionary *remoteTriggerDictionary = [NSMutableDictionary dictionary];
+    [self addValueOrEmpty:remoteTriggerDictionary key:@"label" value:[remoteTrigger label]];
+    [remoteTriggerDictionary setObject:[self jsonStringOrEmptyObject:remoteTrigger.payload]
+                                forKey:@"payloadJson"];
+    [AdjustEventEmitter dispatchEvent:@"adjust_remoteTriggerReceived" withDictionary:remoteTriggerDictionary];
+}
+
 - (void)adjustSkanUpdatedWithConversionDataWannabe:(nonnull NSDictionary<NSString *, NSString *> *)data {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [self addValueOrEmpty:dictionary key:@"conversionValue" value:data[@"conversion_value"]];
@@ -238,6 +254,23 @@ static AdjustSdkDelegate *defaultInstance = nil;
     } else {
         [dictionary setObject:@"" forKey:key];
     }
+}
+
+- (NSString *)jsonStringOrEmptyObject:(id)object {
+    if (object == nil || ![NSJSONSerialization isValidJSONObject:object]) {
+        return @"{}";
+    }
+
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:object
+                                                       options:0
+                                                         error:nil];
+    if (jsonData == nil) {
+        return @"{}";
+    }
+
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData
+                                                 encoding:NSUTF8StringEncoding];
+    return jsonString == nil ? @"{}" : jsonString;
 }
 
 @end

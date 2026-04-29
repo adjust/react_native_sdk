@@ -1,3 +1,16 @@
+### Version 5.6.0 (29th April 2026)
+#### Added
+- Added support for remote trigger callbacks. You can now receive remote trigger updates by calling `setRemoteTriggerCallback` on your `AdjustConfig` instance. Remote trigger payload is exposed as a JSON string in `payloadJson`.
+
+#### Changed
+- Updated the Adjust Signature library version to 3.67.0.
+
+#### Native SDKs
+- [iOS@v5.6.2][ios_sdk_v5.6.2]
+- [Android@v5.6.1][android_sdk_v5.6.1]
+
+---
+
 ### Version 5.5.0 (6th December 2025)
 #### Added
 - Added `getAdidWithTimeout` method to the `Adjust` API to allow retrieving the ADID with a specified timeout. If the value is not obtained in time, null is returned.
@@ -818,6 +831,7 @@ In case you were using beta version of the SDK v5, please switch to the official
 [ios_sdk_v5.4.4]: https://github.com/adjust/ios_sdk/tree/v5.4.4
 [ios_sdk_v5.4.6]: https://github.com/adjust/ios_sdk/tree/v5.4.6
 [ios_sdk_v5.5.0]: https://github.com/adjust/ios_sdk/tree/v5.5.0
+[ios_sdk_v5.6.2]: https://github.com/adjust/ios_sdk/tree/v5.6.2
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -865,3 +879,4 @@ In case you were using beta version of the SDK v5, please switch to the official
 [android_sdk_v5.4.4]: https://github.com/adjust/android_sdk/tree/v5.4.4
 [android_sdk_v5.4.5]: https://github.com/adjust/android_sdk/tree/v5.4.5
 [android_sdk_v5.5.0]: https://github.com/adjust/android_sdk/tree/v5.5.0
+[android_sdk_v5.6.1]: https://github.com/adjust/android_sdk/tree/v5.6.1

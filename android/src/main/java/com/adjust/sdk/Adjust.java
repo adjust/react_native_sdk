@@ -28,7 +28,8 @@ public class Adjust extends ReactContextBaseJavaModule implements
                 OnEventTrackingFailedListener,
                 OnSessionTrackingSucceededListener,
                 OnSessionTrackingFailedListener,
-                OnDeferredDeeplinkResponseListener {
+                OnDeferredDeeplinkResponseListener,
+                OnRemoteTriggerListener {
     private static String TAG = "AdjustBridge";
     private boolean isAttributionCallbackImplemented;
     private boolean isEventTrackingSucceededCallbackImplemented;
@@ -36,6 +37,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
     private boolean isSessionTrackingSucceededCallbackImplemented;
     private boolean isSessionTrackingFailedCallbackImplemented;
     private boolean isDeferredDeeplinkCallbackImplemented;
+    private boolean isRemoteTriggerCallbackImplemented;
     private boolean isDeferredDeeplinkOpeningEnabled = true;
 
     public Adjust(ReactApplicationContext reactContext) {
@@ -94,6 +96,14 @@ public class Adjust extends ReactContextBaseJavaModule implements
             "adjust_deferredDeeplinkReceived",
             AdjustUtil.deferredDeeplinkToMap(uri));
         return this.isDeferredDeeplinkOpeningEnabled;
+    }
+
+    @Override
+    public void onRemoteTrigger(AdjustRemoteTrigger remoteTrigger) {
+        sendEvent(
+            getReactApplicationContext(),
+            "adjust_remoteTriggerReceived",
+            AdjustUtil.remoteTriggerToMap(remoteTrigger));
     }
 
     // common methods
@@ -343,6 +353,11 @@ public class Adjust extends ReactContextBaseJavaModule implements
         // deferred deeplink callback
         if (isDeferredDeeplinkCallbackImplemented) {
             adjustConfig.setOnDeferredDeeplinkResponseListener(this);
+        }
+
+        // remote trigger callback
+        if (isRemoteTriggerCallbackImplemented) {
+            adjustConfig.setOnRemoteTriggerListener(this);
         }
 
         // initialize SDK
@@ -920,6 +935,11 @@ public class Adjust extends ReactContextBaseJavaModule implements
     public void setDeferredDeeplinkCallbackImplemented() {
         this.isDeferredDeeplinkCallbackImplemented = true;
     }
+
+    @ReactMethod
+    public void setRemoteTriggerCallbackImplemented() {
+        this.isRemoteTriggerCallbackImplemented = true;
+    }
     
     // android only methods
 
@@ -1339,6 +1359,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
         this.isSessionTrackingSucceededCallbackImplemented = false;
         this.isSessionTrackingFailedCallbackImplemented = false;
         this.isDeferredDeeplinkCallbackImplemented = false;
+        this.isRemoteTriggerCallbackImplemented = false;
     }
 
     // private & helper methods

@@ -102,6 +102,12 @@ class App extends React.Component {
       console.log("Received deferred deeplink: " + deeplink.deeplink);
     });
 
+    adjustConfig.setRemoteTriggerCallback(function(remoteTrigger) {
+      console.log("Remote trigger callback received");
+      console.log("Label: " + remoteTrigger.label);
+      console.log("Payload JSON: " + remoteTrigger.payloadJson);
+    });
+
     adjustConfig.setSkanUpdatedCallback(function(skanData) {
       console.log("Received SKAN update information:");
       if (skanData.conversionValue != null) {

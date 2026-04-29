@@ -55,6 +55,11 @@ declare module 'react-native-adjust' {
     deeplink: string
   }
 
+  interface AdjustRemoteTrigger {
+    label: string
+    payloadJson: string
+  }
+
   interface AdjustSkanData {
     conversionValue: number
     coarseValue: string
@@ -119,6 +124,10 @@ declare module 'react-native-adjust' {
 
     public setDeferredDeeplinkCallback(
       callback: (deeplink: AdjustDeferredDeeplink) => void
+    ): void
+
+    public setRemoteTriggerCallback(
+      callback: (remoteTrigger: AdjustRemoteTrigger) => void
     ): void
 
     public setSkanUpdatedCallback(

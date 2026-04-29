@@ -11,6 +11,8 @@ package com.adjust.test;
 import android.util.Log;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import com.facebook.react.bridge.*;
 import com.facebook.react.modules.core.*;
 import com.adjust.test.TestLibrary;
@@ -51,8 +53,18 @@ public class AdjustSdkTest extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sendInfoToServer(String basePath) {
+    public void setInfoToSend(ReadableMap info) {
+        if (testLibrary == null) {
+            return;
+        }
+
+        testLibrary.setInfoToSend(readableMapToStringMap(info));
+    }
+
+    @ReactMethod
+    public void sendInfoToServer(String basePath, ReadableMap info) {
         if (testLibrary != null) {
+            testLibrary.setInfoToSend(readableMapToStringMap(info));
             testLibrary.sendInfoToServer(basePath);
         }
     }
@@ -80,5 +92,27 @@ public class AdjustSdkTest extends ReactContextBaseJavaModule {
     @ReactMethod
     public void removeListeners(double count) {
         // Keep: Required for RN built in Event Emitter Calls.
+    }
+
+    private Map<String, String> readableMapToStringMap(ReadableMap info) {
+        Map<String, String> filteredInfo = new HashMap<String, String>();
+        if (info == null) {
+            return filteredInfo;
+        }
+
+        ReadableMapKeySetIterator iterator = info.keySetIterator();
+        while (iterator.hasNextKey()) {
+            String key = iterator.nextKey();
+            if (info.isNull(key) || info.getType(key) != ReadableType.String) {
+                continue;
+            }
+
+            String value = info.getString(key);
+            if (value != null) {
+                filteredInfo.put(key, value);
+            }
+        }
+
+        return filteredInfo;
     }
 }

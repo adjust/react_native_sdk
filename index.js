@@ -166,7 +166,7 @@ Adjust.getLastDeeplink = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native5.5.0", callback);
+    module_adjust.getSdkVersion("react-native5.6.0", callback);
 };
 
 Adjust.componentWillUnmount = function() {
@@ -198,6 +198,11 @@ Adjust.componentWillUnmount = function() {
     if (AdjustConfig.DeferredDeeplinkCallback != null) {
         AdjustConfig.DeferredDeeplinkCallback.remove();
         AdjustConfig.DeferredDeeplinkCallback = null;
+    }
+
+    if (AdjustConfig.RemoteTriggerCallback != null) {
+        AdjustConfig.RemoteTriggerCallback.remove();
+        AdjustConfig.RemoteTriggerCallback = null;
     }
 
     if (AdjustConfig.SkanUpdatedCallback != null) {
@@ -341,7 +346,7 @@ Adjust.teardown = function(testParam) {
 
 var AdjustConfig = function(appToken, environment) {
     // common
-    this.sdkPrefix = "react-native5.5.0";
+    this.sdkPrefix = "react-native5.6.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
@@ -395,6 +400,7 @@ AdjustConfig.EventTrackingFailedCallback = null;
 AdjustConfig.SessionTrackingSucceededCallback = null;
 AdjustConfig.SessionTrackingFailedCallback = null;
 AdjustConfig.DeferredDeeplinkCallback = null;
+AdjustConfig.RemoteTriggerCallback = null;
 AdjustConfig.SkanUpdatedCallback = null;
 
 // common
@@ -529,6 +535,15 @@ AdjustConfig.prototype.setDeferredDeeplinkCallback = function(deferredDeeplinkCa
         module_adjust.setDeferredDeeplinkCallbackImplemented();
         AdjustConfig.DeferredDeeplinkCallback = module_adjust_emitter.addListener(
             'adjust_deferredDeeplinkReceived', deferredDeeplinkCallback
+        );
+    }
+};
+
+AdjustConfig.prototype.setRemoteTriggerCallback = function(remoteTriggerCallback) {
+    if (null == AdjustConfig.RemoteTriggerCallback) {
+        module_adjust.setRemoteTriggerCallbackImplemented();
+        AdjustConfig.RemoteTriggerCallback = module_adjust_emitter.addListener(
+            'adjust_remoteTriggerReceived', remoteTriggerCallback
         );
     }
 };

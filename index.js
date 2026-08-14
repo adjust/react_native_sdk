@@ -357,12 +357,17 @@ var AdjustConfig = function(appToken, environment) {
     this.defaultTracker = null;
     this.externalDeviceId = null;
     this.isDeviceIdsReadingOnceEnabled = null;
+    this.isDeviceIdsReadingEnabled = null;
+    this.isFbIdReadingEnabled = null;
     this.isCoppaComplianceEnabled = null;
     this.eventDeduplicationIdsMaxSize = null;
     this.isDataResidency = null;
     this.urlStrategyDomains = null;
     this.useSubdomains = null;
     this.storeInfo = null;
+    this.isGoogleAdIdReadingEnabled = null;
+    this.isAndroidIdReadingEnabled = null;
+    this.isFireAdIdReadingEnabled = null;
 
     // ios only
     this.isAdServicesEnabled = null;
@@ -561,6 +566,13 @@ AdjustConfig.prototype.disableIdfaReading = function() {
 AdjustConfig.prototype.disableIdfvReading = function() {
     this.isIdfvReadingAllowed = false;
 };
+AdjustConfig.prototype.disableDeviceIdsReading = function() {
+    this.isDeviceIdsReadingEnabled = false;
+};
+
+AdjustConfig.prototype.disableFbIdReading = function() {
+    this.isFbIdReadingEnabled = false;
+};
 
 AdjustConfig.prototype.disableSkanAttribution = function() {
     this.isSkanAttributionEnabled = false;
@@ -577,6 +589,18 @@ AdjustConfig.prototype.disableAppTrackingTransparencyUsage = function() {
 // android only
 AdjustConfig.prototype.disableAppSetIdReading = function() {
     this.isAppSetIdReadingEnabled = false;
+};
+
+AdjustConfig.prototype.disableGoogleAdIdReading = function() {
+    this.isGoogleAdIdReadingEnabled = false;
+};
+
+AdjustConfig.prototype.disableAndroidIdReading = function() {
+    this.isAndroidIdReadingEnabled = false;
+};
+
+AdjustConfig.prototype.disableFireAdIdReading = function() {
+    this.isFireAdIdReadingEnabled = false;
 };
 
 AdjustConfig.prototype.setAttConsentWaitingInterval = function(attConsentWaitingInterval) {

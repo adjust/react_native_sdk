@@ -39,6 +39,8 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSNumber *isAppTrackingTransparencyUsageEnabled = [dict objectForKey:@"isAppTrackingTransparencyUsageEnabled"];
     NSNumber *isIdfaReadingAllowed = [dict objectForKey:@"isIdfaReadingAllowed"];
     NSNumber *isIdfvReadingAllowed = [dict objectForKey:@"isIdfvReadingAllowed"];
+    NSNumber *isDeviceIdsReadingEnabled = [dict objectForKey:@"isDeviceIdsReadingEnabled"];
+    NSNumber *isFbIdReadingEnabled = [dict objectForKey:@"isFbIdReadingEnabled"];
     NSNumber *isSkanAttributionEnabled = [dict objectForKey:@"isSkanAttributionEnabled"];
     NSNumber *isDeferredDeeplinkOpeningEnabled = [dict objectForKey:@"isDeferredDeeplinkOpeningEnabled"];
     NSNumber *isDeviceIdsReadingOnceEnabled = [dict objectForKey:@"isDeviceIdsReadingOnceEnabled"];
@@ -137,6 +139,20 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     if ([self isFieldValid:isIdfvReadingAllowed]) {
         if ([isIdfvReadingAllowed boolValue] == NO) {
             [adjustConfig disableIdfvReading];
+        }
+    }
+
+    // Device Ids reading
+    if ([self isFieldValid:isDeviceIdsReadingEnabled]) {
+        if ([isDeviceIdsReadingEnabled boolValue] == NO) {
+            [adjustConfig disableDeviceIdsReading];
+        }
+    }
+
+    // FB Id reading
+    if ([self isFieldValid:isFbIdReadingEnabled]) {
+        if ([isFbIdReadingEnabled boolValue] == NO) {
+            [adjustConfig disableFbIdReading];
         }
     }
 

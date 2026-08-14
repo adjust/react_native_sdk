@@ -132,6 +132,8 @@ public class Adjust extends ReactContextBaseJavaModule implements
         boolean isPlayStoreKidsComplianceEnabled = false;
         boolean isCoppaComplianceEnabled = false;
         boolean isDeviceIdsReadingOnceEnabled = false;
+        boolean isDeviceIdsReadingEnabled = false;
+        boolean isFbIdReadingEnabled = false;
         boolean isFirstSessionDelayEnabled = false;
         List<Object> urlStrategyDomains = null;
         boolean useSubdomains = false;
@@ -285,6 +287,22 @@ public class Adjust extends ReactContextBaseJavaModule implements
             }
         }
 
+        // Device Ids reading
+        if (checkKey(mapConfig, "isDeviceIdsReadingEnabled")) {
+            isDeviceIdsReadingEnabled = mapConfig.getBoolean("isDeviceIdsReadingEnabled");
+            if (!isDeviceIdsReadingEnabled) {
+                adjustConfig.disableDeviceIdsReading();
+            }
+        }
+
+        // FB Id reading
+        if (checkKey(mapConfig, "isFbIdReadingEnabled")) {
+            isFbIdReadingEnabled = mapConfig.getBoolean("isFbIdReadingEnabled");
+            if (!isFbIdReadingEnabled) {
+                adjustConfig.disableFbIdReading();
+            }
+        }
+
         // first session delay
         if (checkKey(mapConfig, "isFirstSessionDelayEnabled")) {
             isFirstSessionDelayEnabled = mapConfig.getBoolean("isFirstSessionDelayEnabled");
@@ -298,6 +316,30 @@ public class Adjust extends ReactContextBaseJavaModule implements
             boolean isAppSetIdReadingEnabled = mapConfig.getBoolean("isAppSetIdReadingEnabled");
             if (!isAppSetIdReadingEnabled) {
                 adjustConfig.disableAppSetIdReading();
+            }
+        }
+
+        // Google Ad ID reading (Android only)
+        if (checkKey(mapConfig, "isGoogleAdIdReadingEnabled")) {
+            boolean isGoogleAdIdReadingEnabled = mapConfig.getBoolean("isGoogleAdIdReadingEnabled");
+            if (!isGoogleAdIdReadingEnabled) {
+                adjustConfig.disableGoogleAdIdReading();
+            }
+        }
+
+        // Android ID reading (Android only)
+        if (checkKey(mapConfig, "isAndroidIdReadingEnabled")) {
+            boolean isAndroidIdReadingEnabled = mapConfig.getBoolean("isAndroidIdReadingEnabled");
+            if (!isAndroidIdReadingEnabled) {
+                adjustConfig.disableAndroidIdReading();
+            }
+        }
+
+        // Fire Ad ID reading (Android only)
+        if (checkKey(mapConfig, "isFireAdIdReadingEnabled")) {
+            boolean isFireAdIdReadingEnabled = mapConfig.getBoolean("isFireAdIdReadingEnabled");
+            if (!isFireAdIdReadingEnabled) {
+                adjustConfig.disableFireAdIdReading();
             }
         }
 

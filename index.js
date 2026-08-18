@@ -170,7 +170,7 @@ Adjust.getLastDeeplink = function(callback) {
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native5.7.0", callback);
+    module_adjust.getSdkVersion("react-native5.8.0", callback);
 };
 
 Adjust.componentWillUnmount = function() {
@@ -355,7 +355,7 @@ Adjust.teardown = function(testParam) {
 
 var AdjustConfig = function(appToken, environment) {
     // common
-    this.sdkPrefix = "react-native5.7.0";
+    this.sdkPrefix = "react-native5.8.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;

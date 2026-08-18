@@ -22,6 +22,7 @@ BOOL _isSessionTrackingFailedCallbackImplemented;
 BOOL _isDeferredDeeplinkCallbackImplemented;
 BOOL _isRemoteTriggerCallbackImplemented;
 BOOL _isSkanUpdatedCallbackImplemented;
+BOOL _isThirdPartySharingSettingsChangedCallbackImplemented;
 
 #pragma mark - Common methods
 
@@ -223,7 +224,8 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         || _isSessionTrackingFailedCallbackImplemented
         || _isDeferredDeeplinkCallbackImplemented
         || _isRemoteTriggerCallbackImplemented
-        || _isSkanUpdatedCallbackImplemented) {
+        || _isSkanUpdatedCallbackImplemented
+        || _isThirdPartySharingSettingsChangedCallbackImplemented) {
         [adjustConfig setDelegate:
          [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
                                                  eventSucceededCallback:_isEventTrackingSucceededCallbackImplemented
@@ -233,6 +235,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
                                                deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
                                                   remoteTriggerCallback:_isRemoteTriggerCallbackImplemented
                                                     skanUpdatedCallback:_isSkanUpdatedCallbackImplemented
+                              thirdPartySharingSettingsChangedCallback:_isThirdPartySharingSettingsChangedCallbackImplemented
                                            shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
     }
 
@@ -666,6 +669,27 @@ RCT_EXPORT_METHOD(getAdidWithTimeout:(NSDictionary *)timeoutMap callback:(RCTRes
     }];
 }
 
+RCT_EXPORT_METHOD(getThirdPartySharingSettingsWithTimeout:(NSDictionary *)timeoutMap callback:(RCTResponseSenderBlock)callback) {
+    NSNumber *timeoutInMilliseconds = timeoutMap[@"timeoutInMilliseconds"];
+    if (![self isFieldValid:timeoutInMilliseconds]) {
+        if (callback) {
+            callback(@[[NSNull null]]);
+        }
+        return;
+    }
+
+    NSInteger timeoutMs = [timeoutInMilliseconds integerValue];
+    [Adjust thirdPartySharingSettingsWithTimeout:timeoutMs completionHandler:^(ADJThirdPartySharingResult * _Nullable result) {
+        if (callback) {
+            if (nil == result) {
+                callback(@[[NSNull null]]);
+            } else {
+                callback(@[result.thirdPartySharingSettingsJson]);
+            }
+        }
+    }];
+}
+
 RCT_EXPORT_METHOD(getLastDeeplink:(RCTResponseSenderBlock)callback) {
     [Adjust lastDeeplinkWithCompletionHandler:^(NSURL * _Nullable lastDeeplink) {
         if (callback) {
@@ -953,6 +977,10 @@ RCT_EXPORT_METHOD(setSkanUpdatedCallbackImplemented) {
     _isSkanUpdatedCallbackImplemented = YES;
 }
 
+RCT_EXPORT_METHOD(setThirdPartySharingSettingsChangedCallbackImplemented) {
+    _isThirdPartySharingSettingsChangedCallbackImplemented = YES;
+}
+
 #pragma mark - Testing only methods
 
 RCT_EXPORT_METHOD(onResume) {
@@ -1028,6 +1056,7 @@ RCT_EXPORT_METHOD(teardown) {
     _isDeferredDeeplinkCallbackImplemented = NO;
     _isRemoteTriggerCallbackImplemented = NO;
     _isSkanUpdatedCallbackImplemented = NO;
+    _isThirdPartySharingSettingsChangedCallbackImplemented = NO;
     [AdjustSdkDelegate teardown];
 }
 

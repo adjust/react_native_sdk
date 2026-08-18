@@ -161,6 +161,10 @@ Adjust.getAdidWithTimeout = function(timeoutInMilliseconds, callback) {
     module_adjust.getAdidWithTimeout({timeoutInMilliseconds: timeoutInMilliseconds}, callback);
 };
 
+Adjust.getThirdPartySharingSettingsWithTimeout = function(timeoutInMilliseconds, callback) {
+    module_adjust.getThirdPartySharingSettingsWithTimeout({timeoutInMilliseconds: timeoutInMilliseconds}, callback);
+};
+
 Adjust.getLastDeeplink = function(callback) {
     module_adjust.getLastDeeplink(callback);
 };
@@ -208,6 +212,11 @@ Adjust.componentWillUnmount = function() {
     if (AdjustConfig.SkanUpdatedCallback != null) {
         AdjustConfig.SkanUpdatedCallback.remove();
         AdjustConfig.SkanUpdatedCallback = null;
+    }
+
+    if (AdjustConfig.ThirdPartySharingSettingsChangedCallback != null) {
+        AdjustConfig.ThirdPartySharingSettingsChangedCallback.remove();
+        AdjustConfig.ThirdPartySharingSettingsChangedCallback = null;
     }
 };
 
@@ -365,9 +374,6 @@ var AdjustConfig = function(appToken, environment) {
     this.urlStrategyDomains = null;
     this.useSubdomains = null;
     this.storeInfo = null;
-    this.isGoogleAdIdReadingEnabled = null;
-    this.isAndroidIdReadingEnabled = null;
-    this.isFireAdIdReadingEnabled = null;
 
     // ios only
     this.isAdServicesEnabled = null;
@@ -383,9 +389,11 @@ var AdjustConfig = function(appToken, environment) {
     this.isPreinstallTrackingEnabled = null;
     this.preinstallFilePath = null;
     this.isPlayStoreKidsComplianceEnabled = null;
+    this.isGoogleAdIdReadingEnabled = null;
+    this.isAndroidIdReadingEnabled = null;
+    this.isFireAdIdReadingEnabled = null;
     this.fbAppId;
 
-    
 };
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
@@ -407,6 +415,7 @@ AdjustConfig.SessionTrackingFailedCallback = null;
 AdjustConfig.DeferredDeeplinkCallback = null;
 AdjustConfig.RemoteTriggerCallback = null;
 AdjustConfig.SkanUpdatedCallback = null;
+AdjustConfig.ThirdPartySharingSettingsChangedCallback = null;
 
 // common
 
@@ -495,6 +504,15 @@ AdjustConfig.prototype.setAttributionCallback = function(attributionCallback) {
         module_adjust.setAttributionCallbackImplemented();
         AdjustConfig.AttributionCallback = module_adjust_emitter.addListener(
             'adjust_attributionChanged', attributionCallback
+        );
+    }
+};
+
+AdjustConfig.prototype.setThirdPartySharingSettingsChangedCallback = function(thirdPartySharingSettingsChangedCallback) {
+    if (null == AdjustConfig.ThirdPartySharingSettingsChangedCallback) {
+        module_adjust.setThirdPartySharingSettingsChangedCallbackImplemented();
+        AdjustConfig.ThirdPartySharingSettingsChangedCallback = module_adjust_emitter.addListener(
+            'adjust_thirdPartySharingSettingsChanged', thirdPartySharingSettingsChangedCallback
         );
     }
 };

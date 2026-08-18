@@ -29,7 +29,8 @@ public class Adjust extends ReactContextBaseJavaModule implements
                 OnSessionTrackingSucceededListener,
                 OnSessionTrackingFailedListener,
                 OnDeferredDeeplinkResponseListener,
-                OnRemoteTriggerListener {
+                OnRemoteTriggerListener,
+                OnThirdPartySharingSettingsChangedListener {
     private static String TAG = "AdjustBridge";
     private boolean isAttributionCallbackImplemented;
     private boolean isEventTrackingSucceededCallbackImplemented;
@@ -38,6 +39,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
     private boolean isSessionTrackingFailedCallbackImplemented;
     private boolean isDeferredDeeplinkCallbackImplemented;
     private boolean isRemoteTriggerCallbackImplemented;
+    private boolean isThirdPartySharingSettingsChangedCallbackImplemented;
     private boolean isDeferredDeeplinkOpeningEnabled = true;
 
     public Adjust(ReactApplicationContext reactContext) {
@@ -104,6 +106,18 @@ public class Adjust extends ReactContextBaseJavaModule implements
             getReactApplicationContext(),
             "adjust_remoteTriggerReceived",
             AdjustUtil.remoteTriggerToMap(remoteTrigger));
+    }
+
+    @Override
+    public void onThirdPartySharingSettingsChanged(AdjustThirdPartySharingResult adjustThirdPartySharingResult) {
+        WritableMap map = Arguments.createMap();
+        if (adjustThirdPartySharingResult != null) {
+            map.putString("thirdPartySharingSettingsJson", adjustThirdPartySharingResult.getThirdPartySharingSettingsJson());
+        }
+        sendEvent(
+            getReactApplicationContext(),
+            "adjust_thirdPartySharingSettingsChanged",
+            map);
     }
 
     // common methods
@@ -370,6 +384,11 @@ public class Adjust extends ReactContextBaseJavaModule implements
         // attribution callback
         if (isAttributionCallbackImplemented) {
             adjustConfig.setOnAttributionChangedListener(this);
+        }
+
+        // third party sharing settings changed callback
+        if (isThirdPartySharingSettingsChangedCallbackImplemented) {
+            adjustConfig.setOnThirdPartySharingSettingsChangedListener(this);
         }
 
         // event tracking succeeded callback
@@ -918,6 +937,38 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
+    public void getThirdPartySharingSettingsWithTimeout(final ReadableMap timeoutMap, final Callback callback) {
+        if (timeoutMap == null || !checkKey(timeoutMap, "timeoutInMilliseconds")) {
+            if (callback != null) {
+                callback.invoke((String) null);
+            }
+            return;
+        }
+
+        long timeoutInMilliseconds;
+        try {
+            timeoutInMilliseconds = (long) timeoutMap.getDouble("timeoutInMilliseconds");
+        } catch (Exception e) {
+            if (callback != null) {
+                callback.invoke((String) null);
+            }
+            return;
+        }
+
+        com.adjust.sdk.Adjust.getThirdPartySharingSettingsWithTimeout(
+            getReactApplicationContext(),
+            timeoutInMilliseconds,
+            new com.adjust.sdk.OnThirdPartySharingSettingsReadListener() {
+                @Override
+                public void onThirdPartySharingSettingsRead(AdjustThirdPartySharingResult result) {
+                    if (callback != null) {
+                        callback.invoke(result != null ? result.getThirdPartySharingSettingsJson() : null);
+                    }
+                }
+            });
+    }
+
+    @ReactMethod
     public void getLastDeeplink(final Callback callback) {
         com.adjust.sdk.Adjust.getLastDeeplink(
             getReactApplicationContext(),
@@ -982,7 +1033,12 @@ public class Adjust extends ReactContextBaseJavaModule implements
     public void setRemoteTriggerCallbackImplemented() {
         this.isRemoteTriggerCallbackImplemented = true;
     }
-    
+
+    @ReactMethod
+    public void setThirdPartySharingSettingsChangedCallbackImplemented() {
+        this.isThirdPartySharingSettingsChangedCallbackImplemented = true;
+    }
+
     // android only methods
 
     @ReactMethod
@@ -1402,6 +1458,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
         this.isSessionTrackingFailedCallbackImplemented = false;
         this.isDeferredDeeplinkCallbackImplemented = false;
         this.isRemoteTriggerCallbackImplemented = false;
+        this.isThirdPartySharingSettingsChangedCallbackImplemented = false;
     }
 
     // private & helper methods

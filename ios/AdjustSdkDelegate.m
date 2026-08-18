@@ -40,6 +40,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
                             remoteTriggerCallback:(BOOL)swizzleRemoteTriggerCallback
                               skanUpdatedCallback:(BOOL)swizzleSkanUpdatedCallback
+        thirdPartySharingSettingsChangedCallback:(BOOL)swizzleThirdPartySharingSettingsChangedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
     dispatch_once(&onceToken, ^{
         defaultInstance = [[AdjustSdkDelegate alloc] init];
@@ -76,6 +77,10 @@ static AdjustSdkDelegate *defaultInstance = nil;
         if (swizzleSkanUpdatedCallback) {
             [defaultInstance swizzleCallbackMethod:@selector(adjustSkanUpdatedWithConversionData:)
                                   swizzledSelector:@selector(adjustSkanUpdatedWithConversionDataWannabe:)];
+        }
+        if (swizzleThirdPartySharingSettingsChangedCallback) {
+            [defaultInstance swizzleCallbackMethod:@selector(adjustThirdPartySharingSettingsChanged:)
+                                  swizzledSelector:@selector(adjustThirdPartySharingSettingsChangedWannabe:)];
         }
         [defaultInstance setShouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink];
     });
@@ -225,6 +230,14 @@ static AdjustSdkDelegate *defaultInstance = nil;
     [self addValueOrEmpty:dictionary key:@"lastSkanUpdate" value:data[@"last_skan_update"]];
     [self addValueOrEmpty:dictionary key:@"error" value:data[@"error"]];
     [AdjustEventEmitter dispatchEvent:@"adjust_skanUpdated" withDictionary:dictionary];
+}
+
+- (void)adjustThirdPartySharingSettingsChangedWannabe:(ADJThirdPartySharingResult *)thirdPartySharingResult {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    if (thirdPartySharingResult != nil) {
+        [self addValueOrEmpty:dictionary key:@"thirdPartySharingSettingsJson" value:thirdPartySharingResult.thirdPartySharingSettingsJson];
+    }
+    [AdjustEventEmitter dispatchEvent:@"adjust_thirdPartySharingSettingsChanged" withDictionary:dictionary];
 }
 
 - (void)swizzleCallbackMethod:(SEL)originalSelector

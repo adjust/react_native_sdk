@@ -148,6 +148,7 @@ AdjustCommandExecutor.prototype.executeCommand = function(command, idx) {
         case 'amazonAdIdGetter': this.amazonAdIdGetter(command.params); break;
         case 'sdkVersionGetter': this.sdkVersionGetter(command.params); break;
         case 'getLastDeeplink' : this.getLastDeeplink(command.params); break;
+        case 'tpsSettingsGetter': this.tpsSettingsGetter(command.params); break;
         case 'endFirstSessionDelay': this.endFirstSessionDelay(command.params); break;
         case 'coppaComplianceInDelay': this.coppaComplianceInDelay(command.params); break;
         case 'playStoreKidsComplianceInDelay': this.playStoreKidsComplianceInDelay(command.params); break;
@@ -344,6 +345,20 @@ AdjustCommandExecutor.prototype.config = function(params) {
         }
     }
 
+    if ('deviceIdsReadingEnabled' in params) {
+        var deviceIdsReadingEnabledS = getFirstParameterValue(params, 'deviceIdsReadingEnabled');
+        if (deviceIdsReadingEnabledS != 'true') {
+            adjustConfig.disableDeviceIdsReading();
+        }
+    }
+
+    if ('fbIdReadingEnabled' in params) {
+        var fbIdReadingEnabledS = getFirstParameterValue(params, 'fbIdReadingEnabled');
+        if (fbIdReadingEnabledS != 'true') {
+            adjustConfig.disableFbIdReading();
+        }
+    }
+
     if ('allowAdServicesInfoReading' in params) {
         var allowAdServicesInfoReadingS = getFirstParameterValue(params, 'allowAdServicesInfoReading');
         if (allowAdServicesInfoReadingS != 'true') {
@@ -416,6 +431,15 @@ AdjustCommandExecutor.prototype.config = function(params) {
             if (attribution.jsonResponse != null) {
                 infoToSend.json_response = JSON.stringify(attributionJsonResponse);
             }
+            AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
+        });
+    }
+
+    if ('thirdPartySharingSettingsChangedCallbackSendAll' in params) {
+        var _this = this;
+        adjustConfig.setThirdPartySharingSettingsChangedCallback(function(thirdPartySharingSettings) {
+            var infoToSend = {};
+            infoToSend.third_party_sharing_settings = thirdPartySharingSettings.thirdPartySharingSettingsJson;
             AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     }
@@ -556,6 +580,27 @@ AdjustCommandExecutor.prototype.config = function(params) {
             var appSetIdReadingEnabled = appSetIdReadingEnabledS?.toLowerCase() == 'true';
             if (!appSetIdReadingEnabled) {
                 adjustConfig.disableAppSetIdReading();
+            }
+        }
+        if ('googleAdIdReadingEnabled' in params) {
+            var googleAdIdReadingEnabledS = getFirstParameterValue(params, 'googleAdIdReadingEnabled');
+            var googleAdIdReadingEnabled = googleAdIdReadingEnabledS?.toLowerCase() == 'true';
+            if (!googleAdIdReadingEnabled) {
+                adjustConfig.disableGoogleAdIdReading();
+            }
+        }
+        if ('androidIdReadingEnabled' in params) {
+            var androidIdReadingEnabledS = getFirstParameterValue(params, 'androidIdReadingEnabled');
+            var androidIdReadingEnabled = androidIdReadingEnabledS?.toLowerCase() == 'true';
+            if (!androidIdReadingEnabled) {
+                adjustConfig.disableAndroidIdReading();
+            }
+        }
+        if ('fireAdIdReadingEnabled' in params) {
+            var fireAdIdReadingEnabledS = getFirstParameterValue(params, 'fireAdIdReadingEnabled');
+            var fireAdIdReadingEnabled = fireAdIdReadingEnabledS?.toLowerCase() == 'true';
+            if (!fireAdIdReadingEnabled) {
+                adjustConfig.disableFireAdIdReading();
             }
         }
     }
@@ -1137,6 +1182,29 @@ AdjustCommandExecutor.prototype.adidGetterWithTimeout = function(params) {
                 infoToSend.adid = 'nil';
             } else if (Platform.OS === 'android') {
                 infoToSend.adid = 'null';
+            }
+        }
+        if (testCallbackId) {
+            infoToSend.test_callback_id = testCallbackId;
+        }
+        AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
+    });
+};
+
+AdjustCommandExecutor.prototype.tpsSettingsGetter = function(params) {
+    var timeoutStr = getFirstParameterValue(params, 'timeout');
+    var timeout = parseInt(timeoutStr);
+    var testCallbackId = getFirstParameterValue(params, 'testCallbackId');
+    var _this = this;
+    Adjust.getThirdPartySharingSettingsWithTimeout(timeout, function(thirdPartySharingSettingsJson) {
+        var infoToSend = {};
+        if (thirdPartySharingSettingsJson != null) {
+            infoToSend.third_party_sharing = thirdPartySharingSettingsJson;
+        } else {
+            if (Platform.OS === 'ios') {
+                infoToSend.third_party_sharing = 'nil';
+            } else if (Platform.OS === 'android') {
+                infoToSend.third_party_sharing = 'null';
             }
         }
         if (testCallbackId) {

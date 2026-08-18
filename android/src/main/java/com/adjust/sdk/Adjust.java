@@ -110,14 +110,10 @@ public class Adjust extends ReactContextBaseJavaModule implements
 
     @Override
     public void onThirdPartySharingSettingsChanged(AdjustThirdPartySharingResult adjustThirdPartySharingResult) {
-        WritableMap map = Arguments.createMap();
-        if (adjustThirdPartySharingResult != null) {
-            map.putString("thirdPartySharingSettingsJson", adjustThirdPartySharingResult.getThirdPartySharingSettingsJson());
-        }
         sendEvent(
             getReactApplicationContext(),
             "adjust_thirdPartySharingSettingsChanged",
-            map);
+            AdjustUtil.thirdPartySharingResultToMap(adjustThirdPartySharingResult));
     }
 
     // common methods

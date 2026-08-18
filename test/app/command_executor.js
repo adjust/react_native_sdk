@@ -439,7 +439,9 @@ AdjustCommandExecutor.prototype.config = function(params) {
         var _this = this;
         adjustConfig.setThirdPartySharingSettingsChangedCallback(function(thirdPartySharingSettings) {
             var infoToSend = {};
-            infoToSend.third_party_sharing_settings = thirdPartySharingSettings.thirdPartySharingSettingsJson;
+            if (thirdPartySharingSettings.thirdPartySharingSettingsJson != null) {
+                infoToSend.third_party_sharing_settings = thirdPartySharingSettings.thirdPartySharingSettingsJson;
+            }
             AdjustSdkTest.sendInfoToServer(_this.extraPath, infoToSend);
         });
     }

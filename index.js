@@ -499,6 +499,14 @@ AdjustConfig.prototype.setStoreInfo = function(storeInfo) {
     this.storeInfo = storeInfo;
 };
 
+AdjustConfig.prototype.disableDeviceIdsReading = function() {
+    this.isDeviceIdsReadingEnabled = false;
+};
+
+AdjustConfig.prototype.disableFbIdReading = function() {
+    this.isFbIdReadingEnabled = false;
+};
+
 AdjustConfig.prototype.setAttributionCallback = function(attributionCallback) {
     if (null == AdjustConfig.AttributionCallback) {
         module_adjust.setAttributionCallbackImplemented();
@@ -583,13 +591,6 @@ AdjustConfig.prototype.disableIdfaReading = function() {
 
 AdjustConfig.prototype.disableIdfvReading = function() {
     this.isIdfvReadingAllowed = false;
-};
-AdjustConfig.prototype.disableDeviceIdsReading = function() {
-    this.isDeviceIdsReadingEnabled = false;
-};
-
-AdjustConfig.prototype.disableFbIdReading = function() {
-    this.isFbIdReadingEnabled = false;
 };
 
 AdjustConfig.prototype.disableSkanAttribution = function() {

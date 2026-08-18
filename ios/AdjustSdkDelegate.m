@@ -233,10 +233,12 @@ static AdjustSdkDelegate *defaultInstance = nil;
 }
 
 - (void)adjustThirdPartySharingSettingsChangedWannabe:(ADJThirdPartySharingResult *)thirdPartySharingResult {
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-    if (thirdPartySharingResult != nil) {
-        [self addValueOrEmpty:dictionary key:@"thirdPartySharingSettingsJson" value:thirdPartySharingResult.thirdPartySharingSettingsJson];
+    if (thirdPartySharingResult == nil) {
+        return;
     }
+
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    [self addValueOrEmpty:dictionary key:@"thirdPartySharingSettingsJson" value:thirdPartySharingResult.thirdPartySharingSettingsJson];
     [AdjustEventEmitter dispatchEvent:@"adjust_thirdPartySharingSettingsChanged" withDictionary:dictionary];
 }
 

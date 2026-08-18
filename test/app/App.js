@@ -34,7 +34,7 @@ const App: () => React$Node = () => {
   }
 
   var urlOverwrite = "";
-  var ipAddress = "192.168.21.38";
+  var ipAddress = "192.168.21.66";
   if (Platform.OS === "android") {
     urlOverwrite = "https://" + ipAddress + ":8443";
   } else if (Platform.OS === "ios") {
@@ -42,13 +42,8 @@ const App: () => React$Node = () => {
   }
   var controlUrl = "ws://" + ipAddress + ":1987";
 
-  // AdjustSdkTest.addTestDirectory("third-party-sharing");
-  // AdjustSdkTest.addTest("Test_Getters_tps_settings_bursts");
-  // AdjustSdkTest.addTest("Test_VerifyTrack_delayed");
-  // AdjustSdkTest.addTest("Test_SessionBackoff");
-  // AdjustSdkTest.addTest("Test_RetryIn_sdk_click_queue");
-  // AdjustSdkTest.addTest("Test_RetryIn_main_queue");
-  // AdjustSdkTest.addTest("Test_Event_Status2xx4xx5xx_Without_ResponseMessage");
+  // AdjustSdkTest.addTestDirectory("deeplink");
+  // AdjustSdkTest.addTest("Test_StoreInfo_valid_string");
   Adjust.getSdkVersion(function (sdkVersion) {
     AdjustSdkTest.startTestSession(urlOverwrite, controlUrl, sdkVersion);
   });

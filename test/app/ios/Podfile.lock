@@ -1898,10 +1898,10 @@ PODS:
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
     - SocketRocket
-  - react-native-adjust (5.7.0):
+  - react-native-adjust (5.8.0):
     - Adjust (= 5.8.0)
     - React-Core
-  - react-native-adjust-test (5.7.0):
+  - react-native-adjust-test (5.8.0):
     - React
   - React-NativeModulesApple (0.83.5):
     - boost
@@ -2759,8 +2759,8 @@ SPEC CHECKSUMS:
   React-logger: 661e84a3f43439fc2e81478b7d055c3edc44697b
   React-Mapbuffer: 05f0d11c9c28b80913abdd580840d5a3b1e75328
   React-microtasksnativemodule: d433adcf1a5e2f7e6d1fcef57b42efd76aa0aded
-  react-native-adjust: 3707daefaad094d3049210d8d642a071f70c4b7b
-  react-native-adjust-test: 9babc9835c751d8953473dc0a9475da764c83dca
+  react-native-adjust: f4f009ff36c5d27bae2f814ab62704da0bc93020
+  react-native-adjust-test: abb1588726347e3561fad67d4f9dc3a3d9858998
   React-NativeModulesApple: 9070626e7bc2b0b1efd106ce5ff9d4c207ef0ad6
   React-networking: e26aade54c2eeff9f1e60336e26202965895dc2a
   React-oscompat: 7427e1c3527c66edd789d63d0603c68b52b50a12

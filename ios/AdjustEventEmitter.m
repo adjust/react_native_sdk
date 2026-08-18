@@ -31,7 +31,8 @@ RCT_EXPORT_MODULE();
              @"adjust_sessionTrackingFailed",
              @"adjust_deferredDeeplinkReceived",
              @"adjust_remoteTriggerReceived",
-             @"adjust_skanUpdated"];
+             @"adjust_skanUpdated",
+             @"adjust_thirdPartySharingSettingsChanged"];
 }
 
 - (void)startObserving {

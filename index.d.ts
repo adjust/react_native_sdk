@@ -106,6 +106,7 @@ declare module 'react-native-adjust' {
     public disableGoogleAdIdReading(): void
     public disableAndroidIdReading(): void
     public disableFireAdIdReading(): void
+    public disableDeviceIdsFromPluginsReading(): void
     public setEventDeduplicationIdsMaxSize(eventDeduplicationIdsMaxSize: number): void
     public setAttConsentWaitingInterval(attConsentWaitingInterval: number): void
     public setUrlStrategy(urlStrategyDomains: string[], useSubdomains: boolean, isDataResidency: boolean): void

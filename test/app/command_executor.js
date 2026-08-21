@@ -605,6 +605,13 @@ AdjustCommandExecutor.prototype.config = function(params) {
                 adjustConfig.disableFireAdIdReading();
             }
         }
+        if ('deviceIdsFromPluginsReadingEnabled' in params) {
+            var deviceIdsFromPluginsReadingEnabledS = getFirstParameterValue(params, 'deviceIdsFromPluginsReadingEnabled');
+            var deviceIdsFromPluginsReadingEnabled = deviceIdsFromPluginsReadingEnabledS?.toLowerCase() == 'true';
+            if (!deviceIdsFromPluginsReadingEnabled) {
+                adjustConfig.disableDeviceIdsFromPluginsReading();
+            }
+        }
     }
 };
 

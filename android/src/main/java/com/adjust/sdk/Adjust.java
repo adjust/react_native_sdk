@@ -353,6 +353,14 @@ public class Adjust extends ReactContextBaseJavaModule implements
             }
         }
 
+        // device IDs from plugins reading (Android only)
+        if (checkKey(mapConfig, "isDeviceIdsFromPluginsReadingEnabled")) {
+            boolean isDeviceIdsFromPluginsReadingEnabled = mapConfig.getBoolean("isDeviceIdsFromPluginsReadingEnabled");
+            if (!isDeviceIdsFromPluginsReadingEnabled) {
+                adjustConfig.disableDeviceIdsFromPluginsReading();
+            }
+        }
+
         // store info 
         if (checkKey(mapConfig, "storeInfo")) {
             ReadableMap storeInfo = mapConfig.getMap("storeInfo");

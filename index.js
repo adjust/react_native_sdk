@@ -392,6 +392,7 @@ var AdjustConfig = function(appToken, environment) {
     this.isGoogleAdIdReadingEnabled = null;
     this.isAndroidIdReadingEnabled = null;
     this.isFireAdIdReadingEnabled = null;
+    this.isDeviceIdsFromPluginsReadingEnabled = null;
     this.fbAppId;
 
 };
@@ -620,6 +621,10 @@ AdjustConfig.prototype.disableAndroidIdReading = function() {
 
 AdjustConfig.prototype.disableFireAdIdReading = function() {
     this.isFireAdIdReadingEnabled = false;
+};
+
+AdjustConfig.prototype.disableDeviceIdsFromPluginsReading = function() {
+    this.isDeviceIdsFromPluginsReadingEnabled = false;
 };
 
 AdjustConfig.prototype.setAttConsentWaitingInterval = function(attConsentWaitingInterval) {

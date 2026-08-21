@@ -98,11 +98,11 @@ declare module 'react-native-adjust' {
     public disableAdServices(): void
     public disableIdfaReading(): void
     public disableIdfvReading(): void
-    public disableDeviceIdsReading(): void
-    public disableFbIdReading(): void
     public disableSkanAttribution(): void
     public disableAppTrackingTransparencyUsage(): void
     public disableAppSetIdReading(): void
+    public disableDeviceIdsReading(): void
+    public disableFbIdReading(): void
     public disableGoogleAdIdReading(): void
     public disableAndroidIdReading(): void
     public disableFireAdIdReading(): void

@@ -21,7 +21,7 @@
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
                             remoteTriggerCallback:(BOOL)swizzleRemoteTriggerCallback
                               skanUpdatedCallback:(BOOL)swizzleSkanConversionValueUpdatedCallback
-        thirdPartySharingSettingsChangedCallback:(BOOL)swizzleThirdPartySharingSettingsChangedCallback
+         thirdPartySharingSettingsChangedCallback:(BOOL)swizzleThirdPartySharingSettingsChangedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink;
 
 + (void)teardown;

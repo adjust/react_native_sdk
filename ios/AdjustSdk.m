@@ -235,7 +235,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
                                                deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
                                                   remoteTriggerCallback:_isRemoteTriggerCallbackImplemented
                                                     skanUpdatedCallback:_isSkanUpdatedCallbackImplemented
-                              thirdPartySharingSettingsChangedCallback:_isThirdPartySharingSettingsChangedCallbackImplemented
+                               thirdPartySharingSettingsChangedCallback:_isThirdPartySharingSettingsChangedCallbackImplemented
                                            shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
     }
 

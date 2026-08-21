@@ -40,7 +40,7 @@ static AdjustSdkDelegate *defaultInstance = nil;
                          deferredDeeplinkCallback:(BOOL)swizzleDeferredDeeplinkCallback
                             remoteTriggerCallback:(BOOL)swizzleRemoteTriggerCallback
                               skanUpdatedCallback:(BOOL)swizzleSkanUpdatedCallback
-        thirdPartySharingSettingsChangedCallback:(BOOL)swizzleThirdPartySharingSettingsChangedCallback
+         thirdPartySharingSettingsChangedCallback:(BOOL)swizzleThirdPartySharingSettingsChangedCallback
                      shouldLaunchDeferredDeeplink:(BOOL)shouldLaunchDeferredDeeplink {
     dispatch_once(&onceToken, ^{
         defaultInstance = [[AdjustSdkDelegate alloc] init];

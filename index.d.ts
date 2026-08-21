@@ -67,6 +67,10 @@ declare module 'react-native-adjust' {
     error: string
   }
 
+  interface AdjustThirdPartySharingSettings {
+    thirdPartySharingSettingsJson: string
+  }
+
   interface AdjustPurchaseVerificationResult {
     verificationStatus: string
     code: number
@@ -97,6 +101,12 @@ declare module 'react-native-adjust' {
     public disableSkanAttribution(): void
     public disableAppTrackingTransparencyUsage(): void
     public disableAppSetIdReading(): void
+    public disableDeviceIdsReading(): void
+    public disableFbIdReading(): void
+    public disableGoogleAdIdReading(): void
+    public disableAndroidIdReading(): void
+    public disableFireAdIdReading(): void
+    public disableDeviceIdsFromPluginsReading(): void
     public setEventDeduplicationIdsMaxSize(eventDeduplicationIdsMaxSize: number): void
     public setAttConsentWaitingInterval(attConsentWaitingInterval: number): void
     public setUrlStrategy(urlStrategyDomains: string[], useSubdomains: boolean, isDataResidency: boolean): void
@@ -132,6 +142,10 @@ declare module 'react-native-adjust' {
 
     public setSkanUpdatedCallback(
       callback: (skanData: AdjustSkanData) => void
+    ): void
+
+    public setThirdPartySharingSettingsChangedCallback(
+      callback: (thirdPartySharingSettings: AdjustThirdPartySharingSettings) => void
     ): void
 
     static LogLevelVerbose: LogLevel
@@ -249,6 +263,7 @@ declare module 'react-native-adjust' {
     trackThirdPartySharing: (adjustThirdPartySharing: AdjustThirdPartySharing) => void
     trackMeasurementConsent: (measurementConsent: boolean) => void
     getLastDeeplink: (callback: (lastDeeplink: string | null) => void) => void
+    getThirdPartySharingSettingsWithTimeout: (timeoutInMilliseconds: number, callback: (thirdPartySharingSettingsJson: string | null) => void) => void
     verifyAppStorePurchase: (purchase: AdjustAppStorePurchase, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
     verifyAndTrackAppStorePurchase: (adjustEvent: AdjustEvent, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void
     verifyPlayStorePurchase: (purchase: AdjustPlayStorePurchase, callback: (verificationResult: AdjustPurchaseVerificationResult) => void) => void

@@ -161,12 +161,16 @@ Adjust.getAdidWithTimeout = function(timeoutInMilliseconds, callback) {
     module_adjust.getAdidWithTimeout({timeoutInMilliseconds: timeoutInMilliseconds}, callback);
 };
 
+Adjust.getThirdPartySharingSettingsWithTimeout = function(timeoutInMilliseconds, callback) {
+    module_adjust.getThirdPartySharingSettingsWithTimeout({timeoutInMilliseconds: timeoutInMilliseconds}, callback);
+};
+
 Adjust.getLastDeeplink = function(callback) {
     module_adjust.getLastDeeplink(callback);
 };
 
 Adjust.getSdkVersion = function(callback) {
-    module_adjust.getSdkVersion("react-native5.6.0", callback);
+    module_adjust.getSdkVersion("react-native5.8.0", callback);
 };
 
 Adjust.componentWillUnmount = function() {
@@ -208,6 +212,11 @@ Adjust.componentWillUnmount = function() {
     if (AdjustConfig.SkanUpdatedCallback != null) {
         AdjustConfig.SkanUpdatedCallback.remove();
         AdjustConfig.SkanUpdatedCallback = null;
+    }
+
+    if (AdjustConfig.ThirdPartySharingSettingsChangedCallback != null) {
+        AdjustConfig.ThirdPartySharingSettingsChangedCallback.remove();
+        AdjustConfig.ThirdPartySharingSettingsChangedCallback = null;
     }
 };
 
@@ -346,7 +355,7 @@ Adjust.teardown = function(testParam) {
 
 var AdjustConfig = function(appToken, environment) {
     // common
-    this.sdkPrefix = "react-native5.6.0";
+    this.sdkPrefix = "react-native5.8.0";
     this.appToken = appToken;
     this.environment = environment;
     this.logLevel = null;
@@ -357,6 +366,8 @@ var AdjustConfig = function(appToken, environment) {
     this.defaultTracker = null;
     this.externalDeviceId = null;
     this.isDeviceIdsReadingOnceEnabled = null;
+    this.isDeviceIdsReadingEnabled = null;
+    this.isFbIdReadingEnabled = null;
     this.isCoppaComplianceEnabled = null;
     this.eventDeduplicationIdsMaxSize = null;
     this.isDataResidency = null;
@@ -378,9 +389,12 @@ var AdjustConfig = function(appToken, environment) {
     this.isPreinstallTrackingEnabled = null;
     this.preinstallFilePath = null;
     this.isPlayStoreKidsComplianceEnabled = null;
+    this.isGoogleAdIdReadingEnabled = null;
+    this.isAndroidIdReadingEnabled = null;
+    this.isFireAdIdReadingEnabled = null;
+    this.isDeviceIdsFromPluginsReadingEnabled = null;
     this.fbAppId;
 
-    
 };
 
 AdjustConfig.EnvironmentSandbox = "sandbox";
@@ -402,6 +416,7 @@ AdjustConfig.SessionTrackingFailedCallback = null;
 AdjustConfig.DeferredDeeplinkCallback = null;
 AdjustConfig.RemoteTriggerCallback = null;
 AdjustConfig.SkanUpdatedCallback = null;
+AdjustConfig.ThirdPartySharingSettingsChangedCallback = null;
 
 // common
 
@@ -485,11 +500,28 @@ AdjustConfig.prototype.setStoreInfo = function(storeInfo) {
     this.storeInfo = storeInfo;
 };
 
+AdjustConfig.prototype.disableDeviceIdsReading = function() {
+    this.isDeviceIdsReadingEnabled = false;
+};
+
+AdjustConfig.prototype.disableFbIdReading = function() {
+    this.isFbIdReadingEnabled = false;
+};
+
 AdjustConfig.prototype.setAttributionCallback = function(attributionCallback) {
     if (null == AdjustConfig.AttributionCallback) {
         module_adjust.setAttributionCallbackImplemented();
         AdjustConfig.AttributionCallback = module_adjust_emitter.addListener(
             'adjust_attributionChanged', attributionCallback
+        );
+    }
+};
+
+AdjustConfig.prototype.setThirdPartySharingSettingsChangedCallback = function(thirdPartySharingSettingsChangedCallback) {
+    if (null == AdjustConfig.ThirdPartySharingSettingsChangedCallback) {
+        module_adjust.setThirdPartySharingSettingsChangedCallbackImplemented();
+        AdjustConfig.ThirdPartySharingSettingsChangedCallback = module_adjust_emitter.addListener(
+            'adjust_thirdPartySharingSettingsChanged', thirdPartySharingSettingsChangedCallback
         );
     }
 };
@@ -577,6 +609,22 @@ AdjustConfig.prototype.disableAppTrackingTransparencyUsage = function() {
 // android only
 AdjustConfig.prototype.disableAppSetIdReading = function() {
     this.isAppSetIdReadingEnabled = false;
+};
+
+AdjustConfig.prototype.disableGoogleAdIdReading = function() {
+    this.isGoogleAdIdReadingEnabled = false;
+};
+
+AdjustConfig.prototype.disableAndroidIdReading = function() {
+    this.isAndroidIdReadingEnabled = false;
+};
+
+AdjustConfig.prototype.disableFireAdIdReading = function() {
+    this.isFireAdIdReadingEnabled = false;
+};
+
+AdjustConfig.prototype.disableDeviceIdsFromPluginsReading = function() {
+    this.isDeviceIdsFromPluginsReadingEnabled = false;
 };
 
 AdjustConfig.prototype.setAttConsentWaitingInterval = function(attConsentWaitingInterval) {

@@ -22,6 +22,7 @@ BOOL _isSessionTrackingFailedCallbackImplemented;
 BOOL _isDeferredDeeplinkCallbackImplemented;
 BOOL _isRemoteTriggerCallbackImplemented;
 BOOL _isSkanUpdatedCallbackImplemented;
+BOOL _isThirdPartySharingSettingsChangedCallbackImplemented;
 
 #pragma mark - Common methods
 
@@ -39,6 +40,8 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
     NSNumber *isAppTrackingTransparencyUsageEnabled = [dict objectForKey:@"isAppTrackingTransparencyUsageEnabled"];
     NSNumber *isIdfaReadingAllowed = [dict objectForKey:@"isIdfaReadingAllowed"];
     NSNumber *isIdfvReadingAllowed = [dict objectForKey:@"isIdfvReadingAllowed"];
+    NSNumber *isDeviceIdsReadingEnabled = [dict objectForKey:@"isDeviceIdsReadingEnabled"];
+    NSNumber *isFbIdReadingEnabled = [dict objectForKey:@"isFbIdReadingEnabled"];
     NSNumber *isSkanAttributionEnabled = [dict objectForKey:@"isSkanAttributionEnabled"];
     NSNumber *isDeferredDeeplinkOpeningEnabled = [dict objectForKey:@"isDeferredDeeplinkOpeningEnabled"];
     NSNumber *isDeviceIdsReadingOnceEnabled = [dict objectForKey:@"isDeviceIdsReadingOnceEnabled"];
@@ -140,6 +143,20 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         }
     }
 
+    // Device Ids reading
+    if ([self isFieldValid:isDeviceIdsReadingEnabled]) {
+        if ([isDeviceIdsReadingEnabled boolValue] == NO) {
+            [adjustConfig disableDeviceIdsReading];
+        }
+    }
+
+    // FB Id reading
+    if ([self isFieldValid:isFbIdReadingEnabled]) {
+        if ([isFbIdReadingEnabled boolValue] == NO) {
+            [adjustConfig disableFbIdReading];
+        }
+    }
+
     // SKAdNetwork handling
     if ([self isFieldValid:isSkanAttributionEnabled]) {
         if ([isSkanAttributionEnabled boolValue] == NO) {
@@ -207,7 +224,8 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
         || _isSessionTrackingFailedCallbackImplemented
         || _isDeferredDeeplinkCallbackImplemented
         || _isRemoteTriggerCallbackImplemented
-        || _isSkanUpdatedCallbackImplemented) {
+        || _isSkanUpdatedCallbackImplemented
+        || _isThirdPartySharingSettingsChangedCallbackImplemented) {
         [adjustConfig setDelegate:
          [AdjustSdkDelegate getInstanceWithSwizzleOfAttributionCallback:_isAttributionCallbackImplemented
                                                  eventSucceededCallback:_isEventTrackingSucceededCallbackImplemented
@@ -217,6 +235,7 @@ RCT_EXPORT_METHOD(initSdk:(NSDictionary *)dict) {
                                                deferredDeeplinkCallback:_isDeferredDeeplinkCallbackImplemented
                                                   remoteTriggerCallback:_isRemoteTriggerCallbackImplemented
                                                     skanUpdatedCallback:_isSkanUpdatedCallbackImplemented
+                               thirdPartySharingSettingsChangedCallback:_isThirdPartySharingSettingsChangedCallbackImplemented
                                            shouldLaunchDeferredDeeplink:shouldLaunchDeferredDeeplink]];
     }
 
@@ -650,6 +669,27 @@ RCT_EXPORT_METHOD(getAdidWithTimeout:(NSDictionary *)timeoutMap callback:(RCTRes
     }];
 }
 
+RCT_EXPORT_METHOD(getThirdPartySharingSettingsWithTimeout:(NSDictionary *)timeoutMap callback:(RCTResponseSenderBlock)callback) {
+    NSNumber *timeoutInMilliseconds = timeoutMap[@"timeoutInMilliseconds"];
+    if (![self isFieldValid:timeoutInMilliseconds]) {
+        if (callback) {
+            callback(@[[NSNull null]]);
+        }
+        return;
+    }
+
+    NSInteger timeoutMs = [timeoutInMilliseconds integerValue];
+    [Adjust thirdPartySharingSettingsWithTimeout:timeoutMs completionHandler:^(ADJThirdPartySharingResult * _Nullable result) {
+        if (callback) {
+            if (nil == result) {
+                callback(@[[NSNull null]]);
+            } else {
+                callback(@[result.thirdPartySharingSettingsJson]);
+            }
+        }
+    }];
+}
+
 RCT_EXPORT_METHOD(getLastDeeplink:(RCTResponseSenderBlock)callback) {
     [Adjust lastDeeplinkWithCompletionHandler:^(NSURL * _Nullable lastDeeplink) {
         if (callback) {
@@ -937,6 +977,10 @@ RCT_EXPORT_METHOD(setSkanUpdatedCallbackImplemented) {
     _isSkanUpdatedCallbackImplemented = YES;
 }
 
+RCT_EXPORT_METHOD(setThirdPartySharingSettingsChangedCallbackImplemented) {
+    _isThirdPartySharingSettingsChangedCallbackImplemented = YES;
+}
+
 #pragma mark - Testing only methods
 
 RCT_EXPORT_METHOD(onResume) {
@@ -1012,6 +1056,7 @@ RCT_EXPORT_METHOD(teardown) {
     _isDeferredDeeplinkCallbackImplemented = NO;
     _isRemoteTriggerCallbackImplemented = NO;
     _isSkanUpdatedCallbackImplemented = NO;
+    _isThirdPartySharingSettingsChangedCallbackImplemented = NO;
     [AdjustSdkDelegate teardown];
 }
 

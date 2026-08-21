@@ -1,3 +1,19 @@
+### Version 5.8.0 (21st August 2026)
+#### Added
+- Added `getThirdPartySharingSettingsWithTimeout` method to the `Adjust` API and `setThirdPartySharingSettingsChangedCallback` method to `AdjustConfig` for reading the current third-party-sharing settings from the Adjust backend and receiving updates when they change.
+- Added `disableDeviceIdsReading` method to `AdjustConfig` as an umbrella method alternative to invoking individual device ID disabling methods.
+- Added support for Samsung MAPS (Mobile Application Preload System).
+- Added support for sending parameters that identify preinstalled Android system apps.
+
+#### Changed
+- Updated the Adjust Signature library version to 5.0.0.
+
+#### Native SDKs
+- [iOS@v5.8.0][ios_sdk_v5.8.0]
+- [Android@v5.8.0][android_sdk_v5.8.0]
+
+---
+
 ### Version 5.6.0 (29th April 2026)
 #### Added
 - Added support for remote trigger callbacks. You can now receive remote trigger updates by calling `setRemoteTriggerCallback` on your `AdjustConfig` instance. Remote trigger payload is exposed as a JSON string in `payloadJson`.
@@ -832,6 +848,7 @@ In case you were using beta version of the SDK v5, please switch to the official
 [ios_sdk_v5.4.6]: https://github.com/adjust/ios_sdk/tree/v5.4.6
 [ios_sdk_v5.5.0]: https://github.com/adjust/ios_sdk/tree/v5.5.0
 [ios_sdk_v5.6.2]: https://github.com/adjust/ios_sdk/tree/v5.6.2
+[ios_sdk_v5.8.0]: https://github.com/adjust/ios_sdk/tree/v5.8.0
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0
@@ -880,3 +897,4 @@ In case you were using beta version of the SDK v5, please switch to the official
 [android_sdk_v5.4.5]: https://github.com/adjust/android_sdk/tree/v5.4.5
 [android_sdk_v5.5.0]: https://github.com/adjust/android_sdk/tree/v5.5.0
 [android_sdk_v5.6.1]: https://github.com/adjust/android_sdk/tree/v5.6.1
+[android_sdk_v5.8.0]: https://github.com/adjust/android_sdk/tree/v5.8.0

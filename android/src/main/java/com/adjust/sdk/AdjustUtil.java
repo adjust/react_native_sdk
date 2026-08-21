@@ -165,6 +165,17 @@ final class AdjustUtil {
         return map;
     }
 
+    public static WritableMap thirdPartySharingResultToMap(AdjustThirdPartySharingResult thirdPartySharingResult) {
+        WritableMap map = Arguments.createMap();
+        if (thirdPartySharingResult == null) {
+            map.putString("thirdPartySharingSettingsJson", "");
+            return map;
+        }
+
+        map.putString("thirdPartySharingSettingsJson", thirdPartySharingResult.getThirdPartySharingSettingsJson() != null ? thirdPartySharingResult.getThirdPartySharingSettingsJson() : "");
+        return map;
+    }
+
     public static boolean isFieldValid(String field) {
         if (field != null) {
             if (!field.equals("") && !field.equals("null")) {

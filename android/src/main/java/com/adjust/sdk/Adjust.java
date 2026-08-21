@@ -29,7 +29,8 @@ public class Adjust extends ReactContextBaseJavaModule implements
                 OnSessionTrackingSucceededListener,
                 OnSessionTrackingFailedListener,
                 OnDeferredDeeplinkResponseListener,
-                OnRemoteTriggerListener {
+                OnRemoteTriggerListener,
+                OnThirdPartySharingSettingsChangedListener {
     private static String TAG = "AdjustBridge";
     private boolean isAttributionCallbackImplemented;
     private boolean isEventTrackingSucceededCallbackImplemented;
@@ -38,6 +39,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
     private boolean isSessionTrackingFailedCallbackImplemented;
     private boolean isDeferredDeeplinkCallbackImplemented;
     private boolean isRemoteTriggerCallbackImplemented;
+    private boolean isThirdPartySharingSettingsChangedCallbackImplemented;
     private boolean isDeferredDeeplinkOpeningEnabled = true;
 
     public Adjust(ReactApplicationContext reactContext) {
@@ -106,6 +108,14 @@ public class Adjust extends ReactContextBaseJavaModule implements
             AdjustUtil.remoteTriggerToMap(remoteTrigger));
     }
 
+    @Override
+    public void onThirdPartySharingSettingsChanged(AdjustThirdPartySharingResult adjustThirdPartySharingResult) {
+        sendEvent(
+            getReactApplicationContext(),
+            "adjust_thirdPartySharingSettingsChanged",
+            AdjustUtil.thirdPartySharingResultToMap(adjustThirdPartySharingResult));
+    }
+
     // common methods
 
     @ReactMethod
@@ -132,6 +142,8 @@ public class Adjust extends ReactContextBaseJavaModule implements
         boolean isPlayStoreKidsComplianceEnabled = false;
         boolean isCoppaComplianceEnabled = false;
         boolean isDeviceIdsReadingOnceEnabled = false;
+        boolean isDeviceIdsReadingEnabled = false;
+        boolean isFbIdReadingEnabled = false;
         boolean isFirstSessionDelayEnabled = false;
         List<Object> urlStrategyDomains = null;
         boolean useSubdomains = false;
@@ -285,6 +297,22 @@ public class Adjust extends ReactContextBaseJavaModule implements
             }
         }
 
+        // Device Ids reading
+        if (checkKey(mapConfig, "isDeviceIdsReadingEnabled")) {
+            isDeviceIdsReadingEnabled = mapConfig.getBoolean("isDeviceIdsReadingEnabled");
+            if (!isDeviceIdsReadingEnabled) {
+                adjustConfig.disableDeviceIdsReading();
+            }
+        }
+
+        // FB Id reading
+        if (checkKey(mapConfig, "isFbIdReadingEnabled")) {
+            isFbIdReadingEnabled = mapConfig.getBoolean("isFbIdReadingEnabled");
+            if (!isFbIdReadingEnabled) {
+                adjustConfig.disableFbIdReading();
+            }
+        }
+
         // first session delay
         if (checkKey(mapConfig, "isFirstSessionDelayEnabled")) {
             isFirstSessionDelayEnabled = mapConfig.getBoolean("isFirstSessionDelayEnabled");
@@ -298,6 +326,38 @@ public class Adjust extends ReactContextBaseJavaModule implements
             boolean isAppSetIdReadingEnabled = mapConfig.getBoolean("isAppSetIdReadingEnabled");
             if (!isAppSetIdReadingEnabled) {
                 adjustConfig.disableAppSetIdReading();
+            }
+        }
+
+        // Google Ad ID reading (Android only)
+        if (checkKey(mapConfig, "isGoogleAdIdReadingEnabled")) {
+            boolean isGoogleAdIdReadingEnabled = mapConfig.getBoolean("isGoogleAdIdReadingEnabled");
+            if (!isGoogleAdIdReadingEnabled) {
+                adjustConfig.disableGoogleAdIdReading();
+            }
+        }
+
+        // Android ID reading (Android only)
+        if (checkKey(mapConfig, "isAndroidIdReadingEnabled")) {
+            boolean isAndroidIdReadingEnabled = mapConfig.getBoolean("isAndroidIdReadingEnabled");
+            if (!isAndroidIdReadingEnabled) {
+                adjustConfig.disableAndroidIdReading();
+            }
+        }
+
+        // Fire Ad ID reading (Android only)
+        if (checkKey(mapConfig, "isFireAdIdReadingEnabled")) {
+            boolean isFireAdIdReadingEnabled = mapConfig.getBoolean("isFireAdIdReadingEnabled");
+            if (!isFireAdIdReadingEnabled) {
+                adjustConfig.disableFireAdIdReading();
+            }
+        }
+
+        // device IDs from plugins reading (Android only)
+        if (checkKey(mapConfig, "isDeviceIdsFromPluginsReadingEnabled")) {
+            boolean isDeviceIdsFromPluginsReadingEnabled = mapConfig.getBoolean("isDeviceIdsFromPluginsReadingEnabled");
+            if (!isDeviceIdsFromPluginsReadingEnabled) {
+                adjustConfig.disableDeviceIdsFromPluginsReading();
             }
         }
 
@@ -328,6 +388,11 @@ public class Adjust extends ReactContextBaseJavaModule implements
         // attribution callback
         if (isAttributionCallbackImplemented) {
             adjustConfig.setOnAttributionChangedListener(this);
+        }
+
+        // third party sharing settings changed callback
+        if (isThirdPartySharingSettingsChangedCallbackImplemented) {
+            adjustConfig.setOnThirdPartySharingSettingsChangedListener(this);
         }
 
         // event tracking succeeded callback
@@ -876,6 +941,38 @@ public class Adjust extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
+    public void getThirdPartySharingSettingsWithTimeout(final ReadableMap timeoutMap, final Callback callback) {
+        if (timeoutMap == null || !checkKey(timeoutMap, "timeoutInMilliseconds")) {
+            if (callback != null) {
+                callback.invoke((String) null);
+            }
+            return;
+        }
+
+        long timeoutInMilliseconds;
+        try {
+            timeoutInMilliseconds = (long) timeoutMap.getDouble("timeoutInMilliseconds");
+        } catch (Exception e) {
+            if (callback != null) {
+                callback.invoke((String) null);
+            }
+            return;
+        }
+
+        com.adjust.sdk.Adjust.getThirdPartySharingSettingsWithTimeout(
+            getReactApplicationContext(),
+            timeoutInMilliseconds,
+            new com.adjust.sdk.OnThirdPartySharingSettingsReadListener() {
+                @Override
+                public void onThirdPartySharingSettingsRead(AdjustThirdPartySharingResult result) {
+                    if (callback != null) {
+                        callback.invoke(result != null ? result.getThirdPartySharingSettingsJson() : null);
+                    }
+                }
+            });
+    }
+
+    @ReactMethod
     public void getLastDeeplink(final Callback callback) {
         com.adjust.sdk.Adjust.getLastDeeplink(
             getReactApplicationContext(),
@@ -940,7 +1037,12 @@ public class Adjust extends ReactContextBaseJavaModule implements
     public void setRemoteTriggerCallbackImplemented() {
         this.isRemoteTriggerCallbackImplemented = true;
     }
-    
+
+    @ReactMethod
+    public void setThirdPartySharingSettingsChangedCallbackImplemented() {
+        this.isThirdPartySharingSettingsChangedCallbackImplemented = true;
+    }
+
     // android only methods
 
     @ReactMethod
@@ -1360,6 +1462,7 @@ public class Adjust extends ReactContextBaseJavaModule implements
         this.isSessionTrackingFailedCallbackImplemented = false;
         this.isDeferredDeeplinkCallbackImplemented = false;
         this.isRemoteTriggerCallbackImplemented = false;
+        this.isThirdPartySharingSettingsChangedCallbackImplemented = false;
     }
 
     // private & helper methods

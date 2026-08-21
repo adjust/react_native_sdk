@@ -1,4 +1,4 @@
-### Version 5.8.0 (19th August 2026)
+### Version 5.8.0 (21st August 2026)
 #### Added
 - Added `getThirdPartySharingSettingsWithTimeout` method to the `Adjust` API and `setThirdPartySharingSettingsChangedCallback` method to `AdjustConfig` for reading the current third-party-sharing settings from the Adjust backend and receiving updates when they change.
 - Added `disableDeviceIdsReading` method to `AdjustConfig` as an umbrella method alternative to invoking individual device ID disabling methods.

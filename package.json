@@ -7,6 +7,7 @@
     "license": "MIT",
     "keywords": [
         "react-native",
+        "expo",
         "ios",
         "android",
         "adjust"
@@ -18,5 +19,8 @@
     "repository": {
         "type": "git",
         "url": "git://github.com/adjust/react_native_sdk.git"
+    },
+    "devDependencies": {
+        "@expo/config-plugins": "^54.0.1"
     }
 }

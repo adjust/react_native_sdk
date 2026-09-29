@@ -96,6 +96,11 @@ package-lock.json
 ios/Build/
 ios/Index/
 
+#SPM
+.swiftpm/
+Package.resolved
+.build/
+
 # Just in case
 temp/
 

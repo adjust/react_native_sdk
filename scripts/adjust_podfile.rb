@@ -10,21 +10,17 @@
 #     adjust_embed_native_sdk_spm!(installer)   # <-- one line
 #   end
 #
-# Why this is needed: when $RNAdjustUseSPM is enabled, the Adjust iOS SDK
-# is resolved as an SPM product (AdjustSdk). AdjustSdk itself compiles down to a
-# static object (AdjustSdk.o) that gets absorbed directly into react-native-adjust's
-# own framework/binary at link time, so it needs no separate embedding. But AdjustSdk
-# transitively depends on the AdjustSignature package (binary: AdjustSigSdk), which
-# Xcode builds as its own standalone dynamic .framework. CocoaPods' SPM integration
-# only manages the *directly declared* product (AdjustSdk) — it does not walk into
-# and embed transitive SPM products — so without this, the app builds and links fine
-# but crashes at launch on device with
+# Why this is needed: CocoaPods' SPM integration embeds only the product the podspec
+# declares (AdjustSdk), not its transitive ones. AdjustSdk links in statically, but its
+# AdjustSignature dependency builds as a standalone dynamic framework (AdjustSigSdk),
+# so without this the app links fine and then crashes at launch on device with
 # "dyld: Library not loaded: @rpath/AdjustSigSdk.framework/AdjustSigSdk".
 #
-# This helper keeps an "Embed Adjust SPM Frameworks" Run Script build phase on the
-# app target that copies (and, on device builds, re-signs) AdjustSigSdk.framework into
-# the app bundle. With the SPM flag on it adds the phase, or refreshes its script if it
-# changed; with the flag off it removes the phase, so rolling back leaves nothing behind.
+# GoogleAdsOnDeviceConversion, pulled in by the AdjustGoogleOdm product, is static and
+# must NOT be embedded: iOS rejects the install ("contained no image slices").
+#
+# This keeps an "Embed Adjust SPM Frameworks" build phase on the app target in sync with
+# the flag: added or refreshed when it's on, removed when it's off.
 require 'xcodeproj'
 
 ADJUST_SPM_EMBED_PHASE_NAME = 'Embed Adjust SPM Frameworks'.freeze

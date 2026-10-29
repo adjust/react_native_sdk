@@ -1,6 +1,10 @@
 ### Version 5.8.1 (3rd November 2026)
+#### Fixed
+- Fixed a crash that could occur on iOS after downgrading the SDK when global callback or partner parameters were persisted.
+
 #### Changed
 - Updated the Adjust Signature library version to 5.8.0.
+- Improved HTTP response stream handling and resource cleanup on Android.
 
 #### Native SDKs
 - [iOS@v5.8.1][ios_sdk_v5.8.1]

@@ -1,0 +1,275 @@
+import { mergeContents } from "@expo/config-plugins/build/utils/generateCode";
+import {
+  AndroidConfig,
+  createRunOncePlugin,
+  IOSConfig,
+  withAppBuildGradle,
+  withXcodeProject,
+  withDangerousMod,
+} from "@expo/config-plugins";
+import fs from "node:fs";
+import path from "node:path";
+
+/**
+ * @typedef {import('@expo/config-plugins').ConfigPlugin} ConfigPlugin
+ */
+
+/**
+ * @typedef {Object} SdkSignature
+ * @property {string} [ios] - iOS SDK signature path
+ * @property {string} [android] - Android SDK signature path
+ */
+
+/**
+ * @typedef {Object} Props
+ * @property {boolean} [targetAndroid12] - Whether to target Android 12
+ * @property {SdkSignature} [sdkSignature] - SDK signature configuration
+ */
+
+/**
+ * @type {ConfigPlugin<{library: string, status?: string}>}
+ */
+const withXcodeLinkBinaryWithLibraries = (config, { library, status }) => {
+  return withXcodeProject(config, (config) => {
+    const options = status === "optional" ? { weak: true } : {};
+
+    const target = IOSConfig.XcodeUtils.getApplicationNativeTarget({
+      project: config.modResults,
+      projectName: config.modRequest.projectName,
+    });
+
+    config.modResults.addFramework(library, {
+      target: target.uuid,
+      ...options,
+    });
+
+    return config;
+  });
+};
+
+/**
+ * @param {string} src
+ * @returns {Object}
+ */
+const addAndroidPackagingOptions = (src) => {
+  return mergeContents({
+    tag: "react-native-play-services-analytics",
+    src,
+    newSrc: `
+      implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
+      implementation 'com.android.installreferrer:installreferrer:2.2'
+    `,
+    anchor: /dependencies(?:\s+)?\{/,
+    // Inside the dependencies block.
+    offset: 1,
+    comment: "//",
+  });
+};
+
+/**
+ * @param {string} src
+ * @returns {Object}
+ */
+const addSdkSignatureDependency = (src) => {
+  return mergeContents({
+    tag: "react-native-adjust arr dependency",
+    src,
+    newSrc: "implementation files('libs/adjust-lib.aar')",
+    anchor: /dependencies(?:\s+)?\{/,
+    // Inside the dependencies block.
+    offset: 1,
+    comment: "//",
+  });
+};
+
+/**
+ * @param {string} src
+ * @returns {Object}
+ */
+const addNdkAbiFilters = (src) => {
+  return mergeContents({
+    tag: "react-native-adjust NDK abi filters",
+    src,
+    newSrc: "ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'",
+    anchor: /defaultConfig(?:\s+)?\{/,
+    // Inside the dependencies block.
+    offset: 1,
+    comment: "//",
+  });
+};
+
+/**
+ * @type {ConfigPlugin<{isSdkSignatureSupported: boolean}>}
+ */
+const withGradle = (config, { isSdkSignatureSupported }) => {
+  return withAppBuildGradle(config, (config) => {
+    if (config.modResults.language !== "groovy") {
+      throw new Error(
+        "Cannot add Play Services maven gradle because the project build.gradle is not groovy",
+      );
+    }
+
+    if (isSdkSignatureSupported) {
+      config.modResults.contents = addNdkAbiFilters(
+        config.modResults.contents
+      ).contents;
+
+      config.modResults.contents = addSdkSignatureDependency(
+        config.modResults.contents
+      ).contents;
+    }
+
+    config.modResults.contents = addAndroidPackagingOptions(
+      config.modResults.contents
+    ).contents;
+
+    return config;
+  });
+};
+
+/**
+ * @type {ConfigPlugin<{sdkSignaturePath: string}>}
+ */
+const withAndroidSdkSignature = (config, props) => {
+  return withDangerousMod(config, [
+    "android",
+    async (config) => {
+      const projectRoot = config.modRequest.projectRoot;
+      const libPath = path.join(projectRoot, props.sdkSignaturePath);
+
+      if (!fs.existsSync(libPath)) {
+        throw new Error("Cannot find Adjust Android sdk signature library !");
+      }
+
+      const libsDirectoryPath = path.join(projectRoot, "android/app/libs");
+
+      if (!fs.existsSync(libsDirectoryPath)) {
+        fs.mkdirSync(libsDirectoryPath);
+      }
+
+      fs.cpSync(libPath, path.join(libsDirectoryPath, "adjust-lib.aar"));
+
+      return config;
+    },
+  ]);
+};
+
+/**
+ * @type {ConfigPlugin<{sdkSignaturePath: string}>}
+ */
+const withIosSdkSignature = (config, props) => {
+  return withXcodeProject(config, (config) => {
+    const projectRoot = config.modRequest.projectRoot;
+    const libPath = path.join(projectRoot, props.sdkSignaturePath);
+
+    if (!fs.existsSync(libPath)) {
+      throw new Error("Cannot find Adjust iOS sdk signature library !");
+    }
+
+    const newLibPath = path.join(
+      projectRoot,
+      "ios",
+      config.modRequest.projectName,
+      path.basename(libPath)
+    );
+    const target = IOSConfig.XcodeUtils.getApplicationNativeTarget({
+      project: config.modResults,
+      projectName: config.modRequest.projectName,
+    });
+
+    fs.cpSync(libPath, newLibPath, { recursive: true });
+
+    const embedFrameworksBuildPhase =
+      config.modResults.pbxEmbedFrameworksBuildPhaseObj(target.uuid);
+
+    if (!embedFrameworksBuildPhase) {
+      config.modResults.addBuildPhase(
+        [],
+        "PBXCopyFilesBuildPhase",
+        "Embed Frameworks",
+        target.uuid,
+        "frameworks"
+      );
+    }
+
+    config.modResults.addFramework(newLibPath, {
+      target: target.uuid,
+      embed: true,
+      sign: true,
+      customFramework: true,
+    });
+
+    return config;
+  });
+};
+
+/**
+ * Apply react-native-adjust configuration for Expo SDK +44 projects.
+ * @type {ConfigPlugin<void | Props>}
+ */
+const withAdjustPlugin = (config, _props) => {
+  const props = _props || {};
+
+  const androidSdkSignaturePath = props.sdkSignature?.android ?? "";
+  const iosSdkSignaturePath = props.sdkSignature?.ios ?? "";
+  const isAndroidSdkSignatureSupported = androidSdkSignaturePath !== "";
+  const isIosSdkSignatureSupported = iosSdkSignaturePath !== "";
+
+  config = withXcodeLinkBinaryWithLibraries(config, {
+    library: "AdServices.framework",
+    status: "optional",
+  });
+
+  config = withXcodeLinkBinaryWithLibraries(config, {
+    library: "AdSupport.framework",
+    status: "optional",
+  });
+
+  config = withXcodeLinkBinaryWithLibraries(config, {
+    library: "StoreKit.framework",
+    status: "optional",
+  });
+
+  config = withXcodeLinkBinaryWithLibraries(config, {
+    library: "AppTrackingTransparency.framework",
+    status: "optional",
+  });
+
+  if (isIosSdkSignatureSupported) {
+    config = withIosSdkSignature(config, {
+      sdkSignaturePath: iosSdkSignaturePath,
+    });
+  }
+
+  if (props.targetAndroid12) {
+    config = AndroidConfig.Permissions.withPermissions(config, [
+      "com.google.android.gms.permission.AD_ID",
+    ]);
+  }
+
+  config = withGradle(config, {
+    isSdkSignatureSupported: isAndroidSdkSignatureSupported,
+  });
+
+  if (isAndroidSdkSignatureSupported) {
+    config = withAndroidSdkSignature(config, {
+      sdkSignaturePath: androidSdkSignaturePath,
+    });
+  }
+
+  // Return the modified config.
+  return config;
+};
+
+const pkg = {
+  // Prevent this plugin from being run more than once.
+  // This pattern enables users to safely migrate off of this
+  // out-of-tree `@config-plugins/react-native-adjust` to a future
+  // upstream plugin in `react-native-adjust`
+  name: "react-native-adjust",
+  // Indicates that this plugin is dangerously linked to a module,
+  // and might not work with the latest version of that module.
+  version: "UNVERSIONED",
+};
+
+export default createRunOncePlugin(withAdjustPlugin, pkg.name, pkg.version);

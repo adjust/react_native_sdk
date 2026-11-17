@@ -2,7 +2,7 @@ require 'json'
 
 package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
 
-ADJUST_IOS_SDK_VERSION = '5.8.1' unless defined?(ADJUST_IOS_SDK_VERSION)
+ADJUST_IOS_SDK_VERSION = '5.8.2' unless defined?(ADJUST_IOS_SDK_VERSION)
 ADJUST_SPM_URL         = 'https://github.com/adjust/ios_sdk' unless defined?(ADJUST_SPM_URL)
 
 Pod::Spec.new do |s|
@@ -37,7 +37,7 @@ Pod::Spec.new do |s|
       s,
       url: ADJUST_SPM_URL,
       requirement: { kind: 'exactVersion', version: ADJUST_IOS_SDK_VERSION },
-      products: odm_requested ? ['AdjustSdk', 'AdjustGoogleOdm'] : ['AdjustSdk']
+      products: odm_requested ? ['AdjustSdk', 'AdjustGoogleOdmPlugin'] : ['AdjustSdk']
     )
   else
     s.dependency odm_requested ? 'Adjust/AdjustGoogleOdm' : 'Adjust', ADJUST_IOS_SDK_VERSION

@@ -1,5 +1,4 @@
 require 'json'
-require_relative 'scripts/adjust_podfile'
 
 package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
 
@@ -33,11 +32,12 @@ Pod::Spec.new do |s|
     Pod::UI.warn "#{s.name}: $RNAdjustUseSPM set but React Native's spm_dependency helper is unavailable (requires RN 0.75+). Falling back to CocoaPods for the native SDK."
   end
 
-  if use_spm && !AdjustSpm.activate!(ADJUST_IOS_SDK_VERSION)
-    Pod::UI.warn "#{s.name}: couldn't hook into this CocoaPods version. Add `adjust_embed_native_sdk_spm!(installer)` to a post_integrate block in your Podfile, or the app crashes at launch."
-  end
-
   if use_spm
+    require_relative 'scripts/adjust_podfile'
+    unless AdjustSpm.activate!(ADJUST_IOS_SDK_VERSION)
+      Pod::UI.warn "#{s.name}: couldn't hook into this CocoaPods version. Add `adjust_embed_native_sdk_spm!(installer)` to a post_integrate block in your Podfile, or the app crashes at launch."
+    end
+
     spm_dependency(
       s,
       url: ADJUST_SPM_URL,

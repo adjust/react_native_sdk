@@ -1,28 +1,20 @@
-# Adjust React Native: embeds AdjustSigSdk.framework for the opt-in SPM native SDK path.
+# Embeds AdjustSigSdk.framework when the native SDK comes from SPM ($RNAdjustUseSPM).
+# Loaded by the podspec; apps don't call anything.
 #
-# Loaded by react-native-adjust.podspec; apps don't need to require or call anything.
-# Opt in from ios/Podfile with:
-#   $RNAdjustUseSPM = true
-#   use_frameworks! :linkage => :dynamic
-#
-# Why: CocoaPods' SPM integration embeds only the product the podspec declares (AdjustSdk),
-# not its transitive ones. AdjustSignature builds as a standalone dynamic framework
-# (AdjustSigSdk), so without this the app links but crashes at launch on device with
-# "dyld: Library not loaded: @rpath/AdjustSigSdk.framework/AdjustSigSdk".
-#
-# How: once CocoaPods has written its files (post_integrate), adds AdjustSigSdk to the embed
-# script CocoaPods generates for the app ("[CP] Embed Pods Frameworks"), so CocoaPods copies
-# and signs it like any pod framework. The app's own .xcodeproj is never modified, and CocoaPods
-# regenerates the script on every install, so turning SPM off leaves nothing behind.
+# CocoaPods embeds only the SPM product the podspec declares, not AdjustSigSdk, so without
+# this the app crashes at launch ("Library not loaded: @rpath/AdjustSigSdk.framework").
+# The fix is a line in CocoaPods' generated embed script, which is rewritten on every
+# pod install; the app's .xcodeproj is never touched.
 
 return if defined?(AdjustSpm)
 
 module AdjustSpm
   POD_NAME  = 'react-native-adjust'.freeze
-  FRAMEWORK = 'AdjustSigSdk.framework'.freeze
+  NAME      = 'AdjustSigSdk'.freeze
+  FRAMEWORK = "#{NAME}.framework".freeze
   INPUT     = "${BUILT_PRODUCTS_DIR}/#{FRAMEWORK}".freeze
   OUTPUT    = "${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/#{FRAMEWORK}".freeze
-  MARKER    = '# [Adjust] AdjustSigSdk from Swift Package Manager'.freeze
+  MARKER    = "# [Adjust] #{NAME} from Swift Package Manager".freeze
   # The top-level block that ends every CocoaPods embed script.
   ANCHOR    = /^if \[ "\$\{COCOAPODS_PARALLEL_CODE_SIGN\}" == "true" \]; then$/
 
@@ -54,15 +46,19 @@ module AdjustSpm
         end
 
         # The version comment changes the script on an SDK update, so Xcode re-runs the phase.
+        # Xcode also writes the xcframework signature to this pod's build dir as well as the
+        # shared one, and Xcode 26 archives fail on the duplicate ("couldn't be copied to
+        # Signatures because an item with the same name already exists"), so drop the pod's copy.
         block = <<~SH
           #{MARKER} (ios_sdk #{@sdk_version})
           if [ -d "#{INPUT}" ]; then
             install_framework "#{INPUT}"
           fi
+          rm -f "${BUILT_PRODUCTS_DIR}/#{POD_NAME}/"#{NAME}.xcframework-*.signature
         SH
         File.write(script_path, script.sub(ANCHOR) { "#{block}#{$&}" })
         add_to_file_lists(aggregate)
-        Pod::UI.puts "[Adjust] Embedding #{FRAMEWORK} in #{aggregate.name}."
+        Pod::UI.message "[Adjust] Embedding #{FRAMEWORK} in #{aggregate.name}."
       end
     end
 

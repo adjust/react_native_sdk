@@ -1,3 +1,23 @@
+### Version 5.8.2 (23rd November 2026)
+#### Added
+- Added opt-in support for resolving the native iOS SDK through Swift Package Manager instead of CocoaPods (requires React Native 0.75 or later). To enable it, add the following to your `ios/Podfile` before the `target` block and run `pod install`:
+  ```ruby
+  $RNAdjustUseSPM = true
+  use_frameworks! :linkage => :dynamic
+  ```
+  No other Podfile changes are needed. CocoaPods remains the default.
+- Added the `$RNAdjustUseGoogleOdmPlugin` Podfile flag for installing the Google On-Device Measurement (ODM) plugin, with either Swift Package Manager or CocoaPods. To enable it, add the following to your `ios/Podfile` before the `target` block and run `pod install`:
+  ```ruby
+  $RNAdjustUseGoogleOdmPlugin = true
+  pod 'GoogleAdsOnDeviceConversion', '3.0.0'
+  ```
+
+#### Native SDKs
+- [iOS@v5.8.2][ios_sdk_v5.8.2]
+- [Android@v5.8.1][android_sdk_v5.8.1]
+
+---
+
 ### Version 5.8.1 (3rd November 2026)
 #### Fixed
 - Fixed a crash that could occur on iOS after downgrading the SDK when global callback or partner parameters were persisted.
@@ -864,6 +884,7 @@ In case you were using beta version of the SDK v5, please switch to the official
 [ios_sdk_v5.6.2]: https://github.com/adjust/ios_sdk/tree/v5.6.2
 [ios_sdk_v5.8.0]: https://github.com/adjust/ios_sdk/tree/v5.8.0
 [ios_sdk_v5.8.1]: https://github.com/adjust/ios_sdk/tree/v5.8.1
+[ios_sdk_v5.8.2]: https://github.com/adjust/ios_sdk/tree/v5.8.2
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0

@@ -38,6 +38,10 @@ Pod::Spec.new do |s|
       Pod::UI.warn "#{s.name}: couldn't hook into this CocoaPods version. Add `adjust_embed_native_sdk_spm!(installer)` to a post_integrate block in your Podfile, or the app crashes at launch."
     end
 
+    # AdjustSigSdk is a dynamic framework from AdjustSdk's package. Link it from the app
+    # target so it loads at launch with static and dynamic pod linkage alike.
+    s.user_target_xcconfig = { 'OTHER_LDFLAGS' => '$(inherited) -framework "AdjustSigSdk"' }
+
     spm_dependency(
       s,
       url: ADJUST_SPM_URL,

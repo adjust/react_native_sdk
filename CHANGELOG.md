@@ -3,7 +3,6 @@
 - Added opt-in support for resolving the native iOS SDK through Swift Package Manager instead of CocoaPods (requires React Native 0.75 or later). To enable it, add the following to your `ios/Podfile` before the `target` block and run `pod install`:
   ```ruby
   $RNAdjustUseSPM = true
-  use_frameworks! :linkage => :dynamic
   ```
   No other Podfile changes are needed. CocoaPods remains the default.
 - Added the `$RNAdjustUseGoogleOdmPlugin` Podfile flag for installing the Google On-Device Measurement (ODM) plugin, with either Swift Package Manager or CocoaPods. To enable it, add the following to your `ios/Podfile` before the `target` block and run `pod install`:

@@ -18,7 +18,6 @@ $RNAdjustUseGoogleOdmPlugin = true
 pod 'GoogleAdsOnDeviceConversion', '3.0.0'
 
 $RNAdjustUseSPM = true
-use_frameworks! :linkage => :dynamic
 
 target 'AdjustExample' do
   config = use_native_modules!

@@ -29,8 +29,6 @@ module AdjustSpm
     end
 
     def embed(installer)
-      warn_if_not_dynamic(installer)
-
       installer.aggregate_targets.each do |aggregate|
         next unless aggregate.pod_targets.any? { |t| t.name == POD_NAME }
 
@@ -77,14 +75,6 @@ module AdjustSpm
           File.write(path, (lines << entry).join("\n") + "\n") unless lines.include?(entry)
         end
       end
-    end
-
-    def warn_if_not_dynamic(installer)
-      target = installer.pod_targets.find { |t| t.name == POD_NAME }
-      return unless target.respond_to?(:build_as_dynamic_framework?)
-      return if target.build_as_dynamic_framework?
-      Pod::UI.warn('[Adjust] $RNAdjustUseSPM needs dynamic frameworks. ' \
-                   'Add `use_frameworks! :linkage => :dynamic` to your Podfile.')
     end
   end
 

@@ -1,4 +1,4 @@
-### Version 5.8.2 (23rd November 2026)
+### Version 5.8.2 (24th November 2026)
 #### Added
 - Added opt-in support for resolving the native iOS SDK through Swift Package Manager instead of CocoaPods (requires React Native 0.75 or later). To enable it, add the following to your `ios/Podfile` before the `target` block and run `pod install`:
   ```ruby
@@ -10,6 +10,7 @@
   $RNAdjustUseGoogleOdmPlugin = true
   pod 'GoogleAdsOnDeviceConversion', '3.0.0'
   ```
+To use SPM, add the [Google Ads On-Device Conversion iOS SDK](https://github.com/googleads/google-ads-on-device-conversion-ios-sdk) via Swift Package Manager. If your app already includes it (for example, through Firebase Analytics 11.14.0 or later), skip this step.
 
 #### Native SDKs
 - [iOS@v5.8.2][ios_sdk_v5.8.2]

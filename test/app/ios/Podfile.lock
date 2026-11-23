@@ -1,9 +1,4 @@
 PODS:
-  - Adjust (5.8.2):
-    - Adjust/Adjust (= 5.8.2)
-  - Adjust/Adjust (5.8.2):
-    - AdjustSignature (= 5.8.0)
-  - AdjustSignature (5.8.0)
   - boost (1.84.0)
   - DoubleConversion (1.1.6)
   - fast_float (8.0.0)
@@ -1899,7 +1894,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
   - react-native-adjust (5.8.2):
-    - Adjust (= 5.8.2)
     - React-Core
   - react-native-adjust-test (5.8.2):
     - React
@@ -2548,8 +2542,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Adjust
-    - AdjustSignature
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -2714,15 +2706,13 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adjust: f334eb5bdb64c1f55dafb5106f59160f1b27b016
-  AdjustSignature: 0b2c808c9d58e21ff394f4edc7feea70c2ee84fc
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 7f47b3463fec4f3acdd9a7e24741908b9c5b493b
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  hermes-engine: adffc381c61d11bb5a9edb270f5e953d6c7bb2cb
+  hermes-engine: a53ffb93b95fd988a52a537c3b12731072d02350
   RCT-Folly: b29feb752b08042c62badaef7d453f3bb5e6ae23
   RCTDeprecation: 66da7829306a6741edb3f866687c13a4938ca5f4
   RCTRequired: c6853c7a563306968f833210c476741e09fc5f61
@@ -2759,7 +2749,7 @@ SPEC CHECKSUMS:
   React-logger: 661e84a3f43439fc2e81478b7d055c3edc44697b
   React-Mapbuffer: 05f0d11c9c28b80913abdd580840d5a3b1e75328
   React-microtasksnativemodule: d433adcf1a5e2f7e6d1fcef57b42efd76aa0aded
-  react-native-adjust: fcd30785d44669011f66d2657a21801ca3a144fe
+  react-native-adjust: b007d1188bbeda5b17f2724485d07497cb4f410c
   react-native-adjust-test: 7c09c61b20d3a9c8b7bc2763a8979af2253d4460
   React-NativeModulesApple: 9070626e7bc2b0b1efd106ce5ff9d4c207ef0ad6
   React-networking: e26aade54c2eeff9f1e60336e26202965895dc2a
@@ -2797,6 +2787,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 897e8c1fb1fd80c3c01231ed4ec8c1ffa652c29f
 
-PODFILE CHECKSUM: d3cd26661d6762803e53abec34a3e3424972a270
+PODFILE CHECKSUM: 69bd7eb8a9f690cb635aae5536754b3111b3d89f
 
 COCOAPODS: 1.16.2

@@ -14,7 +14,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-# $RNAdjustUseSPM = true
+$RNAdjustUseSPM = true
 
 target 'AdjustTest' do
   config = use_native_modules!

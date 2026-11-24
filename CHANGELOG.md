@@ -1,3 +1,23 @@
+### Version 5.8.2 (24th November 2026)
+#### Added
+- Added opt-in support for resolving the native iOS SDK through Swift Package Manager instead of CocoaPods (requires React Native 0.75 or later). To enable it, add the following to your `ios/Podfile` before the `target` block and run `pod install`:
+  ```ruby
+  $RNAdjustUseSPM = true
+  ```
+- Added the `$RNAdjustUseGoogleOdmPlugin` Podfile flag for installing the Google On-Device Measurement (ODM) plugin, with either Swift Package Manager or CocoaPods. To enable it, add the following to your `ios/Podfile` before the `target` block and run `pod install`:
+  ```ruby
+  $RNAdjustUseGoogleOdmPlugin = true
+  pod 'GoogleAdsOnDeviceConversion', '3.0.0'
+  ```
+  Instead of the `GoogleAdsOnDeviceConversion` pod, you can add the [Google Ads On-Device Conversion iOS SDK](https://github.com/googleads/google-ads-on-device-conversion-ios-sdk) to your app as a Swift package. If your app already includes it (for example, through Firebase Analytics 11.14.0 or later), you don't need to add it.
+  If your `Podfile` has the `pod 'Adjust/AdjustGoogleOdm'` line, remove it and use this flag instead. Keeping that line together with `$RNAdjustUseSPM` adds the native iOS SDK to your app twice.
+
+#### Native SDKs
+- [iOS@v5.8.2][ios_sdk_v5.8.2]
+- [Android@v5.8.1][android_sdk_v5.8.1]
+
+---
+
 ### Version 5.8.1 (3rd November 2026)
 #### Fixed
 - Fixed a crash that could occur on iOS after downgrading the SDK when global callback or partner parameters were persisted.
@@ -864,6 +884,7 @@ In case you were using beta version of the SDK v5, please switch to the official
 [ios_sdk_v5.6.2]: https://github.com/adjust/ios_sdk/tree/v5.6.2
 [ios_sdk_v5.8.0]: https://github.com/adjust/ios_sdk/tree/v5.8.0
 [ios_sdk_v5.8.1]: https://github.com/adjust/ios_sdk/tree/v5.8.1
+[ios_sdk_v5.8.2]: https://github.com/adjust/ios_sdk/tree/v5.8.2
 
 [android_sdk_v4.10.4]: https://github.com/adjust/android_sdk/tree/v4.10.4
 [android_sdk_v4.11.0]: https://github.com/adjust/android_sdk/tree/v4.11.0

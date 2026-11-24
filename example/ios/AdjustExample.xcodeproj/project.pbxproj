@@ -9,17 +9,17 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* AdjustExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AdjustExampleTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
-		5CE11E0A2D0A0001005CE002 /* SceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5CE11E0A2D0A0003005CE002 /* SceneDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		4040FD9959E356328F37BF1E /* libPods-AdjustExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09A3A7624FF5E3502F96909A /* libPods-AdjustExample.a */; };
+		5CE11E0A2D0A0001005CE002 /* SceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5CE11E0A2D0A0003005CE002 /* SceneDelegate.mm */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9C518AE4433611D1AD761D48 /* libPods-AdjustExample-AdjustExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 987A68CCA1C4FF25DE641905 /* libPods-AdjustExample-AdjustExampleTests.a */; };
 		9DAEED1D2C7FCBDC001C427C /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DAEED1C2C7FCBDC001C427C /* AppTrackingTransparency.framework */; };
 		9DAEED1F2C7FCBE0001C427C /* AdServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DAEED1E2C7FCBE0001C427C /* AdServices.framework */; };
 		9DAEED212C7FCBE4001C427C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DAEED202C7FCBE4001C427C /* AdSupport.framework */; };
 		9DAEED232C7FCBE8001C427C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DAEED222C7FCBE8001C427C /* StoreKit.framework */; };
+		B259BF90041FAB320CCE2DBC /* libPods-AdjustExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AECAB3F9BEA3FA3D24921D2 /* libPods-AdjustExample.a */; };
 		E4FA3FFB0312C6009FA756AD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 395198E403F6AEC7BCC0875B /* PrivacyInfo.xcprivacy */; };
-		F7A1573075973A37AC6720DF /* libPods-AdjustExample-AdjustExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C0F76889F4A7EEBED4BE5C3 /* libPods-AdjustExample-AdjustExampleTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,19 +36,19 @@
 		00E356EE1AD99517003FC87E /* AdjustExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AdjustExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* AdjustExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdjustExampleTests.m; sourceTree = "<group>"; };
-		09A3A7624FF5E3502F96909A /* libPods-AdjustExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AdjustExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* AdjustExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdjustExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AdjustExample/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = AdjustExample/AppDelegate.mm; sourceTree = "<group>"; };
-		5CE11E0A2D0A0002005CE002 /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneDelegate.h; path = AdjustExample/SceneDelegate.h; sourceTree = "<group>"; };
-		5CE11E0A2D0A0003005CE002 /* SceneDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SceneDelegate.mm; path = AdjustExample/SceneDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AdjustExample/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AdjustExample/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AdjustExample/main.m; sourceTree = "<group>"; };
-		2C0F76889F4A7EEBED4BE5C3 /* libPods-AdjustExample-AdjustExampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AdjustExample-AdjustExampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		395198E403F6AEC7BCC0875B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = AdjustExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		5CE11E0A2D0A0002005CE002 /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneDelegate.h; path = AdjustExample/SceneDelegate.h; sourceTree = "<group>"; };
+		5CE11E0A2D0A0003005CE002 /* SceneDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SceneDelegate.mm; path = AdjustExample/SceneDelegate.mm; sourceTree = "<group>"; };
+		6AECAB3F9BEA3FA3D24921D2 /* libPods-AdjustExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AdjustExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C82BC3763661620983D96DE /* Pods-AdjustExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdjustExample.release.xcconfig"; path = "Target Support Files/Pods-AdjustExample/Pods-AdjustExample.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AdjustExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		987A68CCA1C4FF25DE641905 /* libPods-AdjustExample-AdjustExampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AdjustExample-AdjustExampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DAEED1C2C7FCBDC001C427C /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		9DAEED1E2C7FCBE0001C427C /* AdServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdServices.framework; path = System/Library/Frameworks/AdServices.framework; sourceTree = SDKROOT; };
 		9DAEED202C7FCBE4001C427C /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -64,7 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7A1573075973A37AC6720DF /* libPods-AdjustExample-AdjustExampleTests.a in Frameworks */,
+				9C518AE4433611D1AD761D48 /* libPods-AdjustExample-AdjustExampleTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +76,7 @@
 				9DAEED232C7FCBE8001C427C /* StoreKit.framework in Frameworks */,
 				9DAEED1D2C7FCBDC001C427C /* AppTrackingTransparency.framework in Frameworks */,
 				9DAEED1F2C7FCBE0001C427C /* AdServices.framework in Frameworks */,
-				4040FD9959E356328F37BF1E /* libPods-AdjustExample.a in Frameworks */,
+				B259BF90041FAB320CCE2DBC /* libPods-AdjustExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,8 +124,8 @@
 				9DAEED1E2C7FCBE0001C427C /* AdServices.framework */,
 				9DAEED1C2C7FCBDC001C427C /* AppTrackingTransparency.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				09A3A7624FF5E3502F96909A /* libPods-AdjustExample.a */,
-				2C0F76889F4A7EEBED4BE5C3 /* libPods-AdjustExample-AdjustExampleTests.a */,
+				6AECAB3F9BEA3FA3D24921D2 /* libPods-AdjustExample.a */,
+				987A68CCA1C4FF25DE641905 /* libPods-AdjustExample-AdjustExampleTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -592,6 +592,19 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers/react/nativemodule/core",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-runtimeexecutor/React_runtimeexecutor.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-runtimeexecutor/React_runtimeexecutor.framework/Headers/platform/ios",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon-Samples/ReactCommon_Samples.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon-Samples/ReactCommon_Samples.framework/Headers/platform/ios",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-Fabric/React_Fabric.framework/Headers/react/renderer/components/view/platform/cxx",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-NativeModulesApple/React_NativeModulesApple.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers/react/renderer/graphics/platform/ios",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD = "";
 				LDPLUSPLUS = "";
@@ -671,6 +684,19 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers/react/nativemodule/core",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-runtimeexecutor/React_runtimeexecutor.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-runtimeexecutor/React_runtimeexecutor.framework/Headers/platform/ios",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon-Samples/ReactCommon_Samples.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon-Samples/ReactCommon_Samples.framework/Headers/platform/ios",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-Fabric/React_Fabric.framework/Headers/react/renderer/components/view/platform/cxx",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-NativeModulesApple/React_NativeModulesApple.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers/react/renderer/graphics/platform/ios",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD = "";
 				LDPLUSPLUS = "";

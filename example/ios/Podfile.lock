@@ -1,18 +1,39 @@
 PODS:
-  - Adjust (5.8.1):
-    - Adjust/Adjust (= 5.8.1)
-  - Adjust/Adjust (5.8.1):
-    - AdjustSignature (= 5.8.0)
-  - AdjustSignature (5.8.0)
   - boost (1.84.0)
   - DoubleConversion (1.1.6)
   - fast_float (8.0.0)
   - FBLazyVector (0.83.5)
   - fmt (12.1.0)
   - glog (0.3.5)
+  - GoogleAdsOnDeviceConversion (3.0.0):
+    - GoogleUtilities/Environment (~> 8.1)
+    - GoogleUtilities/Logger (~> 8.1)
+    - GoogleUtilities/Network (~> 8.1)
+    - nanopb (~> 3.30910.0)
+  - GoogleUtilities/Environment (8.1.5):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Logger (8.1.5):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Network (8.1.5):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Privacy
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (8.1.5)":
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Privacy (8.1.5)
+  - GoogleUtilities/Reachability (8.1.5):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
   - hermes-engine (0.14.1):
     - hermes-engine/Pre-built (= 0.14.1)
   - hermes-engine/Pre-built (0.14.1)
+  - nanopb (3.30910.0):
+    - nanopb/decode (= 3.30910.0)
+    - nanopb/encode (= 3.30910.0)
+  - nanopb/decode (3.30910.0)
+  - nanopb/encode (3.30910.0)
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -1898,8 +1919,7 @@ PODS:
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
     - SocketRocket
-  - react-native-adjust (5.8.1):
-    - Adjust (= 5.8.1)
+  - react-native-adjust (5.8.2):
     - React-Core
   - React-NativeModulesApple (0.83.5):
     - boost
@@ -2468,6 +2488,7 @@ DEPENDENCIES:
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - GoogleAdsOnDeviceConversion (= 3.0.0)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
@@ -2545,8 +2566,9 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Adjust
-    - AdjustSignature
+    - GoogleAdsOnDeviceConversion
+    - GoogleUtilities
+    - nanopb
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -2709,15 +2731,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adjust: f629975dc06e5a4c2bcda27cd78ff8a29912d7bd
-  AdjustSignature: 0b2c808c9d58e21ff394f4edc7feea70c2ee84fc
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 7f47b3463fec4f3acdd9a7e24741908b9c5b493b
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
+  GoogleAdsOnDeviceConversion: b4fcc557983271d53177d75ddf704c025791d261
+  GoogleUtilities: 7dc09b3fa9ecb5c2298b952313d14628b61b9da3
   hermes-engine: 8ef169a5c2cd09235ac9bc80a726d2bbd349d524
+  nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   RCT-Folly: b29feb752b08042c62badaef7d453f3bb5e6ae23
   RCTDeprecation: 66da7829306a6741edb3f866687c13a4938ca5f4
   RCTRequired: c6853c7a563306968f833210c476741e09fc5f61
@@ -2754,7 +2777,7 @@ SPEC CHECKSUMS:
   React-logger: 661e84a3f43439fc2e81478b7d055c3edc44697b
   React-Mapbuffer: 05f0d11c9c28b80913abdd580840d5a3b1e75328
   React-microtasksnativemodule: d433adcf1a5e2f7e6d1fcef57b42efd76aa0aded
-  react-native-adjust: 9ac732adf7e4102591b0404e56d25c7b049259e7
+  react-native-adjust: b007d1188bbeda5b17f2724485d07497cb4f410c
   React-NativeModulesApple: 9070626e7bc2b0b1efd106ce5ff9d4c207ef0ad6
   React-networking: e26aade54c2eeff9f1e60336e26202965895dc2a
   React-oscompat: 7427e1c3527c66edd789d63d0603c68b52b50a12
@@ -2791,6 +2814,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 897e8c1fb1fd80c3c01231ed4ec8c1ffa652c29f
 
-PODFILE CHECKSUM: 5136a0260720238d69f1895031f2a06bfb483d8b
+PODFILE CHECKSUM: 20cf808dbadbe2c5c7625d3719f8e44aaa10120f
 
 COCOAPODS: 1.16.2
